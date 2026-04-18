@@ -8,8 +8,7 @@ It serves as a portfolio to showcase my projects, skills, and background as a so
 
 ## 🚀 Live Website
 
-👉 https://USERNAME.github.io/my-webseite  
-*(replace with your actual GitHub Pages link)*
+👉 https://aschmidtphil.github.io/my-webseite  
 
 ---
 
