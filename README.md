@@ -72,9 +72,9 @@ This website was built to:
 
 Feel free to reach out via:
 
-- GitHub: https://github.com/USERNAME
-- LinkedIn: https://linkedin.com/in/USERNAME
-- Email: your.email@example.com
+- GitHub: https://github.com/aschmidtphil
+- LinkedIn: https://linkedin.com/in/aschmidtphil
+- Email: aschmidtphil@gmail.com
 
 ---
 
