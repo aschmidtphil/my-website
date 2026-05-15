@@ -129,9 +129,9 @@ function loadMorePoke(){renderPokeGrid();}
 // ════════════════════════════════════════════════
 // PODCASTS
 // ════════════════════════════════════════════════
-var podRendered=false;
+
 function renderPodcasts(){
-  if(podRendered)return;podRendered=true;
+  
   var grid=document.getElementById('pod-grid');
   DB.podcasts.forEach(function(p){
     var c=document.createElement('div');c.className='card pod-card';
@@ -146,7 +146,7 @@ function renderPodcasts(){
 // ════════════════════════════════════════════════
 // NATUR — categories
 // ════════════════════════════════════════════════
-var natureRendered=false;
+
 var NATURE_CATS={
   'Eigene Fotos':{desc:'Persönliche Aufnahmen — festgehaltene Momente.',items:[
     {src:'assets/images/Natur/20250921_191313.webp',srcAvif:'assets/images/Natur/20250921_191313.avif',location:'September 2025',title:'Herbstlicht',desc:'Ein stiller Moment — Licht und Schatten kurz vor dem Abend.'},
@@ -207,14 +207,14 @@ function renderNatureCat(){
 // ════════════════════════════════════════════════
 // PHILOSOPHEN TIMELINE — with zoom
 // ════════════════════════════════════════════════
-var philBuilt=false;
+
 var philZoomLevel=1;
 var philBaseW=3600;
 var philActiveEpoch='';
 var philSearchTerm='';
 
 function buildPhil(){
-  if(philBuilt)return;philBuilt=true;
+  
   // Epoch buttons
   var btns=document.getElementById('epoch-btns');
   btns.innerHTML='<button class="epoch-btn active" onclick="philFilterEpoch(\'\',this)">Alle</button>';
@@ -747,28 +747,18 @@ function renderKurse(){
 }
 
 // ════════════════════════════════════════════════
-// INIT
+// PAGE INIT REGISTRATIONS
+// Called by nav.js on every page visit — no caching
 // ════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',function(){
-  applyTheme(_theme);
-  buildNav();
-
-  // Page init hooks
-  registerPageInit('favphil',   function(){renderFavPhil();});
-  registerPageInit('zitate',    function(){renderZitate();});
-  registerPageInit('tshirts',   function(){renderTshirts();});
-  registerPageInit('philosophy',function(){buildPhil();});
-  registerPageInit('gaming',    function(){renderGameCards();});
-  registerPageInit('buecher',   function(){renderBuecher();});
-  registerPageInit('podcasts',  function(){renderPodcasts();});
-  registerPageInit('nature',    function(){renderNature();});
-  registerPageInit('studium',   function(){
-    if(!studiumBuilt){buildFachFilter();renderKurse();studiumBuilt=true;}
-    else renderKurse();
-  });
-  registerPageInit('math',      function(){initMath();});
-
-  // Render on load
-  initSort();
-  renderBuecher();
+document.addEventListener('DOMContentLoaded', function() {
+  // These register callbacks; nav.js calls them on every showPage()
+  registerPageInit('favphil',    function() { renderFavPhil(); });
+  registerPageInit('zitate',     function() { renderZitate(); });
+  registerPageInit('tshirts',    function() { renderTshirts(); });
+  registerPageInit('philosophy', function() { buildPhil(); });
+  registerPageInit('buecher',    function() { renderBuecher(); });
+  registerPageInit('nature',     function() { renderNature(); });
+  registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
+  registerPageInit('math',       function() { initMath(); });
+  // podcasts and gaming are self-contained in their own page HTML
 });

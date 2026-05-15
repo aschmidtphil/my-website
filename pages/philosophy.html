@@ -480,32 +480,34 @@ function setH() {
 
 /* ── Init ── */
 function init() {
-  setH();
-  window.addEventListener('resize', ()=>{ setH(); render(); });
-  new MutationObserver(()=>render()).observe(document.documentElement,
-    { attributes:true, attributeFilter:['data-theme'] });
+  // rAF ensures DOM is laid out so height calculations work
+  requestAnimationFrame(() => {
+    setH();
+    window.addEventListener('resize', ()=>{ setH(); render(); });
+    new MutationObserver(()=>render()).observe(document.documentElement,
+      { attributes:true, attributeFilter:['data-theme'] });
 
-  buildInflToggles();
-  buildEpochFilter();
-  setupDrag();
+    buildInflToggles();
+    buildEpochFilter();
+    setupDrag();
 
-  const tryRender = () => {
-    if (typeof PHILS_V2 !== 'undefined' && typeof EPOCHS_META_V2 !== 'undefined') {
-      render();
-      setTimeout(()=>{
-        const w = document.getElementById('tl-wrap');
-        if (w) w.scrollLeft = BASE_W * 0.20;
-      }, 80);
-    } else {
-      setTimeout(tryRender, 80);
-    }
-  };
-  tryRender();
+    const tryRender = (attempts) => {
+      if (typeof PHILS_V2 !== 'undefined' && typeof EPOCHS_META_V2 !== 'undefined') {
+        render();
+        setTimeout(()=>{
+          const w = document.getElementById('tl-wrap');
+          if (w) w.scrollLeft = BASE_W * 0.20;
+        }, 100);
+      } else if ((attempts||0) < 50) {
+        setTimeout(() => tryRender((attempts||0)+1), 100);
+      }
+    };
+    tryRender(0);
+  });
 }
 
-document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
-  : init();
+// Always call init directly — this script runs after innerHTML injection
+init();
 
 })();
 </script>

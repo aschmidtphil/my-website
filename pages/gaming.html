@@ -104,9 +104,27 @@ window.showGTab = function(name, idx) {
   if (sec) sec.classList.add('active');
   document.querySelectorAll('.gtab')[idx].classList.add('active');
 
-  // Future Cop easter egg
+  // Future Cop easter egg — Sky Captain quote
   if (name === 'fc') {
-    setTimeout(() => playAudioFile('assets/audio/skycaptain.mp3', 'Niemand kann den Sky Captain aufhalten!'), 400);
+    setTimeout(() => {
+      try {
+        const _a = new Audio('assets/audio/skycaptain.mp3');
+        _a.volume = 0.72;
+        _a.play().catch(()=>{});
+      } catch(e) {}
+      // Use nav.js toast if available, otherwise create one
+      if (typeof showToast === 'function') {
+        showToast('Niemand kann den Sky Captain aufhalten!');
+      } else {
+        let t = document.getElementById('_as_toast');
+        if (!t) { t = document.createElement('div'); t.id='_as_toast';
+          t.style.cssText='position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:.75rem 1.25rem;box-shadow:0 8px 32px rgba(0,0,0,.2);font-family:var(--fm);font-size:.78rem;color:var(--text2);z-index:9999;pointer-events:none;transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);';
+          document.body.appendChild(t); }
+        t.textContent = '🔊 Niemand kann den Sky Captain aufhalten!';
+        t.style.transform='translateY(0)'; t.style.opacity='1';
+        clearTimeout(t._t); t._t=setTimeout(()=>{t.style.transform='translateY(80px)';t.style.opacity='0';},3500);
+      }
+    }, 400);
   }
 
   if (name === 'pokemon' && !pokeLoaded) loadPoke();
@@ -116,14 +134,18 @@ window.showGTab = function(name, idx) {
 /* ── Game cards ───────────────────────────────────── */
 const gameRendered = {};
 const RAWG_COVERS = {
-  wc3:    'https://media.rawg.io/media/games/4be/4be6a6ad0364751a96229c56bf69be3e.jpg',
-  sc:     'https://media.rawg.io/media/games/d58/d588e4b8a7a38d77e8e9c53a9e3e7a6e.jpg',
-  diablo: 'https://media.rawg.io/media/games/84d/84da2ac3fdfc6507807a1808595afb12.jpg',
-  sotc:   'https://media.rawg.io/media/screenshots/c08/c08c7d4406bef4edc65a3bafee0a3c47.jpg',
-  hk:     'https://media.rawg.io/media/games/4cf/4cfc6b7f1850590a4634b08bfab308ab.jpg',
-  ff:     'https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg',
-  sg:     'https://media.rawg.io/media/games/5f2/5f2c52c1a87ded1a49e25a7b1c9dc4d4.jpg',
-  pw:     'https://media.rawg.io/media/games/f1a/f1a09bfad4070bbdbe5d0aad0c56d2fb.jpg',
+  wc3:    'https://upload.wikimedia.org/wikipedia/en/thumb/7/75/Warcraft_III_Reign_of_Chaos_blizzard.jpg/256px-Warcraft_III_Reign_of_Chaos_blizzard.jpg',
+  sc:     'https://upload.wikimedia.org/wikipedia/en/thumb/2/20/StarCraft_box_art.jpg/256px-StarCraft_box_art.jpg',
+  diablo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Diablo_II_Coverart.png/256px-Diablo_II_Coverart.png',
+  sotc:   'https://upload.wikimedia.org/wikipedia/en/thumb/3/34/Shadow_of_the_Colossus_%282005%29_cover.png/256px-Shadow_of_the_Colossus_%282005%29_cover.png',
+  hk:     'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Hollow_knight_silksong.png/256px-Hollow_knight_silksong.png',
+  ff:     'https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/FFVII_Box_Art.jpg/256px-FFVII_Box_Art.jpg',
+  sg:     'https://upload.wikimedia.org/wikipedia/en/thumb/2/21/Steins_Gate_visual_novel_cover.jpg/256px-Steins_Gate_visual_novel_cover.jpg',
+  pw:     'https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/Phoenix_Wright_Ace_Attorney_-_Justice_for_All.jpg/256px-Phoenix_Wright_Ace_Attorney_-_Justice_for_All.jpg',
+  lufia:  'https://upload.wikimedia.org/wikipedia/en/thumb/a/a8/Lufia2.jpg/256px-Lufia2.jpg',
+  kknd:   null,
+  fc:     null,
+  mmbn:   'https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Mega_Man_Battle_Network_2_Coverart.png/256px-Mega_Man_Battle_Network_2_Coverart.png',
 };
 const GAME_EMOJI = { wc3:'⚔️',sc:'🚀',diablo:'💀',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾',pokemon:'🔴' };
 

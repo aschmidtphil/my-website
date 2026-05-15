@@ -55,22 +55,26 @@ nav {
 
 /* Dropdown */
 .nav-dropdown {
-  position: absolute; top: calc(100% + 4px); left: 0;
+  position: absolute; top: 100%; left: 0;
   min-width: 220px; background: var(--card);
   border: 1px solid var(--border); border-radius: 10px;
   box-shadow: 0 8px 32px rgba(0,0,0,.12);
   opacity: 0; pointer-events: none;
-  transform: translateY(-6px); transition: all .2s; z-index: 600;
-  /* Extra padding-top so mouse can move from button to dropdown without gap */
-  padding-top: 4px;
+  transform: translateY(-4px); transition: opacity .18s, transform .18s; z-index: 600;
+  /* padding-top creates an invisible bridge so mouse can move from button to dropdown */
+  padding-top: 8px;
+  margin-top: 0;
 }
-/* Hover still works on desktop — with a pseudo-element bridge to prevent gap */
+/* Extend hover area downward to cover the gap between button and dropdown */
 .nav-group::after {
-  content: ''; position: absolute; top: 100%; left: 0;
-  width: 100%; height: 8px; /* bridge gap */
+  content: ''; display: block; position: absolute;
+  top: 100%; left: 0; width: 100%; height: 12px;
+  background: transparent;
 }
 .nav-group:hover .nav-dropdown,
-.nav-group.open .nav-dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+.nav-group.open .nav-dropdown {
+  opacity: 1; pointer-events: all; transform: translateY(0);
+}
 
 .nav-dropdown-item {
   display: flex; align-items: center; gap: .6rem;

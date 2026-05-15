@@ -42,7 +42,7 @@
   <div class="pod-section-hdr">Podcasts</div>
   <div class="pod-cat-nav" id="pod-cat-nav"></div>
   <div class="pod-grid2" id="pod-grid2"></div>
-  <div class="pod-section-hdr">H&ouml;rb&uuml;cher <span style="font-family:var(--fm);font-size:.72rem;color:var(--text3);font-weight:400;margin-left:.5rem">// Audible-Bibliothek · 45 Titel</span></div>
+  <div class="pod-section-hdr">H&ouml;rb&uuml;cher <span style="font-family:var(--fm);font-size:.72rem;color:var(--text3);font-weight:400;margin-left:.5rem">// Bibliothek · 45 Titel</span></div>
   <div class="hb-controls">
     <input class="ctrl-input" type="text" id="hb-search" placeholder="Titel oder Autor&hellip;" oninput="filterHB()" style="width:220px">
     <select class="ctrl-select" id="hb-cat" onchange="filterHB()">
@@ -200,5 +200,7 @@ window.filterHB=function(){
   if(cnt)cnt.textContent=d.length+' von '+HOERB.length+' Titeln';
 };
 filterHB();
+// Expose as global so pages.js renderPodcasts() call works too
+window.renderPodcasts = function(){};
 })();
 </script>

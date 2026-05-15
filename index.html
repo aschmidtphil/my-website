@@ -129,22 +129,26 @@ nav {
 
 /* Dropdown */
 .nav-dropdown {
-  position: absolute; top: calc(100% + 4px); left: 0;
+  position: absolute; top: 100%; left: 0;
   min-width: 220px; background: var(--card);
   border: 1px solid var(--border); border-radius: 10px;
   box-shadow: 0 8px 32px rgba(0,0,0,.12);
   opacity: 0; pointer-events: none;
-  transform: translateY(-6px); transition: all .2s; z-index: 600;
-  /* Extra padding-top so mouse can move from button to dropdown without gap */
-  padding-top: 4px;
+  transform: translateY(-4px); transition: opacity .18s, transform .18s; z-index: 600;
+  /* padding-top creates an invisible bridge so mouse can move from button to dropdown */
+  padding-top: 8px;
+  margin-top: 0;
 }
-/* Hover still works on desktop — with a pseudo-element bridge to prevent gap */
+/* Extend hover area downward to cover the gap between button and dropdown */
 .nav-group::after {
-  content: ''; position: absolute; top: 100%; left: 0;
-  width: 100%; height: 8px; /* bridge gap */
+  content: ''; display: block; position: absolute;
+  top: 100%; left: 0; width: 100%; height: 12px;
+  background: transparent;
 }
 .nav-group:hover .nav-dropdown,
-.nav-group.open .nav-dropdown { opacity: 1; pointer-events: all; transform: translateY(0); }
+.nav-group.open .nav-dropdown {
+  opacity: 1; pointer-events: all; transform: translateY(0);
+}
 
 .nav-dropdown-item {
   display: flex; align-items: center; gap: .6rem;
@@ -786,7 +790,7 @@ footer {
   </div>
 </div>
 
-<!-- Page templates (embedded for file:// support) -->
+<!-- Embedded page templates (work with file:// without a server) -->
 <template id="page-home">
 <div class="hero">
   <div class="hero-grid-bg"></div>
@@ -1529,32 +1533,34 @@ function setH() {
 
 /* ── Init ── */
 function init() {
-  setH();
-  window.addEventListener('resize', ()=>{ setH(); render(); });
-  new MutationObserver(()=>render()).observe(document.documentElement,
-    { attributes:true, attributeFilter:['data-theme'] });
+  // rAF ensures DOM is laid out so height calculations work
+  requestAnimationFrame(() => {
+    setH();
+    window.addEventListener('resize', ()=>{ setH(); render(); });
+    new MutationObserver(()=>render()).observe(document.documentElement,
+      { attributes:true, attributeFilter:['data-theme'] });
 
-  buildInflToggles();
-  buildEpochFilter();
-  setupDrag();
+    buildInflToggles();
+    buildEpochFilter();
+    setupDrag();
 
-  const tryRender = () => {
-    if (typeof PHILS_V2 !== 'undefined' && typeof EPOCHS_META_V2 !== 'undefined') {
-      render();
-      setTimeout(()=>{
-        const w = document.getElementById('tl-wrap');
-        if (w) w.scrollLeft = BASE_W * 0.20;
-      }, 80);
-    } else {
-      setTimeout(tryRender, 80);
-    }
-  };
-  tryRender();
+    const tryRender = (attempts) => {
+      if (typeof PHILS_V2 !== 'undefined' && typeof EPOCHS_META_V2 !== 'undefined') {
+        render();
+        setTimeout(()=>{
+          const w = document.getElementById('tl-wrap');
+          if (w) w.scrollLeft = BASE_W * 0.20;
+        }, 100);
+      } else if ((attempts||0) < 50) {
+        setTimeout(() => tryRender((attempts||0)+1), 100);
+      }
+    };
+    tryRender(0);
+  });
 }
 
-document.readyState === 'loading'
-  ? document.addEventListener('DOMContentLoaded', init)
-  : init();
+// Always call init directly — this script runs after innerHTML injection
+init();
 
 })();
 </script>
@@ -1775,7 +1781,7 @@ document.readyState === 'loading'
   <div class="pod-section-hdr">Podcasts</div>
   <div class="pod-cat-nav" id="pod-cat-nav"></div>
   <div class="pod-grid2" id="pod-grid2"></div>
-  <div class="pod-section-hdr">H&ouml;rb&uuml;cher <span style="font-family:var(--fm);font-size:.72rem;color:var(--text3);font-weight:400;margin-left:.5rem">// Audible-Bibliothek · 45 Titel</span></div>
+  <div class="pod-section-hdr">H&ouml;rb&uuml;cher <span style="font-family:var(--fm);font-size:.72rem;color:var(--text3);font-weight:400;margin-left:.5rem">// Bibliothek · 45 Titel</span></div>
   <div class="hb-controls">
     <input class="ctrl-input" type="text" id="hb-search" placeholder="Titel oder Autor&hellip;" oninput="filterHB()" style="width:220px">
     <select class="ctrl-select" id="hb-cat" onchange="filterHB()">
@@ -1933,6 +1939,8 @@ window.filterHB=function(){
   if(cnt)cnt.textContent=d.length+' von '+HOERB.length+' Titeln';
 };
 filterHB();
+// Expose as global so pages.js renderPodcasts() call works too
+window.renderPodcasts = function(){};
 })();
 </script>
 
@@ -2044,9 +2052,27 @@ window.showGTab = function(name, idx) {
   if (sec) sec.classList.add('active');
   document.querySelectorAll('.gtab')[idx].classList.add('active');
 
-  // Future Cop easter egg
+  // Future Cop easter egg — Sky Captain quote
   if (name === 'fc') {
-    setTimeout(() => playAudioFile('assets/audio/skycaptain.mp3', 'Niemand kann den Sky Captain aufhalten!'), 400);
+    setTimeout(() => {
+      try {
+        const _a = new Audio('assets/audio/skycaptain.mp3');
+        _a.volume = 0.72;
+        _a.play().catch(()=>{});
+      } catch(e) {}
+      // Use nav.js toast if available, otherwise create one
+      if (typeof showToast === 'function') {
+        showToast('Niemand kann den Sky Captain aufhalten!');
+      } else {
+        let t = document.getElementById('_as_toast');
+        if (!t) { t = document.createElement('div'); t.id='_as_toast';
+          t.style.cssText='position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:.75rem 1.25rem;box-shadow:0 8px 32px rgba(0,0,0,.2);font-family:var(--fm);font-size:.78rem;color:var(--text2);z-index:9999;pointer-events:none;transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);';
+          document.body.appendChild(t); }
+        t.textContent = '🔊 Niemand kann den Sky Captain aufhalten!';
+        t.style.transform='translateY(0)'; t.style.opacity='1';
+        clearTimeout(t._t); t._t=setTimeout(()=>{t.style.transform='translateY(80px)';t.style.opacity='0';},3500);
+      }
+    }, 400);
   }
 
   if (name === 'pokemon' && !pokeLoaded) loadPoke();
@@ -2056,14 +2082,18 @@ window.showGTab = function(name, idx) {
 /* ── Game cards ───────────────────────────────────── */
 const gameRendered = {};
 const RAWG_COVERS = {
-  wc3:    'https://media.rawg.io/media/games/4be/4be6a6ad0364751a96229c56bf69be3e.jpg',
-  sc:     'https://media.rawg.io/media/games/d58/d588e4b8a7a38d77e8e9c53a9e3e7a6e.jpg',
-  diablo: 'https://media.rawg.io/media/games/84d/84da2ac3fdfc6507807a1808595afb12.jpg',
-  sotc:   'https://media.rawg.io/media/screenshots/c08/c08c7d4406bef4edc65a3bafee0a3c47.jpg',
-  hk:     'https://media.rawg.io/media/games/4cf/4cfc6b7f1850590a4634b08bfab308ab.jpg',
-  ff:     'https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg',
-  sg:     'https://media.rawg.io/media/games/5f2/5f2c52c1a87ded1a49e25a7b1c9dc4d4.jpg',
-  pw:     'https://media.rawg.io/media/games/f1a/f1a09bfad4070bbdbe5d0aad0c56d2fb.jpg',
+  wc3:    'https://upload.wikimedia.org/wikipedia/en/thumb/7/75/Warcraft_III_Reign_of_Chaos_blizzard.jpg/256px-Warcraft_III_Reign_of_Chaos_blizzard.jpg',
+  sc:     'https://upload.wikimedia.org/wikipedia/en/thumb/2/20/StarCraft_box_art.jpg/256px-StarCraft_box_art.jpg',
+  diablo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Diablo_II_Coverart.png/256px-Diablo_II_Coverart.png',
+  sotc:   'https://upload.wikimedia.org/wikipedia/en/thumb/3/34/Shadow_of_the_Colossus_%282005%29_cover.png/256px-Shadow_of_the_Colossus_%282005%29_cover.png',
+  hk:     'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Hollow_knight_silksong.png/256px-Hollow_knight_silksong.png',
+  ff:     'https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/FFVII_Box_Art.jpg/256px-FFVII_Box_Art.jpg',
+  sg:     'https://upload.wikimedia.org/wikipedia/en/thumb/2/21/Steins_Gate_visual_novel_cover.jpg/256px-Steins_Gate_visual_novel_cover.jpg',
+  pw:     'https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/Phoenix_Wright_Ace_Attorney_-_Justice_for_All.jpg/256px-Phoenix_Wright_Ace_Attorney_-_Justice_for_All.jpg',
+  lufia:  'https://upload.wikimedia.org/wikipedia/en/thumb/a/a8/Lufia2.jpg/256px-Lufia2.jpg',
+  kknd:   null,
+  fc:     null,
+  mmbn:   'https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Mega_Man_Battle_Network_2_Coverart.png/256px-Mega_Man_Battle_Network_2_Coverart.png',
 };
 const GAME_EMOJI = { wc3:'⚔️',sc:'🚀',diablo:'💀',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾',pokemon:'🔴' };
 
@@ -2284,8 +2314,7 @@ renderGameCards();
   </div>
 </template>
 
-<script>
-/**
+<script>/**
  * data.js — All static content data
  * Edit this file to update content on the website.
  */
@@ -3455,291 +3484,275 @@ const EPOCHS_META_V2 = [
   { name:'Neopragmatismus',    color:'#20a050' },
   { name:'Gegenwart',          color:'#4ade80' },
 ];
-
 </script>
-<script>
-/**
- * nav.js — Router, Theme, Language, Nav builder
- * Works with file:// (no server needed) via embedded <template> tags
- * AND with http:// server via fetch() for the multi-file structure
+<script>/**
+ * nav.js — Router · Theme · Language · Nav
+ *
+ * Fixes:
+ *  1. Hash-based URLs (#home, #philosophy …) → direct links work on GitHub Pages
+ *  2. Pages re-render every visit → content never disappears on fast tab switching
+ *  3. <script> tags inside loaded HTML are properly re-executed
+ *  4. Single DOMContentLoaded — no conflict with pages.js
+ *  5. Dropdown: hover + click-toggle + Escape closes
+ *  6. Audio easter eggs: hey_listen.mp3 on Podcasts nav click
  */
-
 'use strict';
 
-// ═══════════════════════════════════════════════
-// THEME
-// ═══════════════════════════════════════════════
+// ── Theme ────────────────────────────────────────
 let _theme = localStorage.getItem('as-theme') || 'light';
 
 function applyTheme(t) {
   _theme = t;
   document.documentElement.setAttribute('data-theme', t);
-  const btn = document.getElementById('theme-btn');
-  if (btn) btn.innerHTML = t === 'light' ? '&#127769;' : '&#9728;&#65039;';
+  const b = document.getElementById('theme-btn');
+  if (b) b.innerHTML = t === 'light' ? '&#127769;' : '&#9728;&#65039;';
   localStorage.setItem('as-theme', t);
 }
-
 function toggleTheme() {
   applyTheme(_theme === 'light' ? 'dark' : 'light');
-  if (typeof drawMB === 'function' && _mathInited) {
-    drawMB(); if (typeof sortArr !== 'undefined' && sortArr.length) drawSort(sortArr); drawFourier();
+  try { if (typeof drawMB       === 'function') drawMB(); }       catch(e){}
+  try { if (typeof drawFourier  === 'function') drawFourier(); }  catch(e){}
+  try { if (typeof sortArr !== 'undefined' && sortArr.length) drawSort(sortArr); } catch(e){}
+}
+
+// ── Language ─────────────────────────────────────
+let _lang = 'de';
+const TR = {
+  de: {'t-hero-tag':'Data Scientist & Philosopher','t-s1':'Jahre Erfahrung','t-s2':'Semester','t-s3':'Zertifiziert','t-s4':'Neugier','t-sk-title':'Skills & Technologien','t-pr-title':'GitHub-Projekte','t-ab-title':'Über mich'},
+  en: {'t-hero-tag':'Data Scientist & Philosopher','t-s1':'Years Experience','t-s2':'Semesters','t-s3':'Certified','t-s4':'Curiosity','t-sk-title':'Skills & Technologies','t-pr-title':'GitHub Projects','t-ab-title':'About Me'},
+};
+function toggleLang() {
+  _lang = _lang === 'de' ? 'en' : 'de';
+  Object.entries(TR[_lang]).forEach(([id,v]) => { const e = document.getElementById(id); if(e) e.textContent = v; });
+}
+
+// ── Audio easter eggs ─────────────────────────────
+function playAudio(file, toastTxt) {
+  try { const a = new Audio('assets/audio/' + file); a.volume = 0.72; a.play().catch(()=>{}); } catch(e) {}
+  const toast = document.getElementById('_as_toast') || createToast();
+  toast.textContent = '🔊 ' + toastTxt;
+  toast.style.cssText += 'transform:translateY(0);opacity:1;';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toast.style.transform = 'translateY(80px)'; toast.style.opacity = '0'; }, 3500);
+}
+function createToast() {
+  const t = document.createElement('div');
+  t.id = '_as_toast';
+  t.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);'
+    + 'border-radius:12px;padding:.75rem 1.25rem;box-shadow:0 8px 32px rgba(0,0,0,.2);font-family:var(--fm);'
+    + 'font-size:.78rem;color:var(--text2);z-index:9999;pointer-events:none;'
+    + 'transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);';
+  document.body.appendChild(t);
+  return t;
+}
+const PAGE_AUDIO = {
+  podcasts: () => playAudio('hey_listen.mp3', 'Hey, listen!'),
+};
+
+// ── Nav structure ─────────────────────────────────
+const NAV = [
+  {type:'direct', id:'home', label:'home'},
+  {type:'group',  label:'Philosophie', items:[
+    {id:'favphil',    icon:'★', label:'Lieblingsphilosophen'},
+    {id:'zitate',     icon:'❝', label:'Lieblingszitate'},
+    {id:'tshirts',    icon:'👕', label:'Philosophie-Shirts'},
+    {divider:true},
+    {id:'philosophy', icon:'⊕', label:'Philosophen-Timeline'},
+    {id:'diss',       icon:'📖', label:'Dissertation'},
+    {id:'phil-eigene',icon:'◈', label:'Meine Philosophie'},
+  ]},
+  {type:'group', label:'Akademisches', items:[
+    {id:'studium',  icon:'📋', label:'Studium'},
+    {id:'buecher',  icon:'📚', label:'Bücher'},
+    {id:'podcasts', icon:'🎙', label:'Podcasts'},
+  ]},
+  {type:'group', label:'Interessen', items:[
+    {id:'gaming', icon:'🎮', label:'Gaming'},
+    {id:'nature', icon:'🌿', label:'Natur'},
+    {id:'math',   icon:'∑',  label:'Mathematik'},
+  ]},
+  {type:'direct', id:'kontakt', label:'kontakt'},
+];
+
+// ── Page inits (called every visit) ──────────────
+const _pageInits = {};
+function registerPageInit(id, fn) { _pageInits[id] = fn; }
+
+// ── HTML cache (content only — not init state) ───
+const _htmlCache = {};
+
+async function getPageHTML(id) {
+  if (_htmlCache[id]) return _htmlCache[id];
+
+  // Try embedded <template> first (works with file://)
+  const tpl = document.getElementById('page-' + id);
+  if (tpl) {
+    const div = document.createElement('div');
+    if (tpl.content) div.appendChild(tpl.content.cloneNode(true));
+    else div.innerHTML = tpl.innerHTML;
+    _htmlCache[id] = div.innerHTML;
+    return _htmlCache[id];
+  }
+
+  // Fall back to fetch (http://)
+  try {
+    const r = await fetch('pages/' + id + '.html');
+    if (r.ok) { _htmlCache[id] = await r.text(); return _htmlCache[id]; }
+  } catch(e) {}
+  return null;
+}
+
+// ── Router ────────────────────────────────────────
+let _busy = false;
+
+async function showPage(id) {
+  if (_busy) return;
+  _busy = true;
+
+  // Update hash URL for direct links
+  const newHash = '#' + id;
+  if (location.hash !== newHash) history.pushState({page:id}, '', newHash);
+
+  const root = document.getElementById('page-root');
+  if (!root) { _busy = false; return; }
+
+  root.style.transition = 'opacity .15s';
+  root.style.opacity    = '0';
+
+  const html = await getPageHTML(id);
+
+  if (!html) {
+    root.innerHTML = `<div style="padding:4rem 3rem;font-family:var(--fm);color:var(--text2)">
+      <h2 style="font-family:var(--fh);color:var(--text);margin-bottom:1rem">Seite nicht gefunden</h2>
+      <p>Starte einen lokalen Server: <code style="background:var(--surface);padding:.2rem .5rem;border-radius:4px">python3 -m http.server 8080</code></p>
+    </div>`;
+    root.style.opacity = '1';
+    _busy = false;
+    return;
+  }
+
+  // Inject HTML
+  root.innerHTML = html;
+
+  // Re-execute <script> tags (innerHTML doesn't run them)
+  root.querySelectorAll('script').forEach(old => {
+    const s = document.createElement('script');
+    s.textContent = old.textContent;
+    old.replaceWith(s);
+  });
+
+  requestAnimationFrame(() => { root.style.opacity = '1'; });
+
+  updateNavActive(id);
+  window.scrollTo(0, 0);
+
+  // Audio
+  if (PAGE_AUDIO[id]) setTimeout(PAGE_AUDIO[id], 350);
+
+  // Run page init — EVERY time (not cached)
+  if (_pageInits[id]) {
+    setTimeout(() => {
+      try { _pageInits[id](); } catch(e) { console.warn('init error', id, e); }
+      _busy = false;
+    }, 60);
+  } else {
+    _busy = false;
   }
 }
 
-// ═══════════════════════════════════════════════
-// LANGUAGE
-// ═══════════════════════════════════════════════
-let _lang = 'de';
-
-const TR = {
-  de: {
-    't-hero-tag': 'Data Scientist & Philosopher',
-    't-s1': 'Jahre Erfahrung', 't-s2': 'Semester',
-    't-s3': 'Zertifiziert',    't-s4': 'Neugier',
-    't-sk-title': 'Skills & Technologien',
-    't-pr-title': 'GitHub-Projekte',
-    't-ab-title': 'Über mich',
-  },
-  en: {
-    't-hero-tag': 'Data Scientist & Philosopher',
-    't-s1': 'Years Experience', 't-s2': 'Semesters',
-    't-s3': 'Certified',        't-s4': 'Curiosity',
-    't-sk-title': 'Skills & Technologies',
-    't-pr-title': 'GitHub Projects',
-    't-ab-title': 'About Me',
-  },
-};
-
-function toggleLang() {
-  _lang = _lang === 'de' ? 'en' : 'de';
-  Object.entries(TR[_lang]).forEach(([id, val]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
+function updateNavActive(id) {
+  document.querySelectorAll('.nav-direct,.nav-group-btn').forEach(b => b.classList.remove('active','group-active'));
+  const d = document.getElementById('navbtn-' + id);
+  if (d) { d.classList.add('active'); return; }
+  NAV.forEach(g => {
+    if (g.type !== 'group') return;
+    if ((g.items||[]).some(it => it.id === id)) {
+      const gb = document.getElementById('navgrp-' + g.label);
+      if (gb) gb.classList.add('group-active');
+    }
   });
 }
 
-// ═══════════════════════════════════════════════
-// NAV STRUCTURE
-// ═══════════════════════════════════════════════
-const NAV_STRUCTURE = [
-  { type: 'direct', id: 'home', label: 'home' },
-  {
-    type: 'group', label: 'Philosophie', items: [
-      { id: 'favphil',    icon: '★', label: 'Lieblingsphilosophen' },
-      { id: 'zitate',     icon: '❝', label: 'Lieblingszitate' },
-      { id: 'tshirts',    icon: '👕', label: 'Philosophie-Shirts' },
-      { divider: true },
-      { id: 'philosophy', icon: '⊕', label: 'Philosophen-Timeline' },
-      { id: 'diss',       icon: '📖', label: 'Dissertation' },
-      { id: 'phil-eigene',icon: '◈', label: 'Meine Philosophie' },
-    ],
-  },
-  {
-    type: 'group', label: 'Akademisches', items: [
-      { id: 'studium',  icon: '📋', label: 'Studium' },
-      { id: 'buecher',  icon: '📚', label: 'Bücher' },
-      { id: 'podcasts', icon: '🎙', label: 'Podcasts' },
-    ],
-  },
-  {
-    type: 'group', label: 'Interessen', items: [
-      { id: 'gaming', icon: '🎮', label: 'Gaming' },
-      { id: 'nature', icon: '🌿', label: 'Natur' },
-      { id: 'math',   icon: '∑',  label: 'Mathematik' },
-    ],
-  },
-  { type: 'direct', id: 'kontakt', label: 'kontakt' },
-];
-
+// ── Nav builder ───────────────────────────────────
 function buildNav() {
   const ul = document.getElementById('nav-groups');
   if (!ul) return;
   ul.innerHTML = '';
 
-  NAV_STRUCTURE.forEach(item => {
+  NAV.forEach(item => {
     const li = document.createElement('li');
 
     if (item.type === 'direct') {
       const b = document.createElement('button');
-      b.className = 'nav-direct';
-      b.id = 'navbtn-' + item.id;
+      b.className = 'nav-direct'; b.id = 'navbtn-' + item.id;
       b.textContent = item.label;
       b.onclick = () => showPage(item.id);
-      if (item.id === 'home') b.classList.add('active');
       li.appendChild(b);
+
     } else {
       li.className = 'nav-group';
       const btn = document.createElement('button');
-      btn.className = 'nav-group-btn';
-      btn.id = 'navgrp-' + item.label;
+      btn.className = 'nav-group-btn'; btn.id = 'navgrp-' + item.label;
       btn.innerHTML = item.label + ' <span class="arr">▾</span>';
-      // Click toggles open class (for mobile / when hover not reliable)
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        const isOpen = li.classList.toggle('open');
-        // Close other groups
         document.querySelectorAll('.nav-group').forEach(g => { if (g !== li) g.classList.remove('open'); });
+        li.classList.toggle('open');
       });
 
       const dd = document.createElement('div');
       dd.className = 'nav-dropdown';
-      item.items.forEach(it => {
-        if (it.divider) {
-          dd.appendChild(Object.assign(document.createElement('div'), { className: 'nav-dropdown-divider' }));
-          return;
-        }
+      (item.items||[]).forEach(it => {
+        if (it.divider) { dd.appendChild(Object.assign(document.createElement('div'), {className:'nav-dropdown-divider'})); return; }
         const di = document.createElement('div');
         di.className = 'nav-dropdown-item';
         di.innerHTML = `<span class="icon">${it.icon}</span>${it.label}`;
-        di.onclick = () => {
-          li.classList.remove('open');
-          // Hey Listen! when navigating to podcasts
-          if (it.id === 'podcasts') {
-            setTimeout(() => {
-              try { const a = new Audio('assets/audio/hey_listen.mp3'); a.volume = 0.7; a.play().catch(()=>{}); } catch(e) {}
-            }, 350);
-          }
-          showPage(it.id);
-        };
+        di.onclick = () => { li.classList.remove('open'); showPage(it.id); };
         dd.appendChild(di);
       });
-      li.appendChild(btn);
-      li.appendChild(dd);
+      li.appendChild(btn); li.appendChild(dd);
     }
     ul.appendChild(li);
   });
 }
 
-function updateNavActive(pageId) {
-  document.querySelectorAll('.nav-direct, .nav-group-btn').forEach(b => {
-    b.classList.remove('active', 'group-active');
-  });
-  const direct = document.getElementById('navbtn-' + pageId);
-  if (direct) { direct.classList.add('active'); return; }
-  NAV_STRUCTURE.forEach(g => {
-    if (g.type !== 'group') return;
-    if (g.items.some(it => it.id === pageId)) {
-      const gbtn = document.getElementById('navgrp-' + g.label);
-      if (gbtn) gbtn.classList.add('group-active');
-    }
-  });
+function buildFooter() {
+  const f = document.getElementById('site-footer');
+  if (!f) return;
+  f.innerHTML = `<p class="footer-txt">&copy; 2025 Alexander Schmidt</p>
+    <div class="footer-links">
+      <a href="https://github.com/aschmidtphil" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/alexander-schmidt" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:aschmidtphil@gmail.com">Email</a>
+    </div>`;
 }
 
-// ═══════════════════════════════════════════════
-// PAGE ROUTER
-// Supports two modes:
-//   1. file:// — reads from embedded <template id="page-xxx"> tags
-//   2. http:// — fetches from pages/xxx.html (server required)
-// ═══════════════════════════════════════════════
-let _currentPage = null;
-const _pageCache  = {};
-const _pageInits  = {};
-const _pageInitDone = {};
-
-function registerPageInit(pageId, fn) {
-  _pageInits[pageId] = fn;
-}
-
-function getPageFromTemplate(id) {
-  const tmpl = document.getElementById('page-' + id);
-  if (tmpl && tmpl.content) {
-    // <template> element
-    const div = document.createElement('div');
-    div.appendChild(tmpl.content.cloneNode(true));
-    return div.innerHTML;
-  }
-  if (tmpl) return tmpl.innerHTML;
-  return null;
-}
-
-async function showPage(id) {
-  if (_currentPage === id) return;
-  _currentPage = id;
-
-  const root = document.getElementById('page-root');
-  if (!root) return;
-
-  root.style.opacity = '0';
-
-  // Try cache first
-  if (!_pageCache[id]) {
-    // Try embedded template (works with file://)
-    const tplContent = getPageFromTemplate(id);
-    if (tplContent !== null) {
-      _pageCache[id] = tplContent;
-    } else {
-      // Try fetch (works with http://)
-      try {
-        const resp = await fetch('pages/' + id + '.html');
-        if (resp.ok) {
-          _pageCache[id] = await resp.text();
-        } else {
-          throw new Error('Not found');
-        }
-      } catch(e) {
-        root.innerHTML = '<div style="padding:4rem 3rem;color:var(--text2);font-family:var(--fm)">'
-          + '<h2 style="font-family:var(--fh);color:var(--text);margin-bottom:1rem">Seite nicht gefunden</h2>'
-          + '<p style="margin-bottom:1rem">Die Seite <code style="background:var(--surface);padding:.2rem .4rem;border-radius:4px">' + id + '</code> konnte nicht geladen werden.</p>'
-          + '<p style="color:var(--text3);font-size:.85rem">Wenn du die Datei direkt im Browser öffnest (file://), '
-          + 'starte stattdessen einen lokalen Server:<br><br>'
-          + '<code style="background:var(--surface);padding:.5rem 1rem;border-radius:6px;display:inline-block;margin-top:.5rem">'
-          + 'python3 -m http.server 8080</code><br><br>'
-          + 'und öffne dann <a href="http://localhost:8080" style="color:var(--accent)">http://localhost:8080</a></p>'
-          + '</div>';
-        root.style.opacity = '1';
-        updateNavActive(id);
-        return;
-      }
-    }
-  }
-
-  root.innerHTML = _pageCache[id];
-  root.style.transition = 'opacity .22s';
-  setTimeout(() => { root.style.opacity = '1'; }, 15);
-
-  updateNavActive(id);
-  window.scrollTo(0, 0);
-
-  if (_pageInits[id] && !_pageInitDone[id]) {
-    _pageInitDone[id] = true;
-    _pageInits[id]();
-  }
-}
-
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
+// ── Init ──────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(_theme);
   buildNav();
+  buildFooter();
 
-  const footer = document.getElementById('site-footer');
-  if (footer) {
-    footer.innerHTML = '<p class="footer-txt">&copy; 2025 Alexander Schmidt</p>'
-      + '<div class="footer-links">'
-      + '<a href="https://github.com/aschmidtphil" target="_blank" rel="noopener">GitHub</a>'
-      + '<a href="https://linkedin.com/in/alexander-schmidt" target="_blank" rel="noopener">LinkedIn</a>'
-      + '<a href="mailto:aschmidtphil@gmail.com">Email</a>'
-      + '</div>';
-  }
+  // Read hash for direct links / page reload
+  const startPage = (location.hash || '#home').slice(1) || 'home';
+  showPage(startPage);
 
-  showPage('home');
-
-  // Close dropdowns when clicking outside nav
-  document.addEventListener('click', e => {
-    if (!e.target.closest('nav')) {
-      document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
-    }
+  // Browser back/forward
+  window.addEventListener('popstate', e => {
+    const id = (e.state && e.state.page) || (location.hash||'#home').slice(1) || 'home';
+    showPage(id);
   });
-  // Close dropdown after page loads on mobile
+
+  // Close dropdowns outside click or Escape
+  document.addEventListener('click', e => {
+    if (!e.target.closest('nav')) document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+  });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
   });
 });
-
 </script>
-<script>
-/**
+<script>/**
  * pages.js — All page renderers and interactivity
  * Registers page inits with nav.js router.
  */
@@ -3870,9 +3883,9 @@ function loadMorePoke(){renderPokeGrid();}
 // ════════════════════════════════════════════════
 // PODCASTS
 // ════════════════════════════════════════════════
-var podRendered=false;
+
 function renderPodcasts(){
-  if(podRendered)return;podRendered=true;
+  
   var grid=document.getElementById('pod-grid');
   DB.podcasts.forEach(function(p){
     var c=document.createElement('div');c.className='card pod-card';
@@ -3887,7 +3900,7 @@ function renderPodcasts(){
 // ════════════════════════════════════════════════
 // NATUR — categories
 // ════════════════════════════════════════════════
-var natureRendered=false;
+
 var NATURE_CATS={
   'Eigene Fotos':{desc:'Persönliche Aufnahmen — festgehaltene Momente.',items:[
     {src:'assets/images/Natur/20250921_191313.webp',srcAvif:'assets/images/Natur/20250921_191313.avif',location:'September 2025',title:'Herbstlicht',desc:'Ein stiller Moment — Licht und Schatten kurz vor dem Abend.'},
@@ -3948,14 +3961,14 @@ function renderNatureCat(){
 // ════════════════════════════════════════════════
 // PHILOSOPHEN TIMELINE — with zoom
 // ════════════════════════════════════════════════
-var philBuilt=false;
+
 var philZoomLevel=1;
 var philBaseW=3600;
 var philActiveEpoch='';
 var philSearchTerm='';
 
 function buildPhil(){
-  if(philBuilt)return;philBuilt=true;
+  
   // Epoch buttons
   var btns=document.getElementById('epoch-btns');
   btns.innerHTML='<button class="epoch-btn active" onclick="philFilterEpoch(\'\',this)">Alle</button>';
@@ -4488,32 +4501,21 @@ function renderKurse(){
 }
 
 // ════════════════════════════════════════════════
-// INIT
+// PAGE INIT REGISTRATIONS
+// Called by nav.js on every page visit — no caching
 // ════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded',function(){
-  applyTheme(_theme);
-  buildNav();
-
-  // Page init hooks
-  registerPageInit('favphil',   function(){renderFavPhil();});
-  registerPageInit('zitate',    function(){renderZitate();});
-  registerPageInit('tshirts',   function(){renderTshirts();});
-  registerPageInit('philosophy',function(){buildPhil();});
-  registerPageInit('gaming',    function(){renderGameCards();});
-  registerPageInit('buecher',   function(){renderBuecher();});
-  registerPageInit('podcasts',  function(){renderPodcasts();});
-  registerPageInit('nature',    function(){renderNature();});
-  registerPageInit('studium',   function(){
-    if(!studiumBuilt){buildFachFilter();renderKurse();studiumBuilt=true;}
-    else renderKurse();
-  });
-  registerPageInit('math',      function(){initMath();});
-
-  // Render on load
-  initSort();
-  renderBuecher();
+document.addEventListener('DOMContentLoaded', function() {
+  // These register callbacks; nav.js calls them on every showPage()
+  registerPageInit('favphil',    function() { renderFavPhil(); });
+  registerPageInit('zitate',     function() { renderZitate(); });
+  registerPageInit('tshirts',    function() { renderTshirts(); });
+  registerPageInit('philosophy', function() { buildPhil(); });
+  registerPageInit('buecher',    function() { renderBuecher(); });
+  registerPageInit('nature',     function() { renderNature(); });
+  registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
+  registerPageInit('math',       function() { initMath(); });
+  // podcasts and gaming are self-contained in their own page HTML
 });
-
 </script>
 
 </body>
