@@ -1,19 +1,95 @@
 <div class="zitat-hero">
-    <div class="zitat-hero-glow"></div>
-    <p class="hero-tag">Gedanken, die bleiben</p>
-    <h1 style="font-family:var(--fh);font-size:3rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Zitate<span style="color:var(--accent2)">.</span></h1>
-    <p style="color:var(--text2);max-width:520px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
-      S&auml;tze, die sich festgesetzt haben. Aus B&uuml;chern, Vorlesungen, eigenen Notizen &mdash; philosophische, pers&ouml;nliche und analytische Gedanken.</p>
-  </div>
+  <div class="zitat-hero-glow"></div>
+  <p class="hero-tag">Gedanken, die bleiben</p>
+  <h1 style="font-family:var(--fh);font-size:3rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Zitate<span style="color:var(--accent2)">.</span></h1>
+  <p style="color:var(--text2);max-width:520px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
+    S&auml;tze, die sich festgesetzt haben. Aus B&uuml;chern, Vorlesungen, eigenen Notizen &mdash; philosophische, pers&ouml;nliche und analytische Gedanken.</p>
+</div>
 
-  <!-- Motto-Zitat prominent -->
-  <div class="zitat-motto">
-    <div class="zitat-motto-text">
-      &bdquo;Wenn aber Immanuel Kant, dieser gro&szlig;e Zerst&ouml;rer im Reiche der Gedanken, an Terrorismus den Maximilian Robespierre weit &uuml;bertraf, so hat er doch mit diesem manche &Auml;hnlichkeiten, die zu einer Vergleichung beider M&auml;nner auffordern. Zun&auml;chst finden wir in beiden dieselbe unerbittliche, schneidende, poesielose, n&uuml;chterne Ehrlichkeit. Dann finden wir in beiden dasselbe Talent des Mi&szlig;trauens, nur da&szlig; es der eine gegen Gedanken aus&uuml;bt und Kritik nennt, w&auml;hrend der andere es gegen Menschen anwendet und republikanische Tugend betitelt. Im h&ouml;chsten Grade jedoch zeigt sich in beiden der Typus des Spie&szlig;b&uuml;rgertums &mdash; die Natur hatte sie bestimmt, Kaffee und Zucker zu wiegen, aber das Schicksal wollte, da&szlig; sie andere Dinge abw&ouml;gen, und legte dem einen einen K&ouml;nig und dem anderen einen Gott auf die Waagschale &hellip; Und sie gaben das richtige Gewicht!&ldquo;
-    </div>
-    <div class="zitat-motto-source">Heinrich Heine &mdash; Zur Geschichte der Religion und Philosophie in Deutschland (1834)</div>
-    <div class="zitat-motto-context">Das Motto meiner Dissertation &mdash; Schellings Zeittheorie zwischen Kant und dem Absoluten.</div>
+<!-- Heine-Motto prominent -->
+<div class="zitat-motto">
+  <div class="zitat-motto-text">
+    &bdquo;Wenn aber Immanuel Kant, dieser gro&szlig;e Zerst&ouml;rer im Reiche der Gedanken, an Terrorismus den Maximilian Robespierre weit &uuml;bertraf, so hat er doch mit diesem manche &Auml;hnlichkeiten, die zu einer Vergleichung beider M&auml;nner auffordern. Zun&auml;chst finden wir in beiden dieselbe unerbittliche, schneidende, poesielose, n&uuml;chterne Ehrlichkeit. Dann finden wir in beiden dasselbe Talent des Mi&szlig;trauens, nur da&szlig; es der eine gegen Gedanken aus&uuml;bt und Kritik nennt, w&auml;hrend der andere es gegen Menschen anwendet und republikanische Tugend betitelt. Im h&ouml;chsten Grade jedoch zeigt sich in beiden der Typus des Spie&szlig;b&uuml;rgertums &mdash; die Natur hatte sie bestimmt, Kaffee und Zucker zu wiegen, aber das Schicksal wollte, da&szlig; sie andere Dinge abw&ouml;gen, und legte dem einen einen K&ouml;nig und dem anderen einen Gott auf die Waagschale &hellip; Und sie gaben das richtige Gewicht!&ldquo;
   </div>
+  <div class="zitat-motto-source">Heinrich Heine &mdash; Zur Geschichte der Religion und Philosophie in Deutschland (1834)</div>
+  <div class="zitat-motto-context">Das Motto meiner Dissertation &mdash; Schellings Zeittheorie zwischen Kant und dem Absoluten.</div>
+</div>
 
-  <div class="zitat-filter" id="zitat-filter"></div>
-  <div class="zitat-masonry" id="zitat-grid"></div>
+<div class="zitat-filter" id="zitat-filter"></div>
+<div class="zitat-masonry" id="zitat-grid"></div>
+
+<script>
+(function(){
+'use strict';
+const ZITATE = [
+  // From Zitate.json
+  {text:'Alles Seiende ist durch das Eine.',author:'Plotin',source:'Enneaden VI,9 — Über das Gute oder das Eine',kat:'Metaphysik'},
+  {text:'Die Idee des Guten steht jenseits des Seins an Würde und Macht.',author:'Platon',source:'Politeia (Der Staat), Buch VI',kat:'Antike'},
+  {text:'Das wahrhaft Gute ist das, was um seiner selbst willen erstrebt wird.',author:'Aristoteles',source:'Nikomachische Ethik',kat:'Antike'},
+  {text:'Der Mensch soll so frei werden von sich selbst, dass Gott in ihm wirken kann.',author:'Meister Eckhart',source:'Predigten und Traktate',kat:'Mystik'},
+  {text:'Der Mensch ist nur ein Schilfrohr, das schwächste in der Natur; aber er ist ein denkendes Schilfrohr.',author:'Blaise Pascal',source:'Pensées',kat:'Rationalismus'},
+  {text:'Der Mensch ist in der Mitte zwischen dem Nichts und dem Unendlichen.',author:'Blaise Pascal',source:'Pensées',kat:'Rationalismus'},
+  {text:'Zwei Dinge erfüllen das Gemüt mit immer neuer Bewunderung und Ehrfurcht: der bestirnte Himmel über mir und das moralische Gesetz in mir.',author:'Immanuel Kant',source:'Kritik der praktischen Vernunft',kat:'Kant'},
+  {text:'Was kann ich wissen? Was soll ich tun? Was darf ich hoffen? Was ist der Mensch?',author:'Immanuel Kant',source:'Logik (nach Jäsche)',kat:'Kant'},
+  {text:'Der Begriff der Freiheit ist der eigentliche Mittelpunkt der Philosophie.',author:'F. W. J. Schelling',source:'Philosophische Untersuchungen über das Wesen der menschlichen Freiheit (1809)',kat:'Schelling'},
+  {text:'Wer nicht versucht hat, die Freiheit über das ganze Universum auszudehnen, hat sie nicht verstanden.',author:'F. W. J. Schelling',source:'Freiheitsschrift',kat:'Schelling'},
+  {text:'Der Mensch kommt am Ausgangspunkt von Zeitlichkeit und Endlichkeit nicht vorbei; sie sind allen Versuchen, über das Endliche hinaus zum Unendlichen zu gelangen, immer schon eingeschrieben und gehen ihnen voraus.',author:'Friedrich Heinrich Jacobi (interpretiert von Birgit Sandkaulen)',source:'Grund und Ursache. Die Vernunftkritik Jacobis',kat:'Endlichkeit'},
+  {text:'Die philosophische Perspektive sub specie aeternitatis verkennt, dass jede Idee des Unendlichen bereits aus der Erfahrung endlicher Existenz hervorgeht.',author:'Birgit Sandkaulen',source:'Grund und Ursache. Die Vernunftkritik Jacobis',kat:'Endlichkeit'},
+  // Additional
+  {text:'Das Antlitz öffnet die ursprünglichste Sprache. Das Antlitz ist Bedeutung für sich allein.',author:'Emmanuel Levinas',source:'Totalität und Unendlichkeit',kat:'Phänomenologie'},
+  {text:'Seid still und erkennet, daß ich Gott bin.',author:'Meister Eckhart',source:'Predigt über Ps. 46,11',kat:'Mystik'},
+  {text:'Die Zeit ist kein äußerer Rahmen, in dem Dinge geschehen, sondern die innere Möglichkeit des Geschehens selbst.',author:'Alexander Schmidt',source:'Schellings Zeittheorie, 2024',kat:'Eigenes'},
+  {text:'Die Natur soll der sichtbare Geist, der Geist die unsichtbare Natur sein.',author:'F. W. J. Schelling',source:'Ideen zu einer Philosophie der Natur',kat:'Schelling'},
+  {text:'Das Dasein ist ein Seiendes, dem es in seinem Sein um dieses Sein selbst geht.',author:'Martin Heidegger',source:'Sein und Zeit, §4',kat:'Phänomenologie'},
+  {text:'Endlichkeit ist nicht das Gegenteil von Unendlichkeit, sondern ihre innere Bedingung.',author:'Alexander Schmidt',source:'Philosophie der radikalen Endlichkeit',kat:'Eigenes'},
+  {text:'Alles fließt — panta rhei. Man kann nicht zweimal in denselben Fluss steigen.',author:'Heraklit',source:'Fragment (bei Platon)',kat:'Antike'},
+  {text:'Die untersuchte Leben ist nicht wert, gelebt zu werden.',author:'Sokrates',source:'Platons Apologie',kat:'Antike'},
+  {text:'Gott ist tot. Gott bleibt tot. Und wir haben ihn getötet.',author:'Friedrich Nietzsche',source:'Die fröhliche Wissenschaft, §125',kat:'Nietzsche'},
+  {text:'Man muss sich Sisyphus als glücklich vorstellen.',author:'Albert Camus',source:'Der Mythos des Sisyphus',kat:'Existenz'},
+  {text:'Worüber man nicht sprechen kann, darüber muss man schweigen.',author:'Ludwig Wittgenstein',source:'Tractatus Logico-Philosophicus, 7',kat:'Analytisch'},
+  {text:'Es gibt kein richtiges Leben im falschen.',author:'Theodor W. Adorno',source:'Minima Moralia',kat:'Kritische Theorie'},
+  {text:'Daten sind endlich: Sie sind Schnitte durch eine Wirklichkeit, die sie nie vollständig erfassen können.',author:'Alexander Schmidt',source:'Persönliche Notiz',kat:'Eigenes'},
+  {text:'Das Schweigen ist nichts anderes als die Abwesenheit aller Bilder.',author:'Meister Eckhart',source:'Deutsche Predigten',kat:'Mystik'},
+];
+
+let activeKat = 'Alle';
+
+function buildFilter() {
+  const div = document.getElementById('zitat-filter');
+  if (!div) return;
+  const kats = ['Alle', ...new Set(ZITATE.map(z => z.kat))];
+  kats.forEach(k => {
+    const b = document.createElement('button');
+    b.className = 'zf-btn' + (k === 'Alle' ? ' active' : '');
+    b.textContent = k;
+    b.onclick = () => {
+      activeKat = k;
+      document.querySelectorAll('.zf-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      renderGrid();
+    };
+    div.appendChild(b);
+  });
+}
+
+function renderGrid() {
+  const grid = document.getElementById('zitat-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const filtered = activeKat === 'Alle' ? ZITATE : ZITATE.filter(z => z.kat === activeKat);
+  filtered.forEach(z => {
+    const card = document.createElement('div');
+    card.className = 'zitat-card';
+    card.innerHTML =
+      '<div class="zitat-text' + (z.text.length > 200 ? ' large' : '') + '">' + z.text + '</div>' +
+      '<div class="zitat-author">' + z.author + '</div>' +
+      (z.source ? '<div class="zitat-source">' + z.source + '</div>' : '') +
+      '<span class="zitat-kat">' + z.kat + '</span>';
+    grid.appendChild(card);
+  });
+}
+
+buildFilter();
+renderGrid();
+})();
+</script>

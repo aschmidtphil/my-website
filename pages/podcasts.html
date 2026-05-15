@@ -1,7 +1,204 @@
+<style>
+.pod-section-hdr{font-family:var(--fh);font-size:1.3rem;font-weight:700;color:var(--text);margin:2.5rem 0 1.25rem;display:flex;align-items:center;gap:.75rem;}
+.pod-section-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
+.pod-cat-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem;}
+.pod-cat-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.3rem .8rem;border-radius:20px;cursor:pointer;font-size:.76rem;font-family:var(--fm);transition:all .15s;}
+.pod-cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.pod-grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.pod-card2{padding:1.25rem;display:flex;gap:.85rem;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);transition:all .25s;}
+.pod-card2:hover{transform:translateY(-2px);border-color:var(--border2);}
+.pod-icon2{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
+.pod-name2{font-family:var(--fh);font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.15rem;}
+.pod-badge{display:inline-block;background:var(--surface);color:var(--text3);padding:.1rem .45rem;border-radius:4px;font-family:var(--fm);font-size:.63rem;margin-bottom:.35rem;}
+.pod-desc2{color:var(--text2);font-size:.78rem;line-height:1.6;}
+.hb-controls{display:flex;gap:.55rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center;}
+.hb-table-wrap{overflow-x:auto;}
+.hb-table{width:100%;border-collapse:collapse;font-size:.81rem;}
+.hb-table th{background:var(--bg3);color:var(--text3);font-family:var(--fm);font-size:.66rem;letter-spacing:.08em;padding:.5rem .9rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;}
+.hb-table th:hover{color:var(--accent);}
+.hb-table td{padding:.55rem .9rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.5;}
+.hb-table tr:hover td{background:var(--bg2);}
+.hb-title-cell{font-weight:600;color:var(--text);font-family:var(--fh);font-size:.83rem;}
+.hb-badge{display:inline-block;padding:.1rem .42rem;border-radius:3px;font-size:.63rem;font-family:var(--fm);white-space:nowrap;}
+.hb-philo{background:#ede9fe;color:#4c1d95}[data-theme="dark"] .hb-philo{background:#2d1f5e;color:#c4b5fd}
+.hb-psych{background:#fce7f3;color:#831843}[data-theme="dark"] .hb-psych{background:#3b0a26;color:#f9a8d4}
+.hb-gaming{background:#dcfce7;color:#14532d}[data-theme="dark"] .hb-gaming{background:#0a2e18;color:#86efac}
+.hb-lit{background:#e0f2fe;color:#075985}[data-theme="dark"] .hb-lit{background:#0c2a42;color:#7dd3fc}
+.hb-selbst{background:#fff7ed;color:#7c2d12}[data-theme="dark"] .hb-selbst{background:#2c1106;color:#fdba74}
+.hb-gesch{background:#f0fdf4;color:#14532d}[data-theme="dark"] .hb-gesch{background:#052212;color:#86efac}
+.hb-wiss{background:#fffbeb;color:#78350f}[data-theme="dark"] .hb-wiss{background:#2c1a00;color:#fcd34d}
+.hb-musik{background:#fdf4ff;color:#7e22ce}[data-theme="dark"] .hb-musik{background:#2e1040;color:#d8b4fe}
+</style>
+
 <div class="page-hero">
-    <div class="page-hero-glow"></div>
-    <p class="hero-tag">Aktives Zuh&ouml;ren</p>
-    <h1 class="page-title">Podcasts<span>.</span></h1>
-    <p class="page-desc">Formate, die ich regelm&auml;&szlig;ig h&ouml;re &mdash; von KI-Forschung und Neurowissenschaften bis zur analytischen Philosophie.</p>
+  <div class="page-hero-glow"></div>
+  <p class="hero-tag">Aktives Zuh&ouml;ren</p>
+  <h1 class="page-title">Podcasts &amp; H&ouml;rb&uuml;cher<span>.</span></h1>
+  <p class="page-desc">Was ich h&ouml;re &mdash; von Gaming und Philosophie bis Psychologie, Geschichte und Literatur.</p>
+  <div class="page-stats" id="pod-stats"></div>
+</div>
+
+<div class="sec">
+  <div class="pod-section-hdr">Podcasts</div>
+  <div class="pod-cat-nav" id="pod-cat-nav"></div>
+  <div class="pod-grid2" id="pod-grid2"></div>
+  <div class="pod-section-hdr">H&ouml;rb&uuml;cher <span style="font-family:var(--fm);font-size:.72rem;color:var(--text3);font-weight:400;margin-left:.5rem">// Audible-Bibliothek · 45 Titel</span></div>
+  <div class="hb-controls">
+    <input class="ctrl-input" type="text" id="hb-search" placeholder="Titel oder Autor&hellip;" oninput="filterHB()" style="width:220px">
+    <select class="ctrl-select" id="hb-cat" onchange="filterHB()">
+      <option value="">Alle Kategorien</option>
+      <option>Philosophie</option><option>Psychologie</option><option>Gaming</option>
+      <option>Literatur</option><option>Selbstentwicklung</option><option>Geschichte</option>
+      <option>Wissenschaft</option><option>Musik / Biografie</option>
+    </select>
+    <span style="font-family:var(--fm);font-size:.72rem;color:var(--text3)" id="hb-count"></span>
   </div>
-  <div class="sec"><div class="pod-grid" id="pod-grid"></div></div>
+  <div class="hb-table-wrap">
+    <table class="hb-table">
+      <thead><tr>
+        <th onclick="sortHB('title')">Titel</th>
+        <th onclick="sortHB('author')">Autor</th>
+        <th>Kategorie</th>
+        <th>L&auml;nge</th>
+      </tr></thead>
+      <tbody id="hb-tbody"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+(function(){
+const PODS=[
+  {name:'Auf ein Bier',cat:'Gaming',icon:'🎮',bg:'#1a2e1a',desc:'Einer der bekanntesten deutschen Gaming-Podcasts — lange, analytische Gespräche über Spiele, Branche und Design.'},
+  {name:'Stay Forever',cat:'Retrogaming',icon:'🕹️',bg:'#1a1a2e',desc:'Tiefgehende historische Analysen klassischer Videospiele und ihrer kulturellen Bedeutung.'},
+  {name:'Insert Moin',cat:'Gaming',icon:'☀️',bg:'#2e2a1a',desc:'Tägliche Episoden zu aktuellen Spielen, Rezensionen und Branchenthemen.'},
+  {name:'GameStar Podcast',cat:'Gaming',icon:'⭐',bg:'#1a1a1a',desc:'Aktuelle Diskussionen über PC-Gaming, Tests und Branchenentwicklungen.'},
+  {name:'OK Cool',cat:'Gaming',icon:'🎯',bg:'#1a2a2e',desc:'Gespräche über Spieleentwicklung, Branche und persönliche Gaming-Geschichten.'},
+  {name:'Easy Allies Podcast',cat:'Gaming',icon:'🤝',bg:'#2e1a1a',desc:'Wöchentliche Diskussionen über aktuelle Spiele, Releases und Branchenentwicklungen.'},
+  {name:'Giant Bombcast',cat:'Gaming',icon:'💣',bg:'#1a1a1a',desc:'Legendärer US-Gaming-Podcast mit News, Diskussionen und Insiderhumor.'},
+  {name:'Post Games',cat:'Gaming Analyse',icon:'🔍',bg:'#1a2e2a',desc:'Reflektierende Diskussionen über Spielekultur und die Bedeutung von Games.'},
+  {name:'Player One Podcast',cat:'Gaming',icon:'🕹️',bg:'#2a1a2e',desc:'Langjähriger Gaming-Podcast mit Fokus auf Konsolen und Branchenanalyse.'},
+  {name:'Spieleveteranen',cat:'Retrogaming',icon:'🏛️',bg:'#2e2a1a',desc:'Veteranen der deutschen Spielebranche über Klassiker und Industriegeschichte.'},
+  {name:'Plauschangriff',cat:'Gaming / Kultur',icon:'🎲',bg:'#1a1a2e',desc:'Rocket Beans Format mit ausführlichen Gesprächen über Spielehistorie und Popkultur.'},
+  {name:'Philosophize This!',cat:'Philosophie',icon:'🏛️',bg:'#1e1a2e',desc:'Beliebter englischer Philosophiepodcast — Denker chronologisch erklärt.'},
+  {name:'History of Philosophy Without Any Gaps',cat:'Philosophie',icon:'📜',bg:'#2e1a2a',desc:'Akademisch fundierte Gesamtdarstellung der Philosophiegeschichte ohne Auslassungen.'},
+  {name:'Radiowissen (BR2)',cat:'Wissen / Bildung',icon:'📡',bg:'#1a2a1a',desc:'Hochwertige Wissensbeiträge zu Geschichte, Philosophie und Naturwissenschaft.'},
+  {name:'Das Wissen (SWR)',cat:'Wissenschaft',icon:'🔬',bg:'#1a2e2e',desc:'Gut recherchierte Features zu wissenschaftlichen und gesellschaftlichen Themen.'},
+  {name:'Alles Geschichte',cat:'Geschichte',icon:'📖',bg:'#2a2e1a',desc:'Historische Ereignisse und Persönlichkeiten verständlich erzählt.'},
+  {name:'Wie wir ticken',cat:'Psychologie',icon:'🧠',bg:'#2e1a1a',desc:'Psychologische Erklärungen zu Verhalten, Emotionen und menschlichen Denkweisen.'},
+  {name:'Danke, gut.',cat:'Mental Health',icon:'💚',bg:'#1a2e1a',desc:'Podcast über Psyche, Alltag und persönliche Entwicklung — offen und ehrlich.'},
+  {name:'Stahl aber herzlich',cat:'Psychologie',icon:'💪',bg:'#2e2e1a',desc:'Gespräche über Beziehungen, Selbstwert und persönliche Entwicklung.'},
+  {name:'Wie wir werden, die wir sind',cat:'Psychologie',icon:'🌱',bg:'#1a2e1a',desc:'Über Trauma, Bindung und persönliche Lebensentwicklung.'},
+  {name:'Psychologie to go!',cat:'Psychologie',icon:'🎒',bg:'#2e1a2e',desc:'Alltagsnahe psychologische Erklärungen zu Beziehungen, Verhalten und Emotionen.'},
+  {name:'eat.READ.sleep (NDR)',cat:'Literatur',icon:'📚',bg:'#2e1a1a',desc:'Literaturpodcast mit Buchbesprechungen, Lesetipps und Autorengesprächen.'},
+  {name:'Kapitel Eins',cat:'Literatur',icon:'📖',bg:'#1a1a2e',desc:'Podcast über Bücher, Lesen und literarische Themen.'},
+  {name:'Plusminus',cat:'Wirtschaft',icon:'📊',bg:'#1a2a2e',desc:'ARD-Wirtschaftspodcast über Finanzen, Verbraucherfragen und Wirtschaftspolitik.'},
+  {name:'Die Schule brennt',cat:'Bildung',icon:'🔥',bg:'#2e1a1a',desc:'Über Bildungssystem, Schule und gesellschaftliche Herausforderungen.'},
+];
+const HOERB=[
+  {title:'Sprache ohne Worte',author:'Peter A. Levine',cat:'Psychologie',dauer:'10 Std. 26 Min.'},
+  {title:'The Polyvagal Theory',author:'Stephen W. Porges',cat:'Wissenschaft',dauer:'5 Std. 4 Min.'},
+  {title:'Das Kind in dir muss Heimat finden',author:'Stefanie Stahl',cat:'Psychologie',dauer:'6 Std. 49 Min.'},
+  {title:'People Pleasing – Raus aus der Harmoniefalle',author:'Ulrike Bossmann',cat:'Selbstentwicklung',dauer:'1 Std. 56 Min.'},
+  {title:'So stärken Sie Ihr Selbstwertgefühl',author:'Stefanie Stahl',cat:'Psychologie',dauer:''},
+  {title:'Die 6 Säulen des Selbstwertgefühls',author:'Nathaniel Branden',cat:'Psychologie',dauer:'13 Std. 30 Min.'},
+  {title:'Tim (offizielle Avicii-Biografie)',author:'Måns Mosesson',cat:'Musik / Biografie',dauer:''},
+  {title:'Blood, Sweat, and Pixels',author:'Jason Schreier',cat:'Gaming',dauer:''},
+  {title:'Die Antwort lautet NEIN',author:'Fredrik Backman',cat:'Literatur',dauer:''},
+  {title:'Den Netten beißen die Hunde',author:'Martin Wehrle',cat:'Selbstentwicklung',dauer:'6 Std. 50 Min.'},
+  {title:'Die schönsten Märchen – Die größte Box',author:'Grimm, Andersen, Hauff u.a.',cat:'Literatur',dauer:'30 Std. 3 Min.'},
+  {title:'Play Nice (Blizzard-Biografie)',author:'Jason Schreier',cat:'Gaming',dauer:''},
+  {title:'Wie man Mensch wird (Montaigne-Biografie)',author:'Sarah Bakewell',cat:'Philosophie',dauer:'17 Std. 3 Min.'},
+  {title:'Die beste aller möglichen Welten (Leibniz)',author:'Michael Kempe',cat:'Philosophie',dauer:'8 Std. 30 Min.'},
+  {title:'Klassiker des philosophischen Denkens',author:'Platon, Aristoteles, Nietzsche u.a.',cat:'Philosophie',dauer:'49 Std. 5 Min.'},
+  {title:'Der tägliche Stoiker',author:'Ryan Holiday',cat:'Philosophie',dauer:'11 Std. 37 Min.'},
+  {title:'Die nackte Wahrheit',author:'Hans Blumenberg',cat:'Philosophie',dauer:'7 Std. 42 Min.'},
+  {title:'Wie soll ich leben? (Montaigne)',author:'Sarah Bakewell',cat:'Philosophie',dauer:'4 Std. 39 Min.'},
+  {title:'Phaidon',author:'Platon',cat:'Philosophie',dauer:'3 Std. 35 Min.'},
+  {title:'Essais',author:'Michel de Montaigne',cat:'Philosophie',dauer:'7 Std. 5 Min.'},
+  {title:'Feuer der Freiheit',author:'Wolfram Eilenberger',cat:'Philosophie',dauer:'12 Std. 39 Min.'},
+  {title:'Alte Meister',author:'Thomas Bernhard',cat:'Literatur',dauer:'7 Std. 7 Min.'},
+  {title:'Hölderlin',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'11 Std. 31 Min.'},
+  {title:'Wo selbst die Wege nachdenklich werden',author:'Andreas Hüser',cat:'Philosophie',dauer:'7 Std. 30 Min.'},
+  {title:'Du musst nicht von allen gemocht werden',author:'Ichiro Kishimi',cat:'Selbstentwicklung',dauer:'6 Std. 5 Min.'},
+  {title:'A Secular Age',author:'Charles Taylor',cat:'Philosophie',dauer:'30 Std. 19 Min.'},
+  {title:'Gedanken (Pensées)',author:'Blaise Pascal',cat:'Philosophie',dauer:'5 Std. 7 Min.'},
+  {title:'Zur Geschichte der Religion und Philosophie in Deutschland',author:'Heinrich Heine',cat:'Philosophie',dauer:'6 Std. 16 Min.'},
+  {title:'Unpopuläre Betrachtungen',author:'Bertrand Russell',cat:'Philosophie',dauer:'8 Std.'},
+  {title:'Sorge dich nicht – lebe!',author:'Dale Carnegie',cat:'Selbstentwicklung',dauer:'8 Std. 45 Min.'},
+  {title:'Kulturgeschichte der Neuzeit',author:'Egon Friedell',cat:'Geschichte',dauer:'9 Std. 17 Min.'},
+  {title:'Wie man Freunde gewinnt',author:'Dale Carnegie',cat:'Selbstentwicklung',dauer:'7 Std. 29 Min.'},
+  {title:'Goethe',author:'Rüdiger Safranski',cat:'Geschichte',dauer:'28 Std. 16 Min.'},
+  {title:'Warum es die Welt nicht gibt',author:'Markus Gabriel',cat:'Philosophie',dauer:'7 Std. 14 Min.'},
+  {title:'Zeit',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'6 Std. 49 Min.'},
+  {title:'Romantik',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'5 Std. 17 Min.'},
+  {title:'Der Gotteswahn',author:'Richard Dawkins',cat:'Wissenschaft',dauer:'5 Std. 16 Min.'},
+  {title:'Momo',author:'Michael Ende',cat:'Literatur',dauer:''},
+  {title:'Zeit der Zauberer',author:'Wolfram Eilenberger',cat:'Philosophie',dauer:'13 Std. 58 Min.'},
+  {title:'Das Philosophen-Portal',author:'Robert Zimmer',cat:'Philosophie',dauer:'5 Std. 53 Min.'},
+  {title:'Das Café der Existenzialisten',author:'Sarah Bakewell',cat:'Philosophie',dauer:'15 Std. 32 Min.'},
+  {title:'Große Denker: Nietzsche, Freud, Einstein, Sartre',author:'div.',cat:'Philosophie',dauer:'1 Std. 7 Min.'},
+  {title:'Große Denker: Kant, Hegel, Darwin, Marx',author:'div.',cat:'Philosophie',dauer:'1 Std. 11 Min.'},
+  {title:'40 bedeutende Personen der Weltgeschichte',author:'div.',cat:'Geschichte',dauer:'11 Std. 56 Min.'},
+  {title:'Don Quijote von der Mancha',author:'Miguel de Cervantes',cat:'Literatur',dauer:'48 Std. 25 Min.'},
+];
+const HBC={Philosophie:'hb-philo',Psychologie:'hb-psych',Gaming:'hb-gaming',Literatur:'hb-lit',
+  Selbstentwicklung:'hb-selbst',Geschichte:'hb-gesch',Wissenschaft:'hb-wiss','Musik / Biografie':'hb-musik'};
+
+// Stats
+const st=document.getElementById('pod-stats');
+if(st) st.innerHTML=
+  '<div class="pstat"><span class="pstat-num">'+PODS.length+'</span><span class="pstat-lbl">PODCASTS</span></div>'+
+  '<div class="pstat"><span class="pstat-num">'+HOERB.length+'</span><span class="pstat-lbl">HÖRBÜCHER</span></div>'+
+  '<div class="pstat"><span class="pstat-num">'+PODS.filter(p=>p.cat.includes('Gaming')).length+'</span><span class="pstat-lbl">GAMING</span></div>'+
+  '<div class="pstat"><span class="pstat-num">'+HOERB.filter(h=>h.cat==='Philosophie').length+'</span><span class="pstat-lbl">PHILOSOPHIE</span></div>';
+
+// Podcast cat filter
+let activeCat='Alle';
+const cn=document.getElementById('pod-cat-nav');
+const cats=['Alle',...new Set(PODS.map(p=>p.cat))];
+cats.forEach(c=>{
+  const b=document.createElement('button');
+  b.className='pod-cat-btn'+(c==='Alle'?' active':'');
+  b.textContent=c;
+  b.onclick=()=>{activeCat=c;document.querySelectorAll('.pod-cat-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderPods();};
+  cn.appendChild(b);
+});
+function renderPods(){
+  const g=document.getElementById('pod-grid2');g.innerHTML='';
+  (activeCat==='Alle'?PODS:PODS.filter(p=>p.cat===activeCat)).forEach(p=>{
+    const d=document.createElement('div');d.className='pod-card2';
+    d.innerHTML='<div class="pod-icon2" style="background:'+p.bg+'">'+p.icon+'</div>'
+      +'<div><div class="pod-name2">'+p.name+'</div><span class="pod-badge">'+p.cat+'</span><div class="pod-desc2">'+p.desc+'</div></div>';
+    g.appendChild(d);
+  });
+}
+renderPods();
+
+// Hörbücher
+let hbS='title',hbD=1;
+window.sortHB=function(c){if(hbS===c)hbD*=-1;else{hbS=c;hbD=1;}filterHB();};
+window.filterHB=function(){
+  const q=(document.getElementById('hb-search')||{value:''}).value.toLowerCase();
+  const cat=(document.getElementById('hb-cat')||{value:''}).value;
+  let d=HOERB.filter(h=>{
+    if(cat&&h.cat!==cat)return false;
+    if(q&&!h.title.toLowerCase().includes(q)&&!h.author.toLowerCase().includes(q))return false;
+    return true;
+  });
+  d.sort((a,b)=>((a[hbS]||'').localeCompare(b[hbS]||'','de'))*hbD);
+  const tb=document.getElementById('hb-tbody');tb.innerHTML='';
+  d.forEach(h=>{
+    const cls=HBC[h.cat]||'hb-wiss';
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td><div class="hb-title-cell">'+h.title+'</div></td>'
+      +'<td style="color:var(--text3);font-size:.78rem">'+h.author+'</td>'
+      +'<td><span class="hb-badge '+cls+'">'+h.cat+'</span></td>'
+      +'<td style="font-family:var(--fm);font-size:.73rem;color:var(--text3);white-space:nowrap">'+h.dauer+'</td>';
+    tb.appendChild(tr);
+  });
+  const cnt=document.getElementById('hb-count');
+  if(cnt)cnt.textContent=d.length+' von '+HOERB.length+' Titeln';
+};
+filterHB();
+})();
+</script>

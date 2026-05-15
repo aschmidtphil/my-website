@@ -1,6 +1,7 @@
 /**
  * nav.js — Router, Theme, Language, Nav builder
- * Loads page HTML from pages/ folder into #page-root
+ * Works with file:// (no server needed) via embedded <template> tags
+ * AND with http:// server via fetch() for the multi-file structure
  */
 
 'use strict';
@@ -21,7 +22,7 @@ function applyTheme(t) {
 function toggleTheme() {
   applyTheme(_theme === 'light' ? 'dark' : 'light');
   if (typeof drawMB === 'function' && _mathInited) {
-    drawMB(); if (sortArr?.length) drawSort(sortArr); drawFourier();
+    drawMB(); if (typeof sortArr !== 'undefined' && sortArr.length) drawSort(sortArr); drawFourier();
   }
 }
 
@@ -106,31 +107,42 @@ function buildNav() {
       b.onclick = () => showPage(item.id);
       if (item.id === 'home') b.classList.add('active');
       li.appendChild(b);
-
     } else {
       li.className = 'nav-group';
       const btn = document.createElement('button');
       btn.className = 'nav-group-btn';
       btn.id = 'navgrp-' + item.label;
       btn.innerHTML = item.label + ' <span class="arr">▾</span>';
+      // Click toggles open class (for mobile / when hover not reliable)
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = li.classList.toggle('open');
+        // Close other groups
+        document.querySelectorAll('.nav-group').forEach(g => { if (g !== li) g.classList.remove('open'); });
+      });
 
       const dd = document.createElement('div');
       dd.className = 'nav-dropdown';
-
       item.items.forEach(it => {
         if (it.divider) {
-          const d = document.createElement('div');
-          d.className = 'nav-dropdown-divider';
-          dd.appendChild(d);
+          dd.appendChild(Object.assign(document.createElement('div'), { className: 'nav-dropdown-divider' }));
           return;
         }
         const di = document.createElement('div');
         di.className = 'nav-dropdown-item';
         di.innerHTML = `<span class="icon">${it.icon}</span>${it.label}`;
-        di.onclick = () => showPage(it.id);
+        di.onclick = () => {
+          li.classList.remove('open');
+          // Hey Listen! when navigating to podcasts
+          if (it.id === 'podcasts') {
+            setTimeout(() => {
+              try { const a = new Audio('assets/audio/hey_listen.mp3'); a.volume = 0.7; a.play().catch(()=>{}); } catch(e) {}
+            }, 350);
+          }
+          showPage(it.id);
+        };
         dd.appendChild(di);
       });
-
       li.appendChild(btn);
       li.appendChild(dd);
     }
@@ -144,7 +156,6 @@ function updateNavActive(pageId) {
   });
   const direct = document.getElementById('navbtn-' + pageId);
   if (direct) { direct.classList.add('active'); return; }
-  // Find group
   NAV_STRUCTURE.forEach(g => {
     if (g.type !== 'group') return;
     if (g.items.some(it => it.id === pageId)) {
@@ -155,15 +166,30 @@ function updateNavActive(pageId) {
 }
 
 // ═══════════════════════════════════════════════
-// PAGE ROUTER — loads HTML from pages/ folder
+// PAGE ROUTER
+// Supports two modes:
+//   1. file:// — reads from embedded <template id="page-xxx"> tags
+//   2. http:// — fetches from pages/xxx.html (server required)
 // ═══════════════════════════════════════════════
 let _currentPage = null;
-const _pageCache  = {};        // cache loaded page HTML
-const _pageInits  = {};        // one-time init functions per page
-let _pageInitDone = {};        // track which inits have run
+const _pageCache  = {};
+const _pageInits  = {};
+const _pageInitDone = {};
 
 function registerPageInit(pageId, fn) {
   _pageInits[pageId] = fn;
+}
+
+function getPageFromTemplate(id) {
+  const tmpl = document.getElementById('page-' + id);
+  if (tmpl && tmpl.content) {
+    // <template> element
+    const div = document.createElement('div');
+    div.appendChild(tmpl.content.cloneNode(true));
+    return div.innerHTML;
+  }
+  if (tmpl) return tmpl.innerHTML;
+  return null;
 }
 
 async function showPage(id) {
@@ -173,38 +199,50 @@ async function showPage(id) {
   const root = document.getElementById('page-root');
   if (!root) return;
 
-  // Show loading state
   root.style.opacity = '0';
 
-  // Load HTML (from cache or fetch)
+  // Try cache first
   if (!_pageCache[id]) {
-    try {
-      const resp = await fetch(`pages/${id}.html`);
-      if (!resp.ok) throw new Error(`pages/${id}.html not found`);
-      _pageCache[id] = await resp.text();
-    } catch (e) {
-      root.innerHTML = `<div style="padding:4rem 3rem;color:var(--text3);font-family:var(--fm)">
-        Seite <strong>${id}</strong> nicht gefunden.</div>`;
-      root.style.opacity = '1';
-      return;
+    // Try embedded template (works with file://)
+    const tplContent = getPageFromTemplate(id);
+    if (tplContent !== null) {
+      _pageCache[id] = tplContent;
+    } else {
+      // Try fetch (works with http://)
+      try {
+        const resp = await fetch('pages/' + id + '.html');
+        if (resp.ok) {
+          _pageCache[id] = await resp.text();
+        } else {
+          throw new Error('Not found');
+        }
+      } catch(e) {
+        root.innerHTML = '<div style="padding:4rem 3rem;color:var(--text2);font-family:var(--fm)">'
+          + '<h2 style="font-family:var(--fh);color:var(--text);margin-bottom:1rem">Seite nicht gefunden</h2>'
+          + '<p style="margin-bottom:1rem">Die Seite <code style="background:var(--surface);padding:.2rem .4rem;border-radius:4px">' + id + '</code> konnte nicht geladen werden.</p>'
+          + '<p style="color:var(--text3);font-size:.85rem">Wenn du die Datei direkt im Browser öffnest (file://), '
+          + 'starte stattdessen einen lokalen Server:<br><br>'
+          + '<code style="background:var(--surface);padding:.5rem 1rem;border-radius:6px;display:inline-block;margin-top:.5rem">'
+          + 'python3 -m http.server 8080</code><br><br>'
+          + 'und öffne dann <a href="http://localhost:8080" style="color:var(--accent)">http://localhost:8080</a></p>'
+          + '</div>';
+        root.style.opacity = '1';
+        updateNavActive(id);
+        return;
+      }
     }
   }
 
   root.innerHTML = _pageCache[id];
-
-  // Fade in
-  root.style.transition = 'opacity .25s';
-  setTimeout(() => { root.style.opacity = '1'; }, 20);
+  root.style.transition = 'opacity .22s';
+  setTimeout(() => { root.style.opacity = '1'; }, 15);
 
   updateNavActive(id);
   window.scrollTo(0, 0);
 
-  // Run page init (once per session)
   if (_pageInits[id] && !_pageInitDone[id]) {
     _pageInitDone[id] = true;
     _pageInits[id]();
-  } else if (_pageInits[id + '_always']) {
-    _pageInits[id + '_always']();
   }
 }
 
@@ -215,18 +253,26 @@ document.addEventListener('DOMContentLoaded', () => {
   applyTheme(_theme);
   buildNav();
 
-  // Build footer
   const footer = document.getElementById('site-footer');
   if (footer) {
-    footer.innerHTML = `
-      <p class="footer-txt">&copy; 2025 Alexander Schmidt</p>
-      <div class="footer-links">
-        <a href="https://github.com/aschmidtphil" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com/in/alexander-schmidt" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:aschmidtphil@gmail.com">Email</a>
-      </div>`;
+    footer.innerHTML = '<p class="footer-txt">&copy; 2025 Alexander Schmidt</p>'
+      + '<div class="footer-links">'
+      + '<a href="https://github.com/aschmidtphil" target="_blank" rel="noopener">GitHub</a>'
+      + '<a href="https://linkedin.com/in/alexander-schmidt" target="_blank" rel="noopener">LinkedIn</a>'
+      + '<a href="mailto:aschmidtphil@gmail.com">Email</a>'
+      + '</div>';
   }
 
-  // Load home on start
   showPage('home');
+
+  // Close dropdowns when clicking outside nav
+  document.addEventListener('click', e => {
+    if (!e.target.closest('nav')) {
+      document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+    }
+  });
+  // Close dropdown after page loads on mobile
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+  });
 });

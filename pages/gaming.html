@@ -1,60 +1,231 @@
+<style>
+/* Audio toast notification */
+.audio-toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:.75rem 1.1rem;box-shadow:0 8px 32px rgba(0,0,0,.18);display:flex;align-items:center;gap:.6rem;font-family:var(--fm);font-size:.75rem;color:var(--text2);z-index:400;transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.audio-toast.show{transform:translateY(0);opacity:1;}
+.audio-toast-icon{font-size:1.1rem;}
+</style>
+
 <div class="gaming-hero-area">
-    <div class="gaming-hero-glow"></div>
-    <p class="hero-tag">Leidenschaft &amp; Reflexion</p>
-    <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Gaming<span style="color:var(--accent3)">.</span></h1>
-    <p style="color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
-      Videospiele als kulturelle und narrative Kunst &mdash; eine pers&ouml;nliche Auswahl der Spiele, die mich gepr&auml;gt oder philosophisch inspiriert haben.</p>
+  <div class="gaming-hero-glow"></div>
+  <p class="hero-tag">Leidenschaft &amp; Reflexion</p>
+  <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Gaming<span style="color:var(--accent3)">.</span></h1>
+  <p style="color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
+    Videospiele als kulturelle und narrative Kunst &mdash; eine pers&ouml;nliche Auswahl der Spiele, die mich gepr&auml;gt oder philosophisch inspiriert haben.</p>
+</div>
+<div style="height:.65rem"></div>
+<div class="g-tabs" id="g-tab-bar">
+  <button class="gtab active" onclick="showGTab('wc3',0)">Warcraft III</button>
+  <button class="gtab"        onclick="showGTab('sc',1)">StarCraft</button>
+  <button class="gtab"        onclick="showGTab('diablo',2)">Diablo</button>
+  <button class="gtab"        onclick="showGTab('sotc',3)">Shadow of the Colossus</button>
+  <button class="gtab"        onclick="showGTab('hk',4)">Hollow Knight</button>
+  <button class="gtab"        onclick="showGTab('ff',5)">Final Fantasy</button>
+  <button class="gtab"        onclick="showGTab('lufia',6)">Lufia 2</button>
+  <button class="gtab"        onclick="showGTab('kknd',7)">KKND 2</button>
+  <button class="gtab"        onclick="showGTab('fc',8)" id="gtab-fc">Future Cop</button>
+  <button class="gtab"        onclick="showGTab('sg',9)">Steins;Gate</button>
+  <button class="gtab"        onclick="showGTab('pw',10)">Phoenix Wright</button>
+  <button class="gtab"        onclick="showGTab('mmbn',11)">Mega Man BN</button>
+  <button class="gtab"        onclick="showGTab('pokemon',12)">Pok&eacute;mon</button>
+</div>
+<div class="g-section active" id="gs-wc3"><div class="game-grid" id="wc3-grid"></div></div>
+<div class="g-section" id="gs-sc"><div class="game-grid" id="sc-grid"></div></div>
+<div class="g-section" id="gs-diablo"><div class="game-grid" id="diablo-grid"></div></div>
+<div class="g-section" id="gs-sotc"><div class="game-grid" id="sotc-grid"></div></div>
+<div class="g-section" id="gs-hk"><div class="game-grid" id="hk-grid"></div></div>
+<div class="g-section" id="gs-ff"><div class="game-grid" id="ff-grid"></div></div>
+<div class="g-section" id="gs-lufia"><div class="game-grid" id="lufia-grid"></div></div>
+<div class="g-section" id="gs-kknd"><div class="game-grid" id="kknd-grid"></div></div>
+<div class="g-section" id="gs-fc"><div class="game-grid" id="fc-grid"></div></div>
+<div class="g-section" id="gs-sg"><div class="game-grid" id="sg-grid"></div></div>
+<div class="g-section" id="gs-pw"><div class="game-grid" id="pw-grid"></div></div>
+<div class="g-section" id="gs-mmbn"><div class="game-grid" id="mmbn-grid"></div></div>
+<div class="g-section" id="gs-pokemon">
+  <div class="poke-detail-area" id="poke-detail"></div>
+  <div class="poke-controls">
+    <input class="ctrl-input" type="text" id="poke-search" placeholder="Pok&eacute;mon suchen&hellip;" oninput="filterPoke()" style="width:195px">
+    <select class="ctrl-select" id="type-filter" onchange="filterPoke()">
+      <option value="">Alle Typen</option>
+      <option>fire</option><option>water</option><option>grass</option><option>electric</option>
+      <option>psychic</option><option>ice</option><option>dragon</option><option>dark</option>
+      <option>fairy</option><option>fighting</option><option>poison</option><option>ground</option>
+      <option>flying</option><option>bug</option><option>rock</option><option>ghost</option>
+      <option>steel</option><option>normal</option>
+    </select>
+    <select class="ctrl-select" id="gen-filter" onchange="filterPoke()">
+      <option value="">Alle Gen</option>
+      <option value="1">Gen I (1&ndash;151)</option>
+      <option value="2">Gen II (152&ndash;251)</option>
+      <option value="3">Gen III (252&ndash;386)</option>
+      <option value="4">Gen IV (387&ndash;493)</option>
+    </select>
   </div>
-  <div style="height:.65rem"></div>
-  <div class="g-tabs">
-    <button class="gtab active" onclick="showGTab('wc3',0)">Warcraft III</button>
-    <button class="gtab"        onclick="showGTab('sc',1)">StarCraft</button>
-    <button class="gtab"        onclick="showGTab('diablo',2)">Diablo</button>
-    <button class="gtab"        onclick="showGTab('sotc',3)">Shadow of the Colossus</button>
-    <button class="gtab"        onclick="showGTab('hk',4)">Hollow Knight</button>
-    <button class="gtab"        onclick="showGTab('ff',5)">Final Fantasy</button>
-    <button class="gtab"        onclick="showGTab('lufia',6)">Lufia 2</button>
-    <button class="gtab"        onclick="showGTab('kknd',7)">KKND 2</button>
-    <button class="gtab"        onclick="showGTab('fc',8)">Future Cop</button>
-    <button class="gtab"        onclick="showGTab('sg',9)">Steins;Gate</button>
-    <button class="gtab"        onclick="showGTab('pw',10)">Phoenix Wright</button>
-    <button class="gtab"        onclick="showGTab('mmbn',11)">Mega Man BN</button>
-    <button class="gtab"        onclick="showGTab('pokemon',12)">Pok&eacute;mon</button>
-  </div>
-  <div class="g-section active" id="gs-wc3"><div class="game-grid" id="wc3-grid"></div></div>
-  <div class="g-section" id="gs-sc"><div class="game-grid" id="sc-grid"></div></div>
-  <div class="g-section" id="gs-diablo"><div class="game-grid" id="diablo-grid"></div></div>
-  <div class="g-section" id="gs-sotc"><div class="game-grid" id="sotc-grid"></div></div>
-  <div class="g-section" id="gs-hk"><div class="game-grid" id="hk-grid"></div></div>
-  <div class="g-section" id="gs-ff"><div class="game-grid" id="ff-grid"></div></div>
-  <div class="g-section" id="gs-lufia"><div class="game-grid" id="lufia-grid"></div></div>
-  <div class="g-section" id="gs-kknd"><div class="game-grid" id="kknd-grid"></div></div>
-  <div class="g-section" id="gs-fc"><div class="game-grid" id="fc-grid"></div></div>
-  <div class="g-section" id="gs-sg"><div class="game-grid" id="sg-grid"></div></div>
-  <div class="g-section" id="gs-pw"><div class="game-grid" id="pw-grid"></div></div>
-  <div class="g-section" id="gs-mmbn"><div class="game-grid" id="mmbn-grid"></div></div>
-  <div class="g-section" id="gs-pokemon">
-    <div class="poke-detail-area" id="poke-detail"></div>
-    <div class="poke-controls">
-      <input class="ctrl-input" type="text" id="poke-search" placeholder="Pok&eacute;mon suchen&hellip;" oninput="filterPoke()" style="width:195px">
-      <select class="ctrl-select" id="type-filter" onchange="filterPoke()">
-        <option value="">Alle Typen</option>
-        <option>fire</option><option>water</option><option>grass</option><option>electric</option>
-        <option>psychic</option><option>ice</option><option>dragon</option><option>dark</option>
-        <option>fairy</option><option>fighting</option><option>poison</option><option>ground</option>
-        <option>flying</option><option>bug</option><option>rock</option><option>ghost</option>
-        <option>steel</option><option>normal</option>
-      </select>
-      <select class="ctrl-select" id="gen-filter" onchange="filterPoke()">
-        <option value="">Alle Gen</option>
-        <option value="1">Gen I (1&ndash;151)</option>
-        <option value="2">Gen II (152&ndash;251)</option>
-        <option value="3">Gen III (252&ndash;386)</option>
-        <option value="4">Gen IV (387&ndash;493)</option>
-      </select>
-    </div>
-    <div class="poke-grid" id="poke-grid">
-      <div class="poke-loading-msg">Pok&eacute;mon werden geladen &#10024;</div>
-    </div>
-    <button class="load-more-btn" id="poke-more" style="display:none" onclick="loadMorePoke()">Mehr laden</button>
-  </div>
+  <div class="poke-grid" id="poke-grid"><div class="poke-loading-msg">Pok&eacute;mon werden geladen &#10024;</div></div>
+  <button class="load-more-btn" id="poke-more" style="display:none" onclick="loadMorePoke()">Mehr laden</button>
+</div>
+
+<!-- Audio toast -->
+<div class="audio-toast" id="audio-toast">
+  <span class="audio-toast-icon">🔊</span>
+  <span id="audio-toast-txt">Niemand kann den Sky Captain aufhalten!</span>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ── Audio player ─────────────────────────────────── */
+let _audioCtx = null;
+
+function playAudioFile(src, toastText) {
+  // Try to play; if autoplay blocked, show toast anyway
+  try {
+    const audio = new Audio(src);
+    audio.volume = 0.75;
+    audio.play().catch(() => {});
+  } catch(e) {}
+  showAudioToast(toastText);
+}
+
+function showAudioToast(txt) {
+  const toast = document.getElementById('audio-toast');
+  const txtEl  = document.getElementById('audio-toast-txt');
+  if (!toast) return;
+  if (txtEl) txtEl.textContent = txt;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+/* ── Tab switching ────────────────────────────────── */
+window.showGTab = function(name, idx) {
+  document.querySelectorAll('.g-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.gtab').forEach(b => b.classList.remove('active'));
+  const sec = document.getElementById('gs-' + name);
+  if (sec) sec.classList.add('active');
+  document.querySelectorAll('.gtab')[idx].classList.add('active');
+
+  // Future Cop easter egg
+  if (name === 'fc') {
+    setTimeout(() => playAudioFile('assets/audio/skycaptain.mp3', 'Niemand kann den Sky Captain aufhalten!'), 400);
+  }
+
+  if (name === 'pokemon' && !pokeLoaded) loadPoke();
+  else if (typeof renderGameCards === 'function') renderGameCards();
+};
+
+/* ── Game cards ───────────────────────────────────── */
+const gameRendered = {};
+const RAWG_COVERS = {
+  wc3:    'https://media.rawg.io/media/games/4be/4be6a6ad0364751a96229c56bf69be3e.jpg',
+  sc:     'https://media.rawg.io/media/games/d58/d588e4b8a7a38d77e8e9c53a9e3e7a6e.jpg',
+  diablo: 'https://media.rawg.io/media/games/84d/84da2ac3fdfc6507807a1808595afb12.jpg',
+  sotc:   'https://media.rawg.io/media/screenshots/c08/c08c7d4406bef4edc65a3bafee0a3c47.jpg',
+  hk:     'https://media.rawg.io/media/games/4cf/4cfc6b7f1850590a4634b08bfab308ab.jpg',
+  ff:     'https://media.rawg.io/media/games/6c5/6c55e22185876626881b76c11922b073.jpg',
+  sg:     'https://media.rawg.io/media/games/5f2/5f2c52c1a87ded1a49e25a7b1c9dc4d4.jpg',
+  pw:     'https://media.rawg.io/media/games/f1a/f1a09bfad4070bbdbe5d0aad0c56d2fb.jpg',
+};
+const GAME_EMOJI = { wc3:'⚔️',sc:'🚀',diablo:'💀',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾',pokemon:'🔴' };
+
+function renderGameCards() {
+  if (typeof DB === 'undefined') return;
+  Object.keys(DB).forEach(s => {
+    if (s === 'podcasts' || s === 'nature' || gameRendered[s]) return;
+    gameRendered[s] = true;
+    const grid = document.getElementById(s + '-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const cover = RAWG_COVERS[s];
+    const emoji = GAME_EMOJI[s] || '🎮';
+    (DB[s] || []).forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      const coverHtml = cover
+        ? '<div class="game-card-cover-wrap"><img class="game-card-cover" src="' + cover + '" alt="' + item.title + '" loading="lazy"'
+          + ' onerror="this.parentElement.innerHTML=\'<div class=\\\"game-card-cover-placeholder\\\">' + emoji + '</div>\'"></div>'
+        : '<div class="game-card-cover-placeholder">' + emoji + '</div>';
+      card.innerHTML = coverHtml
+        + '<div class="game-card-body">'
+        + '<span class="game-badge ' + item.badge + '">' + item.badgeText + '</span>'
+        + '<div class="game-card-title">' + item.title + '</div>'
+        + '<div class="game-card-text">' + item.text + '</div>'
+        + '<div class="tags">' + item.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>'
+        + '</div>';
+      grid.appendChild(card);
+    });
+  });
+}
+
+/* ── Pokémon ──────────────────────────────────────── */
+let pokeLoaded=false,allPoke=[],filtPoke=[],pokeOff=0,typeCache={};
+const BATCH=24;
+async function loadPoke(){
+  if(pokeLoaded)return;pokeLoaded=true;
+  try{
+    const r=await fetch('https://pokeapi.co/api/v2/pokemon?limit=493');
+    const d=await r.json();
+    allPoke=d.results.map((p,i)=>({name:p.name,id:i+1}));
+    filtPoke=allPoke.slice();renderPokeGrid();
+  }catch(e){document.getElementById('poke-grid').innerHTML='<div class="poke-loading-msg">PokeAPI nicht erreichbar.</div>';}
+}
+function renderPokeGrid(){
+  const grid=document.getElementById('poke-grid');
+  if(pokeOff===0)grid.innerHTML='';
+  filtPoke.slice(pokeOff,pokeOff+BATCH).forEach(p=>grid.appendChild(makePokeCard(p)));
+  pokeOff+=BATCH;
+  const more=document.getElementById('poke-more');
+  if(more)more.style.display=pokeOff<filtPoke.length?'block':'none';
+}
+function makePokeCard(p){
+  const c=document.createElement('div');c.className='poke-card';
+  c.innerHTML='<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+p.id+'.png" alt="'+p.name+'" loading="lazy">'
+    +'<div class="poke-name">'+p.name+'</div>'
+    +'<div class="poke-num">#'+String(p.id).padStart(3,'0')+'</div>'
+    +'<div class="poke-types" id="pt-'+p.id+'"><span class="type-badge type-normal">?</span></div>';
+  c.onclick=()=>showPokeDet(p.id);
+  loadPokeTypes(p.id);return c;
+}
+async function loadPokeTypes(id){
+  if(typeCache[id])return;
+  try{const r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);const d=await r.json();typeCache[id]=d;
+  const el=document.getElementById('pt-'+id);
+  if(el)el.innerHTML=d.types.map(t=>'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>').join('');}catch(e){}
+}
+async function showPokeDet(id){
+  const det=document.getElementById('poke-detail');
+  det.innerHTML='<div style="color:var(--text3);font-family:var(--fm);padding:1rem">Lade…</div>';
+  det.classList.add('show');
+  try{
+    let d=typeCache[id];
+    if(!d){const r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);d=await r.json();typeCache[id]=d;}
+    const sc={hp:'#ff6b35',attack:'#f7c948',defense:'#5aa0e8','special-attack':'#e85878','special-defense':'#3ba844',speed:'#a890f0'};
+    det.innerHTML='<img class="poke-big-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+id+'.png" alt="'+d.name+'">'
+      +'<div style="flex:1;min-width:200px"><div class="poke-big-name">'+d.name+'</div>'
+      +'<div style="display:flex;gap:.4rem;margin-bottom:.85rem">'+d.types.map(t=>'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>').join('')+'</div>'
+      +'<div style="display:flex;gap:1.25rem;margin-bottom:.85rem;flex-wrap:wrap">'
+      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">HÖHE</div><div style="font-weight:500">'+d.height/10+'m</div></div>'
+      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">GEWICHT</div><div style="font-weight:500">'+d.weight/10+'kg</div></div>'
+      +'</div>'
+      +d.stats.map(s=>'<div class="stat-bar"><span class="stat-label-sm">'+s.stat.name.replace('special-','sp.')+'</span><span class="stat-val">'+s.base_stat+'</span><div class="stat-track"><div class="stat-fill" style="width:'+Math.min(100,s.base_stat/255*100)+'%;background:'+(sc[s.stat.name]||'var(--accent)')+'"></div></div></div>').join('')
+      +'</div>';
+    det.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }catch(e){det.innerHTML='<div style="color:var(--accent2);padding:1rem">Fehler.</div>';}
+}
+window.filterPoke=function(){
+  const q=document.getElementById('poke-search').value.toLowerCase();
+  const type=document.getElementById('type-filter').value;
+  const gen=parseInt(document.getElementById('gen-filter').value)||0;
+  filtPoke=allPoke.filter(p=>{
+    if(q&&p.name.indexOf(q)<0)return false;
+    if(gen){const r=[[1,151],[152,251],[252,386],[387,493]];const mm=r[gen-1];if(p.id<mm[0]||p.id>mm[1])return false;}
+    if(type&&typeCache[p.id]&&typeCache[p.id].types.map(t=>t.type.name).indexOf(type)<0)return false;
+    return true;
+  });
+  pokeOff=0;renderPokeGrid();
+};
+window.loadMorePoke=function(){renderPokeGrid();};
+
+// Init
+renderGameCards();
+})();
+</script>
