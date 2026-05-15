@@ -1,0 +1,73 @@
+<div class="page-hero">
+    <div class="page-hero-glow" style="background:radial-gradient(circle,rgba(232,82,122,.1),transparent 70%)"></div>
+    <p class="hero-tag">Interaktive Visualisierungen</p>
+    <h1 class="page-title">Mathematik<span style="color:var(--accent2)">.</span></h1>
+    <p class="page-desc">Drei klassische mathematische Konzepte &mdash; interaktiv erfahrbar gemacht. Hinter jedem steckt eine tiefere Idee.</p>
+  </div>
+  <div style="padding:.75rem 3rem 0">
+    <div class="math-tabs">
+      <button class="mtab active" onclick="showMTab('mandelbrot',0)">Mandelbrot-Menge</button>
+      <button class="mtab"        onclick="showMTab('sort',1)">Sortieralgorithmen</button>
+      <button class="mtab"        onclick="showMTab('fourier',2)">Fourier-Reihen</button>
+    </div>
+  </div>
+  <div class="m-section active" id="ms-mandelbrot">
+    <div class="math-ctrl">
+      <span class="math-lbl">Iterationen:</span>
+      <input type="range" min="20" max="200" value="80" id="mb-iter"
+        style="width:160px;accent-color:var(--accent2)" oninput="drawMB()">
+      <span class="math-lbl" id="mb-val">80</span>
+      <button class="btn btn-ghost btn-sm" onclick="resetMB()">Zur&uuml;cksetzen</button>
+    </div>
+    <canvas class="math-canvas" id="mb-canvas" width="700" height="460" style="cursor:crosshair;max-height:460px"></canvas>
+    <div class="math-explainer">
+      <h4>Was ist die Mandelbrot-Menge?</h4>
+      <p>Die Menge aller komplexen Zahlen <span class="math-formula">c</span>, f&uuml;r die die Iteration
+      <span class="math-formula">z&#8345;&#8330;&#8321; = z&#8345;&sup2; + c</span> (mit z&#8320;&nbsp;=&nbsp;0) beschr&auml;nkt bleibt.
+      Die Farben zeigen, wie schnell Punkte au&szlig;erhalb divergieren. Klicken Sie ins Bild zum Zoomen &mdash; die Selbst&auml;hnlichkeit ist unendlich.</p>
+    </div>
+  </div>
+  <div class="m-section" id="ms-sort">
+    <div class="math-ctrl">
+      <span class="math-lbl">Algorithmus:</span>
+      <select class="ctrl-select" id="sort-algo">
+        <option value="bubble">Bubble Sort &mdash; O(n&sup2;)</option>
+        <option value="insertion">Insertion Sort &mdash; O(n&sup2;)</option>
+        <option value="quick">Quick Sort &mdash; O(n log n)</option>
+        <option value="merge">Merge Sort &mdash; O(n log n)</option>
+      </select>
+      <span class="math-lbl">Gr&ouml;&szlig;e:</span>
+      <input type="range" min="20" max="120" value="60" id="sort-size"
+        style="width:120px;accent-color:var(--accent2)" oninput="initSort()">
+      <button class="btn btn-ghost btn-sm" onclick="runSort()">&#9654; Start</button>
+      <button class="btn btn-ghost btn-sm" onclick="initSort()">&#8635; Neu</button>
+    </div>
+    <canvas class="math-canvas" id="sort-canvas" width="700" height="380" style="max-height:380px"></canvas>
+    <div class="math-explainer">
+      <h4>Sortieralgorithmen im Vergleich</h4>
+      <p><strong>Bubble &amp; Insertion Sort</strong>: einfach, aber <span class="math-formula">O(n&sup2;)</span> f&uuml;r gro&szlig;e Datens&auml;tze.
+      <strong>Quick Sort</strong>: im Durchschnitt <span class="math-formula">O(n log n)</span>.
+      <strong>Merge Sort</strong>: garantiert <span class="math-formula">O(n log n)</span> durch rekursives Teilen.</p>
+    </div>
+  </div>
+  <div class="m-section" id="ms-fourier">
+    <div class="math-ctrl">
+      <span class="math-lbl">Harmonische:</span>
+      <input type="range" min="1" max="30" value="5" id="f-terms"
+        style="width:140px;accent-color:var(--accent2)" oninput="drawFourier()">
+      <span class="math-lbl" id="f-val">5</span>
+      <span class="math-lbl">Wellenform:</span>
+      <select class="ctrl-select" id="f-shape" onchange="drawFourier()">
+        <option value="square">Rechteckwelle</option>
+        <option value="sawtooth">S&auml;gezahnwelle</option>
+        <option value="triangle">Dreieckwelle</option>
+      </select>
+    </div>
+    <canvas class="math-canvas" id="f-canvas" width="700" height="440" style="max-height:440px"></canvas>
+    <div class="math-explainer">
+      <h4>Fourier-Zerlegung</h4>
+      <p>Jedes periodische Signal l&auml;sst sich als Summe von Sinuswellen darstellen:
+      <span class="math-formula">f(t) = &sum; aₙ sin(n&omega;t)</span>.
+      Beim Rechteck-Signal bleibt am Sprung immer ein &Uuml;berschwingen von ~9&nbsp;% bestehen (Gibbs-Ph&auml;nomen), egal wie viele Terme.</p>
+    </div>
+  </div>

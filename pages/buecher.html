@@ -1,0 +1,40 @@
+<div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <p class="hero-tag">Intellektuelles Protokoll</p>
+    <h1 class="page-title">B&uuml;cher<span>.</span></h1>
+    <div class="page-stats" id="buch-stats"></div>
+  </div>
+  <div style="padding:1rem 3rem .75rem;background:var(--bg2);border-bottom:1px solid var(--border)">
+    <p style="font-size:.86rem;color:var(--text2);line-height:1.75;max-width:700px;font-style:italic">
+      B&uuml;cher, die ich vollst&auml;ndig gelesen oder intensiv im Studium bearbeitet habe &mdash; ein intellektuelles Protokoll meiner fachlichen Entwicklung.</p>
+  </div>
+  <div class="books-controls">
+    <input class="ctrl-input" type="text" id="buch-search"
+      placeholder="Autor oder Titel&hellip;" oninput="renderBuecher()" style="width:210px">
+    <select class="ctrl-select" id="buch-ctx-filter" onchange="renderBuecher()">
+      <option value="">Alle Bereiche</option>
+      <option>Philosophie</option><option>Literatur</option><option>Sachbuch</option>
+      <option>Biographie</option><option>Kinderbuch</option><option>Selbstentwicklung</option><option>Tech</option>
+    </select>
+    <select class="ctrl-select" id="buch-status-filter" onchange="renderBuecher()">
+      <option value="">Alle Status</option>
+      <option value="gelesen">Gelesen</option>
+      <option value="intensiv gelesen">Intensiv</option>
+      <option value="teilweise">Teilweise</option>
+    </select>
+    <span style="font-family:var(--fm);font-size:.7rem;color:var(--text3)">Sortieren:</span>
+    <button class="sort-btn active" id="sb-Jahr"  onclick="setBuchSort('jahr')">Jahr</button>
+    <button class="sort-btn"        id="sb-Autor" onclick="setBuchSort('autor')">Autor</button>
+    <button class="sort-btn"        id="sb-Titel" onclick="setBuchSort('titel')">Titel</button>
+  </div>
+  <div class="books-table-wrap">
+    <table class="books-table">
+      <thead><tr>
+        <th onclick="setBuchSort('jahr')">Jahr</th>
+        <th onclick="setBuchSort('autor')">Autor</th>
+        <th onclick="setBuchSort('titel')">Titel</th>
+        <th>Ersch.</th><th>Bereich</th><th>Status</th><th>Notizen</th>
+      </tr></thead>
+      <tbody id="buch-tbody"></tbody>
+    </table>
+  </div>

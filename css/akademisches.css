@@ -1,0 +1,93 @@
+/* ═══════════════════════════════════════════
+   STUDIUM
+═══════════════════════════════════════════ */
+.studium-controls {
+  display: flex; gap: .55rem; align-items: center; flex-wrap: wrap;
+  padding: .9rem 3rem; background: var(--bg); border-bottom: 1px solid var(--border);
+  position: sticky; top: 56px; z-index: 90;
+}
+.fach-filter { display: flex; gap: .3rem; flex-wrap: wrap; }
+.ff-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text2); padding: .23rem .6rem; border-radius: 5px; cursor: pointer; font-size: .7rem; font-family: var(--fm); transition: all .15s; white-space: nowrap; }
+.ff-btn.active { color: #fff !important; border-color: transparent !important; }
+.ff-all.active  { background: var(--accent) !important; }
+.ff-phil  { background:#5b52e8; color:#fff !important; border-color:#5b52e8 !important }
+.ff-math  { background:#e8527a; color:#fff !important; border-color:#e8527a !important }
+.ff-info  { background:#22c55e; color:#fff !important; border-color:#22c55e !important }
+.ff-gr    { background:#f59e0b; color:#fff !important; border-color:#f59e0b !important }
+.ff-fr    { background:#06b6d4; color:#fff !important; border-color:#06b6d4 !important }
+.ff-sonstig { background:#a78bfa; color:#fff !important; border-color:#a78bfa !important }
+
+.sem-group  { margin-bottom: 0; }
+.sem-header { display: flex; align-items: center; gap: .7rem; padding: .6rem 3rem; background: var(--bg2); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; transition: background .15s; }
+.sem-header:hover { background: var(--bg3); }
+.sem-badge  { font-family: var(--fm); font-size: .73rem; font-weight: 700; color: var(--text3); background: var(--surface); padding: .18rem .55rem; border-radius: 4px; white-space: nowrap; }
+.sem-name   { font-family: var(--fh); font-size: .86rem; font-weight: 700; color: var(--text); }
+.sem-count  { font-family: var(--fm); font-size: .68rem; color: var(--text3); margin-left: auto; white-space: nowrap; }
+.sem-phase  { font-family: var(--fm); font-size: .66rem; padding: .13rem .45rem; border-radius: 3px; white-space: nowrap; }
+.ph-ba  { background:#e8f0fe; color:#3c5acd } [data-theme="dark"] .ph-ba  { background:#1a2050; color:#8899ff }
+.ph-ma  { background:#e8f8ee; color:#1a7a40 } [data-theme="dark"] .ph-ma  { background:#0a2a18; color:#55dd88 }
+.ph-prom{ background:#fef3e8; color:#8a4a00 } [data-theme="dark"] .ph-prom{ background:#2a1500; color:#ffaa44 }
+.sem-toggle      { color: var(--text3); font-size: .78rem; transition: transform .2s; flex-shrink: 0; }
+.sem-toggle.open { transform: rotate(90deg); }
+
+.kurs-wrap      { overflow-x: auto; display: none; }
+.kurs-wrap.open { display: block; }
+.kurs-table     { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.kurs-table th  { background: var(--bg3); color: var(--text3); font-family: var(--fm); font-size: .66rem; letter-spacing: .08em; padding: .5rem .9rem; text-align: left; font-weight: 500; border-bottom: 1px solid var(--border); }
+.kurs-table td  { padding: .52rem .9rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; line-height: 1.5; }
+.kurs-table tr:last-child td { border-bottom: none; }
+.kurs-table tr:hover td { background: var(--bg2); }
+.kurs-table td:first-child, .kurs-table th:first-child { padding-left: 3rem; }
+.fach-dot     { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+.fach-phil    { background:#5b52e8 } .fach-math  { background:#e8527a }
+.fach-info    { background:#22c55e } .fach-gr    { background:#f59e0b }
+.fach-fr      { background:#06b6d4 } .fach-sonstig { background:#a78bfa }
+.veranst-badge { background: var(--surface); color: var(--text3); padding: .1rem .42rem; border-radius: 3px; font-family: var(--fm); font-size: .63rem; }
+.dozent-cell   { color: var(--accent); font-size: .78rem; font-family: var(--fm); }
+.no-results    { text-align: center; color: var(--text3); font-family: var(--fm); font-size: .8rem; padding: 2.5rem; }
+
+/* ═══════════════════════════════════════════
+   BÜCHER
+═══════════════════════════════════════════ */
+.books-controls {
+  display: flex; gap: .55rem; align-items: center; flex-wrap: wrap;
+  padding: .9rem 3rem; background: var(--bg); border-bottom: 1px solid var(--border);
+  position: sticky; top: 56px; z-index: 90;
+}
+.sort-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text2); padding: .28rem .65rem; border-radius: 5px; cursor: pointer; font-size: .7rem; font-family: var(--fm); transition: all .15s; }
+.sort-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.books-table-wrap { overflow-x: auto; padding-bottom: 3rem; }
+.books-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.books-table th { background: var(--bg3); color: var(--text3); font-family: var(--fm); font-size: .66rem; letter-spacing: .08em; padding: .52rem .82rem; text-align: left; font-weight: 500; border-bottom: 2px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none; position: sticky; top: 0; z-index: 5; }
+.books-table th:hover { color: var(--accent); }
+.books-table th:first-child, .books-table td:first-child { padding-left: 3rem; }
+.books-table td { padding: .58rem .82rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; line-height: 1.5; }
+.books-table td:first-child { font-family: var(--fm); font-size: .73rem; color: var(--text3); white-space: nowrap; }
+.books-table tr:hover td { background: var(--bg2); }
+.b-title { font-weight: 600; color: var(--text); font-family: var(--fh); font-size: .83rem; }
+.b-year  { font-family: var(--fm); font-size: .73rem; color: var(--text3); }
+.b-notes { color: var(--text3); font-size: .76rem; max-width: 190px; }
+
+.ctx-badge { display: inline-block; padding: .1rem .42rem; border-radius: 3px; font-size: .63rem; font-family: var(--fm); font-weight: 600; white-space: nowrap; }
+.ctx-philo { background:#ede9fe;color:#4c1d95} [data-theme="dark"] .ctx-philo{background:#2d1f5e;color:#c4b5fd}
+.ctx-lit   { background:#fce7f3;color:#831843} [data-theme="dark"] .ctx-lit  {background:#3b0a26;color:#f9a8d4}
+.ctx-sach  { background:#e0f2fe;color:#075985} [data-theme="dark"] .ctx-sach {background:#0c2a42;color:#7dd3fc}
+.ctx-bio   { background:#fff7ed;color:#7c2d12} [data-theme="dark"] .ctx-bio  {background:#2c1106;color:#fdba74}
+.ctx-kind  { background:#fffbeb;color:#78350f} [data-theme="dark"] .ctx-kind {background:#2c1a00;color:#fcd34d}
+.ctx-selbst{ background:#f0fdf4;color:#14532d} [data-theme="dark"] .ctx-selbst{background:#052212;color:#86efac}
+.ctx-tech  { background:#dcfce7;color:#14532d} [data-theme="dark"] .ctx-tech {background:#0a2e18;color:#86efac}
+.st-gelesen  { background:#dcfce7;color:#14532d} [data-theme="dark"] .st-gelesen {background:#0a2e18;color:#86efac}
+.st-intensiv { background:#ede9fe;color:#4c1d95} [data-theme="dark"] .st-intensiv{background:#2d1f5e;color:#c4b5fd}
+.st-teilw    { background:#fff7ed;color:#7c2d12} [data-theme="dark"] .st-teilw   {background:#2c1106;color:#fdba74}
+.status-badge { display: inline-block; padding: .1rem .42rem; border-radius: 3px; font-size: .63rem; font-family: var(--fm); }
+
+/* ═══════════════════════════════════════════
+   PODCASTS
+═══════════════════════════════════════════ */
+.pod-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(275px,1fr)); gap: 1.2rem; }
+.pod-card { padding: 1.4rem; display: flex; gap: .9rem; align-items: start; }
+.pod-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; flex-shrink: 0; }
+.pod-name { font-family: var(--fh); font-weight: 700; font-size: .9rem; color: var(--text); margin-bottom: .18rem; }
+.pod-host { color: var(--text3); font-size: .73rem; font-family: var(--fm); margin-bottom: .35rem; }
+.pod-desc { color: var(--text2); font-size: .78rem; line-height: 1.6; }

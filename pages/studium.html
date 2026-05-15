@@ -1,0 +1,17 @@
+<div class="page-hero">
+    <div class="page-hero-glow"></div>
+    <p class="hero-tag">Akademische Laufbahn</p>
+    <h1 class="page-title">Studium<span>.</span></h1>
+    <p class="page-desc">Vollst&auml;ndige Dokumentation aller Lehrveranstaltungen &mdash; Bachelor, Master und Promotion.</p>
+    <div class="page-stats" id="studium-stats"></div>
+  </div>
+  <div class="studium-controls">
+    <input class="ctrl-input" type="text" id="kurs-search"
+      placeholder="Veranstaltung, Dozent, Fach&hellip;" oninput="renderKurse()" style="width:250px">
+    <div id="fach-filter" style="display:flex;gap:.3rem;flex-wrap:wrap"></div>
+    <select class="ctrl-select" id="sort-sem" onchange="renderKurse()">
+      <option value="asc">Semester &#8593;</option>
+      <option value="desc">Semester &#8595;</option>
+    </select>
+  </div>
+  <div id="kurs-list"></div>

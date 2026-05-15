@@ -1,0 +1,60 @@
+<div class="gaming-hero-area">
+    <div class="gaming-hero-glow"></div>
+    <p class="hero-tag">Leidenschaft &amp; Reflexion</p>
+    <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Gaming<span style="color:var(--accent3)">.</span></h1>
+    <p style="color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
+      Videospiele als kulturelle und narrative Kunst &mdash; eine pers&ouml;nliche Auswahl der Spiele, die mich gepr&auml;gt oder philosophisch inspiriert haben.</p>
+  </div>
+  <div style="height:.65rem"></div>
+  <div class="g-tabs">
+    <button class="gtab active" onclick="showGTab('wc3',0)">Warcraft III</button>
+    <button class="gtab"        onclick="showGTab('sc',1)">StarCraft</button>
+    <button class="gtab"        onclick="showGTab('diablo',2)">Diablo</button>
+    <button class="gtab"        onclick="showGTab('sotc',3)">Shadow of the Colossus</button>
+    <button class="gtab"        onclick="showGTab('hk',4)">Hollow Knight</button>
+    <button class="gtab"        onclick="showGTab('ff',5)">Final Fantasy</button>
+    <button class="gtab"        onclick="showGTab('lufia',6)">Lufia 2</button>
+    <button class="gtab"        onclick="showGTab('kknd',7)">KKND 2</button>
+    <button class="gtab"        onclick="showGTab('fc',8)">Future Cop</button>
+    <button class="gtab"        onclick="showGTab('sg',9)">Steins;Gate</button>
+    <button class="gtab"        onclick="showGTab('pw',10)">Phoenix Wright</button>
+    <button class="gtab"        onclick="showGTab('mmbn',11)">Mega Man BN</button>
+    <button class="gtab"        onclick="showGTab('pokemon',12)">Pok&eacute;mon</button>
+  </div>
+  <div class="g-section active" id="gs-wc3"><div class="game-grid" id="wc3-grid"></div></div>
+  <div class="g-section" id="gs-sc"><div class="game-grid" id="sc-grid"></div></div>
+  <div class="g-section" id="gs-diablo"><div class="game-grid" id="diablo-grid"></div></div>
+  <div class="g-section" id="gs-sotc"><div class="game-grid" id="sotc-grid"></div></div>
+  <div class="g-section" id="gs-hk"><div class="game-grid" id="hk-grid"></div></div>
+  <div class="g-section" id="gs-ff"><div class="game-grid" id="ff-grid"></div></div>
+  <div class="g-section" id="gs-lufia"><div class="game-grid" id="lufia-grid"></div></div>
+  <div class="g-section" id="gs-kknd"><div class="game-grid" id="kknd-grid"></div></div>
+  <div class="g-section" id="gs-fc"><div class="game-grid" id="fc-grid"></div></div>
+  <div class="g-section" id="gs-sg"><div class="game-grid" id="sg-grid"></div></div>
+  <div class="g-section" id="gs-pw"><div class="game-grid" id="pw-grid"></div></div>
+  <div class="g-section" id="gs-mmbn"><div class="game-grid" id="mmbn-grid"></div></div>
+  <div class="g-section" id="gs-pokemon">
+    <div class="poke-detail-area" id="poke-detail"></div>
+    <div class="poke-controls">
+      <input class="ctrl-input" type="text" id="poke-search" placeholder="Pok&eacute;mon suchen&hellip;" oninput="filterPoke()" style="width:195px">
+      <select class="ctrl-select" id="type-filter" onchange="filterPoke()">
+        <option value="">Alle Typen</option>
+        <option>fire</option><option>water</option><option>grass</option><option>electric</option>
+        <option>psychic</option><option>ice</option><option>dragon</option><option>dark</option>
+        <option>fairy</option><option>fighting</option><option>poison</option><option>ground</option>
+        <option>flying</option><option>bug</option><option>rock</option><option>ghost</option>
+        <option>steel</option><option>normal</option>
+      </select>
+      <select class="ctrl-select" id="gen-filter" onchange="filterPoke()">
+        <option value="">Alle Gen</option>
+        <option value="1">Gen I (1&ndash;151)</option>
+        <option value="2">Gen II (152&ndash;251)</option>
+        <option value="3">Gen III (252&ndash;386)</option>
+        <option value="4">Gen IV (387&ndash;493)</option>
+      </select>
+    </div>
+    <div class="poke-grid" id="poke-grid">
+      <div class="poke-loading-msg">Pok&eacute;mon werden geladen &#10024;</div>
+    </div>
+    <button class="load-more-btn" id="poke-more" style="display:none" onclick="loadMorePoke()">Mehr laden</button>
+  </div>

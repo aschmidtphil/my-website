@@ -1,0 +1,511 @@
+<!-- ═══════════════════════════════════════════
+     PHILOSOPHEN-TIMELINE v2  —  Google Maps Style
+     144 Philosophen · 230 Einflusslinien · Tier-System
+═══════════════════════════════════════════ -->
+<style>
+.phil-header      { padding:2.5rem 3rem 1.75rem; background:var(--bg2); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+.phil-glow        { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:500px; height:300px; background:radial-gradient(ellipse,rgba(91,82,232,.1),transparent 70%); pointer-events:none; }
+.phil-controls    { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.75rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
+.phil-zoom-group  { display:flex; gap:.25rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.2rem; flex-shrink:0; }
+.pzb              { background:transparent; border:none; color:var(--text2); width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:.9rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
+.pzb:hover        { background:var(--accent); color:#fff; }
+.zoom-label       { font-family:var(--fm); font-size:.7rem; color:var(--text3); padding:0 .35rem; min-width:38px; text-align:center; }
+.phil-search-wrap { position:relative; flex-shrink:0; }
+.phil-search      { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.38rem .75rem .38rem 1.9rem; border-radius:7px; font-family:var(--fb); font-size:.78rem; outline:none; width:175px; height:32px; }
+.phil-search:focus { border-color:var(--accent); }
+.phil-search-icon { position:absolute; left:.55rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.75rem; pointer-events:none; }
+.infl-toggles     { display:flex; gap:.25rem; flex-wrap:wrap; }
+.itbtn            { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.28rem .65rem; border-radius:6px; cursor:pointer; font-family:var(--fm); font-size:.68rem; transition:all .15s; display:flex; align-items:center; gap:.3rem; white-space:nowrap; }
+.itbtn.active     { color:#fff; border-color:transparent; }
+.itbtn-dot        { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.epoch-filter-row { display:flex; gap:.3rem; flex-wrap:wrap; padding:.5rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); overflow-x:auto; }
+.epoch-btn        { background:var(--surface); border:1px solid var(--border); color:var(--text2); padding:.25rem .6rem; border-radius:14px; cursor:pointer; font-size:.68rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; flex-shrink:0; }
+.epoch-btn.active { color:#fff; border-color:transparent; }
+.tier-legend      { display:flex; gap:1.25rem; align-items:center; padding:.45rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.tier-item        { display:flex; align-items:center; gap:.35rem; font-family:var(--fm); font-size:.67rem; color:var(--text3); white-space:nowrap; }
+.tier-pip         { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.vis-count        { margin-left:auto; font-family:var(--fm); font-size:.67rem; color:var(--text3); }
+.tl-outer         { background:var(--bg2); position:relative; }
+.tl-canvas-wrap   { overflow:auto; cursor:grab; user-select:none; }
+.tl-canvas-wrap:active { cursor:grabbing; }
+.tl-canvas-wrap::-webkit-scrollbar { height:6px; }
+.tl-canvas-wrap::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }
+#tl-svg           { display:block; }
+.phil-node-group  { cursor:pointer; }
+.pmodal-overlay   { position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(6px); z-index:700; display:none; align-items:center; justify-content:center; padding:1.5rem; }
+.pmodal-overlay.open { display:flex; }
+.pmodal-box       { background:var(--card); border:1px solid var(--border2); border-radius:18px; padding:2rem 2.25rem; max-width:580px; width:100%; max-height:86vh; overflow-y:auto; position:relative; box-shadow:0 24px 72px rgba(0,0,0,.25); }
+.pmodal-close     { position:absolute; top:1rem; right:1rem; background:var(--surface); border:none; color:var(--text2); width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:.9rem; transition:all .2s; }
+.pmodal-close:hover { background:var(--accent); color:#fff; }
+.pmodal-epoch     { font-family:var(--fm); font-size:.7rem; letter-spacing:.1em; margin-bottom:.3rem; }
+.pmodal-name      { font-family:var(--fh); font-size:1.9rem; font-weight:800; letter-spacing:-.03em; color:var(--text); line-height:1; margin-bottom:.15rem; }
+.pmodal-dates     { font-family:var(--fm); font-size:.75rem; color:var(--text3); margin-bottom:1rem; }
+.pmodal-desc      { color:var(--text2); line-height:1.8; font-size:.87rem; margin-bottom:1.25rem; }
+.pmodal-ideas     { list-style:none; display:flex; flex-direction:column; gap:.35rem; margin-bottom:1.25rem; }
+.pmodal-ideas li  { background:var(--surface); border-radius:6px; padding:.5rem .85rem; font-size:.82rem; color:var(--text2); border-left:3px solid var(--accent); }
+.pmodal-infl-lbl  { font-family:var(--fm); font-size:.68rem; color:var(--text3); letter-spacing:.1em; margin:.75rem 0 .5rem; display:block; }
+.pmodal-chips     { display:flex; gap:.4rem; flex-wrap:wrap; }
+.pmodal-chip      { display:flex; align-items:center; gap:.3rem; padding:.28rem .65rem; border-radius:6px; font-size:.75rem; font-family:var(--fm); cursor:pointer; border:1px solid transparent; transition:opacity .15s; }
+.pmodal-chip:hover { opacity:.75; }
+.chip-dot         { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.tier-badge       { display:inline-block; background:var(--surface); color:var(--text3); padding:.1rem .4rem; border-radius:4px; font-size:.63rem; font-family:var(--fm); margin-left:.5rem; vertical-align:middle; }
+</style>
+
+<!-- HEADER -->
+<div class="phil-header">
+  <div class="phil-glow"></div>
+  <p class="hero-tag">Von Thales bis zur Gegenwart</p>
+  <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);line-height:1;margin-bottom:.5rem">
+    Philosophen-Timeline<span style="color:var(--accent)">.</span>
+  </h1>
+  <p style="color:var(--text2);max-width:660px;line-height:1.75;font-size:.9rem">
+    144 Philosophen &middot; 230 Einflussverbindungen &middot; 2600&thinsp;Jahre Denkgeschichte.<br>
+    <span style="font-family:var(--fm);font-size:.78rem;color:var(--text3)">Zoom: Tier&thinsp;1&thinsp;→ Giganten immer sichtbar &middot; Tier&thinsp;2&thinsp;→ ×1.0 &middot; Tier&thinsp;3&thinsp;→ ×1.8 &middot; Tier&thinsp;4&thinsp;→ ×2.8 &nbsp;|&nbsp; Klick + Drag zum Scrollen</span>
+  </p>
+</div>
+
+<!-- TIER LEGEND -->
+<div class="tier-legend">
+  <div class="tier-item"><div class="tier-pip" style="background:#f7971e;box-shadow:0 0 0 2px #f7971e44"></div>Tier 1 — Giganten (immer)</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#5b80e8"></div>Tier 2 — Wichtige Denker (×1.0)</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#22c55e"></div>Tier 3 — Alle Denker (×1.8)</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#a78bfa"></div>Tier 4 — Randfiguren &amp; Schüler (×2.8)</div>
+  <div class="vis-count" id="vis-count">—</div>
+</div>
+
+<!-- CONTROLS -->
+<div class="phil-controls">
+  <div class="phil-zoom-group">
+    <button class="pzb" onclick="tlZoom(1.35)">+</button>
+    <span class="zoom-label" id="zoom-lbl">×1.0</span>
+    <button class="pzb" onclick="tlZoom(1/1.35)">−</button>
+    <button class="pzb" onclick="tlReset()" style="font-size:.6rem;width:38px">Reset</button>
+  </div>
+  <div class="phil-search-wrap">
+    <span class="phil-search-icon">&#9906;</span>
+    <input class="phil-search" id="phil-search" type="text"
+      placeholder="Philosoph suchen…" oninput="tlSearch(this.value)">
+  </div>
+  <div class="infl-toggles" id="infl-toggles"></div>
+</div>
+
+<!-- EPOCH FILTER -->
+<div class="epoch-filter-row" id="epoch-filter-row"></div>
+
+<!-- SVG CANVAS -->
+<div class="tl-outer" id="tl-outer">
+  <div class="tl-canvas-wrap" id="tl-wrap">
+    <svg id="tl-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="pmodal-overlay" id="pmodal" onclick="if(event.target===this)tlCloseModal()">
+  <div class="pmodal-box">
+    <button class="pmodal-close" onclick="tlCloseModal()">&#10005;</button>
+    <div class="pmodal-epoch" id="pm-epoch"></div>
+    <div class="pmodal-name"  id="pm-name"></div>
+    <div class="pmodal-dates" id="pm-dates"></div>
+    <div class="pmodal-desc"  id="pm-desc"></div>
+    <ul class="pmodal-ideas"  id="pm-ideas"></ul>
+    <div id="pm-infl"></div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════
+   TIMELINE ENGINE v2
+════════════════════════════════════════════ */
+(function(){
+'use strict';
+
+const YEAR_MIN = -700, YEAR_MAX = 2030, YEAR_RANGE = 2730;
+const BASE_W   = 4000;
+const SVG_H    = 530;
+const AXIS_Y   = 265;
+const CARD_W   = 130;
+const CARD_H   = 65;
+const PAD      = 70;   // axis-to-card gap
+
+const INFL_COL = { student:'#5b80e8', inspires:'#22c55e', critic:'#e8527a', develops:'#a78bfa' };
+const TIER_VIS = { 1:0.5, 2:1.0, 3:1.8, 4:2.8 };
+
+let zoom      = 1.0;
+let epoch     = '';
+let search    = '';
+let inflOn    = { student:true, inspires:true, critic:true, develops:true };
+let ready     = false;
+
+function svgW()   { return BASE_W * zoom; }
+function xOf(yr)  { return ((yr - YEAR_MIN) / YEAR_RANGE) * svgW(); }
+function dark()   { return document.documentElement.dataset.theme === 'dark'; }
+function cv(v)    { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function phils()  { return typeof PHILS_V2 !== 'undefined' ? PHILS_V2 : []; }
+function byName(n){ return phils().find(p => p.name === n); }
+function visible(p){ return zoom >= (TIER_VIS[p.tier] || 1); }
+function dimmed(p) { return (epoch && p.epoch !== epoch) || (search && !p.name.toLowerCase().includes(search)); }
+
+function el(tag, attrs, txt) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const e = document.createElementNS(ns, tag);
+  if (attrs) for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, String(v));
+  if (txt !== undefined) e.textContent = txt;
+  return e;
+}
+
+/* ── Main render ── */
+function render() {
+  const W   = svgW();
+  const svg = document.getElementById('tl-svg');
+  if (!svg) return;
+  svg.setAttribute('width', W);
+  svg.setAttribute('height', SVG_H);
+  svg.innerHTML = '';
+
+  const dk  = dark();
+  const bgCard  = dk ? '#181824' : '#ffffff';
+  const textCol = dk ? '#e8e8f0' : '#18181f';
+  const mutedCol= dk ? '#606078' : '#9090a8';
+  const borderCol = cv('--border');
+
+  /* 0. DEFS */
+  const defs = el('defs');
+  Object.entries(INFL_COL).forEach(([t, c]) => {
+    const m = el('marker', { id:'arr-'+t, markerWidth:9, markerHeight:9, refX:7, refY:3, orient:'auto', markerUnits:'strokeWidth' });
+    m.appendChild(el('path', { d:'M0,0 L0,6 L9,3 z', fill:c }));
+    defs.appendChild(m);
+  });
+  /* axis gradient */
+  const ag = el('linearGradient', { id:'axGrad', x1:'0%', y1:'0%', x2:'100%', y2:'0%' });
+  ag.innerHTML = `<stop offset="0%" stop-color="${cv('--accent')}"/><stop offset="100%" stop-color="${cv('--accent2')}"/>`;
+  defs.appendChild(ag);
+  svg.appendChild(defs);
+
+  /* 1. EPOCH BANDS */
+  const epochColors = {};
+  (typeof EPOCHS_META_V2 !== 'undefined' ? EPOCHS_META_V2 : []).forEach(e => epochColors[e.name] = e.color);
+  const epochRanges = {};
+  phils().forEach(p => {
+    if (!epochRanges[p.epoch]) epochRanges[p.epoch] = { min:Infinity, max:-Infinity, c: epochColors[p.epoch]||'#888' };
+    const d = p.death > 0 ? p.death : Math.max(p.birth+40, 2020);
+    epochRanges[p.epoch].min = Math.min(epochRanges[p.epoch].min, p.birth);
+    epochRanges[p.epoch].max = Math.max(epochRanges[p.epoch].max, d);
+  });
+  const bandG = el('g');
+  Object.entries(epochRanges).forEach(([eName, r]) => {
+    const x1 = xOf(r.min - 20), x2 = xOf(r.max + 20);
+    const isActive = epoch === eName;
+    bandG.appendChild(el('rect', { x:x1, y:0, width:Math.max(1, x2-x1), height:SVG_H,
+      fill: r.c + (isActive ? '22' : dk ? '0f' : '09') }));
+    if (x2 - x1 > 50) {
+      const lx = (x1+x2)/2;
+      const sz = Math.min(12, Math.max(7, (x2-x1)*0.06));
+      bandG.appendChild(el('text', { x:lx, y:AXIS_Y+34, 'text-anchor':'middle',
+        fill:r.c, 'font-size':sz, 'font-family':"'JetBrains Mono',monospace", opacity:'0.45' }, eName));
+    }
+  });
+  svg.appendChild(bandG);
+
+  /* 2. AXIS */
+  svg.appendChild(el('line', { x1:0, y1:AXIS_Y, x2:W, y2:AXIS_Y, stroke:'url(#axGrad)', 'stroke-width':2.5 }));
+  const step = zoom >= 4 ? 25 : zoom >= 2.5 ? 50 : zoom >= 1.5 ? 100 : 200;
+  const major = step * 2;
+  for (let y = -600; y <= 2025; y += step) {
+    const x = xOf(y), isMajor = y % major === 0;
+    svg.appendChild(el('line', { x1:x, y1:AXIS_Y-(isMajor?9:5), x2:x, y2:AXIS_Y+(isMajor?9:5),
+      stroke:borderCol, 'stroke-width':isMajor?1.5:0.8, opacity:isMajor?'1':'0.5' }));
+    if (isMajor || zoom > 1.5) {
+      const lbl = y < 0 ? Math.abs(y)+' v.Chr.' : y === 0 ? '0 n.Chr.' : String(y);
+      svg.appendChild(el('text', { x, y:AXIS_Y+22, 'text-anchor':'middle',
+        fill:mutedCol, 'font-size':isMajor?10:8, 'font-family':"'JetBrains Mono',monospace",
+        opacity:isMajor?'0.85':'0.45' }, lbl));
+    }
+  }
+
+  /* 3. INFLUENCE LINES (behind nodes) */
+  const posMap = {};
+  phils().forEach(p => {
+    if (!visible(p)) return;
+    posMap[p.name] = xOf((p.birth + (p.death > 0 ? p.death : 2020)) / 2);
+  });
+
+  const inflG = el('g', { id:'infl-g' });
+  phils().forEach(p => {
+    if (!visible(p) || !p.influences) return;
+    p.influences.forEach(inf => {
+      if (!inflOn[inf.type]) return;
+      const tx = posMap[inf.to];
+      if (tx === undefined) return;
+      const fx = posMap[p.name];
+      const c  = INFL_COL[inf.type];
+      const isHighlighted = search && (p.name.toLowerCase().includes(search) || inf.to.toLowerCase().includes(search));
+      const isDimmedLine  = (epoch && p.epoch !== epoch && (byName(inf.to)?.epoch) !== epoch) ||
+                            (search && !isHighlighted);
+      const dist = Math.abs(tx - fx);
+      const curve = inf.type === 'student' ? -50 : inf.type === 'critic' ? 48 : -35;
+      const mx = (fx + tx) / 2;
+      const d  = `M${fx},${AXIS_Y} C${mx},${AXIS_Y+curve} ${mx},${AXIS_Y+curve} ${tx},${AXIS_Y}`;
+      const dash = inf.type==='critic' ? '6,3' : inf.type==='develops' ? '3,3' : 'none';
+      inflG.appendChild(el('path', { d, fill:'none', stroke:c, 'stroke-width':isHighlighted?2.5:1.5,
+        'stroke-dasharray':dash, opacity:isDimmedLine?'0.04':isHighlighted?'0.75':'0.35',
+        'marker-end':`url(#arr-${inf.type})` }));
+    });
+  });
+  svg.appendChild(inflG);
+
+  /* 4. PHILOSOPHER NODES */
+  const nodeG = el('g', { id:'node-g' });
+  let cnt = 0;
+
+  phils().forEach(p => {
+    if (!visible(p)) return;
+    cnt++;
+    const cx    = posMap[p.name];
+    const above = p.above;
+    const dm    = dimmed(p);
+    const fsize = p.tier === 1 ? 11.5 : p.tier === 2 ? 10 : 9;
+    const showDates = zoom >= 0.85;
+    const showEpoch = zoom >= 1.25;
+    const cH    = CARD_H + (showEpoch ? 13 : 0);
+    const cardY = above ? AXIS_Y - PAD - cH : AXIS_Y + PAD;
+    const ly1   = above ? cardY + cH + 2 : AXIS_Y + 6;
+    const ly2   = above ? AXIS_Y - 6 : cardY - 2;
+    const dotR  = p.tier === 1 ? 7 : p.tier === 2 ? 5 : 4;
+
+    const g = el('g', { class:'phil-node-group', opacity: dm ? '0.08' : '1', transform:`translate(${cx},0)` });
+
+    /* connector */
+    g.appendChild(el('line', { x1:0, y1:ly1, x2:0, y2:ly2, stroke:p.color+'55', 'stroke-width':1.5 }));
+
+    /* dot */
+    g.appendChild(el('circle', { cx:0, cy:AXIS_Y, r:dotR, fill:p.color,
+      stroke: dk?'#0a0a0f':'#ffffff', 'stroke-width':2.5 }));
+
+    /* card shadow (tier 1 glow) */
+    if (p.tier === 1 && !dm) {
+      g.appendChild(el('rect', { x:-CARD_W/2-4, y:cardY-4, width:CARD_W+8, height:cH+8,
+        fill:'none', stroke:p.color, 'stroke-width':0.7, rx:11, ry:11, opacity:'0.3' }));
+    }
+
+    /* card */
+    const cardBg = bgCard + (p.tier===1?'':'ee');
+    g.appendChild(el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH,
+      fill:cardBg, stroke:p.color, 'stroke-width': p.tier===1 ? 2 : 0.8, rx:8, ry:8 }));
+
+    /* name */
+    const nameShort = p.name.length > 17 ? p.name.substring(0,16)+'…' : p.name;
+    g.appendChild(el('text', { x:0, y:cardY+16, 'text-anchor':'middle',
+      fill:textCol, 'font-size':fsize, 'font-weight':p.tier<=2?'700':'600',
+      'font-family':"'Syne',sans-serif" }, nameShort));
+
+    /* dates */
+    if (showDates) {
+      const bs = p.birth<0 ? Math.abs(p.birth)+'v' : String(p.birth);
+      const ds = p.death<=0 ? '→' : p.death<0 ? Math.abs(p.death)+'v' : String(p.death);
+      g.appendChild(el('text', { x:0, y:cardY+29, 'text-anchor':'middle',
+        fill:mutedCol, 'font-size':7.5, 'font-family':"'JetBrains Mono',monospace" }, bs+'–'+ds));
+    }
+
+    /* epoch */
+    if (showEpoch) {
+      const eShort = p.epoch.length>15 ? p.epoch.substring(0,14)+'…' : p.epoch;
+      g.appendChild(el('text', { x:0, y:cardY+cH-7, 'text-anchor':'middle',
+        fill:p.color, 'font-size':7, 'font-family':"'JetBrains Mono',monospace", opacity:'0.8' }, eShort));
+    }
+
+    /* invisible hit rect */
+    const hit = el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH, fill:'transparent' });
+    hit.addEventListener('click', () => tlOpenModal(p));
+    g.appendChild(hit);
+    nodeG.appendChild(g);
+  });
+
+  svg.appendChild(nodeG);
+
+  /* update count */
+  const vc = document.getElementById('vis-count');
+  if (vc) vc.textContent = cnt + ' Philosophen sichtbar';
+}
+
+/* ── Zoom ── */
+window.tlZoom = function(f) {
+  const wrap = document.getElementById('tl-wrap');
+  const ratio = wrap ? wrap.scrollLeft / Math.max(1, wrap.scrollWidth) : 0;
+  zoom = Math.max(0.4, Math.min(5.5, zoom * f));
+  document.getElementById('zoom-lbl').textContent = '×' + zoom.toFixed(1);
+  render();
+  if (wrap) requestAnimationFrame(() => { wrap.scrollLeft = ratio * wrap.scrollWidth; });
+};
+
+window.tlReset = function() {
+  zoom = 1.0;
+  document.getElementById('zoom-lbl').textContent = '×1.0';
+  epoch = ''; search = '';
+  document.getElementById('phil-search').value = '';
+  document.querySelectorAll('.epoch-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.epoch-btn')?.classList.add('active');
+  render();
+  const wrap = document.getElementById('tl-wrap');
+  if (wrap) setTimeout(() => { wrap.scrollLeft = BASE_W * 0.22; }, 60);
+};
+
+/* ── Search ── */
+window.tlSearch = function(val) {
+  search = val.toLowerCase().trim();
+  render();
+  if (search.length > 1) {
+    const found = phils().find(p => p.name.toLowerCase().includes(search));
+    if (found) {
+      const wrap = document.getElementById('tl-wrap');
+      const cx = ((found.birth + (found.death>0?found.death:2020))/2 - YEAR_MIN) / YEAR_RANGE * svgW();
+      if (wrap) wrap.scrollLeft = cx - wrap.clientWidth / 2;
+    }
+  }
+};
+
+/* ── Influence toggles ── */
+function buildInflToggles() {
+  const c = document.getElementById('infl-toggles');
+  if (!c) return;
+  const labels = { student:'Lehrer→Schüler', inspires:'Inspiration', critic:'Kritik', develops:'Weiterentwicklung' };
+  Object.entries(INFL_COL).forEach(([type, color]) => {
+    const b = document.createElement('button');
+    b.className = 'itbtn active'; b.id = 'itb-'+type;
+    b.style.background = color; b.style.color = '#fff'; b.style.borderColor = 'transparent';
+    b.innerHTML = `<div class="itbtn-dot" style="background:#ffffff99"></div>${labels[type]}`;
+    b.onclick = () => {
+      inflOn[type] = !inflOn[type];
+      b.classList.toggle('active', inflOn[type]);
+      b.style.background = inflOn[type] ? color : '';
+      b.style.color      = inflOn[type] ? '#fff' : '';
+      b.style.borderColor= inflOn[type] ? 'transparent' : '';
+      render();
+    };
+    c.appendChild(b);
+  });
+}
+
+/* ── Epoch filter ── */
+function buildEpochFilter() {
+  const c = document.getElementById('epoch-filter-row');
+  if (!c) return;
+  c.innerHTML = '';
+  const all = document.createElement('button');
+  all.className = 'epoch-btn active'; all.textContent = 'Alle Epochen';
+  all.onclick = () => { epoch=''; c.querySelectorAll('.epoch-btn').forEach(b=>b.classList.remove('active')); all.classList.add('active'); all.style.background=''; all.style.color=''; render(); };
+  c.appendChild(all);
+  (typeof EPOCHS_META_V2 !== 'undefined' ? EPOCHS_META_V2 : []).forEach(e => {
+    const b = document.createElement('button');
+    b.className = 'epoch-btn'; b.style.borderColor = e.color+'55';
+    b.innerHTML = `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${e.color};margin-right:4px;vertical-align:middle"></span>${e.name}`;
+    b.onclick = () => {
+      epoch = e.name;
+      c.querySelectorAll('.epoch-btn').forEach(x=>{ x.classList.remove('active'); x.style.background=''; x.style.color=''; });
+      b.classList.add('active'); b.style.background=e.color; b.style.color='#fff';
+      render();
+    };
+    c.appendChild(b);
+  });
+}
+
+/* ── Drag scroll ── */
+function setupDrag() {
+  const w = document.getElementById('tl-wrap');
+  if (!w) return;
+  let dn=false, sx, sl;
+  w.addEventListener('mousedown', e=>{dn=true; sx=e.pageX-w.offsetLeft; sl=w.scrollLeft;});
+  w.addEventListener('mouseleave',()=>{dn=false;});
+  w.addEventListener('mouseup',  ()=>{dn=false;});
+  w.addEventListener('mousemove', e=>{if(!dn)return; e.preventDefault(); w.scrollLeft=sl-(e.pageX-w.offsetLeft-sx);});
+  let ts, tsl;
+  w.addEventListener('touchstart', e=>{ts=e.touches[0].pageX-w.offsetLeft; tsl=w.scrollLeft;},{passive:true});
+  w.addEventListener('touchmove',  e=>{w.scrollLeft=tsl-(e.touches[0].pageX-w.offsetLeft-ts);},{passive:true});
+}
+
+/* ── Modal ── */
+window.tlOpenModal = function(p) {
+  const modal = document.getElementById('pmodal');
+  if (!modal) return;
+  document.getElementById('pm-epoch').innerHTML = `<span style="color:${p.color}">${p.epoch}</span><span class="tier-badge">Tier ${p.tier}</span>`;
+  document.getElementById('pm-name').textContent  = p.name;
+  const b = p.birth<0 ? Math.abs(p.birth)+' v.&thinsp;Chr.' : p.birth;
+  const d = p.death<=0 ? 'heute' : p.death<0 ? Math.abs(p.death)+' v.&thinsp;Chr.' : p.death;
+  document.getElementById('pm-dates').innerHTML = `${b} &ndash; ${d}`;
+  document.getElementById('pm-desc').textContent  = p.desc;
+  document.getElementById('pm-ideas').innerHTML   = (p.ideas||[]).map(i=>`<li>${i}</li>`).join('');
+
+  /* influence section */
+  const out = (p.influences||[]);
+  const inc = phils().filter(q=>(q.influences||[]).some(i=>i.to===p.name))
+                     .map(q=>({from:q.name, type:q.influences.find(i=>i.to===p.name).type}));
+  let html = '';
+  if (out.length) {
+    html += `<span class="pmodal-infl-lbl">Hat beeinflusst:</span><div class="pmodal-chips">`;
+    out.forEach(i=>{
+      const c=INFL_COL[i.type];
+      const safeN = i.to.replace(/'/g,"\\'");
+      html+=`<span class="pmodal-chip" style="background:${c}20;border-color:${c}55;color:${c}"
+        onclick="tlCloseModal();setTimeout(()=>{const q=tlByName('${safeN}');if(q)tlOpenModal(q)},200)">
+        <div class="chip-dot" style="background:${c}"></div>${i.to}
+        <span style="opacity:.55;font-size:.63rem">${i.type}</span></span>`;
+    });
+    html += '</div>';
+  }
+  if (inc.length) {
+    html += `<span class="pmodal-infl-lbl">Wurde beeinflusst durch:</span><div class="pmodal-chips">`;
+    inc.forEach(i=>{
+      const c=INFL_COL[i.type];
+      const safeN = i.from.replace(/'/g,"\\'");
+      html+=`<span class="pmodal-chip" style="background:${c}20;border-color:${c}55;color:${c}"
+        onclick="tlCloseModal();setTimeout(()=>{const q=tlByName('${safeN}');if(q)tlOpenModal(q)},200)">
+        <div class="chip-dot" style="background:${c}"></div>${i.from}
+        <span style="opacity:.55;font-size:.63rem">${i.type}</span></span>`;
+    });
+    html += '</div>';
+  }
+  document.getElementById('pm-infl').innerHTML = html;
+  modal.classList.add('open');
+};
+window.tlCloseModal = function() { document.getElementById('pmodal')?.classList.remove('open'); };
+window.tlByName     = byName;
+
+/* ── Responsive height ── */
+function setH() {
+  const h = Math.max(400, window.innerHeight - 290);
+  const w = document.getElementById('tl-wrap');
+  const o = document.getElementById('tl-outer');
+  if (w) w.style.height = h+'px';
+  if (o) o.style.height = h+'px';
+}
+
+/* ── Init ── */
+function init() {
+  setH();
+  window.addEventListener('resize', ()=>{ setH(); render(); });
+  new MutationObserver(()=>render()).observe(document.documentElement,
+    { attributes:true, attributeFilter:['data-theme'] });
+
+  buildInflToggles();
+  buildEpochFilter();
+  setupDrag();
+
+  const tryRender = () => {
+    if (typeof PHILS_V2 !== 'undefined' && typeof EPOCHS_META_V2 !== 'undefined') {
+      render();
+      setTimeout(()=>{
+        const w = document.getElementById('tl-wrap');
+        if (w) w.scrollLeft = BASE_W * 0.20;
+      }, 80);
+    } else {
+      setTimeout(tryRender, 80);
+    }
+  };
+  tryRender();
+}
+
+document.readyState === 'loading'
+  ? document.addEventListener('DOMContentLoaded', init)
+  : init();
+
+})();
+</script>

@@ -1,0 +1,62 @@
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS — alexander-schmidt.dev
+   Edit here to retheme the entire site.
+═══════════════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg:       #ffffff;
+  --bg2:      #f8f8fc;
+  --bg3:      #f0f0f8;
+  --surface:  #f0f0f8;
+  --surface2: #e4e4f0;
+
+  /* Accent colours */
+  --accent:  #5b52e8;
+  --accent2: #e8527a;
+  --accent3: #22c55e;
+  --accent4: #f59e0b;
+
+  /* Text */
+  --text:  #18181f;
+  --text2: #52526a;
+  --text3: #9090a8;
+
+  /* Borders */
+  --border:  #e0e0ec;
+  --border2: #d0d0e0;
+
+  /* Cards */
+  --card:   #ffffff;
+  --shadow: 0 2px 12px rgba(0,0,0,.07);
+
+  /* Typography */
+  --fh: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+
+  /* Border radius */
+  --r: 14px;
+}
+
+[data-theme="dark"] {
+  --bg:       #0a0a0f;
+  --bg2:      #111118;
+  --bg3:      #181824;
+  --surface:  #22223a;
+  --surface2: #2a2a40;
+
+  --accent:  #7c73ff;
+  --accent2: #ff6584;
+  --accent3: #43e97b;
+  --accent4: #f7971e;
+
+  --text:  #e8e8f0;
+  --text2: #a0a0b8;
+  --text3: #606078;
+
+  --border:  #2a2a42;
+  --border2: #3a3a55;
+
+  --card:   #181824;
+  --shadow: 0 2px 12px rgba(0,0,0,.3);
+}
