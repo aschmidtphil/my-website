@@ -40,6 +40,7 @@
 .gb-sg    {background:#f5e8ff;color:#6a0a9a} [data-theme="dark"] .gb-sg    {background:#2a0a2a;color:#cc88ff}
 .gb-pw    {background:#fff3e0;color:#8a4a00} [data-theme="dark"] .gb-pw    {background:#2a1a00;color:#ffaa44}
 .gb-mmbn  {background:#e0faff;color:#005a8a} [data-theme="dark"] .gb-mmbn  {background:#001a3a;color:#44ddff}
+.gb-hs    {background:#fff3e0;color:#b36000} [data-theme="dark"] .gb-hs    {background:#2a1500;color:#ffaa44}
 
 /* Pokémon */
 .poke-controls   { display: flex; gap: .7rem; flex-wrap: wrap; margin-bottom: 1.6rem; align-items: center; }

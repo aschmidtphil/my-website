@@ -4,9 +4,9 @@
   <!-- Portrait LEFT -->
   <div class="hero-portrait-wrap fade-up d1">
     <picture>
-      <source srcset="assets/images/me/1.avif" type="image/avif">
-      <source srcset="assets/images/me/1.webp"  type="image/webp">
-      <img class="hero-portrait" src="assets/images/me/1.webp"
+      <source srcset="assets/images/me/2.avif" type="image/avif">
+      <source srcset="assets/images/me/2.webp"  type="image/webp">
+      <img class="hero-portrait" src="assets/images/me/2.webp"
            alt="Alexander Schmidt" width="280" height="360"
            loading="eager" fetchpriority="high">
     </picture>
@@ -40,6 +40,310 @@
   <div class="stat-item"><span class="stat-num">IBM</span><span class="stat-label" id="t-s3">Zertifiziert</span></div>
   <div class="stat-item"><span class="stat-num">&#8734;</span><span class="stat-label" id="t-s4">Neugier</span></div>
 </div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     FEATURED — rotierendes Highlight aus den Inhalten
+     ════════════════════════════════════════════════════════ -->
+<div class="sec featured-sec">
+  <div class="featured-header">
+    <h2 class="sec-title" id="t-feat-title">Heute hervorgehoben</h2>
+    <p class="sec-sub">// Ein zufälliges Stück aus dem, was mich beschäftigt</p>
+  </div>
+
+  <div class="featured-card card" id="featured-card">
+    <!-- Filled by JS -->
+  </div>
+
+  <div class="featured-controls">
+    <button class="ftr-btn" id="ftr-prev" title="Vorheriges" aria-label="Vorheriges">‹</button>
+    <div class="ftr-dots" id="ftr-dots"></div>
+    <button class="ftr-btn" id="ftr-next" title="Nächstes" aria-label="Nächstes">›</button>
+    <button class="ftr-btn ftr-shuffle" id="ftr-shuffle" title="Neu auswürfeln" aria-label="Neu auswürfeln">⟲</button>
+  </div>
+</div>
+
+<style>
+/* ── Featured section ── */
+.featured-sec{margin-bottom:2.5rem;}
+.featured-header{margin-bottom:1rem;}
+.featured-card{
+  position:relative;
+  padding:2rem 2.25rem;
+  min-height:260px;
+  display:flex;flex-direction:column;justify-content:center;
+  transition:opacity .35s ease, transform .35s ease;
+  border-left:4px solid var(--accent);
+}
+.featured-card.swap{opacity:0;transform:translateY(8px);}
+.featured-kind{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--fm);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1rem;
+}
+.featured-kind::before{
+  content:'';display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 8px var(--accent);
+}
+.featured-body{flex:1;}
+.featured-quote-text{
+  font-family:var(--fh);font-size:clamp(1.15rem,2vw,1.55rem);
+  font-weight:500;line-height:1.45;color:var(--text);
+  letter-spacing:-.01em;margin-bottom:1rem;font-style:italic;
+}
+.featured-quote-attr{
+  font-family:var(--fm);font-size:.78rem;color:var(--text2);
+  letter-spacing:.04em;
+}
+.featured-quote-attr strong{color:var(--accent3);font-weight:600;font-style:normal;}
+.featured-phil-name{
+  font-family:var(--fh);font-size:clamp(1.5rem,2.5vw,2rem);
+  font-weight:800;line-height:1.1;letter-spacing:-.02em;
+  color:var(--text);margin-bottom:.3rem;
+}
+.featured-phil-dates{
+  font-family:var(--fm);font-size:.75rem;color:var(--text3);
+  letter-spacing:.06em;margin-bottom:1rem;
+}
+.featured-phil-desc{
+  color:var(--text2);font-size:.92rem;line-height:1.7;margin-bottom:1rem;
+}
+.featured-phil-ideas{
+  display:flex;flex-wrap:wrap;gap:.4rem;
+}
+.featured-phil-ideas .tag{
+  font-size:.7rem;
+}
+.featured-game-title{
+  font-family:var(--fh);font-size:clamp(1.3rem,2.2vw,1.7rem);
+  font-weight:800;line-height:1.2;letter-spacing:-.01em;
+  color:var(--text);margin-bottom:.8rem;
+}
+.featured-game-text{
+  color:var(--text2);font-size:.92rem;line-height:1.7;margin-bottom:1rem;
+}
+.featured-game-tags{
+  display:flex;flex-wrap:wrap;gap:.4rem;
+}
+.featured-link{
+  margin-top:1rem;display:inline-flex;align-items:center;gap:.4rem;
+  font-family:var(--fm);font-size:.72rem;color:var(--accent);
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;background:none;border:none;padding:0;
+  transition:gap .2s;
+}
+.featured-link:hover{gap:.7rem;}
+.featured-link::after{content:'→';font-family:inherit;}
+
+.featured-controls{
+  display:flex;align-items:center;justify-content:center;
+  gap:.5rem;margin-top:1rem;
+}
+.ftr-btn{
+  background:transparent;border:1px solid var(--border);
+  color:var(--text2);width:34px;height:34px;border-radius:50%;
+  cursor:pointer;font-size:1rem;font-family:var(--fh);
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.ftr-btn:hover{border-color:var(--accent);color:var(--accent);}
+.ftr-shuffle{margin-left:.4rem;font-size:.85rem;}
+.ftr-dots{
+  display:flex;gap:.35rem;margin:0 .5rem;
+}
+.ftr-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--border2);transition:all .2s;
+}
+.ftr-dot.active{
+  background:var(--accent);
+  box-shadow:0 0 8px var(--glow-accent);
+  transform:scale(1.3);
+}
+</style>
+
+<script>
+(function(){
+'use strict';
+// Wait briefly until ZITATE / PHILS_V2 / DB are available (they live in data.js + pages.js)
+function init() {
+  if (typeof ZITATE === 'undefined' && typeof PHILS_V2 === 'undefined' && typeof DB === 'undefined') {
+    setTimeout(init, 100);
+    return;
+  }
+
+  // Build the pool of featured items from existing data.
+  // This is intentionally generic — when new content is added (more ZITATE, more PHILS_V2),
+  // they will automatically appear here without code changes.
+  var pool = [];
+
+  // ── Zitate ─────────────────────────
+  if (typeof ZITATE !== 'undefined' && ZITATE && ZITATE.length) {
+    ZITATE.forEach(function(z) {
+      pool.push({
+        kind: 'Zitat',
+        render: function() {
+          return '<div class="featured-kind">Zitat</div>' +
+                 '<div class="featured-body">' +
+                   '<div class="featured-quote-text">»' + escapeHtml(z.text) + '«</div>' +
+                   '<div class="featured-quote-attr"><strong>' + escapeHtml(z.author) + '</strong>' +
+                     (z.source ? ' &middot; ' + escapeHtml(z.source) : '') + '</div>' +
+                 '</div>' +
+                 '<button class="featured-link" onclick="showPage(\'zitate\')">Alle Zitate</button>';
+        }
+      });
+    });
+  }
+
+  // ── Lieblingsphilosophen (Tier 1 only — die wirklich wichtigen) ─────────────────────────
+  if (typeof PHILS_V2 !== 'undefined' && PHILS_V2 && PHILS_V2.length) {
+    PHILS_V2.filter(function(p) { return p.tier === 1; }).forEach(function(p) {
+      pool.push({
+        kind: 'Philosoph',
+        render: function() {
+          var ideas = (p.ideas || []).slice(0, 4).map(function(i) {
+            return '<span class="tag">' + escapeHtml(i) + '</span>';
+          }).join('');
+          return '<div class="featured-kind">Lieblings­philosoph</div>' +
+                 '<div class="featured-body">' +
+                   '<div class="featured-phil-name">' + escapeHtml(p.name) + '</div>' +
+                   '<div class="featured-phil-dates">' + escapeHtml((p.birth || '') + ' – ' + (p.death || '')) +
+                     (p.epoch ? ' &middot; ' + escapeHtml(p.epoch) : '') + '</div>' +
+                   '<div class="featured-phil-desc">' + escapeHtml(p.desc || p.short || '') + '</div>' +
+                   (ideas ? '<div class="featured-phil-ideas">' + ideas + '</div>' : '') +
+                 '</div>' +
+                 '<button class="featured-link" onclick="showPage(\'philosophy\')">Zur Timeline</button>';
+        }
+      });
+    });
+  }
+
+  // ── Games / Blizzard ─────────────────────────
+  if (typeof DB !== 'undefined' && DB) {
+    Object.keys(DB).forEach(function(key) {
+      var arr = DB[key];
+      if (!Array.isArray(arr)) return;
+      arr.forEach(function(g) {
+        if (!g.title || !g.text) return;
+        pool.push({
+          kind: 'Spiel',
+          render: function() {
+            var tags = (g.tags || []).slice(0, 4).map(function(t) {
+              return '<span class="tag">' + escapeHtml(t) + '</span>';
+            }).join('');
+            return '<div class="featured-kind">' + escapeHtml(g.badgeText || 'Spiel') + '</div>' +
+                   '<div class="featured-body">' +
+                     '<div class="featured-game-title">' + escapeHtml(g.title) + '</div>' +
+                     '<div class="featured-game-text">' + escapeHtml(g.text) + '</div>' +
+                     (tags ? '<div class="featured-game-tags">' + tags + '</div>' : '') +
+                   '</div>' +
+                   '<button class="featured-link" onclick="showPage(\'gaming\')">Zur Gaming-Seite</button>';
+          }
+        });
+      });
+    });
+  }
+
+  if (pool.length === 0) return;
+
+  // ── Setup carousel ─────────────────────────
+  var card = document.getElementById('featured-card');
+  var dotsEl = document.getElementById('ftr-dots');
+  if (!card) return;
+
+  // Show at most 8 dots — for many items, use ellipsis dots
+  // For simplicity here just render up to 8 dots representing groups
+  var MAX_DOTS = Math.min(8, pool.length);
+  dotsEl.innerHTML = '';
+  for (var i = 0; i < MAX_DOTS; i++) {
+    var d = document.createElement('div');
+    d.className = 'ftr-dot';
+    dotsEl.appendChild(d);
+  }
+
+  // Shuffle the pool for a different order each visit
+  function shuffled(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  var sequence = shuffled(pool);
+  var idx = 0;
+
+  function render(animateOut) {
+    function doRender() {
+      card.innerHTML = sequence[idx].render();
+      // update dots — map current idx into MAX_DOTS positions
+      var dotIdx = Math.floor((idx / sequence.length) * MAX_DOTS);
+      Array.from(dotsEl.children).forEach(function(d, di) {
+        d.classList.toggle('active', di === dotIdx);
+      });
+      requestAnimationFrame(function() {
+        card.classList.remove('swap');
+      });
+    }
+    if (animateOut) {
+      card.classList.add('swap');
+      setTimeout(doRender, 250);
+    } else {
+      doRender();
+    }
+  }
+
+  document.getElementById('ftr-prev').onclick = function() {
+    idx = (idx - 1 + sequence.length) % sequence.length;
+    render(true);
+    pauseAutoRotate();
+  };
+  document.getElementById('ftr-next').onclick = function() {
+    idx = (idx + 1) % sequence.length;
+    render(true);
+    pauseAutoRotate();
+  };
+  document.getElementById('ftr-shuffle').onclick = function() {
+    sequence = shuffled(pool);
+    idx = 0;
+    render(true);
+    pauseAutoRotate();
+  };
+
+  // Auto-rotate every 10s, pause if user interacted
+  var auto = null, paused = false;
+  function startAutoRotate() {
+    if (paused) return;
+    auto = setInterval(function() {
+      idx = (idx + 1) % sequence.length;
+      render(true);
+    }, 10000);
+  }
+  function pauseAutoRotate() {
+    paused = true;
+    if (auto) clearInterval(auto);
+  }
+  // Stop auto-rotate if user has navigated away
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden && auto) clearInterval(auto);
+    else if (!paused) startAutoRotate();
+  });
+
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  render();
+  startAutoRotate();
+}
+
+init();
+})();
+</script>
 
 <div class="sec">
   <h2 class="sec-title" id="t-sk-title">Skills &amp; Technologien</h2>
@@ -102,9 +406,9 @@
       <div class="about-portrait-row">
         <div class="about-portrait-col">
           <picture>
-            <source srcset="assets/images/me/2.avif" type="image/avif">
-            <source srcset="assets/images/me/2.webp"  type="image/webp">
-            <img class="about-portrait" src="assets/images/me/2.webp"
+            <source srcset="assets/images/me/1.avif" type="image/avif">
+            <source srcset="assets/images/me/1.webp"  type="image/webp">
+            <img class="about-portrait" src="assets/images/me/1.webp"
                  alt="Alexander Schmidt" width="136" height="136" loading="lazy">
           </picture>
           <span class="about-portrait-name">Alexander Schmidt<br>Dr.&thinsp;phil. &middot; Data Scientist</span>

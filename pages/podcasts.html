@@ -28,6 +28,16 @@
 .hb-gesch{background:#f0fdf4;color:#14532d}[data-theme="dark"] .hb-gesch{background:#052212;color:#86efac}
 .hb-wiss{background:#fffbeb;color:#78350f}[data-theme="dark"] .hb-wiss{background:#2c1a00;color:#fcd34d}
 .hb-musik{background:#fdf4ff;color:#7e22ce}[data-theme="dark"] .hb-musik{background:#2e1040;color:#d8b4fe}
+
+.pod-cover2{width:64px;height:64px;border-radius:10px;flex-shrink:0;object-fit:cover;display:block;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.pod-body2{flex:1;min-width:0;}
+.pod-link2{margin-left:.5rem;color:var(--text3);text-decoration:none;font-size:.78rem;opacity:.5;transition:all .15s;}
+.pod-link2:hover{color:var(--accent);opacity:1;}
+.pod-offdesc{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border);color:var(--text3);font-size:.72rem;line-height:1.55;font-style:italic;}
+.pod-offlabel{font-family:var(--fm);font-style:normal;color:var(--accent);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;margin-right:.3rem;}
+.hb-cover{width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.hb-cover-none{background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.hb-row-inner{display:flex;gap:.7rem;align-items:center;}
 </style>
 
 <div class="page-hero">
@@ -68,78 +78,78 @@
 <script>
 (function(){
 const PODS=[
-  {name:'Auf ein Bier',cat:'Gaming',icon:'🎮',bg:'#1a2e1a',desc:'Einer der bekanntesten deutschen Gaming-Podcasts — lange, analytische Gespräche über Spiele, Branche und Design.'},
-  {name:'Stay Forever',cat:'Retrogaming',icon:'🕹️',bg:'#1a1a2e',desc:'Tiefgehende historische Analysen klassischer Videospiele und ihrer kulturellen Bedeutung.'},
-  {name:'Insert Moin',cat:'Gaming',icon:'☀️',bg:'#2e2a1a',desc:'Tägliche Episoden zu aktuellen Spielen, Rezensionen und Branchenthemen.'},
-  {name:'GameStar Podcast',cat:'Gaming',icon:'⭐',bg:'#1a1a1a',desc:'Aktuelle Diskussionen über PC-Gaming, Tests und Branchenentwicklungen.'},
-  {name:'OK Cool',cat:'Gaming',icon:'🎯',bg:'#1a2a2e',desc:'Gespräche über Spieleentwicklung, Branche und persönliche Gaming-Geschichten.'},
-  {name:'Easy Allies Podcast',cat:'Gaming',icon:'🤝',bg:'#2e1a1a',desc:'Wöchentliche Diskussionen über aktuelle Spiele, Releases und Branchenentwicklungen.'},
-  {name:'Giant Bombcast',cat:'Gaming',icon:'💣',bg:'#1a1a1a',desc:'Legendärer US-Gaming-Podcast mit News, Diskussionen und Insiderhumor.'},
-  {name:'Post Games',cat:'Gaming Analyse',icon:'🔍',bg:'#1a2e2a',desc:'Reflektierende Diskussionen über Spielekultur und die Bedeutung von Games.'},
-  {name:'Player One Podcast',cat:'Gaming',icon:'🕹️',bg:'#2a1a2e',desc:'Langjähriger Gaming-Podcast mit Fokus auf Konsolen und Branchenanalyse.'},
-  {name:'Spieleveteranen',cat:'Retrogaming',icon:'🏛️',bg:'#2e2a1a',desc:'Veteranen der deutschen Spielebranche über Klassiker und Industriegeschichte.'},
-  {name:'Plauschangriff',cat:'Gaming / Kultur',icon:'🎲',bg:'#1a1a2e',desc:'Rocket Beans Format mit ausführlichen Gesprächen über Spielehistorie und Popkultur.'},
-  {name:'Philosophize This!',cat:'Philosophie',icon:'🏛️',bg:'#1e1a2e',desc:'Beliebter englischer Philosophiepodcast — Denker chronologisch erklärt.'},
-  {name:'History of Philosophy Without Any Gaps',cat:'Philosophie',icon:'📜',bg:'#2e1a2a',desc:'Akademisch fundierte Gesamtdarstellung der Philosophiegeschichte ohne Auslassungen.'},
-  {name:'Radiowissen (BR2)',cat:'Wissen / Bildung',icon:'📡',bg:'#1a2a1a',desc:'Hochwertige Wissensbeiträge zu Geschichte, Philosophie und Naturwissenschaft.'},
-  {name:'Das Wissen (SWR)',cat:'Wissenschaft',icon:'🔬',bg:'#1a2e2e',desc:'Gut recherchierte Features zu wissenschaftlichen und gesellschaftlichen Themen.'},
-  {name:'Alles Geschichte',cat:'Geschichte',icon:'📖',bg:'#2a2e1a',desc:'Historische Ereignisse und Persönlichkeiten verständlich erzählt.'},
-  {name:'Wie wir ticken',cat:'Psychologie',icon:'🧠',bg:'#2e1a1a',desc:'Psychologische Erklärungen zu Verhalten, Emotionen und menschlichen Denkweisen.'},
-  {name:'Danke, gut.',cat:'Mental Health',icon:'💚',bg:'#1a2e1a',desc:'Podcast über Psyche, Alltag und persönliche Entwicklung — offen und ehrlich.'},
-  {name:'Stahl aber herzlich',cat:'Psychologie',icon:'💪',bg:'#2e2e1a',desc:'Gespräche über Beziehungen, Selbstwert und persönliche Entwicklung.'},
-  {name:'Wie wir werden, die wir sind',cat:'Psychologie',icon:'🌱',bg:'#1a2e1a',desc:'Über Trauma, Bindung und persönliche Lebensentwicklung.'},
-  {name:'Psychologie to go!',cat:'Psychologie',icon:'🎒',bg:'#2e1a2e',desc:'Alltagsnahe psychologische Erklärungen zu Beziehungen, Verhalten und Emotionen.'},
-  {name:'eat.READ.sleep (NDR)',cat:'Literatur',icon:'📚',bg:'#2e1a1a',desc:'Literaturpodcast mit Buchbesprechungen, Lesetipps und Autorengesprächen.'},
-  {name:'Kapitel Eins',cat:'Literatur',icon:'📖',bg:'#1a1a2e',desc:'Podcast über Bücher, Lesen und literarische Themen.'},
-  {name:'Plusminus',cat:'Wirtschaft',icon:'📊',bg:'#1a2a2e',desc:'ARD-Wirtschaftspodcast über Finanzen, Verbraucherfragen und Wirtschaftspolitik.'},
-  {name:'Die Schule brennt',cat:'Bildung',icon:'🔥',bg:'#2e1a1a',desc:'Über Bildungssystem, Schule und gesellschaftliche Herausforderungen.'},
+  {name:'Auf ein Bier',cat:'Gaming',icon:'ð®',bg:'#1a2e1a',desc:'Einer der bekanntesten deutschen Gaming-Podcasts — lange, analytische Gespräche über Spiele, Branche und Design.',offdesc:'Andre liebt das finnische Studio Housemarque. Jetzt haben sie endlich ihr neues Spiel „Saros“ rausgebracht und die ersten Schätzungen der Verkaufszahlen liegen in den Hunderttausenden, nicht in den Millionen. Das ist…',img:'assets/images/podcasts/auf-ein-bier.jpg',url:'https://podcasts.apple.com/de/podcast/auf-ein-bier-von-gamespodcast-de/id996280061?uo=4'},
+  {name:'Stay Forever',cat:'Retrogaming',icon:'ð¹ï¸',bg:'#1a1a2e',desc:'Tiefgehende historische Analysen klassischer Videospiele und ihrer kulturellen Bedeutung.',offdesc:'Ein Podcast über die aufregenden Games und Games-Technologien der 80er, 90er und frühen 2000er Jahre. Begleitet uns auf archäologische Expeditionen und pustet mit uns vorsichtig den Staub der Zeit von wunderbaren alten…',img:'assets/images/podcasts/stay-forever.jpg',url:'https://podcasts.apple.com/de/podcast/stay-forever-retrogames-technik/id461077931?uo=4'},
+  {name:'Insert Moin',cat:'Gaming',icon:'âï¸',bg:'#2e2a1a',desc:'Tägliche Episoden zu aktuellen Spielen, Rezensionen und Branchenthemen.',offdesc:'Hosted on Acast. See acast.com/privacy for more information. ]]>',img:'assets/images/podcasts/insert-moin.jpg',url:'https://podcasts.apple.com/de/podcast/insert-moin/id408178702?uo=4'},
+  {name:'GameStar Podcast',cat:'Gaming',icon:'â­',bg:'#1a1a1a',desc:'Aktuelle Diskussionen über PC-Gaming, Tests und Branchenentwicklungen.',offdesc:'Im GameStar Podcast sprechen die Redaktionen von GameStar, GamePro und MeinMMO über die Themen, die sie bewegen - PC- und Konsolenspiele von Diablo bis Battlefield, Gaming-Hardware oder Maurice Webers Lieblingspizza…',img:'assets/images/podcasts/gamestar-podcast.jpg',url:'https://podcasts.apple.com/de/podcast/gamestar-podcast/id1207844441?uo=4'},
+  {name:'OK Cool',cat:'Gaming',icon:'ð¯',bg:'#1a2a2e',desc:'Gespräche über Spieleentwicklung, Branche und persönliche Gaming-Geschichten.',offdesc:'OK COOL ist das unabhängige Magazin über Menschen, Spiele und ihre Geschichten. Sowohl in tiefgründigen Audioreportagen als auch in kurzweiligen Gesprächen lernt Gastgeber und Journalist Dom Schott jede Woche neue…',img:'assets/images/podcasts/ok-cool.jpg',url:'https://podcasts.apple.com/de/podcast/ok-cool/id1509985306?uo=4'},
+  {name:'Easy Allies Podcast',cat:'Gaming',icon:'ð¤',bg:'#2e1a1a',desc:'Wöchentliche Diskussionen über aktuelle Spiele, Releases und Branchenentwicklungen.',offdesc:'We discuss the latest video games and weekly industry headlines, answer listener questions, and keep a running tally of stupid bets.',img:'assets/images/podcasts/easy-allies-podcast.jpg',url:'https://podcasts.apple.com/de/podcast/the-easy-allies-podcast/id1097284330?uo=4'},
+  {name:'Giant Bombcast',cat:'Gaming',icon:'ð£',bg:'#1a1a1a',desc:'Legendärer US-Gaming-Podcast mit News, Diskussionen und Insiderhumor.',offdesc:'',img:'assets/images/podcasts/giant-bombcast.jpg',url:'https://podcasts.apple.com/de/podcast/giant-bombcast/id274450056?uo=4'},
+  {name:'Post Games',cat:'Gaming Analyse',icon:'ð',bg:'#1a2e2a',desc:'Reflektierende Diskussionen über Spielekultur und die Bedeutung von Games.',offdesc:'Post Games is an audio magazine about how and why we love video games. Each week, host Chris Plante reports on a new, overlooked, or underappreciated topic in gaming culture. Why do people play games that scare them?…',img:'assets/images/podcasts/post-games.jpg',url:'https://podcasts.apple.com/de/podcast/post-games/id1815131711?uo=4'},
+  {name:'Player One Podcast',cat:'Gaming',icon:'ð¹ï¸',bg:'#2a1a2e',desc:'Langjähriger Gaming-Podcast mit Fokus auf Konsolen und Branchenanalyse.',offdesc:'',img:'assets/images/podcasts/player-one-podcast.jpg',url:'https://podcasts.apple.com/de/podcast/player-one-podcast/id202883543?uo=4'},
+  {name:'Spieleveteranen',cat:'Retrogaming',icon:'ðï¸',bg:'#2e2a1a',desc:'Veteranen der deutschen Spielebranche über Klassiker und Industriegeschichte.',offdesc:'Ein Podcast über alte und neue Spiele',img:'assets/images/podcasts/spieleveteranen.jpg',url:'https://podcasts.apple.com/de/podcast/spieleveteranen/id317860125?uo=4'},
+  {name:'Plauschangriff',cat:'Gaming / Kultur',icon:'ð²',bg:'#1a1a2e',desc:'Rocket Beans Format mit ausführlichen Gesprächen über Spielehistorie und Popkultur.',offdesc:'Gepflegtes Geplauder von Gregor Kartsios und der Rocket Beans TV-Crew rund um Themen aller Couleur. Naja, gut, um Videospiele und Filme geht\'s am meisten, aber nicht immer! Jeden zweiten Sonntag auf…',img:'assets/images/podcasts/plauschangriff.jpg',url:'https://podcasts.apple.com/de/podcast/plauschangriff/id1042652702?uo=4'},
+  {name:'Philosophize This!',cat:'Philosophie',icon:'ðï¸',bg:'#1e1a2e',desc:'Beliebter englischer Philosophiepodcast — Denker chronologisch erklärt.',offdesc:'Beginner friendly if listened to in order! For anyone interested in an educational podcast about philosophy where you don\'t need to be a graduate-level philosopher to understand it. In chronological order, the thinkers…',img:'assets/images/podcasts/philosophize-this.jpg',url:'https://podcasts.apple.com/de/podcast/philosophize-this/id659155419?uo=4'},
+  {name:'History of Philosophy Without Any Gaps',cat:'Philosophie',icon:'ð',bg:'#2e1a2a',desc:'Akademisch fundierte Gesamtdarstellung der Philosophiegeschichte ohne Auslassungen.',offdesc:'Peter Adamson, Professor of Philosophy at the LMU in Munich and at King’s College London, takes listeners through the history of philosophy, ”without any gaps.” The series looks at the ideas, lives and historical…',img:'assets/images/podcasts/history-of-philosophy-without-any-gaps.jpg',url:'https://podcasts.apple.com/de/podcast/history-of-philosophy-without-any-gaps/id396903391?uo=4'},
+  {name:'Radiowissen (BR2)',cat:'Wissen / Bildung',icon:'ð¡',bg:'#1a2a1a',desc:'Hochwertige Wissensbeiträge zu Geschichte, Philosophie und Naturwissenschaft.',offdesc:'Die ganze Welt des Wissens, gut recherchiert, spannend erzählt. Interessantes aus Geschichte und Archäologie, Literatur, Architektur, Film und Musik, Beiträge aus Philosophie und Psychologie. Wissenswertes über Natur…',img:'assets/images/podcasts/radiowissen-br2.jpg',url:'https://podcasts.apple.com/de/podcast/radiowissen/id257719552?uo=4'},
+  {name:'Das Wissen (SWR)',cat:'Wissenschaft',icon:'ð¬',bg:'#1a2e2e',desc:'Gut recherchierte Features zu wissenschaftlichen und gesellschaftlichen Themen.',offdesc:'Wichtige Zusammenhänge, überraschende Hintergründe, gründliche Recherchen. Täglich Neues aus Gesundheit und Ökologie, Wissenschaft und Weltgeschehen im Podcast Das Wissen. Manuskripte und weitere Informationen zu den…',img:'assets/images/podcasts/das-wissen-swr.jpg',url:'https://podcasts.apple.com/de/podcast/das-wissen-swr/id104913043?uo=4'},
+  {name:'Alles Geschichte',cat:'Geschichte',icon:'ð',bg:'#2a2e1a',desc:'Historische Ereignisse und Persönlichkeiten verständlich erzählt.',offdesc:'Hinter allem steckt Geschichte und wir erzählen sie euch - euer History-Podcast.',img:'assets/images/podcasts/alles-geschichte.jpg',url:'https://podcasts.apple.com/de/podcast/alles-geschichte-der-history-podcast/id1537934452?uo=4'},
+  {name:'Wie wir ticken',cat:'Psychologie',icon:'ð§ ',bg:'#2e1a1a',desc:'Psychologische Erklärungen zu Verhalten, Emotionen und menschlichen Denkweisen.',offdesc:'Jeder Mensch tickt anders – doch warum? Psychologie hilft, unsere Wahrnehmung zu schärfen und sich und andere besser zu verstehen. Wir sprechen über die Facetten von Liebe, Partnerschaft und Freundschaft, wir fragen…',img:'assets/images/podcasts/wie-wir-ticken.jpg',url:'https://podcasts.apple.com/de/podcast/wie-wir-ticken-euer-psychologie-podcast/id1723821916?uo=4'},
+  {name:'Danke, gut.',cat:'Mental Health',icon:'ð',bg:'#1a2e1a',desc:'Podcast über Psyche, Alltag und persönliche Entwicklung — offen und ehrlich.',offdesc:'Über fünf Millionen Menschen in Deutschland leiden unter Depressionen. Beinahe Jede*r kommt in seinem Leben selbst, im eigenen Umfeld oder durch Popkultur damit in Kontakt. Trotzdem wird wenig über Depression und…',img:'assets/images/podcasts/danke-gut.jpg',url:'https://podcasts.apple.com/de/podcast/danke-gut-der-cosmo-podcast-%C3%BCber-pop-und-psyche/id1526787716?uo=4'},
+  {name:'Stahl aber herzlich',cat:'Psychologie',icon:'ðª',bg:'#2e2e1a',desc:'Gespräche über Beziehungen, Selbstwert und persönliche Entwicklung.',offdesc:'Der Podcast direkt von der Therapie-Couch. Ob Beziehungsfragen, Selbstzweifel oder Bindungsangst: In jeder Folge behandelt die Bestsellerautorin und Psychologin Stefanie Stahl ein spezifisches Problem mit echten…',img:'assets/images/podcasts/stahl-aber-herzlich.jpg',url:'https://podcasts.apple.com/de/podcast/stahl-aber-herzlich-der-psychotherapie-podcast-mit/id1545894332?uo=4'},
+  {name:'Wie wir werden, die wir sind',cat:'Psychologie',icon:'ð±',bg:'#1a2e1a',desc:'Ãber Trauma, Bindung und persönliche Lebensentwicklung.',offdesc:'Über Trauma, Verbundenheit und das Leben. In diesem Podcast übersetzt Dami Charf komplexe psychologische Konzepte verständlich in Alltagssprache. Sie schlägt dabei die Brücke zwischen Wissen und Erfahrung. Der Podcast…',img:'assets/images/podcasts/wie-wir-werden-die-wir-sind.jpg',url:'https://podcasts.apple.com/de/podcast/dami-charf-wie-wir-werden-die-wir-sind/id1781238322?uo=4'},
+  {name:'Psychologie to go!',cat:'Psychologie',icon:'ð',bg:'#2e1a2e',desc:'Alltagsnahe psychologische Erklärungen zu Beziehungen, Verhalten und Emotionen.',offdesc:'Bin ich ein Messie? Wie bekomme ich meine Eifersucht in den Griff? Woran erkenne ich einen Narzissten? Jeden Sonntag gibt die Psychotherapeutin Franca Cerutti Einblicke in ihre Praxis und in die spannende Welt der…',img:'assets/images/podcasts/psychologie-to-go.jpg',url:'https://podcasts.apple.com/de/podcast/psychologie-to-go/id1332049198?uo=4'},
+  {name:'eat.READ.sleep (NDR)',cat:'Literatur',icon:'ð',bg:'#2e1a1a',desc:'Literaturpodcast mit Buchbesprechungen, Lesetipps und Autorengesprächen.',offdesc:'Was macht ein richtig gutes Cover aus? Jan und Daniel sprechen mit Britta Egetemeier vom Penguin Verlag über gute und weniger gute Einfälle. Wie viel Mitspracherecht haben hier die Autorinnen und Autoren? Und warum…',img:'assets/images/podcasts/eat-read-sleep-ndr.jpg',url:'https://podcasts.apple.com/de/podcast/eat-read-sleep-b%C3%BCcher-f%C3%BCr-dich/id1517396087?uo=4'},
+  {name:'Kapitel Eins',cat:'Literatur',icon:'ð',bg:'#1a1a2e',desc:'Podcast über Bücher, Lesen und literarische Themen.',offdesc:'',img:'assets/images/podcasts/kapitel-eins.jpg',url:'https://podcasts.apple.com/de/podcast/kapitel-eins/id1434964283?uo=4'},
+  {name:'Plusminus',cat:'Wirtschaft',icon:'ð',bg:'#1a2a2e',desc:'ARD-Wirtschaftspodcast über Finanzen, Verbraucherfragen und Wirtschaftspolitik.',offdesc:'Geld. Tech. Zukunft. Anna Planken und David Ahlf packen Themen an, die wirklich relevant sind. Jeden Mittwoch ein neuer Fokus auf Mobilität, Immobilien, Energie und mehr. Aufwendige Recherchen aus den…',img:'assets/images/podcasts/plusminus.jpg',url:'https://podcasts.apple.com/de/podcast/plusminus-mehr-als-nur-wirtschaft/id1740510494?uo=4'},
+  {name:'Die Schule brennt',cat:'Bildung',icon:'ð¥',bg:'#2e1a1a',desc:'Ãber Bildungssystem, Schule und gesellschaftliche Herausforderungen.',offdesc:'Im Bildungssystem herrscht Reformstau. Die schulischen Leistungen gehen zurück, es fehlen tausende Lehrkräfte bei gleichzeitig wachsender Bildungsungerechtigkeit. Und dann noch KI! Es gibt in Schulen aber auch tolle…',img:'assets/images/podcasts/die-schule-brennt.jpg',url:'https://podcasts.apple.com/de/podcast/die-schule-brennt-der-bildungspodcast-mit-bob-blume/id1660743375?uo=4'},
 ];
 const HOERB=[
-  {title:'Sprache ohne Worte',author:'Peter A. Levine',cat:'Psychologie',dauer:'10 Std. 26 Min.'},
-  {title:'The Polyvagal Theory',author:'Stephen W. Porges',cat:'Wissenschaft',dauer:'5 Std. 4 Min.'},
-  {title:'Das Kind in dir muss Heimat finden',author:'Stefanie Stahl',cat:'Psychologie',dauer:'6 Std. 49 Min.'},
-  {title:'People Pleasing – Raus aus der Harmoniefalle',author:'Ulrike Bossmann',cat:'Selbstentwicklung',dauer:'1 Std. 56 Min.'},
-  {title:'So stärken Sie Ihr Selbstwertgefühl',author:'Stefanie Stahl',cat:'Psychologie',dauer:''},
-  {title:'Die 6 Säulen des Selbstwertgefühls',author:'Nathaniel Branden',cat:'Psychologie',dauer:'13 Std. 30 Min.'},
-  {title:'Tim (offizielle Avicii-Biografie)',author:'Måns Mosesson',cat:'Musik / Biografie',dauer:''},
-  {title:'Blood, Sweat, and Pixels',author:'Jason Schreier',cat:'Gaming',dauer:''},
-  {title:'Die Antwort lautet NEIN',author:'Fredrik Backman',cat:'Literatur',dauer:''},
-  {title:'Den Netten beißen die Hunde',author:'Martin Wehrle',cat:'Selbstentwicklung',dauer:'6 Std. 50 Min.'},
-  {title:'Die schönsten Märchen – Die größte Box',author:'Grimm, Andersen, Hauff u.a.',cat:'Literatur',dauer:'30 Std. 3 Min.'},
-  {title:'Play Nice (Blizzard-Biografie)',author:'Jason Schreier',cat:'Gaming',dauer:''},
-  {title:'Wie man Mensch wird (Montaigne-Biografie)',author:'Sarah Bakewell',cat:'Philosophie',dauer:'17 Std. 3 Min.'},
-  {title:'Die beste aller möglichen Welten (Leibniz)',author:'Michael Kempe',cat:'Philosophie',dauer:'8 Std. 30 Min.'},
-  {title:'Klassiker des philosophischen Denkens',author:'Platon, Aristoteles, Nietzsche u.a.',cat:'Philosophie',dauer:'49 Std. 5 Min.'},
-  {title:'Der tägliche Stoiker',author:'Ryan Holiday',cat:'Philosophie',dauer:'11 Std. 37 Min.'},
-  {title:'Die nackte Wahrheit',author:'Hans Blumenberg',cat:'Philosophie',dauer:'7 Std. 42 Min.'},
-  {title:'Wie soll ich leben? (Montaigne)',author:'Sarah Bakewell',cat:'Philosophie',dauer:'4 Std. 39 Min.'},
-  {title:'Phaidon',author:'Platon',cat:'Philosophie',dauer:'3 Std. 35 Min.'},
-  {title:'Essais',author:'Michel de Montaigne',cat:'Philosophie',dauer:'7 Std. 5 Min.'},
-  {title:'Feuer der Freiheit',author:'Wolfram Eilenberger',cat:'Philosophie',dauer:'12 Std. 39 Min.'},
-  {title:'Alte Meister',author:'Thomas Bernhard',cat:'Literatur',dauer:'7 Std. 7 Min.'},
-  {title:'Hölderlin',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'11 Std. 31 Min.'},
-  {title:'Wo selbst die Wege nachdenklich werden',author:'Andreas Hüser',cat:'Philosophie',dauer:'7 Std. 30 Min.'},
-  {title:'Du musst nicht von allen gemocht werden',author:'Ichiro Kishimi',cat:'Selbstentwicklung',dauer:'6 Std. 5 Min.'},
-  {title:'A Secular Age',author:'Charles Taylor',cat:'Philosophie',dauer:'30 Std. 19 Min.'},
-  {title:'Gedanken (Pensées)',author:'Blaise Pascal',cat:'Philosophie',dauer:'5 Std. 7 Min.'},
-  {title:'Zur Geschichte der Religion und Philosophie in Deutschland',author:'Heinrich Heine',cat:'Philosophie',dauer:'6 Std. 16 Min.'},
-  {title:'Unpopuläre Betrachtungen',author:'Bertrand Russell',cat:'Philosophie',dauer:'8 Std.'},
-  {title:'Sorge dich nicht – lebe!',author:'Dale Carnegie',cat:'Selbstentwicklung',dauer:'8 Std. 45 Min.'},
-  {title:'Kulturgeschichte der Neuzeit',author:'Egon Friedell',cat:'Geschichte',dauer:'9 Std. 17 Min.'},
-  {title:'Wie man Freunde gewinnt',author:'Dale Carnegie',cat:'Selbstentwicklung',dauer:'7 Std. 29 Min.'},
-  {title:'Goethe',author:'Rüdiger Safranski',cat:'Geschichte',dauer:'28 Std. 16 Min.'},
-  {title:'Warum es die Welt nicht gibt',author:'Markus Gabriel',cat:'Philosophie',dauer:'7 Std. 14 Min.'},
-  {title:'Zeit',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'6 Std. 49 Min.'},
-  {title:'Romantik',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'5 Std. 17 Min.'},
-  {title:'Der Gotteswahn',author:'Richard Dawkins',cat:'Wissenschaft',dauer:'5 Std. 16 Min.'},
-  {title:'Momo',author:'Michael Ende',cat:'Literatur',dauer:''},
-  {title:'Zeit der Zauberer',author:'Wolfram Eilenberger',cat:'Philosophie',dauer:'13 Std. 58 Min.'},
-  {title:'Das Philosophen-Portal',author:'Robert Zimmer',cat:'Philosophie',dauer:'5 Std. 53 Min.'},
-  {title:'Das Café der Existenzialisten',author:'Sarah Bakewell',cat:'Philosophie',dauer:'15 Std. 32 Min.'},
-  {title:'Große Denker: Nietzsche, Freud, Einstein, Sartre',author:'div.',cat:'Philosophie',dauer:'1 Std. 7 Min.'},
-  {title:'Große Denker: Kant, Hegel, Darwin, Marx',author:'div.',cat:'Philosophie',dauer:'1 Std. 11 Min.'},
-  {title:'40 bedeutende Personen der Weltgeschichte',author:'div.',cat:'Geschichte',dauer:'11 Std. 56 Min.'},
-  {title:'Don Quijote von der Mancha',author:'Miguel de Cervantes',cat:'Literatur',dauer:'48 Std. 25 Min.'},
+  {title:'Sprache ohne Worte',author:'Peter A. Levine',cat:'Psychologie',dauer:'10 Std. 26 Min.',img:'assets/images/audiobooks/sprache-ohne-worte-peter-a-levine.jpg'},
+  {title:'The Polyvagal Theory',author:'Stephen W. Porges',cat:'Wissenschaft',dauer:'5 Std. 4 Min.',img:'assets/images/audiobooks/the-polyvagal-theory-stephen-w-porges.jpg'},
+  {title:'Das Kind in dir muss Heimat finden',author:'Stefanie Stahl',cat:'Psychologie',dauer:'6 Std. 49 Min.',img:'assets/images/audiobooks/das-kind-in-dir-muss-heimat-finden-stefanie-stahl.jpg'},
+  {title:'People Pleasing – Raus aus der Harmoniefalle',author:'Ulrike Bossmann',cat:'Selbstentwicklung',dauer:'1 Std. 56 Min.',img:''},
+  {title:'So stärken Sie Ihr Selbstwertgefühl',author:'Stefanie Stahl',cat:'Psychologie',dauer:'',img:''},
+  {title:'Die 6 Säulen des Selbstwertgefühls',author:'Nathaniel Branden',cat:'Psychologie',dauer:'13 Std. 30 Min.',img:''},
+  {title:'Tim (offizielle Avicii-Biografie)',author:'MÃ¥ns Mosesson',cat:'Musik / Biografie',dauer:'',img:'assets/images/audiobooks/tim-offizielle-avicii-biografie-m-ns-mosesson.jpg'},
+  {title:'Blood, Sweat, and Pixels',author:'Jason Schreier',cat:'Gaming',dauer:'',img:'assets/images/audiobooks/blood-sweat-and-pixels-jason-schreier.jpg'},
+  {title:'Die Antwort lautet NEIN',author:'Fredrik Backman',cat:'Literatur',dauer:'',img:'assets/images/audiobooks/die-antwort-lautet-nein-fredrik-backman.jpg'},
+  {title:'Den Netten beiÃen die Hunde',author:'Martin Wehrle',cat:'Selbstentwicklung',dauer:'6 Std. 50 Min.',img:''},
+  {title:'Die schönsten Märchen – Die gröÃte Box',author:'Grimm, Andersen, Hauff u.a.',cat:'Literatur',dauer:'30 Std. 3 Min.',img:''},
+  {title:'Play Nice (Blizzard-Biografie)',author:'Jason Schreier',cat:'Gaming',dauer:'',img:'assets/images/audiobooks/play-nice-blizzard-biografie-jason-schreier.jpg'},
+  {title:'Wie man Mensch wird (Montaigne-Biografie)',author:'Sarah Bakewell',cat:'Philosophie',dauer:'17 Std. 3 Min.',img:'assets/images/audiobooks/wie-man-mensch-wird-montaigne-biografie-sarah-bakewell.jpg'},
+  {title:'Die beste aller möglichen Welten (Leibniz)',author:'Michael Kempe',cat:'Philosophie',dauer:'8 Std. 30 Min.',img:''},
+  {title:'Klassiker des philosophischen Denkens',author:'Platon, Aristoteles, Nietzsche u.a.',cat:'Philosophie',dauer:'49 Std. 5 Min.',img:'assets/images/audiobooks/klassiker-des-philosophischen-denkens-platon-aristoteles-nietzsche-u-a.jpg'},
+  {title:'Der tägliche Stoiker',author:'Ryan Holiday',cat:'Philosophie',dauer:'11 Std. 37 Min.',img:''},
+  {title:'Die nackte Wahrheit',author:'Hans Blumenberg',cat:'Philosophie',dauer:'7 Std. 42 Min.',img:'assets/images/audiobooks/die-nackte-wahrheit-hans-blumenberg.jpg'},
+  {title:'Wie soll ich leben? (Montaigne)',author:'Sarah Bakewell',cat:'Philosophie',dauer:'4 Std. 39 Min.',img:'assets/images/audiobooks/wie-soll-ich-leben-montaigne-sarah-bakewell.jpg'},
+  {title:'Phaidon',author:'Platon',cat:'Philosophie',dauer:'3 Std. 35 Min.',img:'assets/images/audiobooks/phaidon-platon.jpg'},
+  {title:'Essais',author:'Michel de Montaigne',cat:'Philosophie',dauer:'7 Std. 5 Min.',img:'assets/images/audiobooks/essais-michel-de-montaigne.jpg'},
+  {title:'Feuer der Freiheit',author:'Wolfram Eilenberger',cat:'Philosophie',dauer:'12 Std. 39 Min.',img:''},
+  {title:'Alte Meister',author:'Thomas Bernhard',cat:'Literatur',dauer:'7 Std. 7 Min.',img:'assets/images/audiobooks/alte-meister-thomas-bernhard.jpg'},
+  {title:'Hölderlin',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'11 Std. 31 Min.',img:''},
+  {title:'Wo selbst die Wege nachdenklich werden',author:'Andreas Hüser',cat:'Philosophie',dauer:'7 Std. 30 Min.',img:'assets/images/audiobooks/wo-selbst-die-wege-nachdenklich-werden-andreas-h-ser.jpg'},
+  {title:'Du musst nicht von allen gemocht werden',author:'Ichiro Kishimi',cat:'Selbstentwicklung',dauer:'6 Std. 5 Min.',img:'assets/images/audiobooks/du-musst-nicht-von-allen-gemocht-werden-ichiro-kishimi.jpg'},
+  {title:'A Secular Age',author:'Charles Taylor',cat:'Philosophie',dauer:'30 Std. 19 Min.',img:'assets/images/audiobooks/a-secular-age-charles-taylor.jpg'},
+  {title:'Gedanken (PensÃ©es)',author:'Blaise Pascal',cat:'Philosophie',dauer:'5 Std. 7 Min.',img:''},
+  {title:'Zur Geschichte der Religion und Philosophie in Deutschland',author:'Heinrich Heine',cat:'Philosophie',dauer:'6 Std. 16 Min.',img:'assets/images/audiobooks/zur-geschichte-der-religion-und-philosophie-in-deutschland-heinrich-heine.jpg'},
+  {title:'Unpopuläre Betrachtungen',author:'Bertrand Russell',cat:'Philosophie',dauer:'8 Std.',img:''},
+  {title:'Sorge dich nicht – lebe!',author:'Dale Carnegie',cat:'Selbstentwicklung',dauer:'8 Std. 45 Min.',img:'assets/images/audiobooks/sorge-dich-nicht-lebe-dale-carnegie.jpg'},
+  {title:'Kulturgeschichte der Neuzeit',author:'Egon Friedell',cat:'Geschichte',dauer:'9 Std. 17 Min.',img:'assets/images/audiobooks/kulturgeschichte-der-neuzeit-egon-friedell.jpg'},
+  {title:'Wie man Freunde gewinnt',author:'Dale Carnegie',cat:'Selbstentwicklung',dauer:'7 Std. 29 Min.',img:'assets/images/audiobooks/wie-man-freunde-gewinnt-dale-carnegie.jpg'},
+  {title:'Goethe',author:'Rüdiger Safranski',cat:'Geschichte',dauer:'28 Std. 16 Min.',img:''},
+  {title:'Warum es die Welt nicht gibt',author:'Markus Gabriel',cat:'Philosophie',dauer:'7 Std. 14 Min.',img:'assets/images/audiobooks/warum-es-die-welt-nicht-gibt-markus-gabriel.jpg'},
+  {title:'Zeit',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'6 Std. 49 Min.',img:''},
+  {title:'Romantik',author:'Rüdiger Safranski',cat:'Philosophie',dauer:'5 Std. 17 Min.',img:''},
+  {title:'Der Gotteswahn',author:'Richard Dawkins',cat:'Wissenschaft',dauer:'5 Std. 16 Min.',img:'assets/images/audiobooks/der-gotteswahn-richard-dawkins.jpg'},
+  {title:'Momo',author:'Michael Ende',cat:'Literatur',dauer:'',img:'assets/images/audiobooks/momo-michael-ende.jpg'},
+  {title:'Zeit der Zauberer',author:'Wolfram Eilenberger',cat:'Philosophie',dauer:'13 Std. 58 Min.',img:'assets/images/audiobooks/zeit-der-zauberer-wolfram-eilenberger.jpg'},
+  {title:'Das Philosophen-Portal',author:'Robert Zimmer',cat:'Philosophie',dauer:'5 Std. 53 Min.',img:'assets/images/audiobooks/das-philosophen-portal-robert-zimmer.jpg'},
+  {title:'Das CafÃ© der Existenzialisten',author:'Sarah Bakewell',cat:'Philosophie',dauer:'15 Std. 32 Min.',img:''},
+  {title:'GroÃe Denker: Nietzsche, Freud, Einstein, Sartre',author:'div.',cat:'Philosophie',dauer:'1 Std. 7 Min.',img:''},
+  {title:'GroÃe Denker: Kant, Hegel, Darwin, Marx',author:'div.',cat:'Philosophie',dauer:'1 Std. 11 Min.',img:''},
+  {title:'40 bedeutende Personen der Weltgeschichte',author:'div.',cat:'Geschichte',dauer:'11 Std. 56 Min.',img:''},
+  {title:'Don Quijote von der Mancha',author:'Miguel de Cervantes',cat:'Literatur',dauer:'48 Std. 25 Min.',img:'assets/images/audiobooks/don-quijote-von-der-mancha-miguel-de-cervantes.jpg'},
 ];
 const HBC={Philosophie:'hb-philo',Psychologie:'hb-psych',Gaming:'hb-gaming',Literatur:'hb-lit',
   Selbstentwicklung:'hb-selbst',Geschichte:'hb-gesch',Wissenschaft:'hb-wiss','Musik / Biografie':'hb-musik'};
@@ -167,8 +177,19 @@ function renderPods(){
   const g=document.getElementById('pod-grid2');g.innerHTML='';
   (activeCat==='Alle'?PODS:PODS.filter(p=>p.cat===activeCat)).forEach(p=>{
     const d=document.createElement('div');d.className='pod-card2';
-    d.innerHTML='<div class="pod-icon2" style="background:'+p.bg+'">'+p.icon+'</div>'
-      +'<div><div class="pod-name2">'+p.name+'</div><span class="pod-badge">'+p.cat+'</span><div class="pod-desc2">'+p.desc+'</div></div>';
+    const safeName = p.name.replace(/"/g,'&quot;');
+    const cover = p.img
+      ? '<img class="pod-cover2" src="'+p.img+'" alt="'+safeName+' Cover" loading="lazy">'
+      : '<div class="pod-icon2" style="background:'+p.bg+'">'+p.icon+'</div>';
+    const linkIcon = p.url
+      ? '<a class="pod-link2" href="'+p.url+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Auf Apple Podcasts öffnen">↗</a>'
+      : '';
+    const officialDesc = (p.offdesc && p.offdesc.length>10)
+      ? '<div class="pod-offdesc"><span class="pod-offlabel">Offiziell:</span> '+p.offdesc+'</div>' : '';
+    d.innerHTML = cover + '<div class="pod-body2"><div class="pod-name2">'+p.name+linkIcon+'</div>'
+                + '<span class="pod-badge">'+p.cat+'</span>'
+                + '<div class="pod-desc2">'+p.desc+'</div>' + officialDesc + '</div>';
+    if (p.url) { d.style.cursor='pointer'; d.onclick=function(e){ if(e.target.tagName!=='A') window.open(p.url,'_blank','noopener'); }; }
     g.appendChild(d);
   });
 }
@@ -178,26 +199,24 @@ renderPods();
 let hbS='title',hbD=1;
 window.sortHB=function(c){if(hbS===c)hbD*=-1;else{hbS=c;hbD=1;}filterHB();};
 window.filterHB=function(){
-  const q=(document.getElementById('hb-search')||{value:''}).value.toLowerCase();
-  const cat=(document.getElementById('hb-cat')||{value:''}).value;
-  let d=HOERB.filter(h=>{
-    if(cat&&h.cat!==cat)return false;
-    if(q&&!h.title.toLowerCase().includes(q)&&!h.author.toLowerCase().includes(q))return false;
-    return true;
-  });
-  d.sort((a,b)=>((a[hbS]||'').localeCompare(b[hbS]||'','de'))*hbD);
-  const tb=document.getElementById('hb-tbody');tb.innerHTML='';
-  d.forEach(h=>{
-    const cls=HBC[h.cat]||'hb-wiss';
+  const tb=document.getElementById('hb-tbody'); if(!tb) return;
+  const s=document.getElementById('hb-search'); const c=document.getElementById('hb-cat');
+  const q=(s&&s.value||'').toLowerCase(); const fc=c&&c.value||'';
+  let arr=HOERB.filter(h=>(!fc||h.cat===fc)&&(!q||(h.title+h.author).toLowerCase().includes(q)));
+  arr.sort((a,b)=>{const x=a[hbS]||'',y=b[hbS]||'';return x<y?-hbD:x>y?hbD:0;});
+  tb.innerHTML='';
+  arr.forEach(h=>{
     const tr=document.createElement('tr');
-    tr.innerHTML='<td><div class="hb-title-cell">'+h.title+'</div></td>'
-      +'<td style="color:var(--text3);font-size:.78rem">'+h.author+'</td>'
-      +'<td><span class="hb-badge '+cls+'">'+h.cat+'</span></td>'
-      +'<td style="font-family:var(--fm);font-size:.73rem;color:var(--text3);white-space:nowrap">'+h.dauer+'</td>';
+    const cover = h.img ? '<img class="hb-cover" src="'+h.img+'" alt="" loading="lazy">'
+                        : '<div class="hb-cover hb-cover-none">📖</div>';
+    const cls = {'Philosophie':'hb-philo','Psychologie':'hb-psych','Gaming':'hb-gaming','Literatur':'hb-lit','Selbstentwicklung':'hb-selbst','Geschichte':'hb-gesch','Wissenschaft':'hb-wiss','Musik / Biografie':'hb-musik'}[h.cat]||'';
+    tr.innerHTML='<td class="hb-title-cell"><div class="hb-row-inner">'+cover+'<span>'+h.title+'</span></div></td>'
+                +'<td>'+h.author+'</td>'
+                +'<td><span class="hb-badge '+cls+'">'+h.cat+'</span></td>'
+                +'<td>'+h.dauer+'</td>';
     tb.appendChild(tr);
   });
-  const cnt=document.getElementById('hb-count');
-  if(cnt)cnt.textContent=d.length+' von '+HOERB.length+' Titeln';
+  const cnt=document.getElementById('hb-count'); if(cnt) cnt.textContent=arr.length+' Titel';
 };
 filterHB();
 // Expose as global so pages.js renderPodcasts() call works too

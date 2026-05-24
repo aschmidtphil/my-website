@@ -84,6 +84,12 @@ const DB = {
     {badge:'gb-diablo',badgeText:'D4',title:'Diablo 4 — Ambition',text:'Lilith als Antagonistin ist brillant. Die offene Welt und das Worldbuilding sind das bisher stärkste der Reihe.',tags:['Lilith','Open World','Seasons']},
     {badge:'gb-diablo',badgeText:'KLASSEN',title:'Lieblingsklassen',text:'Necromancer für den philosophischen Touch: Herrschaft über Leben und Tod als Spielmechanik. Rogue für Eleganz des Bewegungsflusses.',tags:['Necromancer','Rogue','Sorcerer']},
   ],
+  hs:[
+    {badge:'gb-hs',badgeText:'HEARTHSTONE',title:'Hearthstone — der Einstieg',text:'Mit dem Beta-Release gezockt. Das Deckbuilding-System war für mich faszinierend — Schach trifft Poker trifft Blizzard-Universum. Die Vanilla-Meta war noch ausgewogen und kreativ.',tags:['Deckbuilding','TCG','Beta']},
+    {badge:'gb-hs',badgeText:'ARENA',title:'Arena — das Herzstück',text:'Der Draft-Modus war Hearthstone at its best: Kein Pay-to-Win, reines Spielverständnis. 12 Wins zu erreichen war ein echter Meilenstein.',tags:['Arena','Draft','Skill']},
+    {badge:'gb-hs',badgeText:'KLASSEN',title:'Lieblingsklassen',text:'Mage für die klassische Kontrolle und Zauberschaden. Rogue für den Combo-Stil und das Gefühl, etwas Cleveres gebaut zu haben. Warrior für die epischen Control-Spiele.',tags:['Mage','Rogue','Warrior']},
+    {badge:'gb-hs',badgeText:'HEUTE',title:'Wohin die Reise ging',text:'Hearthstone hat leider den Monetarisierungs-Weg eingeschlagen: zu viele Erweiterungen, zu schnelle Rotation, Pay-to-Compete. Ein gutes Beispiel dafür, wie ein geniales Konzept durch Geschäftsstrategie kompromittiert wird.',tags:['Monetarisierung','Meta','Power Creep']},
+  ],
   sotc:[
     {badge:'gb-sotc',badgeText:'SOTC',title:'Shadow of the Colossus',text:'Das Spiel, das ich am meisten als Kunst bezeichnen würde. 16 gigantische Kolosse, eine leere Welt, eine Frage nach dem Preis des Handelns.',tags:['Agro','Wander','Team Ico']},
     {badge:'gb-sotc',badgeText:'LIEBLING',title:'Lieblingskoloss: Malus',text:'Der finale Koloss — ein Monument aus Stein, das aus dem Sturm ragt. Der Aufstieg ist ein Ritual. Monumental und still.',tags:['Final Boss','Malus','Epik']},

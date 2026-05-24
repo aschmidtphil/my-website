@@ -1,49 +1,124 @@
 <style>
-/* Audio toast notification */
-.audio-toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:.75rem 1.1rem;box-shadow:0 8px 32px rgba(0,0,0,.18);display:flex;align-items:center;gap:.6rem;font-family:var(--fm);font-size:.75rem;color:var(--text2);z-index:400;transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
-.audio-toast.show{transform:translateY(0);opacity:1;}
-.audio-toast-icon{font-size:1.1rem;}
+/* Game image lightbox */
+.game-lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:3000;display:none;align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;}
+.game-lb.open{display:flex;}
+.game-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:10px;box-shadow:0 8px 64px rgba(0,0,0,.7);cursor:default;user-select:none;}
+.game-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:3001;}
+.game-lb-x:hover{background:rgba(255,255,255,.3);}
+.game-lb-caption{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-family:var(--fm);font-size:.78rem;letter-spacing:.04em;pointer-events:none;text-align:center;}
+/* Make cover image show pointer cursor */
+.game-card-cover-wrap{cursor:zoom-in;}
+/* Blizzard sub-tabs */
+.bliz-tabs{display:flex;gap:0;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin:.75rem 0 1.5rem;width:fit-content;flex-wrap:wrap;}
+.btab{padding:.48rem .95rem;background:transparent;border:none;color:var(--text2);cursor:pointer;font-family:var(--fh);font-size:.76rem;font-weight:600;transition:all .2s;border-right:1px solid var(--border);white-space:nowrap;}
+.btab:last-child{border-right:none;}
+.btab.active{background:rgba(255,149,0,.85);color:#fff;}
+.btab:hover:not(.active){background:rgba(255,149,0,.1);color:var(--text);}
+.bliz-sub{display:none;}.bliz-sub.active{display:block;}
+.bliz-overview{max-width:100%;}
 </style>
 
 <div class="gaming-hero-area">
   <div class="gaming-hero-glow"></div>
   <p class="hero-tag">Leidenschaft &amp; Reflexion</p>
-  <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Gaming<span style="color:var(--accent3)">.</span></h1>
+  <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">
+    Gaming<span style="color:var(--accent3)">.</span>
+  </h1>
   <p style="color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
-    Videospiele als kulturelle und narrative Kunst &mdash; eine pers&ouml;nliche Auswahl der Spiele, die mich gepr&auml;gt oder philosophisch inspiriert haben.</p>
+    Videospiele als kulturelle und narrative Kunst &mdash; eine pers&ouml;nliche Auswahl der Spiele,
+    die mich gepr&auml;gt oder philosophisch inspiriert haben.
+  </p>
 </div>
-<div style="height:.65rem"></div>
+
 <div class="g-tabs" id="g-tab-bar">
-  <button class="gtab active" onclick="showGTab('wc3',0)">Warcraft III</button>
-  <button class="gtab"        onclick="showGTab('sc',1)">StarCraft</button>
-  <button class="gtab"        onclick="showGTab('diablo',2)">Diablo</button>
-  <button class="gtab"        onclick="showGTab('sotc',3)">Shadow of the Colossus</button>
-  <button class="gtab"        onclick="showGTab('hk',4)">Hollow Knight</button>
-  <button class="gtab"        onclick="showGTab('ff',5)">Final Fantasy</button>
-  <button class="gtab"        onclick="showGTab('lufia',6)">Lufia 2</button>
-  <button class="gtab"        onclick="showGTab('kknd',7)">KKND 2</button>
-  <button class="gtab"        onclick="showGTab('fc',8)" id="gtab-fc">Future Cop</button>
-  <button class="gtab"        onclick="showGTab('sg',9)">Steins;Gate</button>
-  <button class="gtab"        onclick="showGTab('pw',10)">Phoenix Wright</button>
-  <button class="gtab"        onclick="showGTab('mmbn',11)">Mega Man BN</button>
-  <button class="gtab"        onclick="showGTab('pokemon',12)">Pok&eacute;mon</button>
+  <button class="gtab active"  onclick="showGTab('blizzard',0)">&#127381; Blizzard</button>
+  <button class="gtab"         onclick="showGTab('sotc',1)">Shadow of the Colossus</button>
+  <button class="gtab"         onclick="showGTab('hk',2)">Hollow Knight</button>
+  <button class="gtab"         onclick="showGTab('ff',3)">Final Fantasy</button>
+  <button class="gtab"         onclick="showGTab('lufia',4)">Lufia 2</button>
+  <button class="gtab"         onclick="showGTab('kknd',5)">KKND 2</button>
+  <button class="gtab"         onclick="showGTab('fc',6)">Future Cop</button>
+  <button class="gtab"         onclick="showGTab('sg',7)">Steins;Gate</button>
+  <button class="gtab"         onclick="showGTab('pw',8)">Phoenix Wright</button>
+  <button class="gtab"         onclick="showGTab('mmbn',9)">Mega Man BN</button>
+  <button class="gtab"         onclick="showGTab('pokemon',10)">Pok&eacute;mon</button>
 </div>
-<div class="g-section active" id="gs-wc3"><div class="game-grid" id="wc3-grid"></div></div>
-<div class="g-section" id="gs-sc"><div class="game-grid" id="sc-grid"></div></div>
-<div class="g-section" id="gs-diablo"><div class="game-grid" id="diablo-grid"></div></div>
-<div class="g-section" id="gs-sotc"><div class="game-grid" id="sotc-grid"></div></div>
-<div class="g-section" id="gs-hk"><div class="game-grid" id="hk-grid"></div></div>
-<div class="g-section" id="gs-ff"><div class="game-grid" id="ff-grid"></div></div>
-<div class="g-section" id="gs-lufia"><div class="game-grid" id="lufia-grid"></div></div>
-<div class="g-section" id="gs-kknd"><div class="game-grid" id="kknd-grid"></div></div>
-<div class="g-section" id="gs-fc"><div class="game-grid" id="fc-grid"></div></div>
-<div class="g-section" id="gs-sg"><div class="game-grid" id="sg-grid"></div></div>
-<div class="g-section" id="gs-pw"><div class="game-grid" id="pw-grid"></div></div>
-<div class="g-section" id="gs-mmbn"><div class="game-grid" id="mmbn-grid"></div></div>
+
+
+
+
+<div class="g-section"        id="gs-sotc"> <div class="game-grid" id="sotc-grid"></div></div>
+<div class="g-section"        id="gs-hk">   <div class="game-grid" id="hk-grid"></div></div>
+<div class="g-section"        id="gs-ff">   <div class="game-grid" id="ff-grid"></div></div>
+<div class="g-section"        id="gs-lufia"><div class="game-grid" id="lufia-grid"></div></div>
+<div class="g-section"        id="gs-kknd"> <div class="game-grid" id="kknd-grid"></div></div>
+<div class="g-section"        id="gs-fc">   <div class="game-grid" id="fc-grid"></div></div>
+<div class="g-section"        id="gs-sg">   <div class="game-grid" id="sg-grid"></div></div>
+<div class="g-section"        id="gs-pw">   <div class="game-grid" id="pw-grid"></div></div>
+<div class="g-section"        id="gs-mmbn"> <div class="game-grid" id="mmbn-grid"></div></div>
+
+<div class="g-section active" id="gs-blizzard">
+<div style="padding:1rem 0">
+
+  <!-- Overview text -->
+  <div class="bliz-overview">
+    <div style="font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem">Persönliche Perspektive</div>
+    <h2 style="font-family:var(--fh);font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:.85rem;letter-spacing:-.02em">
+      Blizzard Entertainment
+    </h2>
+    <p style="color:var(--text2);font-size:.9rem;line-height:1.85;margin-bottom:.85rem;">
+      Seit StarCraft bin ich großer Blizzard-Fan. Warcraft, Diablo, WoW &mdash; diese Spiele haben mich
+      durch Kindheit und Jugend begleitet und sind Teil meiner Biografie. Blizzard stand für ein
+      Versprechen: <em style="color:var(--text);font-style:normal;font-weight:600">Players First, Fun First.</em>
+      Qualität vor Schnelligkeit, Spaß vor Monetarisierung.
+    </p>
+    <p style="color:var(--text2);font-size:.9rem;line-height:1.85;margin-bottom:.85rem;">
+      Jason Schreiers <strong style="color:var(--text)">Play Nice</strong> hat dieses Bild bestätigt
+      und vertieft. Auf der einen Seite <span style="color:var(--accent3);font-weight:600">Mike Morhaime</span>,
+      der Mitgründer, der <em>Players First</em> verkörperte. Auf der anderen
+      <span style="color:var(--accent2);font-weight:600">Bobby Kotick</span>, der
+      <em>Investors First</em> propagierte und Blizzard zunehmend als Cash-Cow behandelte.
+    </p>
+    <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:1.25rem;">
+      Im Kern ist das kein Blizzard-spezifisches Problem &mdash; es ist das Schicksal vieler kreativer
+      Unternehmen, die groß genug werden, um börsennotiert zu sein: Verantwortung für Tausende
+      Arbeitsplätze und Investoren erzwingt sicheren Geldfluss. Innovation und Spaß treten zurück,
+      Marken werden gemolken, Lootboxen und Glücksspielmechanismen ersetzen echtes Game-Design.
+      Morhaimes Blizzard hat dem lange widerstanden. Es wäre schön, wenn das wieder gelingt.
+    </p>
+    <div style="display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--surface);border-radius:var(--r-sm);border:1px solid var(--border);max-width:460px;margin-bottom:1.75rem;">
+      <span style="font-size:1.4rem;">📖</span>
+      <div>
+        <div style="font-family:var(--fh);font-weight:700;font-size:.85rem;color:var(--text);">Play Nice &mdash; Jason Schreier</div>
+        <div style="font-size:.75rem;color:var(--text3);margin-top:.1rem;">The Rise, Fall, and Future of Blizzard Entertainment &middot; gelesen &amp; sehr empfohlen</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sub-tabs for individual games -->
+  <div style="font-family:var(--fm);font-size:.67rem;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;">Spiele</div>
+  <div class="bliz-tabs">
+    <button class="btab active" onclick="showBlizTab('wc3')">Warcraft III</button>
+    <button class="btab"        onclick="showBlizTab('sc')">StarCraft</button>
+    <button class="btab"        onclick="showBlizTab('diablo')">Diablo</button>
+    <button class="btab"        onclick="showBlizTab('hs')">Hearthstone</button>
+  </div>
+
+  <div class="bliz-sub active" id="bsub-wc3"><div class="game-grid" id="wc3-grid"></div></div>
+  <div class="bliz-sub"        id="bsub-sc"> <div class="game-grid" id="sc-grid"></div></div>
+  <div class="bliz-sub"        id="bsub-diablo"><div class="game-grid" id="diablo-grid"></div></div>
+  <div class="bliz-sub"        id="bsub-hs">
+    <div class="game-grid" id="hs-grid"></div>
+  </div>
+
+</div>
+</div>
+
 <div class="g-section" id="gs-pokemon">
   <div class="poke-detail-area" id="poke-detail"></div>
   <div class="poke-controls">
-    <input class="ctrl-input" type="text" id="poke-search" placeholder="Pok&eacute;mon suchen&hellip;" oninput="filterPoke()" style="width:195px">
+    <input class="ctrl-input" type="text" id="poke-search"
+      placeholder="Pok&eacute;mon suchen&hellip;" oninput="filterPoke()" style="width:195px">
     <select class="ctrl-select" id="type-filter" onchange="filterPoke()">
       <option value="">Alle Typen</option>
       <option>fire</option><option>water</option><option>grass</option><option>electric</option>
@@ -60,194 +135,790 @@
       <option value="4">Gen IV (387&ndash;493)</option>
     </select>
   </div>
-  <div class="poke-grid" id="poke-grid"><div class="poke-loading-msg">Pok&eacute;mon werden geladen &#10024;</div></div>
+  <div class="poke-grid" id="poke-grid">
+    <div class="poke-loading-msg">Pok&eacute;mon werden geladen &#10024;</div>
+  </div>
   <button class="load-more-btn" id="poke-more" style="display:none" onclick="loadMorePoke()">Mehr laden</button>
 </div>
 
 <!-- Audio toast -->
-<div class="audio-toast" id="audio-toast">
-  <span class="audio-toast-icon">🔊</span>
-  <span id="audio-toast-txt">Niemand kann den Sky Captain aufhalten!</span>
+<div id="_as_toast" style="position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);
+  border:1px solid var(--border2);border-radius:12px;padding:.75rem 1.25rem;
+  box-shadow:0 8px 32px rgba(0,0,0,.2);font-family:var(--fm);font-size:.78rem;
+  color:var(--text2);z-index:9999;pointer-events:none;
+  transform:translateY(80px);opacity:0;
+  transition:all .35s cubic-bezier(.34,1.56,.64,1);">
+</div>
+
+
+<!-- Game image lightbox -->
+<div class="game-lb" id="game-lb" onclick="if(event.target===this)gameLbClose()">
+  <button class="game-lb-x" onclick="gameLbClose()">&#10005;</button>
+  <img id="game-lb-img" src="" alt="">
+  <div class="game-lb-caption" id="game-lb-cap"></div>
 </div>
 
 <script>
 (function(){
 'use strict';
 
-/* ── Audio player ─────────────────────────────────── */
-let _audioCtx = null;
+/* ─── Local image paths ───────────────────────────────────────────
+   All games use assets/images/games/GAMEID_N.avif (+ .webp fallback)
+   Place your files with these exact names:
 
-function playAudioFile(src, toastText) {
-  // Try to play; if autoplay blocked, show toast anyway
-  try {
-    const audio = new Audio(src);
-    audio.volume = 0.75;
-    audio.play().catch(() => {});
-  } catch(e) {}
-  showAudioToast(toastText);
-}
+   wc3_1.avif/.webp    wc3_2.avif/.webp    wc3_3.avif/.webp
+   sc_1.avif/.webp     sc_2.avif/.webp     sc_3.avif/.webp
+   diablo_1.avif/.webp diablo_2.avif/.webp diablo_3.avif/.webp
+   sotc_1.avif/.webp   sotc_2.avif/.webp   sotc_3.avif/.webp
+   hk_1.avif/.webp     hk_2.avif/.webp     hk_3.avif/.webp
+   ff_1.avif/.webp     ff_2.avif/.webp     ff_3.avif/.webp
+   lufia_1.avif/.webp  lufia_2.avif/.webp  lufia_3.avif/.webp
+   kknd2_1.avif/.webp  kknd2_2.avif/.webp  kknd2_3.avif/.webp
+   future_cop_1.avif/.webp  future_cop_2.avif/.webp  future_cop_3.avif/.webp
+   sg_1.avif/.webp     sg_2.avif/.webp     sg_3.avif/.webp
+   pw_1.avif/.webp     pw_2.avif/.webp     pw_3.avif/.webp
+   mmbn_1.avif/.webp   mmbn_2.avif/.webp   mmbn_3.avif/.webp
+──────────────────────────────────────────────────────────────── */
+var IMG = {
+  wc3:    ['assets/images/games/wc3_1',   'assets/images/games/wc3_2',   'assets/images/games/wc3_3'],
+  sc:     ['assets/images/games/sc_1',    'assets/images/games/sc_2',    'assets/images/games/sc_3'],
+  diablo: ['assets/images/games/diablo_1','assets/images/games/diablo_2','assets/images/games/diablo_3'],
+  sotc:   ['assets/images/games/sotc_1',  'assets/images/games/sotc_2',  'assets/images/games/sotc_3'],
+  hk:     ['assets/images/games/hk_1',    'assets/images/games/hk_2',    'assets/images/games/hk_3'],
+  ff:     ['assets/images/games/ff_1',    'assets/images/games/ff_2',    'assets/images/games/ff_3'],
+  lufia:  ['assets/images/games/lufia_1', 'assets/images/games/lufia_2', 'assets/images/games/lufia_3'],
+  kknd:   ['assets/images/games/kknd2_1', 'assets/images/games/kknd2_2', 'assets/images/games/kknd2_3'],
+  fc:     ['assets/images/games/future_cop_1','assets/images/games/future_cop_2','assets/images/games/future_cop_3'],
+  sg:     ['assets/images/games/sg_1',    'assets/images/games/sg_2',    'assets/images/games/sg_3'],
+  pw:     ['assets/images/games/pw_1',    'assets/images/games/pw_2',    'assets/images/games/pw_3'],
+  mmbn:   ['assets/images/games/mmbn_1',  'assets/images/games/mmbn_2',  'assets/images/games/mmbn_3'],
+};
 
-function showAudioToast(txt) {
-  const toast = document.getElementById('audio-toast');
-  const txtEl  = document.getElementById('audio-toast-txt');
-  if (!toast) return;
-  if (txtEl) txtEl.textContent = txt;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 3500);
-}
+// Per-image object-position overrides (index matches IMG array)
+// Format: 'left|center|right top|center|bottom' or 'X% Y%'
+var IMG_POS = {
+  kknd: ['left bottom', 'left bottom', 'center center'],
+  // Add overrides for other games as needed, e.g.:
+  // fc: ['center bottom', null, null],
+};
 
-/* ── Tab switching ────────────────────────────────── */
+var EMOJI = {wc3:'⚔️',sc:'🚀',diablo:'💀',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾'};
+
+/* ─── Tab switching ─────────────────────────────────────────────── */
 window.showGTab = function(name, idx) {
-  document.querySelectorAll('.g-section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.gtab').forEach(b => b.classList.remove('active'));
-  const sec = document.getElementById('gs-' + name);
+  document.querySelectorAll('.g-section').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.gtab').forEach(function(b){ b.classList.remove('active'); });
+  var sec = document.getElementById('gs-' + name);
   if (sec) sec.classList.add('active');
-  document.querySelectorAll('.gtab')[idx].classList.add('active');
+  var tabs = document.querySelectorAll('.gtab');
+  if (tabs[idx]) tabs[idx].classList.add('active');
 
-  // Future Cop easter egg — Sky Captain quote
+  // Future Cop audio easter egg
   if (name === 'fc') {
-    setTimeout(() => {
+    setTimeout(function() {
+      var toast = document.getElementById('_as_toast');
       try {
-        const _a = new Audio('assets/audio/skycaptain.mp3');
-        _a.volume = 0.72;
-        _a.play().catch(()=>{});
+        var a = new Audio('assets/audio/skycaptain.mp3');
+        a.volume = 0.72;
+        a.play().catch(function(){});
       } catch(e) {}
-      // Use nav.js toast if available, otherwise create one
-      if (typeof showToast === 'function') {
-        showToast('Niemand kann den Sky Captain aufhalten!');
-      } else {
-        let t = document.getElementById('_as_toast');
-        if (!t) { t = document.createElement('div'); t.id='_as_toast';
-          t.style.cssText='position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:.75rem 1.25rem;box-shadow:0 8px 32px rgba(0,0,0,.2);font-family:var(--fm);font-size:.78rem;color:var(--text2);z-index:9999;pointer-events:none;transform:translateY(80px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);';
-          document.body.appendChild(t); }
-        t.textContent = '🔊 Niemand kann den Sky Captain aufhalten!';
-        t.style.transform='translateY(0)'; t.style.opacity='1';
-        clearTimeout(t._t); t._t=setTimeout(()=>{t.style.transform='translateY(80px)';t.style.opacity='0';},3500);
+      if (toast) {
+        toast.textContent = '🔊 Niemand kann den Sky Captain aufhalten!';
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+        clearTimeout(toast._t);
+        toast._t = setTimeout(function(){
+          toast.style.transform = 'translateY(80px)';
+          toast.style.opacity = '0';
+        }, 3500);
       }
     }, 400);
   }
 
-  if (name === 'pokemon' && !pokeLoaded) loadPoke();
-  else if (typeof renderGameCards === 'function') renderGameCards();
+  if (name === 'pokemon') { if (!pokeLoaded) loadPoke(); }
 };
 
-/* ── Game cards ───────────────────────────────────── */
-const gameRendered = {};
-const RAWG_COVERS = {
-  wc3:    'https://upload.wikimedia.org/wikipedia/en/thumb/7/75/Warcraft_III_Reign_of_Chaos_blizzard.jpg/256px-Warcraft_III_Reign_of_Chaos_blizzard.jpg',
-  sc:     'https://upload.wikimedia.org/wikipedia/en/thumb/2/20/StarCraft_box_art.jpg/256px-StarCraft_box_art.jpg',
-  diablo: 'https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/Diablo_II_Coverart.png/256px-Diablo_II_Coverart.png',
-  sotc:   'https://upload.wikimedia.org/wikipedia/en/thumb/3/34/Shadow_of_the_Colossus_%282005%29_cover.png/256px-Shadow_of_the_Colossus_%282005%29_cover.png',
-  hk:     'https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Hollow_knight_silksong.png/256px-Hollow_knight_silksong.png',
-  ff:     'https://upload.wikimedia.org/wikipedia/en/thumb/e/e9/FFVII_Box_Art.jpg/256px-FFVII_Box_Art.jpg',
-  sg:     'https://upload.wikimedia.org/wikipedia/en/thumb/2/21/Steins_Gate_visual_novel_cover.jpg/256px-Steins_Gate_visual_novel_cover.jpg',
-  pw:     'https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/Phoenix_Wright_Ace_Attorney_-_Justice_for_All.jpg/256px-Phoenix_Wright_Ace_Attorney_-_Justice_for_All.jpg',
-  lufia:  'https://upload.wikimedia.org/wikipedia/en/thumb/a/a8/Lufia2.jpg/256px-Lufia2.jpg',
-  kknd:   null,
-  fc:     null,
-  mmbn:   'https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Mega_Man_Battle_Network_2_Coverart.png/256px-Mega_Man_Battle_Network_2_Coverart.png',
+/* ── Blizzard sub-tab switching ─────────────────────── */
+window.showBlizTab = function(name) {
+  document.querySelectorAll('.bliz-sub').forEach(function(s){ s.classList.remove('active'); });
+  document.querySelectorAll('.btab').forEach(function(b){ b.classList.remove('active'); });
+  var sub = document.getElementById('bsub-' + name);
+  if (sub) sub.classList.add('active');
+  // Mark the right btab active
+  document.querySelectorAll('.btab').forEach(function(b){
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'" + name + "'") >= 0) {
+      b.classList.add('active');
+    }
+  });
+  // Render cards for this sub-section if not yet done
+  renderGameCards();
 };
-const GAME_EMOJI = { wc3:'⚔️',sc:'🚀',diablo:'💀',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾',pokemon:'🔴' };
+
+/* ─── Game cards ────────────────────────────────────────────────── */
+function makePicture(base, alt, emoji, objPos) {
+  var wrap = document.createElement('div');
+  wrap.className = 'game-card-cover-wrap';
+  var pic = document.createElement('picture');
+  var src1 = document.createElement('source');
+  src1.setAttribute('srcset', base + '.avif');
+  src1.setAttribute('type', 'image/avif');
+  var src2 = document.createElement('source');
+  src2.setAttribute('srcset', base + '.webp');
+  src2.setAttribute('type', 'image/webp');
+  var img = document.createElement('img');
+  img.className = 'game-card-cover';
+  img.src = base + '.webp';
+  img.alt = alt;
+  img.loading = 'lazy';
+  if (objPos) img.style.objectPosition = objPos;
+  img.onerror = function() {
+    var ph = document.createElement('div');
+    ph.className = 'game-card-cover-placeholder';
+    ph.textContent = emoji;
+    wrap.replaceWith(ph);
+  };
+  pic.appendChild(src1);
+  pic.appendChild(src2);
+  pic.appendChild(img);
+  wrap.appendChild(pic);
+  // Click → open lightbox with full image
+  wrap.addEventListener('click', function() {
+    gameLbOpen(base + '.webp', alt);
+  });
+  return wrap;
+}
+
+/* ── Game image lightbox ─────────────────────────────── */
+window.gameLbOpen = function(src, caption) {
+  var lb  = document.getElementById('game-lb');
+  var img = document.getElementById('game-lb-img');
+  var cap = document.getElementById('game-lb-cap');
+  if (!lb || !img) return;
+  img.src = src;
+  img.alt = caption || '';
+  if (cap) cap.textContent = caption || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+window.gameLbClose = function() {
+  var lb = document.getElementById('game-lb');
+  if (lb) { lb.classList.remove('open'); document.body.style.overflow = ''; }
+};
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') gameLbClose();
+});
 
 function renderGameCards() {
   if (typeof DB === 'undefined') return;
-  Object.keys(DB).forEach(s => {
-    if (s === 'podcasts' || s === 'nature' || gameRendered[s]) return;
-    gameRendered[s] = true;
-    const grid = document.getElementById(s + '-grid');
+  Object.keys(DB).forEach(function(s) {
+    if (s === 'podcasts' || s === 'nature') return;
+    var grid = document.getElementById(s + '-grid');
     if (!grid) return;
     grid.innerHTML = '';
-    const cover = RAWG_COVERS[s];
-    const emoji = GAME_EMOJI[s] || '🎮';
-    (DB[s] || []).forEach(item => {
-      const card = document.createElement('div');
+    var imgs  = IMG[s] || null;
+    var emoji = EMOJI[s] || '🎮';
+    var cards = DB[s] || [];
+
+    cards.forEach(function(item, idx) {
+      var card = document.createElement('div');
       card.className = 'game-card';
-      const coverHtml = cover
-        ? '<div class="game-card-cover-wrap"><img class="game-card-cover" src="' + cover + '" alt="' + item.title + '" loading="lazy"'
-          + ' onerror="this.parentElement.innerHTML=\'<div class=\\\"game-card-cover-placeholder\\\">' + emoji + '</div>\'"></div>'
-        : '<div class="game-card-cover-placeholder">' + emoji + '</div>';
-      card.innerHTML = coverHtml
-        + '<div class="game-card-body">'
-        + '<span class="game-badge ' + item.badge + '">' + item.badgeText + '</span>'
-        + '<div class="game-card-title">' + item.title + '</div>'
-        + '<div class="game-card-text">' + item.text + '</div>'
-        + '<div class="tags">' + item.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>'
-        + '</div>';
+
+      if (imgs) {
+        var base = imgs[idx % imgs.length];
+        var posArr = IMG_POS[s] || [];
+        var pos = posArr[idx % imgs.length] || null;
+        card.appendChild(makePicture(base, item.title, emoji, pos));
+      } else {
+        var ph = document.createElement('div');
+        ph.className = 'game-card-cover-placeholder';
+        ph.textContent = emoji;
+        card.appendChild(ph);
+      }
+
+      var body = document.createElement('div');
+      body.className = 'game-card-body';
+      body.innerHTML =
+        '<span class="game-badge ' + item.badge + '">' + item.badgeText + '</span>' +
+        '<div class="game-card-title">' + item.title + '</div>' +
+        '<div class="game-card-text">' + item.text + '</div>' +
+        '<div class="tags">' + item.tags.map(function(t){ return '<span class="tag">' + t + '</span>'; }).join('') + '</div>';
+      card.appendChild(body);
       grid.appendChild(card);
     });
   });
 }
 
-/* ── Pokémon ──────────────────────────────────────── */
-let pokeLoaded=false,allPoke=[],filtPoke=[],pokeOff=0,typeCache={};
-const BATCH=24;
-async function loadPoke(){
-  if(pokeLoaded)return;pokeLoaded=true;
-  try{
-    const r=await fetch('https://pokeapi.co/api/v2/pokemon?limit=493');
-    const d=await r.json();
-    allPoke=d.results.map((p,i)=>({name:p.name,id:i+1}));
-    filtPoke=allPoke.slice();renderPokeGrid();
-  }catch(e){document.getElementById('poke-grid').innerHTML='<div class="poke-loading-msg">PokeAPI nicht erreichbar.</div>';}
+/* ─── Pokémon ───────────────────────────────────────────────────── */
+var pokeLoaded = false, allPoke = [], filtPoke = [], pokeOff = 0, typeCache = {};
+var BATCH = 24;
+
+function loadPoke() {
+  if (pokeLoaded) return;
+  pokeLoaded = true;
+  fetch('https://pokeapi.co/api/v2/pokemon?limit=493')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      allPoke = d.results.map(function(p,i){ return {name:p.name, id:i+1}; });
+      filtPoke = allPoke.slice();
+      renderPokeGrid();
+    })
+    .catch(function(){
+      var g = document.getElementById('poke-grid');
+      if (g) g.innerHTML = '<div class="poke-loading-msg">PokeAPI nicht erreichbar.</div>';
+    });
 }
-function renderPokeGrid(){
-  const grid=document.getElementById('poke-grid');
-  if(pokeOff===0)grid.innerHTML='';
-  filtPoke.slice(pokeOff,pokeOff+BATCH).forEach(p=>grid.appendChild(makePokeCard(p)));
-  pokeOff+=BATCH;
-  const more=document.getElementById('poke-more');
-  if(more)more.style.display=pokeOff<filtPoke.length?'block':'none';
+
+function renderPokeGrid() {
+  var grid = document.getElementById('poke-grid');
+  if (!grid) return;
+  if (pokeOff === 0) grid.innerHTML = '';
+  filtPoke.slice(pokeOff, pokeOff + BATCH).forEach(function(p){
+    grid.appendChild(makePokeCard(p));
+  });
+  pokeOff += BATCH;
+  var more = document.getElementById('poke-more');
+  if (more) more.style.display = pokeOff < filtPoke.length ? 'block' : 'none';
 }
-function makePokeCard(p){
-  const c=document.createElement('div');c.className='poke-card';
-  c.innerHTML='<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+p.id+'.png" alt="'+p.name+'" loading="lazy">'
-    +'<div class="poke-name">'+p.name+'</div>'
-    +'<div class="poke-num">#'+String(p.id).padStart(3,'0')+'</div>'
-    +'<div class="poke-types" id="pt-'+p.id+'"><span class="type-badge type-normal">?</span></div>';
-  c.onclick=()=>showPokeDet(p.id);
-  loadPokeTypes(p.id);return c;
+
+function makePokeCard(p) {
+  var c = document.createElement('div');
+  c.className = 'poke-card';
+  c.innerHTML =
+    '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + p.id + '.png" alt="' + p.name + '" loading="lazy">' +
+    '<div class="poke-name">' + p.name + '</div>' +
+    '<div class="poke-num">#' + String(p.id).padStart(3,'0') + '</div>' +
+    '<div class="poke-types" id="pt-' + p.id + '"><span class="type-badge type-normal">?</span></div>';
+  c.onclick = function(){ showPokeDet(p.id); };
+  loadPokeTypes(p.id);
+  return c;
 }
-async function loadPokeTypes(id){
-  if(typeCache[id])return;
-  try{const r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);const d=await r.json();typeCache[id]=d;
-  const el=document.getElementById('pt-'+id);
-  if(el)el.innerHTML=d.types.map(t=>'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>').join('');}catch(e){}
+
+function loadPokeTypes(id) {
+  if (typeCache[id]) return;
+  fetch('https://pokeapi.co/api/v2/pokemon/' + id)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      typeCache[id] = d;
+      var el = document.getElementById('pt-' + id);
+      if (el) el.innerHTML = d.types.map(function(t){
+        return '<span class="type-badge type-' + t.type.name + '">' + t.type.name + '</span>';
+      }).join('');
+    })
+    .catch(function(){});
 }
-async function showPokeDet(id){
-  const det=document.getElementById('poke-detail');
-  det.innerHTML='<div style="color:var(--text3);font-family:var(--fm);padding:1rem">Lade…</div>';
+
+function showPokeDet(id) {
+  var det = document.getElementById('poke-detail');
+  if (!det) return;
+  det.innerHTML = '<div style="color:var(--text3);font-family:var(--fm);padding:1rem">Lade\u2026</div>';
   det.classList.add('show');
-  try{
-    let d=typeCache[id];
-    if(!d){const r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);d=await r.json();typeCache[id]=d;}
-    const sc={hp:'#ff6b35',attack:'#f7c948',defense:'#5aa0e8','special-attack':'#e85878','special-defense':'#3ba844',speed:'#a890f0'};
-    det.innerHTML='<img class="poke-big-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+id+'.png" alt="'+d.name+'">'
-      +'<div style="flex:1;min-width:200px"><div class="poke-big-name">'+d.name+'</div>'
-      +'<div style="display:flex;gap:.4rem;margin-bottom:.85rem">'+d.types.map(t=>'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>').join('')+'</div>'
-      +'<div style="display:flex;gap:1.25rem;margin-bottom:.85rem;flex-wrap:wrap">'
-      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">HÖHE</div><div style="font-weight:500">'+d.height/10+'m</div></div>'
-      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">GEWICHT</div><div style="font-weight:500">'+d.weight/10+'kg</div></div>'
-      +'</div>'
-      +d.stats.map(s=>'<div class="stat-bar"><span class="stat-label-sm">'+s.stat.name.replace('special-','sp.')+'</span><span class="stat-val">'+s.base_stat+'</span><div class="stat-track"><div class="stat-fill" style="width:'+Math.min(100,s.base_stat/255*100)+'%;background:'+(sc[s.stat.name]||'var(--accent)')+'"></div></div></div>').join('')
-      +'</div>';
-    det.scrollIntoView({behavior:'smooth',block:'nearest'});
-  }catch(e){det.innerHTML='<div style="color:var(--accent2);padding:1rem">Fehler.</div>';}
+  var d = typeCache[id];
+  if (d) { renderPokeDet(det, d); return; }
+  fetch('https://pokeapi.co/api/v2/pokemon/' + id)
+    .then(function(r){ return r.json(); })
+    .then(function(d){ typeCache[id] = d; renderPokeDet(det, d); })
+    .catch(function(){ det.innerHTML = '<div style="color:var(--accent2);padding:1rem">Fehler beim Laden.</div>'; });
 }
-window.filterPoke=function(){
-  const q=document.getElementById('poke-search').value.toLowerCase();
-  const type=document.getElementById('type-filter').value;
-  const gen=parseInt(document.getElementById('gen-filter').value)||0;
-  filtPoke=allPoke.filter(p=>{
-    if(q&&p.name.indexOf(q)<0)return false;
-    if(gen){const r=[[1,151],[152,251],[252,386],[387,493]];const mm=r[gen-1];if(p.id<mm[0]||p.id>mm[1])return false;}
-    if(type&&typeCache[p.id]&&typeCache[p.id].types.map(t=>t.type.name).indexOf(type)<0)return false;
+
+function renderPokeDet(det, d) {
+  var sc = {hp:'#ff6b35',attack:'#f7c948',defense:'#5aa0e8','special-attack':'#e85878','special-defense':'#3ba844',speed:'#a890f0'};
+  det.innerHTML =
+    '<img class="poke-big-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + d.id + '.png" alt="' + d.name + '">' +
+    '<div style="flex:1;min-width:200px">' +
+    '<div class="poke-big-name">' + d.name + '</div>' +
+    '<div style="display:flex;gap:.4rem;margin-bottom:.85rem">' + d.types.map(function(t){ return '<span class="type-badge type-' + t.type.name + '">' + t.type.name + '</span>'; }).join('') + '</div>' +
+    '<div style="display:flex;gap:1.25rem;margin-bottom:.85rem;flex-wrap:wrap">' +
+    '<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">H\u00d6HE</div><div style="font-weight:500">' + (d.height/10) + 'm</div></div>' +
+    '<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">GEWICHT</div><div style="font-weight:500">' + (d.weight/10) + 'kg</div></div>' +
+    '</div>' +
+    d.stats.map(function(s){
+      return '<div class="stat-bar"><span class="stat-label-sm">' + s.stat.name.replace('special-','sp.') + '</span>' +
+             '<span class="stat-val">' + s.base_stat + '</span>' +
+             '<div class="stat-track"><div class="stat-fill" style="width:' + Math.min(100, s.base_stat/255*100) + '%;background:' + (sc[s.stat.name]||'var(--accent)') + '"></div></div></div>';
+    }).join('') +
+    '</div>';
+  det.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+window.filterPoke = function() {
+  var q    = (document.getElementById('poke-search') || {value:''}).value.toLowerCase();
+  var type = (document.getElementById('type-filter') || {value:''}).value;
+  var gen  = parseInt((document.getElementById('gen-filter') || {value:''}).value) || 0;
+  var gens = [[1,151],[152,251],[252,386],[387,493]];
+  filtPoke = allPoke.filter(function(p) {
+    if (q && p.name.indexOf(q) < 0) return false;
+    if (gen) { var mm = gens[gen-1]; if (p.id < mm[0] || p.id > mm[1]) return false; }
+    if (type && typeCache[p.id]) {
+      var has = typeCache[p.id].types.some(function(t){ return t.type.name === type; });
+      if (!has) return false;
+    }
     return true;
   });
-  pokeOff=0;renderPokeGrid();
+  pokeOff = 0;
+  renderPokeGrid();
 };
-window.loadMorePoke=function(){renderPokeGrid();};
+window.loadMorePoke = function() { renderPokeGrid(); };
 
-// Init
+/* ─── Init ──────────────────────────────────────────────────────── */
 renderGameCards();
+
 })();
 </script>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SKY CAPTAIN SOUNDBOARD — Easter Egg
+     Triggers: click Future-Cop toast · type "futurecop" or "skycaptain"
+     ═══════════════════════════════════════════════════════════════ -->
+<style>
+/* ── Fireworks canvas ── */
+#sky-fireworks{position:fixed;inset:0;pointer-events:none;z-index:9999;display:none;}
+#sky-fireworks.active{display:block;}
+
+/* ── Soundboard modal ── */
+.sky-modal{
+  position:fixed;inset:0;z-index:10000;
+  background:radial-gradient(ellipse at center,rgba(20,5,5,.92),rgba(0,0,0,.97));
+  backdrop-filter:blur(12px);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:1.5rem;overflow-y:auto;
+  animation:skyFadeIn .5s ease-out;
+}
+.sky-modal.active{display:flex;}
+@keyframes skyFadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes skyBoxIn{
+  0%  {transform:translateY(40px) scale(.92);opacity:0;}
+  60% {transform:translateY(-6px) scale(1.02);opacity:1;}
+  100%{transform:translateY(0) scale(1);}
+}
+
+.sky-box{
+  width:100%;max-width:1100px;
+  background:linear-gradient(180deg,#1f0a0a,#0a0303);
+  border:2px solid #dc2626;
+  border-radius:14px;
+  box-shadow:0 0 0 1px rgba(220,38,38,.3) inset,
+             0 0 60px rgba(220,38,38,.4),
+             0 20px 80px rgba(0,0,0,.8);
+  padding:1.75rem 1.75rem 2rem;position:relative;
+  animation:skyBoxIn .55s cubic-bezier(.18,1.2,.5,1) .15s backwards;
+}
+
+.sky-header{
+  display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;
+}
+.sky-title{
+  font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;
+  background:linear-gradient(90deg,#fca5a5,#dc2626,#7c0a0a);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:-.02em;line-height:1;
+  filter:drop-shadow(0 0 16px rgba(220,38,38,.5));
+}
+.sky-subtitle{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:#fca5a5;opacity:.7;margin-top:.25rem;
+}
+.sky-close{
+  margin-left:auto;background:transparent;border:1px solid #b91c1c;
+  color:#fca5a5;width:36px;height:36px;border-radius:50%;cursor:pointer;
+  font-size:1.1rem;transition:all .15s;
+}
+.sky-close:hover{background:#b91c1c;color:#fff;transform:rotate(90deg);}
+
+.sky-stop-all{
+  background:linear-gradient(135deg,#dc2626,#7c0a0a);
+  border:none;color:#fff;font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.55rem 1rem;border-radius:6px;cursor:pointer;
+  box-shadow:0 3px 12px rgba(220,38,38,.4);transition:all .15s;
+}
+.sky-stop-all:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(220,38,38,.6);}
+
+.sky-cat-section{margin-bottom:1.4rem;}
+.sky-cat-label{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  color:#fca5a5;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;
+  border-bottom:1px dashed rgba(220,38,38,.3);padding-bottom:.35rem;
+}
+.sky-cat-count{
+  font-size:.6rem;color:#7c2d12;opacity:.7;
+  background:rgba(220,38,38,.15);padding:.1rem .4rem;border-radius:4px;
+  margin-left:auto;
+}
+
+.sky-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:.55rem;
+}
+.sky-btn{
+  position:relative;
+  background:linear-gradient(180deg,#2a0808,#1a0404);
+  border:1px solid rgba(220,38,38,.35);
+  border-radius:7px;
+  padding:.65rem .85rem;
+  color:#fecaca;text-align:left;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:.78rem;line-height:1.35;
+  transition:all .15s;
+  overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 2px 4px rgba(0,0,0,.5);
+}
+.sky-btn::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:#dc2626;transform:scaleY(0);transform-origin:bottom;
+  transition:transform .25s;
+}
+.sky-btn:hover{
+  background:linear-gradient(180deg,#3e0c0c,#240606);
+  border-color:#dc2626;color:#fff;
+  transform:translateY(-1px);
+  box-shadow:0 0 0 1px rgba(220,38,38,.5),0 4px 14px rgba(220,38,38,.35);
+}
+.sky-btn:hover::before{transform:scaleY(1);}
+.sky-btn:active{transform:translateY(0);}
+.sky-btn.playing{
+  background:linear-gradient(180deg,#dc2626,#7c0a0a);color:#fff;
+  border-color:#fca5a5;
+  animation:skyPulse .8s ease-in-out infinite;
+}
+.sky-btn.playing::before{transform:scaleY(1);background:#fff;}
+@keyframes skyPulse{
+  0%,100%{box-shadow:0 0 0 1px rgba(252,165,165,.4),0 4px 14px rgba(220,38,38,.5);}
+  50%    {box-shadow:0 0 0 1px rgba(252,165,165,.8),0 8px 28px rgba(220,38,38,.8);}
+}
+.sky-num{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;color:rgba(252,165,165,.55);margin-right:.45rem;
+}
+.sky-btn.playing .sky-num{color:rgba(255,255,255,.7);}
+
+.sky-hint{
+  margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(220,38,38,.2);
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;
+  color:rgba(252,165,165,.5);letter-spacing:.06em;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+}
+.sky-hint kbd{
+  background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.3);
+  border-radius:3px;padding:.05rem .35rem;font-family:inherit;color:#fca5a5;
+}
+
+
+</style>
+
+<canvas id="sky-fireworks"></canvas>
+<div class="sky-modal" id="sky-modal" onclick="if(event.target===this)skyClose()">
+  <div class="sky-box">
+    <div class="sky-header">
+      <div>
+        <div class="sky-title">🚁 SKY CAPTAIN SOUNDBOARD</div>
+        <div class="sky-subtitle">Future Cop: L.A.P.D. · 56 Sprüche · klick &amp; höre</div>
+      </div>
+      <button class="sky-stop-all" onclick="skyStopAll()">⏹ Alles stoppen</button>
+      <button class="sky-close" onclick="skyClose()" title="Schließen">✕</button>
+    </div>
+    <div id="sky-grid-container"></div>
+    <div class="sky-hint">
+      <span><kbd>ESC</kbd> zum Schließen · <kbd>SPACE</kbd> für Zufallsspruch</span>
+      <span style="opacity:.4">Mehrere Sprüche gleichzeitig möglich 🔊</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var SKY_CLIPS=[
+  {n:1,label:'Der Skycaptain ist der Größte',cat:'💪 Großspurig',file:'01_sky_captain - Der Skycaptain ist der Größte.mp3'},
+  {n:2,label:'Der Skycaptain ist unschlagbar',cat:'💪 Großspurig',file:'02_sky_captain - Der Skycaptain ist unschlagbar.mp3'},
+  {n:3,label:'Niemand kann den Skycaptain aufhalten',cat:'💪 Großspurig',file:'03_sky_captain - Niemand kann den Skycaptain aufhalten.mp3'},
+  {n:4,label:'Gibt es auf',cat:'🔍 Suchen & Drohen',file:'04_sky_captain - Gibt es auf.mp3'},
+  {n:5,label:'Woooo bist duuuu',cat:'🔍 Suchen & Drohen',file:'05_sky_captain - Woooo bist duuuu.mp3'},
+  {n:6,label:'Komm raus, zeig dich, wo auch immer du steckst',cat:'🔍 Suchen & Drohen',file:'06_sky_captain - Komm raus, zeig dich, wo auch immer du steckst.mp3'},
+  {n:7,label:'Du kannst dich nicht ewig verstecken',cat:'🔍 Suchen & Drohen',file:'07_sky_captain - Du kannst dich nicht ewig verstecken.mp3'},
+  {n:8,label:'Lauf du Feigling',cat:'🔍 Suchen & Drohen',file:'08_sky_captain - Lauf du Feigling.mp3'},
+  {n:9,label:'Ich krieg dich',cat:'🔍 Suchen & Drohen',file:'09_sky_captain - Ich krieg dich.mp3'},
+  {n:10,label:'Du wirst vor mir zittern',cat:'🔍 Suchen & Drohen',file:'10_sky_captain - Du wirst vor mir zittern.mp3'},
+  {n:11,label:'Stirb',cat:'🔍 Suchen & Drohen',file:'11_sky_captain - Stirb.mp3'},
+  {n:12,label:'Unterwirf dich',cat:'🔍 Suchen & Drohen',file:'12_sky_captain - Unterwirf dich.mp3'},
+  {n:13,label:'Du wagst es',cat:'🔍 Suchen & Drohen',file:'13_sky_captain - Du wagst es.mp3'},
+  {n:14,label:'Ich werde allmählich wütend',cat:'🔍 Suchen & Drohen',file:'14_sky_captain - Ich werde allmählich wütend.mp3'},
+  {n:15,label:'Ich möchte dir meinen kleinen Freund vorstellen',cat:'🔍 Suchen & Drohen',file:'15_sky_captain - Ich möchte dir meinen kleinen Freund vorstellen.mp3'},
+  {n:16,label:'Auf auf meine Lakaien',cat:'👹 Befehle',file:'16_sky_captain - Auf auf meine Lakaien.mp3'},
+  {n:17,label:'Fliegt meine wunderbaren Geschöpfe',cat:'👹 Befehle',file:'17_sky_captain - Fliegt meine wunderbaren Geschöpfe.mp3'},
+  {n:18,label:'Verderben vom Himmel',cat:'👹 Befehle',file:'18_sky_captain - Verderben vom Himmel.mp3'},
+  {n:19,label:'Verteidigt euren Meister',cat:'👹 Befehle',file:'19_sky_captain - Verteidigt euren Meister.mp3'},
+  {n:20,label:'Schon besser',cat:'👹 Befehle',file:'20_sky_captain - Schon besser.mp3'},
+  {n:21,label:'Sie gehören mir, mir allein',cat:'👹 Befehle',file:'21_sky_captain - Sie gehören mir, mir allein.mp3'},
+  {n:22,label:'Das ist meins, alles meins',cat:'👹 Befehle',file:'22_sky_captain - Das ist meins, alles meins.mp3'},
+  {n:23,label:'Du machst es mir zu leicht',cat:'👹 Befehle',file:'23_sky_captain - Du machst es mir zu leicht.mp3'},
+  {n:24,label:'Fühle meine Macht',cat:'👹 Befehle',file:'24_sky_captain - Fühle meine Macht.mp3'},
+  {n:25,label:'Du hast den Turm doch nicht etwa gebraucht',cat:'😏 Spott',file:'25_sky_captain - Du hast den Turm doch nicht etwa gebraucht.mp3'},
+  {n:26,label:'Ist das alles, was du kannst',cat:'😏 Spott',file:'26_sky_captain - Ist das alles, was du kannst.mp3'},
+  {n:27,label:'Ups, hehe',cat:'😏 Spott',file:'27_sky_captain - Ups, hehe.mp3'},
+  {n:28,label:'Klopf Klopf',cat:'😏 Spott',file:'28_sky_captain - Klopf Klopf.mp3'},
+  {n:29,label:'Man das gibt einen hässlichen Ölfleck',cat:'😏 Spott',file:'29_sky_captain - Man das gibt einen hässlichen Ölfleck.mp3'},
+  {n:30,label:'Das war dumm von dir',cat:'😏 Spott',file:'30_sky_captain - Das war dumm von dir.mp3'},
+  {n:31,label:'Ja verschwende nur deine Zeit',cat:'😏 Spott',file:'31_sky_captain - Ja verschwende nur deine Zeit.mp3'},
+  {n:32,label:'Glaubst du wirklich, dass dir das helfen wird',cat:'😏 Spott',file:'32_sky_captain - Glaubst du wirklich, dass dir das helfen wird.mp3'},
+  {n:33,label:'He, nur eine Fleischwunde',cat:'😏 Spott',file:'33_sky_captain - He, nur eine Fleischwunde.mp3'},
+  {n:34,label:'Wir sehen uns in der Hölle',cat:'😏 Spott',file:'34_sky_captain - Wir sehen uns in der Hölle.mp3'},
+  {n:35,label:'Ich bin zurück',cat:'🎭 Affekte',file:'35_sky_captain - Ich bin zurück.mp3'},
+  {n:36,label:'Ha',cat:'🎭 Affekte',file:'36_sky_captain - Ha.mp3'},
+  {n:37,label:'Ja',cat:'🎭 Affekte',file:'37_sky_captain - Ja.mp3'},
+  {n:38,label:'Aaah',cat:'🎭 Affekte',file:'38_sky_captain - Aaah.mp3'},
+  {n:39,label:'Hehehehehehehehehe',cat:'🎭 Affekte',file:'39_sky_captain - Hehehehehehehehehe.mp3'},
+  {n:40,label:'Hihehehehehehehehe',cat:'🎭 Affekte',file:'40_sky_captain - Hihehehehehehehehe.mp3'},
+  {n:41,label:'Hehehehahahahahahaha',cat:'🎭 Affekte',file:'41_sky_captain - Hehehehahahahahahaha.mp3'},
+  {n:42,label:'Hehehehehehehehehe',cat:'🎭 Affekte',file:'42_sky_captain - Hehehehehehehehehe.mp3'},
+  {n:43,label:'Awwwwweehöh',cat:'🎭 Affekte',file:'43_sky_captain Awwwwweehöh.mp3'},
+  {n:44,label:'Uiiiiöh',cat:'🎭 Affekte',file:'44_sky_captain - Uiiiiöh.mp3'},
+  {n:45,label:'Neiiiin',cat:'🎭 Affekte',file:'45_sky_captain - Neiiiin.mp3'},
+  {n:46,label:'Ich, ich fasse es nicht',cat:'🎭 Affekte',file:'46_sky_captain - Ich, ich fasse es nicht.mp3'},
+  {n:47,label:'Das zahle ich dir heim',cat:'🔥 Provokation',file:'47_sky_captain - Das zahle ich dir heim.mp3'},
+  {n:48,label:'Anfängerglück – Nochmal schaffst du das nicht',cat:'🔥 Provokation',file:'48_sky_captain - Anfängerglück – Nochmal schaffst du das nicht.mp3'},
+  {n:49,label:'Du lernst dazu, aber das wird dich auch nicht retten',cat:'🔥 Provokation',file:'49_sky_captain - Du lernst dazu, aber das wird dich auch nicht retten.mp3'},
+  {n:50,label:'Du schon wieder, du hartknäckige Nervensäge',cat:'🔥 Provokation',file:'50_sky_captain - Du schon wieder, du hartknäckige Nervensäge.mp3'},
+  {n:51,label:'Du fängst wirklich an mir auf die Nerven zu gehen',cat:'🔥 Provokation',file:'51_sky_captain - Du fängst wirklich an mir auf die Nerven zu gehen.mp3'},
+  {n:52,label:'Genieße deinen letzten unbedeutenden Erfolg',cat:'🔥 Provokation',file:'52_sky_captain -  Genieße deinen letzten unbedeutenden Erfolg.mp3'},
+  {n:53,label:'Deine Schonzeit ist vorüber',cat:'🔥 Provokation',file:'53_sky_captain - Deine Schonzeit ist vorüber.mp3'},
+  {n:54,label:'Kann dich denn nichts aufhalten',cat:'🔥 Provokation',file:'54_sky_captain - Kann dich denn nichts aufhalten.mp3'},
+  {n:55,label:'Ich habe dich unterschätzt, das passiert mir nicht noch einmal',cat:'🔥 Provokation',file:'55_sky_captain - Ich habe dich unterschätzt, das passiert mir nicht noch einmal.mp3'},
+  {n:56,label:'Endlich ein würdiger Gegner',cat:'🔥 Provokation',file:'56_sky_captain - Endlich ein würdiger Gegner.mp3'}
+];
+
+  // ────────────────────────────────────────
+  // SOUNDBOARD: build grid + audio engine
+  // ────────────────────────────────────────
+  var skyBuilt = false;
+  function skyBuild(){
+    if(skyBuilt) return; skyBuilt = true;
+    var container = document.getElementById('sky-grid-container');
+    if(!container) return;
+
+    // Group by category, preserving order from SKY_CLIPS
+    var catOrder = [];
+    var grouped = {};
+    SKY_CLIPS.forEach(function(c){
+      if(!grouped[c.cat]){ grouped[c.cat] = []; catOrder.push(c.cat); }
+      grouped[c.cat].push(c);
+    });
+
+    container.innerHTML = '';
+    catOrder.forEach(function(cat){
+      var clips = grouped[cat];
+      var sec = document.createElement('div'); sec.className = 'sky-cat-section';
+      var lbl = document.createElement('div'); lbl.className = 'sky-cat-label';
+      lbl.innerHTML = cat + '<span class="sky-cat-count">' + clips.length + '</span>';
+      sec.appendChild(lbl);
+
+      var grid = document.createElement('div'); grid.className = 'sky-grid';
+      clips.forEach(function(c){
+        var btn = document.createElement('button'); btn.className = 'sky-btn';
+        btn.innerHTML = '<span class="sky-num">' + String(c.n).padStart(2,'0') + '</span>' + escapeHtml(c.label);
+        btn.onclick = function(){ skyPlay(c, btn); };
+        grid.appendChild(btn);
+      });
+      sec.appendChild(grid);
+      container.appendChild(sec);
+    });
+  }
+
+  var skyActiveAudios = [];
+
+  function skyPlay(clip, btn){
+    var src = 'assets/audio/future_cop/' + encodeURIComponent(clip.file);
+    var a = new Audio(src); a.volume = 0.85;
+    skyActiveAudios.push(a);
+    btn.classList.add('playing');
+    a.addEventListener('ended', function(){
+      btn.classList.remove('playing');
+      var i = skyActiveAudios.indexOf(a); if(i>=0) skyActiveAudios.splice(i,1);
+    });
+    a.addEventListener('error', function(){
+      btn.classList.remove('playing');
+      btn.style.opacity = '.4';
+      btn.title = 'Datei nicht gefunden: ' + clip.file;
+    });
+    a.play().catch(function(){ btn.classList.remove('playing'); });
+  }
+
+  window.skyStopAll = function(){
+    skyActiveAudios.forEach(function(a){ try{ a.pause(); a.currentTime = 0; }catch(e){} });
+    skyActiveAudios = [];
+    document.querySelectorAll('.sky-btn.playing').forEach(function(b){ b.classList.remove('playing'); });
+  };
+
+  // ────────────────────────────────────────
+  // FIREWORKS canvas
+  // ────────────────────────────────────────
+  function skyFireworks(duration){
+    var cv = document.getElementById('sky-fireworks');
+    if(!cv) return;
+    cv.classList.add('active');
+    var ctx = cv.getContext('2d');
+    function resize(){ cv.width = innerWidth; cv.height = innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+
+    var particles = [];
+    var rockets = [];
+    var t0 = performance.now();
+    var lastRocket = 0;
+
+    var palettes = [
+      ['#fca5a5','#dc2626','#fbbf24','#f59e0b'],   // red+gold
+      ['#a78bfa','#7c3aed','#c084fc','#f0abfc'],   // purple
+      ['#60a5fa','#3b82f6','#22d3ee','#a5f3fc'],   // blue+cyan
+      ['#fb923c','#f97316','#fde047','#fb7185'],   // orange+pink
+    ];
+
+    function launchRocket(){
+      var x = innerWidth * (0.15 + Math.random()*0.7);
+      var targetY = innerHeight * (0.15 + Math.random()*0.35);
+      var palette = palettes[Math.floor(Math.random()*palettes.length)];
+      rockets.push({
+        x:x, y:innerHeight+10, tx:x+(Math.random()-.5)*60, ty:targetY,
+        vy:-(7 + Math.random()*3), trail:[], palette:palette, exploded:false
+      });
+    }
+
+    function explode(r){
+      var n = 50 + Math.floor(Math.random()*40);
+      for(var i=0;i<n;i++){
+        var ang = Math.random()*Math.PI*2;
+        var speed = 1 + Math.random()*5;
+        particles.push({
+          x:r.x, y:r.y,
+          vx:Math.cos(ang)*speed, vy:Math.sin(ang)*speed,
+          life:1, decay:0.008 + Math.random()*0.012,
+          color:r.palette[Math.floor(Math.random()*r.palette.length)],
+          size:1.5 + Math.random()*2
+        });
+      }
+    }
+
+    function frame(now){
+      var elapsed = now - t0;
+      ctx.fillStyle = 'rgba(0,0,0,0.18)';
+      ctx.fillRect(0,0,cv.width,cv.height);
+
+      // Spawn rockets
+      if(elapsed < duration - 600 && now - lastRocket > 220 + Math.random()*200){
+        launchRocket(); lastRocket = now;
+        if(Math.random() < 0.4){ setTimeout(launchRocket, 80); }
+      }
+
+      // Update rockets
+      rockets.forEach(function(r){
+        r.trail.push({x:r.x,y:r.y});
+        if(r.trail.length>8) r.trail.shift();
+        r.y += r.vy;
+        if(r.y <= r.ty && !r.exploded){
+          r.exploded = true;
+          explode(r);
+        }
+        if(!r.exploded){
+          r.trail.forEach(function(t,i){
+            ctx.beginPath();
+            ctx.fillStyle = r.palette[0];
+            ctx.globalAlpha = i/r.trail.length;
+            ctx.arc(t.x, t.y, 2, 0, Math.PI*2);
+            ctx.fill();
+          });
+          ctx.globalAlpha = 1;
+        }
+      });
+      rockets = rockets.filter(function(r){ return !r.exploded; });
+
+      // Update particles
+      particles.forEach(function(p){
+        p.vy += 0.04; // gravity
+        p.vx *= 0.99; p.vy *= 0.99;
+        p.x += p.vx; p.y += p.vy;
+        p.life -= p.decay;
+        ctx.beginPath();
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        ctx.fill();
+      });
+      particles = particles.filter(function(p){ return p.life > 0; });
+      ctx.globalAlpha = 1;
+
+      if(elapsed < duration || particles.length > 0 || rockets.length > 0){
+        requestAnimationFrame(frame);
+      } else {
+        ctx.clearRect(0,0,cv.width,cv.height);
+        cv.classList.remove('active');
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // ────────────────────────────────────────
+  // TRIGGER: open soundboard
+  // ────────────────────────────────────────
+  window.skyOpenEasterEgg = function(){
+    skyBuild();
+    skyFireworks(2200);
+    // Delay modal to let the first salvo show
+    setTimeout(function(){
+      document.getElementById('sky-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // Play one random clip on open as a fanfare
+      var clips = SKY_CLIPS;
+      var pick = clips[Math.floor(Math.random()*Math.min(3, clips.length))]; // first 3 = grand intro lines
+      var fakeBtn = {classList:{add:function(){},remove:function(){}}, style:{}};
+      skyPlay(pick, fakeBtn);
+    }, 700);
+  };
+
+  window.skyClose = function(){
+    document.getElementById('sky-modal').classList.remove('active');
+    document.body.style.overflow = '';
+    skyStopAll();
+  };
+
+  // ────────────────────────────────────────
+  // TRIGGER: tippe  "futurecop"  oder  "skycaptain"
+  // ────────────────────────────────────────
+  var typedBuffer = '';
+  var triggers = ['futurecop','skycaptain'];
+  document.addEventListener('keydown', function(e){
+    // ESC closes the soundboard
+    if(e.key === 'Escape'){
+      var m = document.getElementById('sky-modal');
+      if(m && m.classList.contains('active')) { skyClose(); return; }
+    }
+    // Random clip via Space
+    if(e.key === ' '){
+      var m2 = document.getElementById('sky-modal');
+      if(m2 && m2.classList.contains('active')){
+        // Don't trigger when typing in inputs
+        if(['INPUT','TEXTAREA'].indexOf(document.activeElement.tagName)>=0) return;
+        e.preventDefault();
+        var btns = document.querySelectorAll('.sky-btn');
+        if(btns.length){ btns[Math.floor(Math.random()*btns.length)].click(); }
+        return;
+      }
+    }
+    // Don't track when typing in inputs
+    if(['INPUT','TEXTAREA'].indexOf(document.activeElement.tagName)>=0) return;
+    if(e.key && e.key.length === 1){
+      typedBuffer = (typedBuffer + e.key.toLowerCase()).slice(-20);
+      triggers.forEach(function(trig){
+        if(typedBuffer.indexOf(trig) >= 0){
+          typedBuffer = '';
+          window.skyOpenEasterEgg();
+        }
+      });
+    }
+  });
+
+  function escapeHtml(s){
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+})();
+</script>
+

@@ -1,55 +1,461 @@
-<div class="diss-hero">
-    <div class="diss-hero-glow"></div>
-    <p class="hero-tag">Schellingiana 35 &middot; frommann-holzboog &middot; 2024</p>
-    <h1 style="font-family:var(--fh);font-size:clamp(1.6rem,4vw,2.7rem);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.1;max-width:820px;margin-bottom:1rem">
+<style>
+/* ── Lightbox (wordcloud) ── */
+.wc-lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:none;align-items:center;justify-content:center;padding:1.5rem;}
+.wc-lb.open{display:flex;}
+.wc-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:8px;cursor:default;user-select:none;}
+.wc-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:2001;}
+.wc-lb-x:hover{background:rgba(255,255,255,.28);}
+.wc-lb-btns{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;z-index:2001;}
+.wc-lb-btn{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);color:#fff;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.05rem;font-weight:700;}
+.wc-lb-btn:hover{background:rgba(255,255,255,.3);}
+.wc-thumb-wrap{position:relative;cursor:zoom-in;border-radius:var(--r);overflow:hidden;}
+.wc-hint{position:absolute;bottom:.5rem;right:.6rem;background:rgba(0,0,0,.62);color:#fff;font-family:var(--fm);font-size:.63rem;padding:.18rem .45rem;border-radius:4px;pointer-events:none;letter-spacing:.04em;}
+
+/* ── Override diss-hero to be a flex container (fix overflow:hidden) ── */
+.diss-hero{
+  overflow:visible !important;   /* allow book image to breathe */
+  display:flex !important;
+  gap:2.5rem;
+  align-items:center;
+  flex-wrap:wrap;
+  padding:3rem 3rem 2.5rem !important;
+}
+.diss-hero-glow{
+  position:absolute;right:-60px;top:-60px;
+  width:360px;height:360px;
+  background:radial-gradient(circle,rgba(91,82,232,.1),transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.diss-hero-inner{flex:1;min-width:260px;position:relative;z-index:1;}
+.diss-hero-img{
+  flex-shrink:0;align-self:center;
+  position:relative;z-index:1;
+  margin-right:1rem;
+}
+.diss-hero-img img{
+  width:280px;max-width:100%;
+  border-radius:12px;
+  box-shadow:0 10px 36px rgba(0,0,0,.28);
+  display:block;object-fit:cover;aspect-ratio:3/4;  /* portrait — book cover */
+}
+
+/* Main body: 2-col grid */
+.diss-body{
+  display:grid;
+  grid-template-columns:1fr 440px;
+  gap:2.5rem;
+  padding:2rem 3rem 3.5rem;
+  align-items:start;
+}
+@media(max-width:900px){
+  .diss-body{grid-template-columns:1fr;}
+  .diss-hero-img{display:none;}
+}
+
+/* Abstract row: text + diss_2 side by side */
+.diss-abstract-row{display:flex;gap:1.75rem;align-items:flex-start;margin-bottom:2rem;max-width:1300px;}
+.diss-abstract-row .diss-abstract{flex:1;min-width:200px;margin:0;}
+.diss-abstract-row .diss-side-img img{
+  width:200px;border-radius:10px;
+  box-shadow:0 6px 24px rgba(0,0,0,.2);
+  display:block;object-fit:cover;aspect-ratio:3/4;  /* portrait — matches diss_1 */
+}
+
+/* TOC — compact, max-width constrained */
+.toc-list{list-style:none;margin:0;padding:0;max-width:1300px;}
+.toc-row{
+  display:flex;align-items:baseline;gap:.3rem;
+  padding:.26rem .35rem;border-bottom:1px solid var(--border);
+  cursor:default;transition:background .12s;font-size:.82rem;
+  /* important: NO justify-content space-between - keep everything left-aligned */
+}
+.toc-row:last-child{border-bottom:none;}
+.toc-row:hover{background:var(--surface);}
+.toc-row.has-children{cursor:pointer;}
+.toc-row.l0{padding-left:.35rem;}
+.toc-row.l1{padding-left:1.4rem;font-size:.79rem;}
+.toc-row.l2{padding-left:2.7rem;font-size:.76rem;color:var(--text2);}
+.toc-row.l3{padding-left:3.9rem;font-size:.73rem;color:var(--text3);}
+.toc-arrow{font-size:.56rem;color:var(--text3);flex:0 0 11px;text-align:center;transition:transform .2s;}
+.toc-row.open>.toc-arrow{transform:rotate(90deg);}
+.toc-num{font-family:var(--fm);font-size:.67rem;color:var(--accent);flex:0 0 auto;min-width:30px;}
+.toc-num.muted{color:var(--text3);}
+/* KEY FIX: title takes only its own width — no flex grow */
+.toc-name{flex:0 1 auto;color:inherit;padding-right:.25rem;}
+.toc-name.bold{color:var(--text);font-weight:600;}
+.toc-name.italic{font-style:italic;color:var(--text3);}
+/* dots fill any remaining gap with a small max */
+.toc-dots{flex:1 1 auto;min-width:12px;border-bottom:1px dotted var(--border2);margin:0 .25rem .14rem;}
+/* page number sits right after the dots, NOT at the right edge of the row */
+.toc-pg{font-family:var(--fm);font-size:.67rem;color:var(--text3);flex:0 0 auto;}
+.toc-children{display:none;}
+.toc-children.open{display:block;}
+
+/* Right col: wordcloud */
+.diss-wc-col{position:sticky;top:72px;}
+.diss-wc-label{font-family:var(--fm);font-size:.66rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;}
+.diss-wc-note{font-size:.67rem;color:var(--text3);margin-top:.5rem;line-height:1.5;font-family:var(--fm);}
+
+/* ── Diss image lightbox ── */
+.diss-img-lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:none;align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;}
+.diss-img-lb.open{display:flex;}
+.diss-img-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:10px;box-shadow:0 8px 64px rgba(0,0,0,.7);cursor:default;user-select:none;}
+.diss-img-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:2001;}
+.diss-img-lb-x:hover{background:rgba(255,255,255,.3);}
+
+/* Diss images clickable */
+.diss-hero-img img,
+.diss-abstract-row .diss-side-img img{cursor:zoom-in;transition:transform .25s,box-shadow .25s;}
+.diss-hero-img img:hover,
+.diss-abstract-row .diss-side-img img:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+</style>
+
+<!-- ═══ HERO ═══════════════════════════════════════════ -->
+<div class="diss-hero" style="display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap;">
+  <div class="diss-hero-glow"></div>
+
+  <div class="diss-hero-inner">
+    <p class="hero-tag">
+      <a href="https://www.frommann-holzboog.de/reihen/55/550003520?lang=de" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:.85">Schellingiana 35</a>
+      &middot;
+      <a href="https://www.frommann-holzboog.de" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;opacity:.85">frommann-holzboog</a>
+      &middot; 2024
+    </p>
+    <h1 style="font-family:var(--fh);font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.1;max-width:680px;margin-bottom:1rem;">
       Schellings Zeittheorie.<br>
       <span style="color:var(--accent)">Das verborgene System hinter der Weltalterphilosophie.</span>
     </h1>
     <div class="diss-meta-row">
-      <span class="diss-meta-badge accent">Schellingiana Bd. 35</span>
-      <span class="diss-meta-badge">frommann-holzboog &middot; 2024</span>
+      <span class="diss-meta-badge accent">
+        <a href="https://www.frommann-holzboog.de/reihen/55/550003520?lang=de" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Schellingiana Bd. 35</a>
+      </span>
+      <span class="diss-meta-badge">
+        <a href="https://www.frommann-holzboog.de" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">frommann-holzboog &middot; 2024</a>
+      </span>
       <span class="diss-meta-badge">XVI + 346 Seiten</span>
-      <span class="diss-meta-badge">Universit&auml;t Wuppertal</span>
+      <span class="diss-meta-badge">
+        <a href="https://www.uni-wuppertal.de" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Universit&auml;t Wuppertal</a>
+      </span>
     </div>
-    <div class="diss-stats-row">
+    <div class="diss-stats-row" style="margin-top:1.25rem;">
       <div class="diss-stat"><span class="diss-stat-num">346</span><span class="diss-stat-lbl">SEITEN</span></div>
-      <div class="diss-stat"><span class="diss-stat-num">35</span><span class="diss-stat-lbl">SCHELLINGIANA</span></div>
+      <div class="diss-stat">
+        <span class="diss-stat-num"><a href="https://www.frommann-holzboog.de/reihen/55/550003520?lang=de" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">35</a></span>
+        <span class="diss-stat-lbl">SCHELLINGIANA</span>
+      </div>
       <div class="diss-stat"><span class="diss-stat-num">2024</span><span class="diss-stat-lbl">ERSCHIENEN</span></div>
       <div class="diss-stat"><span class="diss-stat-num">6+</span><span class="diss-stat-lbl">JAHRE</span></div>
     </div>
   </div>
-  <div class="diss-abstract">
-    <span class="diss-abstract-label">// KURZFASSUNG</span>
-    Die Arbeit rekonstruiert ein verborgenes System der Zeit in Schellings Weltalterphilosophie (1811&ndash;1815). Im Zentrum steht die These, dass Schellings fragmentarische Weltalterentw&uuml;rfe keine gescheiterten Versuche darstellen, sondern Ausdruck einer bewusst offengehaltenen Zeitkonzeption sind: Zeit als strukturierte Negativit&auml;t, als das, was der positiven Entfaltung des Absoluten vorausliegt.
+
+  <!-- Book cover right of title -->
+  <div class="diss-hero-img">
+    <picture>
+      <source srcset="assets/images/diss/diss_1.avif" type="image/avif">
+      <source srcset="assets/images/diss/diss_1.webp"  type="image/webp">
+      <img src="assets/images/diss/diss_1.webp" alt="Schellings Zeittheorie — Buchcover" loading="lazy" onclick="dissImgOpen('assets/images/diss/diss_1.webp')">
+    </picture>
   </div>
-  <div class="diss-toc">
-    <div class="section-divider">Inhaltsverzeichnis</div>
-    <ul class="diss-toc-list">
-      <li><span class="diss-toc-num">&ndash;</span><span class="diss-toc-name" style="color:var(--text3);font-style:italic">Vorwort</span><span class="diss-toc-pages">I&ndash;XVI</span></li>
-      <li><span class="diss-toc-num">I.</span><span class="diss-toc-name">Einleitung: Das Problem der Zeit in Schellings Weltalterphilosophie</span><span class="diss-toc-pages">1</span></li>
-      <li><span class="diss-toc-num">II.</span><span class="diss-toc-name">Die Weltalterentw&uuml;rfe im &Uuml;berblick: Genese und Fragmentcharakter</span><span class="diss-toc-pages">&ndash;</span></li>
-      <li><span class="diss-toc-num">III.</span><span class="diss-toc-name">Zeitstruktur und Negativit&auml;t: Der Ungrund als Zeitprinzip</span><span class="diss-toc-pages">&ndash;</span></li>
-      <li><span class="diss-toc-num">IV.</span><span class="diss-toc-name">Die drei Druckfassungen im Vergleich: Kontinuit&auml;t und Bruch</span><span class="diss-toc-pages">&ndash;</span></li>
-      <li><span class="diss-toc-num">V.</span><span class="diss-toc-name">Schellings Zeitkonzeption im Kontext des Deutschen Idealismus</span><span class="diss-toc-pages">&ndash;</span></li>
-      <li><span class="diss-toc-num">VI.</span><span class="diss-toc-name">Systematische Rekonstruktion: Das verborgene System</span><span class="diss-toc-pages">&ndash;</span></li>
-      <li><span class="diss-toc-num">VII.</span><span class="diss-toc-name">Ausblick: Relevanz f&uuml;r die gegenw&auml;rtige Metaphysikdebatte</span><span class="diss-toc-pages">&ndash;</span></li>
-      <li><span class="diss-toc-num">&ndash;</span><span class="diss-toc-name" style="color:var(--text3);font-style:italic">Literaturverzeichnis</span><span class="diss-toc-pages">&ndash;</span></li>
-    </ul>
-  </div>
-  <div style="padding:0 3rem .5rem"><div class="section-divider">Wordclouds <span style="font-family:var(--fm);font-size:.7rem;color:var(--text3);font-weight:400;margin-left:.5rem">// Visualisierungen zentraler Begriffe</span></div></div>
-  <div class="wc-grid">
-    <div class="wc-card"><div class="wc-img-area"><picture><source srcset="assets/images/Wordclouds/wc_variant_01_mw8000_min3_s929393.avif" type="image/avif"><source srcset="assets/images/Wordclouds/wc_variant_01_mw8000_min3_s929393.webp" type="image/webp"><img class="wc-real-img" src="assets/images/Wordclouds/wc_variant_01_mw8000_min3_s929393.webp" alt="Wordcloud I-II" loading="lazy"></picture></div><div class="wc-info"><span class="wc-info-label">KAPITEL I&ndash;II</span><div class="wc-info-title">Einleitung &amp; Genese</div><div class="wc-info-desc">Zeitproblem, Weltalter, Fragment</div></div></div>
-    <div class="wc-card"><div class="wc-img-area"><picture><source srcset="assets/images/Wordclouds/wc_variant_02_mw8000_min3_s931685.avif" type="image/avif"><source srcset="assets/images/Wordclouds/wc_variant_02_mw8000_min3_s931685.webp" type="image/webp"><img class="wc-real-img" src="assets/images/Wordclouds/wc_variant_02_mw8000_min3_s931685.webp" alt="Wordcloud III" loading="lazy"></picture></div><div class="wc-info"><span class="wc-info-label">KAPITEL III</span><div class="wc-info-title">Zeitstruktur &amp; Negativit&auml;t</div><div class="wc-info-desc">Ungrund, Negativit&auml;t, Ewigkeit</div></div></div>
-    <div class="wc-card"><div class="wc-img-area"><picture><source srcset="assets/images/Wordclouds/wc_variant_03_mw3000_min3_s809433.avif" type="image/avif"><source srcset="assets/images/Wordclouds/wc_variant_03_mw3000_min3_s809433.webp" type="image/webp"><img class="wc-real-img" src="assets/images/Wordclouds/wc_variant_03_mw3000_min3_s809433.webp" alt="Wordcloud IV" loading="lazy"></picture></div><div class="wc-info"><span class="wc-info-label">KAPITEL IV</span><div class="wc-info-title">Die drei Druckfassungen</div><div class="wc-info-desc">Kontinuit&auml;t, Differenz, Revision</div></div></div>
-    <div class="wc-card"><div class="wc-img-area"><picture><source srcset="assets/images/Wordclouds/wc_variant_04_mw8000_min3_s808324.avif" type="image/avif"><source srcset="assets/images/Wordclouds/wc_variant_04_mw8000_min3_s808324.webp" type="image/webp"><img class="wc-real-img" src="assets/images/Wordclouds/wc_variant_04_mw8000_min3_s808324.webp" alt="Wordcloud V-VI" loading="lazy"></picture></div><div class="wc-info"><span class="wc-info-label">KAPITEL V&ndash;VI</span><div class="wc-info-title">System &amp; Kontext</div><div class="wc-info-desc">Hegel, Fichte, Jacobi</div></div></div>
-    <div class="wc-card"><div class="wc-img-area"><picture><source srcset="assets/images/Wordclouds/wc_variant_05_mw8000_min3_s555038.avif" type="image/avif"><source srcset="assets/images/Wordclouds/wc_variant_05_mw8000_min3_s555038.webp" type="image/webp"><img class="wc-real-img" src="assets/images/Wordclouds/wc_variant_05_mw8000_min3_s555038.webp" alt="Wordcloud Gesamt" loading="lazy"></picture></div><div class="wc-info"><span class="wc-info-label">GESAMTTEXT</span><div class="wc-info-title">Gesamte Dissertation</div><div class="wc-info-desc">346 Seiten &mdash; alle zentralen Begriffe</div></div></div>
-    <div class="wc-card"><div class="wc-img-area"><picture><source srcset="assets/images/Wordclouds/Posterwc_variant_03_mw8000_min3_s999968.avif" type="image/avif"><source srcset="assets/images/Wordclouds/Posterwc_variant_03_mw8000_min3_s999968.webp" type="image/webp"><img class="wc-real-img" src="assets/images/Wordclouds/Posterwc_variant_03_mw8000_min3_s999968.webp" alt="Poster" loading="lazy"></picture></div><div class="wc-info"><span class="wc-info-label">POSTER</span><div class="wc-info-title">Poster-Variante</div><div class="wc-info-desc">Druckoptimierte Visualisierung</div></div></div>
-  </div>
-  <div style="padding:0 3rem 3rem">
-    <div class="section-divider">Einordnung &amp; Kontext</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.2rem">
-      <div class="card" style="padding:1.4rem"><div style="font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.45rem">VERLAGSREIHE</div><div style="font-family:var(--fh);font-weight:700;font-size:.93rem;color:var(--text);margin-bottom:.35rem">Schellingiana</div><div style="color:var(--text2);font-size:.8rem;line-height:1.65">Die f&uuml;hrende Schelling-Forschungsreihe im deutschsprachigen Raum. Band 35 von 36.</div></div>
-      <div class="card" style="padding:1.4rem"><div style="font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.45rem">BETREUUNG</div><div style="font-family:var(--fh);font-weight:700;font-size:.93rem;color:var(--text);margin-bottom:.35rem">Prof. Dr. Alexander Schnell</div><div style="color:var(--text2);font-size:.8rem;line-height:1.65">Lehrstuhl f&uuml;r Theoretische Philosophie / Ph&auml;nomenologie, BU Wuppertal.</div></div>
-      <div class="card" style="padding:1.4rem"><div style="font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.45rem">KERNTHESE</div><div style="font-family:var(--fh);font-weight:700;font-size:.93rem;color:var(--text);margin-bottom:.35rem">Zeit als strukturierte Negativit&auml;t</div><div style="color:var(--text2);font-size:.8rem;line-height:1.65">Die Weltalterentw&uuml;rfe sind kein Scheitern, sondern eine bewusst offengehaltene Zeitkonzeption.</div></div>
+</div>
+
+<!-- ═══ BODY: left col (abstract + TOC + cards) | right col (wordcloud) ═══ -->
+<div class="diss-body">
+
+  <!-- ── LEFT COLUMN ── -->
+  <div>
+
+    <!-- Abstract + diss_2 side by side -->
+    <div class="diss-abstract-row">
+      <div class="diss-abstract">
+        <span class="diss-abstract-label">// KURZFASSUNG</span>
+        Schellings unvollendetes Lebensprojekt, eine dreibändige Reihe über »Die Weltalter« zu schreiben, stellt
+        die Forschung bis heute vor die Herausforderung, seine oft verschleiernd ausgedrückten Gedanken zu
+        durchleuchten und sie systematisch und im Einklang mit seinen sonstigen Äußerungen zu rekonstruieren.
+        In diesem Band zeigt Alexander Schmidt, dass Schelling seiner Philosophie ein an der Bibel orientiertes
+        7-Phasen-Modell zugrunde legt, in dem sein lebenslanges Streben nach einem System der Freiheit seine
+        Verwirklichung findet. Schmidt rekonstruiert Schellings metaphysisches System der Zeiten erstmals
+        vollumfänglich, entschlüsselt das Weltalterprojekt in einem einzigen Ergebnissatz und belegt, dass
+        Zeit für Schelling Geschichte ist, die als christliche Heilsgeschichte identifiziert werden muss.
+      </div>
+      <div class="diss-side-img">
+        <picture>
+          <source srcset="assets/images/diss/diss_2.avif" type="image/avif">
+          <source srcset="assets/images/diss/diss_2.webp"  type="image/webp">
+          <img src="assets/images/diss/diss_2.webp" alt="Aus der Dissertation" loading="lazy" onclick="dissImgOpen('assets/images/diss/diss_2.webp')">
+        </picture>
+      </div>
     </div>
+
+    <!-- TOC -->
+    <div class="section-divider" style="margin-bottom:1rem;">
+      Inhaltsverzeichnis
+      <span style="font-family:var(--fm);font-size:.66rem;color:var(--text3);font-weight:400;margin-left:.6rem;">// Klicken zum Aufklappen</span>
+    </div>
+    <ul class="toc-list" id="diss-toc"></ul>
+
+    <!-- Context cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:2rem;">
+      <div class="card" style="padding:1.2rem;">
+        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.35rem;">VERLAGSREIHE</div>
+        <div style="font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.28rem;">Schellingiana</div>
+        <div style="color:var(--text2);font-size:.77rem;line-height:1.62;">Die führende Schelling-Forschungsreihe im deutschsprachigen Raum. Band 35 von 36.</div>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.35rem;">BETREUUNG</div>
+        <div style="font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.28rem;">Prof. Dr. Alexander Schnell</div>
+        <div style="color:var(--text2);font-size:.77rem;line-height:1.62;">Lehrstuhl für Theoretische Philosophie &amp; Phänomenologie, BU Wuppertal.</div>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.35rem;">KERNTHESE</div>
+        <div style="font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.28rem;">Zeit als christliche Heilsgeschichte</div>
+        <div style="color:var(--text2);font-size:.77rem;line-height:1.62;">Die Weltalterentwürfe als christliche Zeittheorie in Anlehnung an Paulus.</div>
+      </div>
+    </div>
+
+  </div><!-- /.left-col -->
+
+  <!-- ── RIGHT COLUMN: Wordcloud ── -->
+  <div class="diss-wc-col">
+    <div class="diss-wc-label">// Wordcloud</div>
+    <div class="wc-thumb-wrap" onclick="wcOpen()" title="Zum Vergrößern klicken">
+      <picture>
+        <source srcset="assets/images/diss/Wordclouds/wc_variant_01_mw8000_min3_s929393.avif" type="image/avif">
+        <source srcset="assets/images/diss/Wordclouds/wc_variant_01_mw8000_min3_s929393.webp" type="image/webp">
+        <img src="assets/images/diss/Wordclouds/wc_variant_01_mw8000_min3_s929393.webp"
+             alt="Wordcloud" loading="lazy" style="width:100%;display:block;border-radius:var(--r);">
+      </picture>
+      <div class="wc-hint">&#128269; Vergrößern</div>
+    </div>
+    <p class="diss-wc-note">Begriffshäufigkeit &middot; Stopwörter entfernt &middot; Maskenform</p>
   </div>
+
+</div><!-- /.diss-body -->
+
+<!-- Diss image lightbox -->
+<div class="diss-img-lb" id="diss-img-lb" onclick="if(event.target===this)dissImgClose()">
+  <button class="diss-img-lb-x" onclick="dissImgClose()">&#10005;</button>
+  <img id="diss-img-lb-img" src="" alt="">
+</div>
+
+<!-- Wordcloud Lightbox -->
+<div class="wc-lb" id="wc-lb" onclick="if(event.target===this)wcClose()">
+  <button class="wc-lb-x" onclick="wcClose()">&#10005;</button>
+  <img id="wc-lb-img"
+       src="assets/images/diss/Wordclouds/wc_variant_01_mw8000_min3_s929393.webp"
+       alt="Wordcloud Vollansicht" draggable="false"
+       style="transform-origin:center;transition:transform .18s;cursor:zoom-in;">
+  <div class="wc-lb-btns">
+    <button class="wc-lb-btn" onclick="wcZoom(1.3)">+</button>
+    <button class="wc-lb-btn" onclick="wcZoom(1/1.3)">&minus;</button>
+    <button class="wc-lb-btn" onclick="wcReset()" style="font-size:.62rem;width:46px;">Reset</button>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ── TOC DATA ── */
+var TOC = [
+  {num:'—', title:'Vorwort', page:'XIII', muted:true},
+  {num:'1.', title:'Einleitung', page:'1'},
+  {num:'2.', title:'Annäherung', page:'10', children:[
+    {num:'2.1', title:'Kurzbiographie Schellings', page:'10'},
+    {num:'2.2', title:'Im Schatten von Fichte und Hegel', page:'20'},
+    {num:'2.3', title:'Der philosophische Weg von der Freiheitsschrift zu den Weltaltern', page:'22'},
+  ]},
+  {num:'3.', title:'Die Weltalter', page:'28', children:[
+    {num:'3.1', title:'Entstehungsgeschichte', page:'28'},
+    {num:'3.2', title:'Schellings Weltalternachlass', page:'30'},
+    {num:'3.3', title:'Veröffentlichungen', page:'33'},
+    {num:'3.4', title:'Der Inhalt der Weltalter', page:'35', children:[
+      {num:'3.4.1', title:'Die Anfangssätze', page:'35'},
+      {num:'3.4.2', title:'Die Einleitung', page:'37'},
+      {num:'3.4.3', title:'Die drei Drucke und die Zugangsweisen', page:'42', children:[
+        {num:'3.4.3.1', title:'Der I. Druck', page:'44'},
+        {num:'3.4.3.2', title:'Der II. Druck', page:'46'},
+        {num:'3.4.3.3', title:'Der III. Druck', page:'48'},
+        {num:'3.4.3.4', title:'Zugangsweisen und Favorisierung', page:'50'},
+      ]},
+    ]},
+  ]},
+  {num:'4.', title:'Schellings Metaphysik: die Prinzipien- oder Potenzenlehre', page:'53'},
+  {num:'5.', title:'Das weitere Schicksal der Weltalter in der Spätphilosophie', page:'80', children:[
+    {num:'5.1', title:'Die fehlenden Veröffentlichungen in den Sämmtlichen Werken von 1809–1850', page:'81'},
+    {num:'5.2', title:'Die Fortsetzung des Weltalterprojektes in der Spätphilosophie', page:'86'},
+    {num:'5.3', title:'Periodisierung der Schelling\'schen werkgeschichtlichen Entwicklung', page:'95'},
+  ]},
+  {num:'6.', title:'Geschichtlicher Hintergrund von Schellings Zeittheorie: die Spinozabriefe', page:'99', children:[
+    {num:'6.1', title:'Der Grundtext: System und Freiheit', page:'99'},
+    {num:'6.2', title:'Die VII. Beilage: der ungereimte Begriff der ewigen Zeit', page:'103'},
+    {num:'6.3', title:'Die freie Weltschöpfung als Aufgabe der positiven Philosophie', page:'110'},
+  ]},
+  {num:'7.', title:'Schellings Zeittheorie: das verborgene System hinter der Weltalterphilosophie', page:'118', bold:true, children:[
+    {num:'7.1', title:'Zeit und Metaphysik: die Genealogie der Zeit', page:'118', children:[
+      {num:'7.1.1', title:'Absolute Vergangenheit', page:'120'},
+      {num:'7.1.2', title:'Zeit und Freiheit', page:'122'},
+      {num:'7.1.3', title:'Allgemeine Subjektivität der Zeit', page:'123'},
+      {num:'7.1.4', title:'Zeit und Organismus', page:'125'},
+      {num:'7.1.5', title:'Zeit und Einheit', page:'126'},
+    ]},
+    {num:'7.2', title:'Das System der sieben Phasen', page:'127', children:[
+      {num:'7.2.1', title:'Phase I: absolute Ewigkeit', page:'132', children:[
+        {num:'7.2.1.1', title:'Annäherung an den absoluten Anfang mithilfe der Methode der Anthropomorphisierung', page:'132'},
+        {num:'7.2.1.2', title:'Schellings Kritik an Hegels Konzeption des Anfangs', page:'138'},
+        {num:'7.2.1.3', title:'Der unvordenkliche Anfang als ewige Freiheit im Ungrund', page:'142'},
+      ]},
+      {num:'7.2.2', title:'Phase II: das Rad der anfänglichen Geburt', page:'145'},
+      {num:'7.2.3', title:'Phase III: vorweltliche Vergangenheit', page:'151'},
+      {num:'7.2.4', title:'Phase IV: freie Schöpfung und Sündenfall', page:'157', children:[
+        {num:'7.2.4.1', title:'Schöpfung und Zeit', page:'159'},
+        {num:'7.2.4.2', title:'Schöpfung, Freiheit und Sündenfall', page:'160'},
+        {num:'7.2.4.3', title:'Die Schöpfung aus Nichts', page:'167'},
+      ]},
+      {num:'7.2.5', title:'Phase V: weltliche Gegenwart', page:'172'},
+      {num:'7.2.6', title:'Phase VI: Apokalypse', page:'175'},
+      {num:'7.2.7', title:'Phase VII: nachweltliche Zukunft', page:'177'},
+    ]},
+    {num:'7.3', title:'Das System der Freiheit', page:'179', children:[
+      {num:'7.3.1', title:'Schellings synthetisches Systemverständnis', page:'179'},
+      {num:'7.3.2', title:'Freiheit als Anfang, Mitte und Ende des Systems', page:'188', children:[
+        {num:'7.3.2.1', title:'Freiheit als Anfang (Phase I)', page:'189'},
+        {num:'7.3.2.2', title:'Freiheit als Mittelpunkt (Phase IV)', page:'191'},
+        {num:'7.3.2.3', title:'Freiheit als Ende (Phase VII)', page:'197'},
+      ]},
+      {num:'7.3.3', title:'Zyklisches oder lineares System- und Geschichtsmodell', page:'199'},
+      {num:'7.3.4', title:'Das System der Zeiten als allgemeiner Rahmen der Wissenschaft', page:'204'},
+    ]},
+  ]},
+  {num:'8.', title:'Überblick über die Rezeption der Freiheits- und Weltalterphilosophie', page:'208', children:[
+    {num:'8.1',  title:'Die Wiederentdeckung Schellings durch Heidegger (1936)', page:'209'},
+    {num:'8.2',  title:'Schröters Veröffentlichung des I. und II. Weltalterdrucks (1946)', page:'211'},
+    {num:'8.3',  title:'Fuhrmans\' christlich-theistische Weltalterdeutung (1954)', page:'212'},
+    {num:'8.4',  title:'Habermas\' Diagnose der Unmöglichkeit des werdenden Gottes (1955)', page:'214'},
+    {num:'8.5',  title:'Schulz\' Habilitationsschrift und sein Streit mit Fuhrmans', page:'216', children:[
+      {num:'8.5.1', title:'Schulz\' idealistische Schelling-Deutung (1955)', page:'216'},
+      {num:'8.5.2', title:'Der Streit zwischen Schulz und Fuhrmans (1955–1972)', page:'219'},
+    ]},
+    {num:'8.6',  title:'Wielands Analyse zu den Fundamentalerfahrungen der Zeitlichkeit (1956)', page:'221'},
+    {num:'8.7',  title:'Holz\' Zurückweisung von Böhmes Einfluss und von Schellings Scheitern (1970)', page:'223'},
+    {num:'8.8',  title:'Hogrebes Weltalterrekonstruktion mithilfe der Prädikationstheorie (1989)', page:'225'},
+    {num:'8.9',  title:'Sandkaulens Analysen der Hintergründe von Schellings Zeittheorie (1990)', page:'226'},
+    {num:'8.10', title:'Lanfranconis Entschlüsselung der Krisis und des göttlichen Heilsplans (1992)', page:'227'},
+    {num:'8.11', title:'Hermannis Betonung der Theodizee und des Sündenfalls (1994)', page:'232'},
+    {num:'8.12', title:'Peetz\' Analyse von Jacobis und Schellings Rationalitätsverständnis (1995)', page:'236'},
+    {num:'8.13', title:'Hutters Ansatz bei Schellings Überlegungen zu Kants Vernunftantinomie (1996)', page:'242'},
+    {num:'8.14', title:'Trawnys Deutung der Zeit als Zu-kunft (Advent) (2004)', page:'248'},
+    {num:'8.15', title:'Xians rationalistische Zurückweisung des Theologischen (2005)', page:'252'},
+    {num:'8.16', title:'Friedrichs Schilderung der Vergangenheit und des Ungrundes (2009)', page:'257'},
+    {num:'8.17', title:'Neumanns Theorie geschichtlicher Zeiten (2019)', page:'265'},
+    {num:'8.18', title:'Tabellarische Übersicht über die Rezeptionsgeschichte', page:'278'},
+    {num:'8.19', title:'Quintessenz der Rezeptionsgeschichte der Weltalter', page:'283'},
+  ]},
+  {num:'9.',  title:'Schelling zeitgeschichtlich verstehen und deuten', page:'289', children:[
+    {num:'9.1', title:'Das Verhältnis von Theologie und Philosophie bei Schelling', page:'291'},
+    {num:'9.2', title:'Christliche Philosophie', page:'293'},
+    {num:'9.3', title:'Belastbare Entschlüsselung des Weltalterprojektes', page:'303'},
+  ]},
+  {num:'10.', title:'Schlussbetrachtung', page:'313'},
+];
+
+/* ── TOC renderer ── */
+function buildTOC(items, container, level) {
+  items.forEach(function(item) {
+    var hasKids = item.children && item.children.length > 0;
+    var row = document.createElement('li');
+    row.className = 'toc-row l' + level + (hasKids ? ' has-children' : '');
+
+    var arrow = document.createElement('span');
+    arrow.className = 'toc-arrow';
+    arrow.textContent = hasKids ? '▶' : '';
+    row.appendChild(arrow);
+
+    var num = document.createElement('span');
+    num.className = 'toc-num' + (item.muted ? ' muted' : '');
+    num.textContent = item.num;
+    row.appendChild(num);
+
+    var name = document.createElement('span');
+    name.className = 'toc-name' + (item.bold ? ' bold' : '') + (item.muted ? ' italic' : '');
+    name.textContent = item.title;
+    row.appendChild(name);
+
+    var dots = document.createElement('span');
+    dots.className = 'toc-dots';
+    row.appendChild(dots);
+
+    var pg = document.createElement('span');
+    pg.className = 'toc-pg';
+    pg.textContent = item.page || '';
+    row.appendChild(pg);
+
+    container.appendChild(row);
+
+    if (hasKids) {
+      var kids = document.createElement('ul');
+      kids.className = 'toc-list toc-children';
+      buildTOC(item.children, kids, level + 1);
+      container.appendChild(kids);
+      row.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var open = row.classList.toggle('open');
+        kids.classList.toggle('open', open);
+      });
+    }
+  });
+}
+
+var tocEl = document.getElementById('diss-toc');
+if (tocEl) buildTOC(TOC, tocEl, 0);
+
+/* ── Wordcloud zoom ── */
+window._wcSc = 1;
+function _wcImg(){ return document.getElementById('wc-lb-img'); }
+function _wcLb() { return document.getElementById('wc-lb'); }
+
+window.wcOpen = function() {
+  var lb=_wcLb(), img=_wcImg(); if(!lb) return;
+  window._wcSc=1; if(img){img.style.transform='scale(1)';img.style.cursor='zoom-in';}
+  lb.classList.add('open'); document.body.style.overflow='hidden';
+};
+window.wcClose = function() {
+  var lb=_wcLb(); if(!lb) return;
+  lb.classList.remove('open'); document.body.style.overflow='';
+};
+window.wcZoom = function(f) {
+  var img=_wcImg(); if(!img) return;
+  window._wcSc=Math.max(.4,Math.min(8,window._wcSc*f));
+  img.style.transform='scale('+window._wcSc+')';
+  img.style.cursor=window._wcSc>1.05?'zoom-out':'zoom-in';
+};
+/* ── Diss image lightbox open/close ── */
+window.dissImgOpen = function(src) {
+  var lb = document.getElementById('diss-img-lb');
+  var img = document.getElementById('diss-img-lb-img');
+  if (!lb || !img) return;
+  img.src = src;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+window.dissImgClose = function() {
+  var lb = document.getElementById('diss-img-lb');
+  if (!lb) return;
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+};
+
+window.wcReset = function() {
+  var img=_wcImg(); window._wcSc=1;
+  if(img){img.style.transform='scale(1)';img.style.cursor='zoom-in';}
+};
+window.wcToggle = function() {
+  window._wcSc>1.05 ? wcZoom(1/window._wcSc) : wcZoom(2.5);
+};
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){wcClose();dissImgClose();} });
+document.addEventListener('wheel', function(e){
+  var lb=_wcLb(); if(!lb||!lb.classList.contains('open')) return;
+  e.preventDefault(); wcZoom(e.deltaY<0?1.12:1/1.12);
+}, {passive:false});
+
+})();
+</script>

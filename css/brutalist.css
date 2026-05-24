@@ -1,0 +1,527 @@
+/* ═══════════════════════════════════════════════════════
+   BRUTALIST EDITORIAL
+   Scoped to html[data-style="brutalist"]
+
+   Concept: Swiss/International Typographic Style meets
+   digital brutalism. Bold structure, sharp edges,
+   high-contrast, magazine-grid aesthetic.
+
+   Light: stark white + jet black + one signal colour (red)
+   Dark:  jet black + off-white + electric red
+═══════════════════════════════════════════════════════ */
+
+/* ── Variables ────────────────────────────────────────── */
+html[data-style="brutalist"] {
+  --bg:       #f5f5f0;
+  --bg2:      #ebebе4;
+  --bg3:      #ddddd6;
+  --surface:  #e4e4dc;
+  --surface2: #d5d5cc;
+
+  --accent:   #d42b2b;   /* signal red    */
+  --accent2:  #1a1a1a;   /* near-black    */
+  --accent3:  #d42b2b;
+  --accent4:  #d42b2b;
+
+  --glow-accent:  rgba(212,43,43,.2);
+  --glow-accent2: rgba(26,26,26,.15);
+  --glow-accent3: rgba(212,43,43,.2);
+  --glow-accent4: rgba(212,43,43,.2);
+
+  --text:  #0a0a08;
+  --text2: #3a3a36;
+  --text3: #8a8a82;
+
+  --border:  #c8c8c0;
+  --border2: #a0a098;
+
+  --card:         #ffffff;
+  --card-glass:   #ffffff;
+  --card-border:  #0a0a08;
+  --shadow:       4px 4px 0 #0a0a08;
+  --shadow-hover: 6px 6px 0 #d42b2b;
+
+  --fh: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+  --r:    0px;   /* NO border radius — brutalist */
+  --r-sm: 0px;
+
+  --grad-accent:  linear-gradient(90deg, #d42b2b, #8b0000);
+  --grad-accent2: linear-gradient(90deg, #0a0a08, #3a3a36);
+  --grad-text:    linear-gradient(90deg, #d42b2b, #0a0a08);
+}
+
+html[data-style="brutalist"][data-theme="dark"] {
+  --bg:       #0a0a08;
+  --bg2:      #111110;
+  --bg3:      #1a1a18;
+  --surface:  #1a1a18;
+  --surface2: #222220;
+
+  --accent:   #ff3333;
+  --accent2:  #f0ede8;
+  --accent3:  #ff3333;
+  --accent4:  #ff3333;
+
+  --glow-accent:  rgba(255,51,51,.3);
+  --glow-accent2: rgba(240,237,232,.1);
+  --glow-accent3: rgba(255,51,51,.3);
+  --glow-accent4: rgba(255,51,51,.3);
+
+  --text:  #f0ede8;
+  --text2: #b0ada8;
+  --text3: #606060;
+
+  --border:  #2a2a28;
+  --border2: #3a3a38;
+
+  --card:         #111110;
+  --card-glass:   #111110;
+  --card-border:  #f0ede8;
+  --shadow:       4px 4px 0 #f0ede8;
+  --shadow-hover: 6px 6px 0 #ff3333;
+}
+
+/* ── Global overrides ─────────────────────────────────── */
+html[data-style="brutalist"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── NAV ─────────────────────────────────────────────── */
+html[data-style="brutalist"] nav {
+  background: var(--bg);
+  border-bottom: 3px solid var(--text);
+  backdrop-filter: none;
+  height: 56px;
+}
+html[data-style="brutalist"] .nav-logo {
+  font-family: var(--fh);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+html[data-style="brutalist"] .nav-logo span {
+  color: var(--accent);
+  background: none;
+  -webkit-text-fill-color: var(--accent);
+}
+html[data-style="brutalist"] .nav-group-btn,
+html[data-style="brutalist"] .nav-direct {
+  font-family: var(--fm);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+html[data-style="brutalist"] .nav-group-btn:hover,
+html[data-style="brutalist"] .nav-group-btn.group-active,
+html[data-style="brutalist"] .nav-direct:hover,
+html[data-style="brutalist"] .nav-direct.active {
+  color: var(--accent);
+  background: none;
+  text-shadow: none;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+html[data-style="brutalist"] .nav-dropdown {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  backdrop-filter: none;
+  background: var(--bg);
+  box-shadow: 4px 4px 0 var(--text);
+}
+html[data-style="brutalist"] .nav-dropdown-item {
+  font-family: var(--fm);
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+html[data-style="brutalist"] .nav-dropdown-item:hover {
+  background: var(--text);
+  color: var(--bg);
+}
+html[data-style="brutalist"] .theme-btn,
+html[data-style="brutalist"] .lang-btn {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--fm);
+  font-size: .65rem;
+}
+html[data-style="brutalist"] .theme-btn:hover,
+html[data-style="brutalist"] .lang-btn:hover {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: none;
+  border-color: var(--text);
+}
+
+/* ── CARDS ────────────────────────────────────────────── */
+html[data-style="brutalist"] .card {
+  border-radius: 0;
+  border: 2px solid var(--card-border);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+}
+html[data-style="brutalist"] .card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+/* ── BUTTONS ──────────────────────────────────────────── */
+html[data-style="brutalist"] .btn {
+  border-radius: 0;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: .8rem;
+}
+html[data-style="brutalist"] .btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 3px 3px 0 var(--text);
+}
+html[data-style="brutalist"] .btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--text);
+}
+html[data-style="brutalist"] .btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 2px solid var(--text);
+  box-shadow: 3px 3px 0 var(--text);
+}
+html[data-style="brutalist"] .btn-ghost:hover {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: 5px 5px 0 var(--accent);
+}
+
+/* ── PAGE HERO ────────────────────────────────────────── */
+html[data-style="brutalist"] .page-hero {
+  border-bottom: 3px solid var(--text);
+  background: var(--bg);
+}
+html[data-style="brutalist"] .page-title {
+  font-size: 3.5rem;
+  letter-spacing: -.05em;
+}
+html[data-style="brutalist"] .page-title span {
+  color: var(--accent);
+  text-shadow: none;
+}
+html[data-style="brutalist"] .hero-tag {
+  color: var(--accent);
+  text-shadow: none;
+  letter-spacing: .2em;
+}
+html[data-style="brutalist"] .hero-tag::before {
+  background: var(--accent);
+  box-shadow: none;
+}
+html[data-style="brutalist"] .pstat-num {
+  color: var(--accent);
+  background: none;
+  -webkit-text-fill-color: var(--accent);
+}
+
+/* ── SECTION DIVIDERS ─────────────────────────────────── */
+html[data-style="brutalist"] .section-divider {
+  font-size: 1.3rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  font-weight: 800;
+  border-bottom: 3px solid var(--text);
+  padding-bottom: .4rem;
+}
+html[data-style="brutalist"] .section-divider::after {
+  display: none;
+}
+html[data-style="brutalist"] .sec-title {
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+html[data-style="brutalist"] .sec-sub {
+  letter-spacing: .15em;
+}
+
+/* ── TAGS ─────────────────────────────────────────────── */
+html[data-style="brutalist"] .tag {
+  border-radius: 0;
+  border: 1px solid var(--text);
+  background: transparent;
+  color: var(--text2);
+  font-size: .65rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* ── INPUTS ───────────────────────────────────────────── */
+html[data-style="brutalist"] .ctrl-input,
+html[data-style="brutalist"] .ctrl-select {
+  border-radius: 0;
+  border: 2px solid var(--border2);
+  background: var(--bg);
+}
+html[data-style="brutalist"] .ctrl-input:focus {
+  border-color: var(--accent);
+  box-shadow: 2px 2px 0 var(--accent);
+}
+
+/* ── HOME HERO ────────────────────────────────────────── */
+html[data-style="brutalist"] .hero-name .n1 { color: var(--text); }
+html[data-style="brutalist"] .hero-name .n2 {
+  color: var(--accent);
+  background: none;
+  -webkit-text-fill-color: var(--accent);
+  filter: none;
+}
+html[data-style="brutalist"] .cursor { color: var(--accent); text-shadow: none; }
+html[data-style="brutalist"] .hero-portrait-wrap::before { display: none; }
+html[data-style="brutalist"] .hero-portrait-wrap::after  { display: none; }
+html[data-style="brutalist"] .hero-portrait {
+  border-radius: 0;
+  border: 3px solid var(--text);
+  box-shadow: 8px 8px 0 var(--text);
+  filter: none;
+}
+html[data-style="brutalist"] .hero-portrait:hover {
+  box-shadow: 12px 12px 0 var(--accent);
+  transform: translate(-3px, -3px);
+}
+html[data-style="brutalist"] .hero-grid-bg,
+html[data-style="brutalist"] .hero-glow { display: none; }
+/* Replace grid bg with brutalist rule lines */
+html[data-style="brutalist"] .hero::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0; height: 3px;
+  background: var(--accent);
+  z-index: 0;
+}
+html[data-style="brutalist"] .stat-item { border-right: 2px solid var(--text); }
+html[data-style="brutalist"] .stat-num {
+  color: var(--accent);
+  background: none;
+  -webkit-text-fill-color: var(--accent);
+}
+html[data-style="brutalist"] .stats-row {
+  border-top: 3px solid var(--text);
+  border-bottom: 3px solid var(--text);
+  background: var(--border);
+}
+html[data-style="brutalist"] .social-link {
+  border-radius: 0;
+  border: 2px solid var(--text2);
+}
+html[data-style="brutalist"] .social-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 2px 2px 0 var(--accent);
+  background: transparent;
+}
+html[data-style="brutalist"] .about-portrait {
+  border-radius: 0;
+  border: 3px solid var(--text);
+  box-shadow: 4px 4px 0 var(--text);
+  background: none;
+}
+html[data-style="brutalist"] .about-portrait:hover {
+  box-shadow: 6px 6px 0 var(--accent);
+}
+html[data-style="brutalist"] .tl-item::before {
+  background: var(--accent);
+  box-shadow: none;
+  border-radius: 0;
+}
+html[data-style="brutalist"] .tl::before {
+  background: var(--text);
+  width: 3px;
+}
+html[data-style="brutalist"] .tl-year { color: var(--accent); }
+
+/* ── PHILOSOPHY ───────────────────────────────────────── */
+html[data-style="brutalist"] .favphil-card {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: var(--shadow);
+}
+html[data-style="brutalist"] .favphil-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+html[data-style="brutalist"] .zitat-card {
+  border-radius: 0;
+  border: 2px solid var(--border);
+  box-shadow: 3px 3px 0 var(--border2);
+}
+html[data-style="brutalist"] .zitat-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--accent);
+  border-color: var(--accent);
+}
+html[data-style="brutalist"] .zitat-author { color: var(--accent); text-shadow: none; }
+html[data-style="brutalist"] .zitat-motto {
+  border-left: 6px solid var(--accent);
+  border-radius: 0;
+}
+html[data-style="brutalist"] .zf-btn { border-radius: 0; }
+html[data-style="brutalist"] .zf-btn.active { background: var(--accent); border-color: var(--accent); }
+
+/* ── GAMING ───────────────────────────────────────────── */
+html[data-style="brutalist"] .game-card {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+}
+html[data-style="brutalist"] .game-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+html[data-style="brutalist"] .gtab { border-radius: 0; font-family: var(--fm); text-transform: uppercase; font-size: .67rem; letter-spacing: .06em; }
+html[data-style="brutalist"] .gtab.active { background: var(--text); color: var(--bg); }
+html[data-style="brutalist"] .g-tabs { border-radius: 0; border: 2px solid var(--text); }
+
+/* ── PODCASTS ─────────────────────────────────────────── */
+html[data-style="brutalist"] .pod-card2 {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+}
+html[data-style="brutalist"] .pod-card2:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--accent);
+}
+html[data-style="brutalist"] .pod-cat-btn { border-radius: 0; }
+html[data-style="brutalist"] .pod-cat-btn.active { background: var(--accent); border-color: var(--accent); }
+
+/* ── BÜCHER / STUDIUM ─────────────────────────────────── */
+html[data-style="brutalist"] .books-table th,
+html[data-style="brutalist"] .kurs-table th { background: var(--text); color: var(--bg); }
+html[data-style="brutalist"] .sort-btn { border-radius: 0; }
+html[data-style="brutalist"] .sort-btn.active { background: var(--accent); border-color: var(--accent); }
+html[data-style="brutalist"] .sem-header:hover { background: var(--surface); }
+html[data-style="brutalist"] .ff-btn { border-radius: 0; }
+
+/* ── NATUR ────────────────────────────────────────────── */
+html[data-style="brutalist"] .nature-card {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: var(--shadow);
+}
+html[data-style="brutalist"] .nature-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hover);
+}
+html[data-style="brutalist"] .nature-cat-btn { border-radius: 0; }
+html[data-style="brutalist"] .nature-cat-btn.active { background: var(--accent); border-color: var(--accent); box-shadow: none; }
+
+/* ── MATH ─────────────────────────────────────────────── */
+html[data-style="brutalist"] .math-tabs { border-radius: 0; border: 2px solid var(--text); }
+html[data-style="brutalist"] .mtab { border-radius: 0; font-family: var(--fm); text-transform: uppercase; font-size: .7rem; }
+html[data-style="brutalist"] .mtab.active { background: var(--accent); }
+html[data-style="brutalist"] .math-canvas { border-radius: 0; border: 2px solid var(--text); box-shadow: 4px 4px 0 var(--text); }
+
+/* ── PHILOSOPHY TIMELINE ──────────────────────────────── */
+html[data-style="brutalist"] .pmodal-box {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: 8px 8px 0 var(--text);
+  backdrop-filter: none;
+}
+html[data-style="brutalist"] .pmodal-close { border-radius: 0; }
+html[data-style="brutalist"] .pmodal-name { color: var(--accent); }
+html[data-style="brutalist"] .epoch-btn { border-radius: 0; }
+html[data-style="brutalist"] .tier-item .tier-pip { border-radius: 0; }
+
+/* ── DISSERTATION ─────────────────────────────────────── */
+html[data-style="brutalist"] .diss-meta-badge { border-radius: 0; border: 2px solid var(--border2); }
+html[data-style="brutalist"] .diss-meta-badge.accent { background: var(--accent); border-color: var(--accent); }
+html[data-style="brutalist"] .diss-stat { border-radius: 0; border: 2px solid var(--border); }
+html[data-style="brutalist"] .diss-stat-num { color: var(--accent); background: none; -webkit-text-fill-color: var(--accent); }
+html[data-style="brutalist"] .diss-abstract { border-left: 5px solid var(--accent); border-radius: 0; background: var(--bg2); }
+html[data-style="brutalist"] .toc-row:hover { background: var(--text); color: var(--bg); }
+html[data-style="brutalist"] .toc-row:hover .toc-num,
+html[data-style="brutalist"] .toc-row:hover .toc-name,
+html[data-style="brutalist"] .toc-row:hover .toc-pg { color: var(--bg); }
+html[data-style="brutalist"] .toc-num { color: var(--accent); }
+
+/* ── KONTAKT ──────────────────────────────────────────── */
+html[data-style="brutalist"] .contact-card {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: var(--shadow);
+}
+html[data-style="brutalist"] .contact-card:hover {
+  transform: translate(-2px, 0);
+  box-shadow: 4px 4px 0 var(--accent);
+  border-color: var(--accent);
+}
+html[data-style="brutalist"] .contact-icon { border-radius: 0; border: 1px solid var(--border2); }
+
+/* ── FOOTER ───────────────────────────────────────────── */
+html[data-style="brutalist"] footer {
+  border-top: 3px solid var(--text);
+  background: var(--bg2);
+}
+html[data-style="brutalist"] .footer-links a:hover { color: var(--accent); text-shadow: none; }
+
+/* ── MEINE PHILOSOPHIE ────────────────────────────────── */
+html[data-style="brutalist"] .pe-card {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+}
+html[data-style="brutalist"] .pe-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+html[data-style="brutalist"] .pe-tension { border-radius: 0; }
+html[data-style="brutalist"] .pe-ta { color: var(--accent); text-shadow: none; }
+html[data-style="brutalist"] .pe-tb { color: var(--text); }
+
+/* ── SCROLLBAR ────────────────────────────────────────── */
+html[data-style="brutalist"] ::-webkit-scrollbar-thumb { border-radius: 0; background: var(--text2); }
+html[data-style="brutalist"] .tl-canvas-wrap::-webkit-scrollbar-thumb { background: var(--accent); }
+
+/* ── ACCENT BADGE / LABEL elements ───────────────────── */
+html[data-style="brutalist"] .diss-abstract-label,
+html[data-style="brutalist"] .wc-info-label { color: var(--accent); }
+html[data-style="brutalist"] .diss-wc-label { color: var(--accent); }
+
+/* ── GAME LIGHTBOX ────────────────────────────────────── */
+html[data-style="brutalist"] .game-lb img { border-radius: 0; box-shadow: 8px 8px 0 rgba(255,255,255,.3); }
+
+/* ── WC LIGHTBOX ──────────────────────────────────────── */
+html[data-style="brutalist"] .wc-lb img { border-radius: 0; }
+html[data-style="brutalist"] .wc-thumb-wrap { border-radius: 0; }
+
+/* ── POKE CARDS ───────────────────────────────────────── */
+html[data-style="brutalist"] .poke-card {
+  border-radius: 0;
+  border: 2px solid var(--text);
+  box-shadow: 3px 3px 0 var(--text);
+}
+html[data-style="brutalist"] .poke-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--accent);
+  border-color: var(--accent);
+}
+html[data-style="brutalist"] .poke-detail-area { border-radius: 0; border: 2px solid var(--text); }
+
+/* ── HERO-TAG for pages ───────────────────────────────── */
+html[data-style="brutalist"] .page-hero-glow { display: none; }
+html[data-style="brutalist"] .page-hero { border-bottom: 3px solid var(--text); }

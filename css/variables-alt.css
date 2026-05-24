@@ -1,0 +1,88 @@
+/* ═══════════════════════════════════════════════════════
+   DESIGN SYSTEM — "NEON NOIR"
+
+   Light mode = dunkles Blaugrau (deutlich heller als Dark)
+   Dark mode  = fast-Schwarz mit starken Neons
+
+   Differenz Light↔Dark ist jetzt klar sichtbar.
+═══════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Backgrounds: dunkles Mitternachtsblau (NICHT fast-schwarz) */
+  --bg:       #1a1f2e;
+  --bg2:      #232940;
+  --bg3:      #2c3452;
+  --surface:  #2c3452;
+  --surface2: #36406a;
+
+  /* ── Neon accents (etwas gedämpfter im Light-Mode) */
+  --accent:   #f5c842;
+  --accent2:  #e84aaa;
+  --accent3:  #3dd8b8;
+  --accent4:  #9f7af5;
+
+  --glow-accent:  rgba(245,200,66,.30);
+  --glow-accent2: rgba(232,74,170,.30);
+  --glow-accent3: rgba(61,216,184,.25);
+  --glow-accent4: rgba(159,122,245,.25);
+
+  /* ── Text (etwas wärmer im Light-Mode) */
+  --text:  #eceaf4;
+  --text2: #9aa2bc;
+  --text3: #5a6480;
+
+  /* ── Borders (leicht sichtbarer im Light-Mode) */
+  --border:  rgba(255,255,255,.10);
+  --border2: rgba(255,255,255,.18);
+
+  /* ── Cards */
+  --card:         rgba(35,41,64,.90);
+  --card-glass:   rgba(255,255,255,.05);
+  --card-border:  rgba(255,255,255,.12);
+  --shadow:       0 4px 24px rgba(0,0,0,.35);
+  --shadow-hover: 0 8px 48px rgba(0,0,0,.50);
+
+  /* ── Typography */
+  --fh: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+
+  --r: 16px;
+  --r-sm: 10px;
+
+  --grad-accent:  linear-gradient(135deg, #f5c842, #e84aaa);
+  --grad-accent2: linear-gradient(135deg, #3dd8b8, #9f7af5);
+  --grad-text:    linear-gradient(135deg, #f5c842 0%, #e84aaa 50%, #9f7af5 100%);
+}
+
+/* Dark mode = echtes Schwarz, stärkere Neons, maximaler Kontrast */
+[data-theme="dark"] {
+  --bg:       #000000;
+  --bg2:      #07090f;
+  --bg3:      #0d1020;
+  --surface:  #0d1020;
+  --surface2: #141929;
+
+  --accent:   #ffd040;
+  --accent2:  #ff40b0;
+  --accent3:  #40ffcc;
+  --accent4:  #b090ff;
+
+  --glow-accent:  rgba(255,208,64,.50);
+  --glow-accent2: rgba(255,64,176,.50);
+  --glow-accent3: rgba(64,255,204,.42);
+  --glow-accent4: rgba(176,144,255,.42);
+
+  --text:  #ffffff;
+  --text2: #8090aa;
+  --text3: #384050;
+
+  --border:  rgba(255,255,255,.05);
+  --border2: rgba(255,255,255,.09);
+
+  --card:         rgba(7,9,15,.92);
+  --card-glass:   rgba(255,255,255,.03);
+  --card-border:  rgba(255,255,255,.07);
+  --shadow:       0 4px 32px rgba(0,0,0,.75);
+  --shadow-hover: 0 8px 60px rgba(0,0,0,.90);
+}

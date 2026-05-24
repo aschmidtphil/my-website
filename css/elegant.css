@@ -1,0 +1,245 @@
+/* ═══════════════════════════════════════════════════════
+   SOFT & ELEGANT
+   Scoped to html[data-style="elegant"]
+
+   Concept: Art catalogue meets Swiss editorial.
+   Warm crème paper, deep charcoal, brushed gold accents.
+   Generous whitespace, refined serif-inspired headings.
+
+   Light: warm crème + charcoal + gold
+   Dark:  deep warm charcoal + cream + gold
+═══════════════════════════════════════════════════════ */
+
+html[data-style="elegant"] {
+  --bg:       #f9f6f0;
+  --bg2:      #f2ede4;
+  --bg3:      #e8e1d6;
+  --surface:  #ede8de;
+  --surface2: #e0d9cc;
+
+  --accent:   #b8943f;
+  --accent2:  #8a6820;
+  --accent3:  #c8a855;
+  --accent4:  #6b4f1a;
+
+  --glow-accent:  rgba(184,148,63,.25);
+  --glow-accent2: rgba(138,104,32,.2);
+  --glow-accent3: rgba(200,168,85,.2);
+  --glow-accent4: rgba(107,79,26,.2);
+
+  --text:  #1c1a16;
+  --text2: #4a4640;
+  --text3: #9a9288;
+
+  --border:  #d8d0c4;
+  --border2: #c4bab0;
+
+  --card:         #fefcf8;
+  --card-glass:   rgba(254,252,248,.9);
+  --card-border:  #d8d0c4;
+  --shadow:       0 2px 16px rgba(28,26,22,.08), 0 1px 4px rgba(28,26,22,.05);
+  --shadow-hover: 0 8px 32px rgba(184,148,63,.2), 0 2px 8px rgba(28,26,22,.08);
+
+  --fh: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
+  --r:    10px;
+  --r-sm: 6px;
+
+  --grad-accent:  linear-gradient(135deg, #c8a855, #8a6820);
+  --grad-accent2: linear-gradient(135deg, #b8943f, #6b4f1a);
+  --grad-text:    linear-gradient(135deg, #c8a855 0%, #8a6820 100%);
+}
+
+html[data-style="elegant"][data-theme="dark"] {
+  --bg:       #1c1a16;
+  --bg2:      #252220;
+  --bg3:      #2e2a26;
+  --surface:  #2e2a26;
+  --surface2: #383430;
+
+  --accent:   #d4a84a;
+  --accent2:  #f0c870;
+  --accent3:  #b8943f;
+  --accent4:  #e8b855;
+
+  --glow-accent:  rgba(212,168,74,.35);
+  --glow-accent2: rgba(240,200,112,.3);
+  --glow-accent3: rgba(184,148,63,.3);
+  --glow-accent4: rgba(232,184,85,.3);
+
+  --text:  #f0ece4;
+  --text2: #b0a898;
+  --text3: #706860;
+
+  --border:  #3a3630;
+  --border2: #4a4640;
+
+  --card:         #252220;
+  --card-glass:   rgba(37,34,32,.92);
+  --card-border:  #3a3630;
+  --shadow:       0 4px 24px rgba(0,0,0,.35);
+  --shadow-hover: 0 8px 40px rgba(212,168,74,.3), 0 4px 12px rgba(0,0,0,.2);
+}
+
+/* Global */
+html[data-style="elegant"] body { background: var(--bg); color: var(--text); }
+
+/* NAV */
+html[data-style="elegant"] nav {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+html[data-style="elegant"] .nav-logo { font-weight: 800; letter-spacing: .02em; }
+html[data-style="elegant"] .nav-logo span {
+  background: var(--grad-accent);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+html[data-style="elegant"] .nav-group-btn:hover,
+html[data-style="elegant"] .nav-group-btn.group-active,
+html[data-style="elegant"] .nav-direct:hover,
+html[data-style="elegant"] .nav-direct.active { color: var(--accent); text-shadow: none; }
+html[data-style="elegant"] .nav-dropdown {
+  border: 1px solid var(--border); border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(28,26,22,.12);
+  background: var(--card);
+}
+html[data-style="elegant"] .nav-dropdown-item:hover { background: var(--surface); color: var(--accent); }
+html[data-style="elegant"] .theme-btn,
+html[data-style="elegant"] .lang-btn { border-color: var(--border2); }
+html[data-style="elegant"] .theme-btn:hover,
+html[data-style="elegant"] .lang-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: none; }
+
+/* Cards */
+html[data-style="elegant"] .card {
+  background: var(--card); border: 1px solid var(--card-border); border-radius: var(--r);
+  box-shadow: var(--shadow); backdrop-filter: none;
+}
+html[data-style="elegant"] .card:hover {
+  transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent);
+}
+
+/* Buttons */
+html[data-style="elegant"] .btn { border-radius: 6px; }
+html[data-style="elegant"] .btn-primary {
+  background: var(--grad-accent); color: var(--bg);
+  font-weight: 700; box-shadow: 0 4px 16px var(--glow-accent);
+}
+html[data-style="elegant"] .btn-primary:hover { box-shadow: 0 6px 24px var(--glow-accent); }
+html[data-style="elegant"] .btn-ghost { border: 1px solid var(--border2); }
+html[data-style="elegant"] .btn-ghost:hover { border-color: var(--accent); color: var(--accent); box-shadow: none; }
+
+/* Hero */
+html[data-style="elegant"] .hero-name .n1 { color: var(--text); }
+html[data-style="elegant"] .hero-name .n2 {
+  background: var(--grad-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+html[data-style="elegant"] .cursor { color: var(--accent); text-shadow: none; animation: blink 1.2s step-end infinite; }
+html[data-style="elegant"] .hero-tag { color: var(--accent); text-shadow: none; letter-spacing: .18em; }
+html[data-style="elegant"] .hero-tag::before { background: var(--accent); box-shadow: none; }
+html[data-style="elegant"] .hero-portrait-wrap::before { background: radial-gradient(ellipse, rgba(184,148,63,.15), transparent 70%); }
+html[data-style="elegant"] .hero-portrait-wrap::after { display: none; }
+html[data-style="elegant"] .hero-portrait {
+  border: 2px solid var(--accent); border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(184,148,63,.2);
+}
+html[data-style="elegant"] .hero-portrait:hover { box-shadow: 0 16px 48px rgba(184,148,63,.3); }
+html[data-style="elegant"] .stat-num { background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+html[data-style="elegant"] .stats-row { background: var(--bg2); border-color: var(--border); }
+html[data-style="elegant"] .stat-item:hover { background: var(--surface); }
+html[data-style="elegant"] .social-link { border-color: var(--border2); border-radius: 6px; }
+html[data-style="elegant"] .social-link:hover { border-color: var(--accent); color: var(--accent); box-shadow: none; background: var(--surface); }
+html[data-style="elegant"] .tl-item::before { background: var(--accent); box-shadow: 0 0 6px var(--glow-accent); }
+html[data-style="elegant"] .tl-year { color: var(--accent); }
+html[data-style="elegant"] .tl::before { background: linear-gradient(var(--accent), var(--accent2)); }
+html[data-style="elegant"] .about-portrait {
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 16px var(--glow-accent);
+  background: linear-gradient(var(--bg2),var(--bg2)) padding-box, var(--grad-accent) border-box;
+}
+
+/* Sections */
+html[data-style="elegant"] .pstat-num { background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+html[data-style="elegant"] .sec-title { color: var(--text); }
+html[data-style="elegant"] .section-divider { color: var(--text); }
+html[data-style="elegant"] .section-divider::after { background: linear-gradient(90deg, var(--border2), transparent); }
+html[data-style="elegant"] .page-title span { color: var(--accent); text-shadow: none; }
+html[data-style="elegant"] .page-hero-glow { background: radial-gradient(circle, rgba(184,148,63,.12), transparent 70%); }
+html[data-style="elegant"] .hero-tag { color: var(--accent); text-shadow: none; }
+
+/* Tags */
+html[data-style="elegant"] .tag { border: 1px solid var(--border); background: var(--bg3); border-radius: 4px; }
+
+/* Inputs */
+html[data-style="elegant"] .ctrl-input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--glow-accent); }
+html[data-style="elegant"] .ctrl-input,
+html[data-style="elegant"] .ctrl-select { border-radius: 6px; }
+
+/* Zitate */
+html[data-style="elegant"] .zitat-author { color: var(--accent); text-shadow: none; }
+html[data-style="elegant"] .zitat-card { border-radius: var(--r); border-color: var(--border); }
+html[data-style="elegant"] .zitat-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+html[data-style="elegant"] .zitat-motto { border-left-color: var(--accent); border-radius: 0 var(--r) var(--r) 0; }
+html[data-style="elegant"] .zf-btn { border-radius: 20px; }
+html[data-style="elegant"] .zf-btn.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+/* Games */
+html[data-style="elegant"] .game-card { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .game-card:hover { box-shadow: var(--shadow-hover); border-color: var(--accent); }
+html[data-style="elegant"] .gtab.active { background: var(--grad-accent); color: var(--bg); }
+html[data-style="elegant"] .g-tabs { border-radius: 8px; }
+
+/* Podcasts */
+html[data-style="elegant"] .pod-card2 { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .pod-card2:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+html[data-style="elegant"] .pod-cat-btn.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+
+/* Natur */
+html[data-style="elegant"] .nature-card { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .nature-card:hover { box-shadow: var(--shadow-hover); }
+html[data-style="elegant"] .nature-cat-btn.active { background: var(--accent); border-color: var(--accent); color: var(--bg); box-shadow: none; }
+
+/* Studium/Bücher */
+html[data-style="elegant"] .sort-btn.active { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+html[data-style="elegant"] .ff-btn { border-radius: 4px; }
+
+/* Diss */
+html[data-style="elegant"] .diss-meta-badge.accent { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+html[data-style="elegant"] .diss-stat-num { background: var(--grad-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+html[data-style="elegant"] .diss-abstract { border-left-color: var(--accent); }
+html[data-style="elegant"] .diss-abstract-label { color: var(--accent); }
+html[data-style="elegant"] .toc-num { color: var(--accent); }
+
+/* Phil timeline modal */
+html[data-style="elegant"] .pmodal-box { border: 1px solid var(--border); border-radius: 16px; backdrop-filter: none; }
+html[data-style="elegant"] .pmodal-name { color: var(--accent); }
+html[data-style="elegant"] .epoch-btn.active { color: var(--bg) !important; }
+
+/* Math */
+html[data-style="elegant"] .mtab.active { background: var(--grad-accent); color: var(--bg); }
+
+/* Footer */
+html[data-style="elegant"] footer { background: var(--bg2); border-top: 1px solid var(--border); }
+html[data-style="elegant"] .footer-links a:hover { color: var(--accent); }
+
+/* Favphil */
+html[data-style="elegant"] .favphil-card { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .favphil-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+
+/* Pe */
+html[data-style="elegant"] .pe-card { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .pe-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+html[data-style="elegant"] .pe-ta { color: var(--accent); text-shadow: none; }
+
+/* Kontakt */
+html[data-style="elegant"] .contact-card { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .contact-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+
+/* Wordcloud */
+html[data-style="elegant"] .wc-thumb-wrap { border-radius: var(--r); }
+html[data-style="elegant"] .diss-wc-label { color: var(--accent); }
+html[data-style="elegant"] .wc-card { border: 1px solid var(--border); border-radius: var(--r); }
+html[data-style="elegant"] .wc-card:hover { border-color: var(--accent); box-shadow: var(--shadow-hover); }
+html[data-style="elegant"] .wc-info-label { color: var(--accent); }

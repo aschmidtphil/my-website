@@ -39,6 +39,129 @@ function toggleLang() {
   Object.entries(TR[_lang]).forEach(([id,v]) => { const e = document.getElementById(id); if(e) e.textContent = v; });
 }
 
+// ── Style / Theme System ─────────────────────
+// style = 'standard' | 'neon-noir'
+// theme = 'light' | 'dark'
+// They are independent: neon-noir has its own light/dark
+
+let _style = localStorage.getItem('as-style') || 'standard';
+
+function applyStyle(style) {
+  _style = style;
+  localStorage.setItem('as-style', style);
+  // neon-noir.css scopes all alt rules under html[data-style="neon-noir"]
+  var altStyles = ['neon-noir','brutalist','elegant','terminal','glass'];
+  if (altStyles.indexOf(style) >= 0) {
+    document.documentElement.setAttribute('data-style', style);
+  } else {
+    document.documentElement.removeAttribute('data-style');
+  }
+  updateStyleBtn();
+  if (style === 'neon-noir') {
+    setTimeout(function(){ if (typeof patchHeroCanvas === 'function') patchHeroCanvas(); }, 80);
+  }
+}
+
+function updateStyleBtn() {
+  const btn = document.getElementById('style-btn');
+  if (!btn) return;
+  const labels = { 'standard': '◐', 'neon-noir': '✦', 'brutalist': '▪' };
+  btn.textContent = labels[_style] || '◐';
+  btn.title = _style === 'standard' ? 'Style: Standard' : 'Style: Neon Noir';
+}
+
+function openStylePicker() {
+  var picker = document.getElementById('_style_picker');
+  if (picker) { picker.remove(); return; }
+
+  picker = document.createElement('div');
+  picker.id = '_style_picker';
+  picker.style.cssText = 'position:fixed;top:64px;right:1rem;'
+    + 'background:var(--card);border:1px solid var(--border2);border-radius:12px;'
+    + 'box-shadow:0 8px 32px rgba(0,0,0,.28);z-index:9000;overflow:hidden;min-width:192px;'
+    + 'backdrop-filter:blur(16px);';
+
+  // Helper: create a clickable row
+  function makeRow(icon, label, desc, isActive, onClick) {
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;cursor:pointer;'
+      + 'font-family:var(--fm);font-size:.78rem;color:var(--text2);transition:background .15s;';
+    var iconEl = document.createElement('span');
+    iconEl.style.cssText = 'font-size:1rem;width:20px;text-align:center;flex-shrink:0;';
+    iconEl.textContent = icon;
+    var textEl = document.createElement('div');
+    textEl.style.flex = '1';
+    var labelEl = document.createElement('div');
+    labelEl.style.cssText = 'font-weight:600;color:var(--text);';
+    labelEl.textContent = label;
+    textEl.appendChild(labelEl);
+    if (desc) {
+      var descEl = document.createElement('div');
+      descEl.style.cssText = 'font-size:.68rem;color:var(--text3);';
+      descEl.textContent = desc;
+      textEl.appendChild(descEl);
+    }
+    row.appendChild(iconEl);
+    row.appendChild(textEl);
+    if (isActive) {
+      var check = document.createElement('span');
+      check.style.cssText = 'margin-left:auto;color:var(--accent);font-weight:700;';
+      check.textContent = '✓';
+      row.appendChild(check);
+    }
+    row.addEventListener('mouseenter', function() { row.style.background = 'var(--surface)'; });
+    row.addEventListener('mouseleave', function() { row.style.background = ''; });
+    row.addEventListener('click', function(e) { e.stopPropagation(); onClick(); picker.remove(); });
+    return row;
+  }
+
+  function makeLabel(txt) {
+    var el = document.createElement('div');
+    el.style.cssText = 'padding:.6rem 1rem .3rem;font-family:var(--fm);font-size:.65rem;'
+      + 'color:var(--text3);letter-spacing:.1em;text-transform:uppercase;';
+    el.textContent = txt;
+    return el;
+  }
+
+  function makeDivider() {
+    var el = document.createElement('div');
+    el.style.cssText = 'height:1px;background:var(--border);margin:.3rem 0;';
+    return el;
+  }
+
+  picker.appendChild(makeLabel('Design'));
+  picker.appendChild(makeRow('◻', 'Standard',    'Hell & aufgeräumt',     _style === 'standard',   function() { applyStyle('standard'); }));
+  picker.appendChild(makeRow('✦', 'Neon Noir',   'Dunkel & dramatisch',   _style === 'neon-noir',  function() { applyStyle('neon-noir'); }));
+  picker.appendChild(makeRow('▪', 'Brutalist',   'Scharf & editorial',    _style === 'brutalist',  function() { applyStyle('brutalist'); }));
+  picker.appendChild(makeRow('✿', 'Elegant',     'Crème, Gold, Kunst',    _style === 'elegant',    function() { applyStyle('elegant'); }));
+  picker.appendChild(makeRow('▶', 'Terminal',    '80er Retro-Monitor',    _style === 'terminal',   function() { applyStyle('terminal'); }));
+  picker.appendChild(makeRow('◈', 'Glassmorphism','Tiefes Violett, Blur', _style === 'glass',      function() { applyStyle('glass'); }));
+  picker.appendChild(makeDivider());
+  picker.appendChild(makeLabel('Modus'));
+  picker.appendChild(makeRow('☀️', 'Hell',   '', _theme === 'light', function() { applyTheme('light'); }));
+  picker.appendChild(makeRow('🌙', 'Dunkel', '', _theme === 'dark',  function() { applyTheme('dark'); }));
+
+  var footer = document.createElement('div');
+  footer.style.cssText = 'padding:.5rem 1rem .75rem;font-family:var(--fm);font-size:.64rem;color:var(--text3);';
+  footer.textContent = 'Klick außen zum Schließen';
+  picker.appendChild(footer);
+
+  document.body.appendChild(picker);
+
+  // Close on outside click
+  setTimeout(function() {
+    function close(e) {
+      if (!e.target.closest('#_style_picker') && !e.target.closest('#style-btn')) {
+        picker.remove();
+        document.removeEventListener('click', close);
+      }
+    }
+    document.addEventListener('click', close);
+  }, 50);
+}
+
+
+
 // ── Audio easter eggs ─────────────────────────────
 function playAudio(file, toastTxt) {
   try { const a = new Audio('assets/audio/' + file); a.volume = 0.72; a.play().catch(()=>{}); } catch(e) {}
@@ -248,7 +371,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Read hash for direct links / page reload
   const startPage = (location.hash || '#home').slice(1) || 'home';
-  showPage(startPage);
+  applyStyle(_style);
+    showPage(startPage);
 
   // Browser back/forward
   window.addEventListener('popstate', e => {
