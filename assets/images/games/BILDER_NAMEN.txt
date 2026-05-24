@@ -1,0 +1,3 @@
+wc3_1..3  sc_1..3  diablo_1..3  sotc_1..3  hk_1..3
+ff_1..3  lufia_1..3  kknd2_1..3  future_cop_1..3
+sg_1..3  pw_1..3  mmbn_1..3  (je .avif + .webp)
