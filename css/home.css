@@ -110,3 +110,84 @@
   .about-grid { grid-template-columns: 1fr; }
   .stats-row  { grid-template-columns: repeat(2,1fr); }
 }
+
+/* ══ Favphil — rich cards ══════════════════════════════════════ */
+.favphil-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:1.5rem;padding:2rem 3rem 4rem;
+}
+.favphil-card{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column;
+  transition:all .25s;
+}
+.favphil-card:hover{
+  transform:translateY(-4px);box-shadow:var(--shadow-hover);
+}
+.favphil-portrait{
+  height:200px;overflow:hidden;background:var(--surface);
+  position:relative;flex-shrink:0;
+}
+.favphil-portrait img{
+  width:100%;height:100%;object-fit:cover;object-position:center 22%;
+  display:block;filter:grayscale(.2) contrast(1.04);
+  transition:filter .25s, transform .5s ease-out;
+}
+.favphil-card:hover .favphil-portrait img{
+  filter:grayscale(0) contrast(1.06);transform:scale(1.04);
+}
+.favphil-mono{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--surface),var(--bg2));
+  font-family:var(--fh);font-size:4.5rem;font-weight:800;
+  opacity:.45;letter-spacing:-.05em;
+}
+.favphil-portrait-era{
+  position:absolute;left:.85rem;bottom:.85rem;
+  font-family:var(--fm);font-size:.62rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:#fff;
+  padding:.25rem .65rem;border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);backdrop-filter:blur(4px);
+}
+.favphil-body{padding:1.25rem 1.4rem 1.4rem;display:flex;flex-direction:column;gap:.65rem;}
+.favphil-name{
+  font-family:var(--fh);font-size:1.3rem;font-weight:800;
+  letter-spacing:-.02em;color:var(--text);line-height:1.15;
+}
+.favphil-dates{
+  font-family:var(--fm);font-size:.74rem;color:var(--text3);
+  letter-spacing:.04em;margin-top:-.4rem;
+}
+.favphil-quote{
+  font-family:var(--fh);font-size:.95rem;font-style:italic;
+  color:var(--text);line-height:1.55;
+  padding:.7rem 0 .7rem 1rem;border-left:3px solid var(--accent2);
+  margin:.2rem 0;
+}
+.favphil-desc{
+  color:var(--text2);font-size:.86rem;line-height:1.7;
+}
+.favphil-ideas{
+  list-style:none;padding:0;margin:.4rem 0 0;
+  display:flex;flex-direction:column;gap:.35rem;
+}
+.favphil-ideas li{
+  position:relative;padding-left:1.1rem;
+  font-size:.82rem;color:var(--text2);line-height:1.5;
+}
+.favphil-ideas li::before{
+  content:'';position:absolute;left:0;top:.55rem;
+  width:5px;height:5px;border-radius:50%;background:var(--accent);
+}
+.favphil-why{
+  margin-top:.6rem;padding-top:.9rem;border-top:1px dashed var(--border);
+}
+.favphil-why-label{
+  font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.45rem;
+}
+.favphil-why-text{
+  font-size:.85rem;line-height:1.65;color:var(--text2);font-style:italic;
+}

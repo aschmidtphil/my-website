@@ -1,149 +1,478 @@
-<!-- ═══════════════════════════════════════════
-     PHILOSOPHEN-TIMELINE v2  —  Google Maps Style
-     144 Philosophen · 230 Einflusslinien · Tier-System
-═══════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     PHILOSOPHEN-TIMELINE v3 — überarbeitet
+     • 332 Philosoph:innen · korrekte Datumshandhabung (BC/AD/heute)
+     • Porträts für Lieblingsphilosophen
+     • Bessere Zoom-Stufen
+     • Epoche-Bands, Tier-System, Einflusslinien
+═══════════════════════════════════════════════════════════════════ -->
+
 <style>
-.phil-header      { padding:2.5rem 3rem 1.75rem; background:var(--bg2); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
-.phil-glow        { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:500px; height:300px; background:radial-gradient(ellipse,rgba(91,82,232,.1),transparent 70%); pointer-events:none; }
-.phil-controls    { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.75rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
-.phil-zoom-group  { display:flex; gap:.25rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.2rem; flex-shrink:0; }
-.pzb              { background:transparent; border:none; color:var(--text2); width:28px; height:28px; border-radius:6px; cursor:pointer; font-size:.9rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
-.pzb:hover        { background:var(--accent); color:#fff; }
-.zoom-label       { font-family:var(--fm); font-size:.7rem; color:var(--text3); padding:0 .35rem; min-width:38px; text-align:center; }
+.phil-header   { padding:2.5rem 3rem 1.75rem; background:linear-gradient(180deg,var(--bg2),var(--bg)); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+.phil-glow     { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); pointer-events:none; }
+.phil-hero .page-hero-glow { left:50%; right:auto; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); }
+.phil-title    { font-family:var(--fh); font-size:clamp(2rem,4vw,2.8rem); font-weight:800; letter-spacing:-.035em; color:var(--text); line-height:1; margin:.3rem 0 .65rem; position:relative; z-index:1; }
+.phil-title span { color:var(--accent); }
+.phil-sub      { color:var(--text2); max-width:720px; line-height:1.75; font-size:.92rem; position:relative; z-index:1; }
+.phil-meta     { font-family:var(--fm); font-size:.74rem; color:var(--text3); margin-top:.6rem; position:relative; z-index:1; }
+
+.phil-controls { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.85rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
+.phil-zoom-group { display:flex; gap:.2rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
+.pzb           { background:transparent; border:none; color:var(--text2); width:30px; height:30px; border-radius:6px; cursor:pointer; font-size:.95rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
+.pzb:hover     { background:var(--accent); color:#fff; }
+.zoom-label    { font-family:var(--fm); font-size:.72rem; color:var(--text3); padding:0 .4rem; min-width:42px; text-align:center; }
 .phil-search-wrap { position:relative; flex-shrink:0; }
-.phil-search      { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.38rem .75rem .38rem 1.9rem; border-radius:7px; font-family:var(--fb); font-size:.78rem; outline:none; width:175px; height:32px; }
+.phil-search   { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.42rem .75rem .42rem 1.95rem; border-radius:7px; font-family:var(--fb); font-size:.8rem; outline:none; width:190px; height:34px; }
 .phil-search:focus { border-color:var(--accent); }
-.phil-search-icon { position:absolute; left:.55rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.75rem; pointer-events:none; }
-.infl-toggles     { display:flex; gap:.25rem; flex-wrap:wrap; }
-.itbtn            { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.28rem .65rem; border-radius:6px; cursor:pointer; font-family:var(--fm); font-size:.68rem; transition:all .15s; display:flex; align-items:center; gap:.3rem; white-space:nowrap; }
-.itbtn.active     { color:#fff; border-color:transparent; }
-.itbtn-dot        { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.phil-search-icon { position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.78rem; pointer-events:none; }
+/* ── Ansicht-Umschalter (Timeline / Tabelle) ── */
+.view-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
+.vs-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .8rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
+.vs-btn:hover { color:var(--text); }
+.vs-btn.active { background:var(--accent); color:#fff; }
+/* ── Tabellenansicht ── */
+.tl-table-wrap { display:none; padding:1.2rem 3rem 3rem; overflow-x:auto; }
+.tl-table-wrap.active { display:block; }
+.tl-table-meta { font-family:var(--fm); font-size:.74rem; color:var(--text3); }
+.tl-table { width:100%; border-collapse:collapse; font-size:.84rem; }
+.tl-table th { font-family:var(--fm); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text3); text-align:left; padding:.55rem .7rem; border-bottom:2px solid var(--border2); white-space:nowrap; }
+.tl-table th.sortable { cursor:pointer; user-select:none; }
+.tl-table th.sortable:hover { color:var(--text); }
+.tl-table th .sort-arrow { font-size:.6rem; margin-left:.25rem; opacity:.8; }
+.tl-table td { padding:.5rem .7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+.tl-table tbody tr { cursor:pointer; transition:background .12s; }
+.tl-table tbody tr:hover { background:var(--surface); }
+.tl-tbl-name { font-weight:600; color:var(--text); white-space:nowrap; }
+.tl-tbl-dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:.45rem; vertical-align:0; }
+.tl-tbl-life { font-family:var(--fm); font-size:.76rem; color:var(--text2); white-space:nowrap; }
+.tl-tbl-epoch { white-space:nowrap; }
+.tl-epoch-pill { display:inline-block; font-family:var(--fm); font-size:.7rem; padding:.14rem .55rem; border-radius:6px; border:1px solid; white-space:nowrap; font-weight:600; }
+.tl-table-meta-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.7rem; }
+.tl-export-btn { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.38rem .85rem; border-radius:7px; cursor:pointer; font-family:var(--fm); font-size:.72rem; transition:all .15s; white-space:nowrap; }
+.tl-export-btn:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
+.tl-badge { display:inline-block; font-family:var(--fm); font-size:.64rem; background:var(--surface); border:1px solid var(--border2); color:var(--text2); border-radius:5px; padding:.1rem .42rem; margin:.1rem .18rem .1rem 0; white-space:nowrap; }
+.tl-badge.hl { background:var(--accent); border-color:var(--accent); color:#fff; }
+@media (max-width:900px){ .tl-table-wrap{ padding:1rem 1.2rem 2.5rem; } .tl-table .opt-col{ display:none; } }
+
+.infl-toggles  { display:flex; gap:.25rem; flex-wrap:wrap; }
+.itbtn         { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.3rem .7rem; border-radius:6px; cursor:pointer; font-family:var(--fm); font-size:.7rem; transition:all .15s; display:flex; align-items:center; gap:.35rem; white-space:nowrap; }
+.itbtn.active  { color:#fff; border-color:transparent; }
+.itbtn-dot     { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
 .epoch-filter-row { display:flex; gap:.3rem; flex-wrap:wrap; padding:.5rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); overflow-x:auto; }
-.epoch-btn        { background:var(--surface); border:1px solid var(--border); color:var(--text2); padding:.25rem .6rem; border-radius:14px; cursor:pointer; font-size:.68rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; flex-shrink:0; }
+
+/* Großepochen-Umschalter + Epochen-Dropdown */
+.era-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
+.era-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
+.era-btn:hover { color:var(--text); }
+.era-btn.active { background:var(--accent); color:#fff; }
+.filter-mode-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
+.fm-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
+.fm-btn:hover { color:var(--text); }
+.fm-btn.active { background:var(--accent); color:#fff; }
+.epoch-dd-wrap { display:inline-flex; align-items:center; gap:.5rem; margin-left:1rem; }
+.epoch-dd-label { font-size:.72rem; font-family:var(--fm); color:var(--text3); }
+.epoch-dd { background:var(--surface); border:1px solid var(--border); color:var(--text); padding:.45rem .8rem; border-radius:8px; font-size:.76rem; font-family:var(--fm); cursor:pointer; outline:none; min-width:280px; max-width:360px; }
+.epoch-dd:focus { border-color:var(--accent); }
+
+.epoch-btn     { background:var(--surface); border:1px solid var(--border); color:var(--text2); padding:.28rem .65rem; border-radius:14px; cursor:pointer; font-size:.7rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; flex-shrink:0; }
 .epoch-btn.active { color:#fff; border-color:transparent; }
-.tier-legend      { display:flex; gap:1.25rem; align-items:center; padding:.45rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.tier-item        { display:flex; align-items:center; gap:.35rem; font-family:var(--fm); font-size:.67rem; color:var(--text3); white-space:nowrap; }
-.tier-pip         { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-.vis-count        { margin-left:auto; font-family:var(--fm); font-size:.67rem; color:var(--text3); }
-.tl-outer         { background:var(--bg2); position:relative; }
-.tl-canvas-wrap   { overflow:auto; cursor:grab; user-select:none; }
+
+.tier-legend   { display:flex; gap:1.25rem; align-items:center; padding:.5rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); flex-wrap:wrap; }
+.tier-item     { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
+.tier-pip      { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+/* ── Epochen-Farblegende (C13) ── */
+.epoch-legend { padding:0 3rem; background:var(--bg); border-bottom:1px solid var(--border); overflow:hidden; }
+.epoch-legend-head { display:flex; align-items:center; gap:.5rem; padding:.5rem 0; cursor:pointer; font-family:var(--fm); font-size:.68rem; color:var(--text3); user-select:none; }
+.epoch-legend-head:hover { color:var(--text2); }
+.epoch-legend-caret { display:inline-block; transition:transform .2s; font-size:.6rem; }
+.epoch-legend.collapsed .epoch-legend-caret { transform:rotate(-90deg); }
+.epoch-legend-grid { display:flex; flex-wrap:wrap; gap:.3rem .9rem; padding:0 0 .65rem; max-height:200px; transition:max-height .25s ease, opacity .2s, padding .2s; }
+.epoch-legend.collapsed .epoch-legend-grid { max-height:0; opacity:0; padding:0; }
+.epoch-leg-item { display:flex; align-items:center; gap:.35rem; font-family:var(--fm); font-size:.66rem; color:var(--text2); white-space:nowrap; cursor:pointer; padding:.1rem .2rem; border-radius:4px; transition:background .12s; }
+.epoch-leg-item:hover { background:var(--surface); color:var(--text); }
+.epoch-leg-item.active { background:var(--accent)22; color:var(--text); font-weight:600; }
+.epoch-leg-swatch { width:11px; height:11px; border-radius:3px; flex-shrink:0; }
+@media (max-width:900px){ .epoch-legend{ padding-left:1.2rem; padding-right:1.2rem; } }
+.tier-fav      { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
+.tier-fav-icon { width:14px; height:14px; border-radius:50%; background:var(--accent2); display:flex; align-items:center; justify-content:center; color:#fff; font-size:.6rem; flex-shrink:0; }
+.vis-count     { margin-left:auto; font-family:var(--fm); font-size:.68rem; color:var(--text3); }
+.vc-hl         { color:var(--accent); font-weight:700; }
+.vc-sep        { opacity:.5; }
+.vc-dim        { opacity:.7; }
+
+.tl-outer      { background:var(--bg2); position:relative; }
+.tl-canvas-wrap{ overflow:auto; cursor:grab; user-select:none; scroll-behavior:auto; -webkit-tap-highlight-color:transparent; }
 .tl-canvas-wrap:active { cursor:grabbing; }
-.tl-canvas-wrap::-webkit-scrollbar { height:6px; }
-.tl-canvas-wrap::-webkit-scrollbar-thumb { background:var(--border2); border-radius:3px; }
-#tl-svg           { display:block; }
-.phil-node-group  { cursor:pointer; }
-.pmodal-overlay   { position:fixed; inset:0; background:rgba(0,0,0,.55); backdrop-filter:blur(6px); z-index:700; display:none; align-items:center; justify-content:center; padding:1.5rem; }
+.tl-canvas-wrap::-webkit-scrollbar { height:8px; }
+.tl-canvas-wrap::-webkit-scrollbar-thumb { background:var(--border2); border-radius:4px; }
+.tl-canvas-wrap::-webkit-scrollbar-thumb:hover { background:var(--accent); }
+#tl-svg        { display:block; }
+.phil-node-group { cursor:pointer; transition:opacity .25s; }
+.tl-canvas-wrap.zooming .phil-node-group { transition:none !important; }
+
+/* Hover-Tooltip — schwebt über Knoten */
+.tl-hover-card {
+  position:absolute; z-index:200; pointer-events:none;
+  background:var(--card); border:2px solid var(--accent); border-radius:12px;
+  padding:.85rem 1.1rem; min-width:240px; max-width:340px;
+  box-shadow:0 12px 36px rgba(0,0,0,.25);
+  opacity:0; transform:translateY(8px); transition:opacity .2s, transform .2s;
+}
+.tl-hover-card.show { opacity:1; transform:translateY(0); }
+.tl-hc-portrait { width:60px; height:60px; border-radius:50%; object-fit:cover; object-position:center 22%; float:right; margin-left:.6rem; border:2px solid var(--accent); }
+.tl-hc-name { font-family:var(--fh); font-weight:800; font-size:1.05rem; letter-spacing:-.02em; color:var(--text); margin-bottom:.2rem; line-height:1.1; }
+.tl-hc-dates { font-family:var(--fm); font-size:.7rem; color:var(--text3); margin-bottom:.4rem; }
+.tl-hc-epoch { display:inline-block; font-family:var(--fm); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600; padding:.18rem .5rem; border-radius:10px; color:#fff; margin-bottom:.5rem; }
+.tl-hc-desc { font-size:.78rem; color:var(--text2); line-height:1.55; clear:both; padding-top:.2rem; }
+
+.pmodal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); backdrop-filter:blur(8px); z-index:700; display:none; align-items:center; justify-content:center; padding:1.5rem; }
 .pmodal-overlay.open { display:flex; }
-.pmodal-box       { background:var(--card); border:1px solid var(--border2); border-radius:18px; padding:2rem 2.25rem; max-width:580px; width:100%; max-height:86vh; overflow-y:auto; position:relative; box-shadow:0 24px 72px rgba(0,0,0,.25); }
-.pmodal-close     { position:absolute; top:1rem; right:1rem; background:var(--surface); border:none; color:var(--text2); width:30px; height:30px; border-radius:50%; cursor:pointer; font-size:.9rem; transition:all .2s; }
+.pmodal-box    { background:var(--card); border:1px solid var(--border2); border-radius:18px; padding:2rem 2.25rem; max-width:620px; width:100%; max-height:86vh; overflow-y:auto; position:relative; box-shadow:0 24px 72px rgba(0,0,0,.3); }
+.pmodal-close  { position:absolute; top:1rem; right:1rem; background:var(--surface); border:none; color:var(--text2); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:.95rem; transition:all .2s; }
 .pmodal-close:hover { background:var(--accent); color:#fff; }
-.pmodal-epoch     { font-family:var(--fm); font-size:.7rem; letter-spacing:.1em; margin-bottom:.3rem; }
-.pmodal-name      { font-family:var(--fh); font-size:1.9rem; font-weight:800; letter-spacing:-.03em; color:var(--text); line-height:1; margin-bottom:.15rem; }
-.pmodal-dates     { font-family:var(--fm); font-size:.75rem; color:var(--text3); margin-bottom:1rem; }
-.pmodal-desc      { color:var(--text2); line-height:1.8; font-size:.87rem; margin-bottom:1.25rem; }
-.pmodal-ideas     { list-style:none; display:flex; flex-direction:column; gap:.35rem; margin-bottom:1.25rem; }
-.pmodal-ideas li  { background:var(--surface); border-radius:6px; padding:.5rem .85rem; font-size:.82rem; color:var(--text2); border-left:3px solid var(--accent); }
-.pmodal-infl-lbl  { font-family:var(--fm); font-size:.68rem; color:var(--text3); letter-spacing:.1em; margin:.75rem 0 .5rem; display:block; }
-.pmodal-chips     { display:flex; gap:.4rem; flex-wrap:wrap; }
-.pmodal-chip      { display:flex; align-items:center; gap:.3rem; padding:.28rem .65rem; border-radius:6px; font-size:.75rem; font-family:var(--fm); cursor:pointer; border:1px solid transparent; transition:opacity .15s; }
+
+.pmodal-header { display:flex; gap:1.2rem; align-items:flex-start; margin-bottom:1.2rem; }
+.pmodal-portrait { width:90px; height:120px; flex-shrink:0; border-radius:10px; overflow:hidden; background:var(--surface); border:2px solid var(--accent); box-shadow:0 6px 20px rgba(0,0,0,.15); }
+.pmodal-portrait img { width:100%; height:100%; object-fit:cover; object-position:center 18%; display:block; }
+.pmodal-portrait-fallback { width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-family:var(--fh); font-size:2.5rem; font-weight:800; opacity:.4; }
+.pmodal-headerinfo { flex:1; min-width:0; }
+.pmodal-epoch  { font-family:var(--fm); font-size:.72rem; letter-spacing:.1em; margin-bottom:.35rem; text-transform:uppercase; }
+.pmodal-name   { font-family:var(--fh); font-size:1.9rem; font-weight:800; letter-spacing:-.03em; color:var(--text); line-height:1.05; margin-bottom:.15rem; }
+.pmodal-dates  { font-family:var(--fm); font-size:.8rem; color:var(--text3); }
+.tier-badge    { display:inline-block; background:var(--surface); color:var(--text3); padding:.12rem .45rem; border-radius:4px; font-size:.65rem; font-family:var(--fm); margin-left:.5rem; vertical-align:middle; }
+.fav-badge     { display:inline-block; background:var(--accent2); color:#fff; padding:.12rem .5rem; border-radius:4px; font-size:.62rem; font-family:var(--fm); margin-left:.4rem; vertical-align:middle; letter-spacing:.05em; }
+
+.pmodal-desc   { color:var(--text2); line-height:1.75; font-size:.9rem; margin-bottom:1.3rem; }
+.pmodal-ideas  { list-style:none; display:flex; flex-direction:column; gap:.4rem; margin-bottom:1.3rem; }
+.pmodal-ideas li { background:var(--surface); border-radius:6px; padding:.55rem .9rem; font-size:.83rem; color:var(--text2); border-left:3px solid var(--accent); }
+
+.pmodal-works-lbl { font-family:var(--fm); font-size:.7rem; color:var(--text3); letter-spacing:.1em; margin:.4rem 0 .55rem; display:block; text-transform:uppercase; }
+.pmodal-works { display:flex; flex-direction:column; gap:.3rem; margin-bottom:1.1rem; }
+.pmodal-work { display:flex; align-items:center; gap:.55rem; padding:.42rem .8rem; background:var(--surface); border-radius:6px; font-size:.8rem; color:var(--text2); border-left:3px solid var(--accent2); }
+.pmodal-work-icon { color:var(--accent2); font-size:.8rem; flex-shrink:0; }
+.pmodal-infl-lbl { font-family:var(--fm); font-size:.7rem; color:var(--text3); letter-spacing:.1em; margin:.8rem 0 .55rem; display:block; text-transform:uppercase; }
+.pmodal-chips  { display:flex; gap:.42rem; flex-wrap:wrap; }
+.pmodal-chip   { display:flex; align-items:center; gap:.32rem; padding:.3rem .68rem; border-radius:6px; font-size:.76rem; font-family:var(--fm); cursor:pointer; border:1px solid transparent; transition:opacity .15s; }
 .pmodal-chip:hover { opacity:.75; }
-.chip-dot         { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.tier-badge       { display:inline-block; background:var(--surface); color:var(--text3); padding:.1rem .4rem; border-radius:4px; font-size:.63rem; font-family:var(--fm); margin-left:.5rem; vertical-align:middle; }
+.chip-dot      { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+@media (max-width:780px) {
+  .phil-header,.phil-controls,.epoch-filter-row,.tier-legend { padding-left:1.2rem; padding-right:1.2rem; }
+  .pmodal-header { flex-direction:column; gap:.8rem; }
+  .pmodal-portrait { width:80px; height:108px; }
+}
 </style>
 
 <!-- HEADER -->
-<div class="phil-header">
-  <div class="phil-glow"></div>
+<div class="page-hero phil-hero">
+  <div class="page-hero-glow"></div>
   <p class="hero-tag">Von Thales bis zur Gegenwart</p>
-  <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text);line-height:1;margin-bottom:.5rem">
-    Philosophen-Timeline<span style="color:var(--accent)">.</span>
-  </h1>
-  <p style="color:var(--text2);max-width:660px;line-height:1.75;font-size:.9rem">
-    144 Philosophen &middot; 230 Einflussverbindungen &middot; 2600&thinsp;Jahre Denkgeschichte.<br>
-    <span style="font-family:var(--fm);font-size:.78rem;color:var(--text3)">Zoom: Tier&thinsp;1&thinsp;→ Giganten immer sichtbar &middot; Tier&thinsp;2&thinsp;→ ×1.0 &middot; Tier&thinsp;3&thinsp;→ ×1.8 &middot; Tier&thinsp;4&thinsp;→ ×2.8 &nbsp;|&nbsp; Klick + Drag zum Scrollen</span>
+  <h1 class="page-title">Philosophen-Timeline<span>.</span></h1>
+  <p class="page-desc">
+    332 Philosoph:innen · 2 600 Jahre Denkgeschichte · Einflussverbindungen, Epochen und Tier-System
+  </p>
+  <p class="phil-meta">
+    Klick + Drag zum Scrollen · Mausrad zum Zoomen · Hover zeigt Verbindungen · Klick öffnet Details
   </p>
 </div>
 
 <!-- TIER LEGEND -->
 <div class="tier-legend">
-  <div class="tier-item"><div class="tier-pip" style="background:#f7971e;box-shadow:0 0 0 2px #f7971e44"></div>Tier 1 — Giganten (immer)</div>
-  <div class="tier-item"><div class="tier-pip" style="background:#5b80e8"></div>Tier 2 — Wichtige Denker (×1.0)</div>
-  <div class="tier-item"><div class="tier-pip" style="background:#22c55e"></div>Tier 3 — Alle Denker (×1.8)</div>
-  <div class="tier-item"><div class="tier-pip" style="background:#a78bfa"></div>Tier 4 — Randfiguren &amp; Schüler (×2.8)</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#f5b50a;box-shadow:0 0 0 2px #f5b50a44"></div>T1 — Giganten</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#3b9eff"></div>T2 — Wichtige Denker</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#23c552"></div>T3 — Bedeutend</div>
+  <div class="tier-item"><div class="tier-pip" style="background:#9b7cff"></div>T4 — Schüler &amp; Randfiguren</div>
   <div class="vis-count" id="vis-count">—</div>
+</div>
+<div class="epoch-legend collapsed" id="epoch-legend">
+  <div class="epoch-legend-head" onclick="toggleEpochLegend()">
+    <span class="epoch-legend-caret">▼</span>
+    <span>Epochen-Farben</span>
+    <span style="opacity:.6" id="epoch-legend-hint">— anzeigen</span>
+  </div>
+  <div class="epoch-legend-grid" id="epoch-legend-grid"></div>
 </div>
 
 <!-- CONTROLS -->
 <div class="phil-controls">
   <div class="phil-zoom-group">
-    <button class="pzb" onclick="tlZoom(1.35)">+</button>
+    <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen">+</button>
     <span class="zoom-label" id="zoom-lbl">×1.0</span>
-    <button class="pzb" onclick="tlZoom(1/1.35)">−</button>
-    <button class="pzb" onclick="tlReset()" style="font-size:.6rem;width:38px">Reset</button>
+    <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen">−</button>
+    <button class="pzb" onclick="tlReset()" style="font-size:.62rem;width:42px" title="Zurücksetzen">Reset</button>
+  </div>
+  <div class="view-switch" id="view-switch">
+    <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')">Timeline</button>
+    <button class="vs-btn" id="vs-table" onclick="tlSetView('table')">Tabelle</button>
   </div>
   <div class="phil-search-wrap">
-    <span class="phil-search-icon">&#9906;</span>
+    <span class="phil-search-icon">⌕</span>
     <input class="phil-search" id="phil-search" type="text"
       placeholder="Philosoph suchen…" oninput="tlSearch(this.value)">
   </div>
   <div class="infl-toggles" id="infl-toggles"></div>
+  <button class="itbtn" id="female-btn" onclick="tlToggleFemale()" style="margin-left:auto"
+    title="Nur Philosophinnen anzeigen">♀ Philosophinnen</button>
 </div>
 
-<!-- EPOCH FILTER -->
-<div class="epoch-filter-row" id="epoch-filter-row"></div>
+<!-- FILTER: Modus-Umschalter (Epoche / Disziplin / Strömung) + Dropdown -->
+<div class="epoch-filter-row" id="epoch-filter-row">
+  <div class="filter-mode-switch" id="filter-mode-switch">
+    <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)">Epoche</button>
+    <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)">Disziplin</button>
+    <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)">Strömung</button>
+    <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)">Grundposition</button>
+    <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)">Thema</button>
+  </div>
+  <div class="epoch-dd-wrap">
+    <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"></select>
+  </div>
+</div>
 
-<!-- SVG CANVAS -->
+<!-- SVG CANVAS + Hover Card -->
 <div class="tl-outer" id="tl-outer">
   <div class="tl-canvas-wrap" id="tl-wrap">
     <svg id="tl-svg" xmlns="http://www.w3.org/2000/svg"></svg>
   </div>
+  <div class="tl-hover-card" id="tl-hover"></div>
+</div>
+<div class="tl-table-wrap" id="tl-table-wrap">
+  <div class="tl-table-meta-row">
+    <div class="tl-table-meta" id="tl-table-meta"></div>
+    <button class="tl-export-btn" onclick="tlTblExport()" title="Aktuelle Tabellenansicht als CSV herunterladen">⬇ Als CSV exportieren</button>
+  </div>
+  <table class="tl-table">
+    <thead>
+      <tr>
+        <th class="sortable" onclick="tlTblSort('name')">Philosoph<span class="sort-arrow" id="arr-name"></span></th>
+        <th class="sortable" onclick="tlTblSort('birth')">Zeitraum<span class="sort-arrow" id="arr-birth"></span></th>
+        <th class="sortable" onclick="tlTblSort('epoch')">Epoche<span class="sort-arrow" id="arr-epoch"></span></th>
+        <th>Disziplinen</th>
+        <th>Strömungen</th>
+        <th class="opt-col">Grundpositionen</th>
+        <th class="opt-col">Themen</th>
+      </tr>
+    </thead>
+    <tbody id="tl-table-body"></tbody>
+  </table>
 </div>
 
 <!-- MODAL -->
 <div class="pmodal-overlay" id="pmodal" onclick="if(event.target===this)tlCloseModal()">
   <div class="pmodal-box">
-    <button class="pmodal-close" onclick="tlCloseModal()">&#10005;</button>
-    <div class="pmodal-epoch" id="pm-epoch"></div>
-    <div class="pmodal-name"  id="pm-name"></div>
-    <div class="pmodal-dates" id="pm-dates"></div>
+    <button class="pmodal-close" onclick="tlCloseModal()">✕</button>
+    <div class="pmodal-header">
+      <div class="pmodal-portrait" id="pm-portrait-wrap"></div>
+      <div class="pmodal-headerinfo">
+        <div class="pmodal-epoch" id="pm-epoch"></div>
+        <div class="pmodal-name"  id="pm-name"></div>
+        <div class="pmodal-dates" id="pm-dates"></div>
+      </div>
+    </div>
     <div class="pmodal-desc"  id="pm-desc"></div>
     <ul class="pmodal-ideas"  id="pm-ideas"></ul>
+    <div id="pm-works"></div>
     <div id="pm-infl"></div>
   </div>
 </div>
 
 <script>
-/* ════════════════════════════════════════════
-   TIMELINE ENGINE v2
-════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   TIMELINE ENGINE v3
+   ════════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
 
-const YEAR_MIN = -700, YEAR_MAX = 2030, YEAR_RANGE = 2730;
-const BASE_W   = 4000;
-const SVG_H    = 530;
-const AXIS_Y   = 265;
-const CARD_W   = 130;
-const CARD_H   = 65;
-const PAD      = 70;   // axis-to-card gap
+const YEAR_MIN = -700, YEAR_MAX = 2030, YEAR_RANGE = YEAR_MAX - YEAR_MIN;
+const BASE_W   = 4400;
+let SVG_H      = 760;   /* = feste Viewport-Höhe, wird in setH() gesetzt */
+let AXIS_Y     = 380;   /* = SVG_H/2, immer vertikal zentriert */
+const CARD_W   = 134;
+const CARD_H   = 96;  /* increased to fit portrait */
+let PAD        = 85;   // axis-to-card gap (dynamisch: schrumpft bei wenig Höhe)
 
 const INFL_COL = { student:'#5b80e8', inspires:'#22c55e', critic:'#e8527a', develops:'#a78bfa' };
-const TIER_VIS = { 1:0.5, 2:1.0, 3:1.8, 4:2.8 };
+const TIER_VIS = { 1:0.55, 2:0.85, 3:1.5, 4:2.4 };
+/* Mega-Giganten: sichtbar auch bei extremem Herauszoomen (≤0.55).
+   Bewusst sehr klein gehalten — die "Säulen" der abendländischen Philosophie. */
+const MEGA = new Set(['Platon','Aristoteles','Kant','Sokrates','Nietzsche','Descartes','Hegel','Augustinus','Thomas v. Aquin']);
+const MEGA_ZOOM = 0.55;  /* unter diesem Zoom: nur die 9 Giganten + grobe Großepochen-Bänder */
+/* Tier-Ringfarben — bewusst metallisch/neutral, damit sie sich klar von den
+   bunten Epochenfarben abheben und als Rangstufe lesbar sind. */
+const TIER_RING = { 1:'#f5b50a', 2:'#3b9eff', 3:'#23c552', 4:'#9b7cff' };
+const TIER_NAME    = { 1:'Gigant',  2:'Wichtiger Denker', 3:'Bedeutend', 4:'Schüler/Randfigur' };
+const TIER_NAME_F  = { 1:'Gigantin', 2:'Wichtige Denkerin', 3:'Bedeutend', 4:'Schülerin/Randfigur' };
+/* geschlechtssensible Tier-Bezeichnung */
+function tierName(p) { return (p.female ? TIER_NAME_F : TIER_NAME)[p.tier] || ''; }
 
-let zoom      = 1.0;
-let epoch     = '';
-let search    = '';
-let inflOn    = { student:true, inspires:true, critic:true, develops:true };
-let ready     = false;
+/* Lieblingsphilosophen — Mapping von Namen in PHILS_V2 zu Bild-Slug */
+const FAV_SLUGS = {
+  'Parmenides':'parmenides','Anaximander':'anaximander','Heraklit':'heraklit',
+  'Platon':'platon','Aristoteles':'aristoteles','Plotin':'plotin',
+  'Eriugena':'eriugena','Augustinus':'augustinus','Böhme':'boehme',
+  'Pascal':'pascal','Malebranche':'malebranche','Kant':'kant',
+  'Schelling':'schelling','Hegel':'hegel','Hölderlin':'hoelderlin',
+  'Heidegger':'heidegger','Levinas':'levinas','Tengelyi':'tengelyi',
+  'Leibniz':'leibniz','Jacobi':'jacobi','Kierkegaard':'kierkegaard',
+  'Spinoza':'spinoza','Schopenhauer':'schopenhauer','Nietzsche':'nietzsche',
+  'Freud':'freud','Cioran':'cioran','Derrida':'derrida','Hume':'hume',
+  'N. Hartmann':'n-hartmann','James':'wjames','Scholem':'scholem'
+};
 
-function svgW()   { return BASE_W * zoom; }
-function xOf(yr)  { return ((yr - YEAR_MIN) / YEAR_RANGE) * svgW(); }
-function dark()   { return document.documentElement.dataset.theme === 'dark'; }
-function cv(v)    { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-function phils()  { return typeof PHILS_V2 !== 'undefined' ? PHILS_V2 : []; }
-function byName(n){ return phils().find(p => p.name === n); }
-function visible(p){ return zoom >= (TIER_VIS[p.tier] || 1); }
-function dimmed(p) { return (epoch && p.epoch !== epoch) || (search && !p.name.toLowerCase().includes(search)); }
+let zoom = 1.0;
+let epoch = '';
+let femaleOnly = false;  /* Frauen-Filter */
+let viewMode = 'timeline';  /* 'timeline' | 'table' */
+let _tblSort = { key:'birth', dir:1 };
+let search = '';
+let filterMode = 'epoch';   /* 'epoch' | 'disc' | 'mov' | 'pos' | 'thema' */
+let discFilter = '';        /* aktive Disziplin */
+let movFilter = '';         /* aktive Strömung */
+let posFilter = '';         /* aktive Grundposition */
+let themaFilter = '';       /* aktives Thema */
+let inflOn = { student:true, inspires:true, critic:true, develops:true };
+let focusName = null;   /* currently hovered/clicked philosopher — drives focus mode */
+let _connectedToFocus = new Set();  /* Namen, die mit dem fokussierten Knoten verbunden sind */
+let _unfocusTimer = null;  /* Debounce für mouseleave (Anti-Flacker) */
+let _chainSet = new Set();  /* Hover-Kette: bleibt beim Linien-Nachverfolgen bestehen,
+                               wird erst beim Verlassen der Timeline geleert */
+/* ── Touch (C11): 1. Tap = Fokus/Info, 2. Tap auf dieselbe Karte = Modal ── */
+let _lastTapName = null;     /* zuletzt getappte Karte (für Doppel-Tap-Erkennung) */
+let _tchX = 0, _tchY = 0, _tchT = 0;  /* Tap vs. Scroll unterscheiden */
+function computeConnected(name) {
+  const s = new Set();
+  if (!name) return s;
+  const fp = byName(name);
+  if (fp && fp.influences) fp.influences.forEach(i => s.add(i.to));
+  phils().forEach(q => {
+    if (q.influences && q.influences.some(i => i.to === name)) s.add(q.name);
+  });
+  return s;
+}
+let inflMode = 'focus'; /* 'focus' = lines only for active node, 'all' = always show all */
+
+function svgW() { return BASE_W * zoom; }
+function xOf(yr) { return ((yr - YEAR_MIN) / YEAR_RANGE) * svgW(); }
+function dark() { return document.documentElement.dataset.theme === 'dark'; }
+function cv(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function phils() { return typeof PHILS_V2 !== 'undefined' ? PHILS_V2 : []; }
+function byName(n) { return phils().find(p => p.name === n); }
+/* Anzeigename: display-Feld bevorzugt, sonst name (Schlüssel bleibt name) */
+function dispName(p) { return p.display || p.name; }
+/* Basis-Sichtbarkeit: hängt NUR von Zoom/Filter ab, NICHT vom Hover.
+   Daraus wird das Layout berechnet → Hovern verschiebt keine Karten. */
+function baseVisible(p) {
+  if (femaleOnly && !p.female) return false;
+  if (zoom < MEGA_ZOOM) return MEGA.has(p.name);   /* Mega-Verdichtungsstufe */
+  return zoom >= (TIER_VIS[p.tier] || 1);
+}
+function visible(p) {
+  /* Beim Hovern zusätzlich: fokussierter Knoten + Verbundene sichtbar (zoom-unabhängig) */
+  if (_chainSet.size && _chainSet.has(p.name)) return true;
+  return baseVisible(p);
+}
+function dimmed(p) {
+  /* Epochen-Modus: Einzelepoche oder Großepoche */
+  if (filterMode === 'epoch') {
+    if (epoch && p.epoch !== epoch) return true;
+    if (window._currentEra) {
+      const m = window._EPOCH_META && window._EPOCH_META[p.epoch];
+      if (!m || m.era !== window._currentEra) return true;
+    }
+  }
+  /* Disziplin-Modus */
+  else if (filterMode === 'disc' && discFilter) {
+    if (!p.disc || !p.disc.includes(discFilter)) return true;
+  }
+  /* Strömungs-Modus */
+  else if (filterMode === 'mov' && movFilter) {
+    if (!p.mov || !p.mov.includes(movFilter)) return true;
+  }
+  /* Grundpositions-Modus */
+  else if (filterMode === 'pos' && posFilter) {
+    if (!p.pos || !p.pos.includes(posFilter)) return true;
+  }
+  /* Themen-Modus */
+  else if (filterMode === 'thema' && themaFilter) {
+    if (!p.thema || !p.thema.includes(themaFilter)) return true;
+  }
+  /* Suche wirkt in allen Modi */
+  if (search && !p.name.toLowerCase().includes(search) && !dispName(p).toLowerCase().includes(search)) return true;
+  return false;
+}
+function isFav(p) { return !!FAV_SLUGS[p.name]; }
+function favSlug(p) { return FAV_SLUGS[p.name]; }
+/* Best image format the browser supports — detected once at startup.
+   SVG <image> can't use <picture>, so we pick the format in JS. */
+let _imgExt = 'jpg';  /* safe default; upgraded to webp/avif after detection */
+function detectImageFormat() {
+  /* AVIF test */
+  const avif = new Image();
+  avif.onload = () => { _imgExt = 'avif'; if (typeof render === 'function') render(); };
+  avif.onerror = () => {
+    /* AVIF failed → try WebP */
+    const webp = new Image();
+    webp.onload = () => { if (_imgExt !== 'avif') { _imgExt = 'webp'; if (typeof render === 'function') render(); } };
+    webp.onerror = () => {};
+    webp.src = 'data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=';
+  };
+  avif.src = 'data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAGF2aWZtaWYxbWlhZk1BMUIAAADybWV0YQAAAAAAAAAoaGRscgAAAAAAAAAAcGljdAAAAAAAAAAAAAAAAGxpYmF2aWYAAAAADnBpdG0AAAAAAAEAAAAeaWxvYwAAAABEAAABAAEAAAABAAABGgAAAB0AAAAoaWluZgAAAAAAAQAAABppbmZlAgAAAAABAABhdjAxQ29sb3IAAAAAamlwcnAAAABLaXBjbwAAABRpc3BlAAAAAAAAAAEAAAABAAAAEHBpeGkAAAAAAwgICAAAAAxhdjFDgQAMAAAAABNjb2xybmNseAACAAIABoAAAAAXaXBtYQAAAAAAAAABAAEEAQKDBAAAACVtZGF0EgAKCBgABogQEDQgMgkQAAAAB8dSLfI=';
+}
+
+/* ── Mehrfach-Porträts ──
+   Für diese Slugs existieren mehrere Bilder: <slug>.jpg, <slug>1.jpg, <slug>2.jpg …
+   Die Zahl gibt an, WIE VIELE Varianten es GESAMT gibt (inkl. dem Basis-Bild ohne Ziffer).
+   Beispiel: 'schelling':3  →  schelling.jpg, schelling1.jpg, schelling2.jpg
+   Trage hier nur die wenigen Philosophen ein, für die du mehrere Bilder hast. */
+const MULTI_PORTRAITS = {
+  'schelling': 4,   // schelling.jpg, schelling1, schelling2, schelling3 (private Zeichnung)
+  'kant': 2,        // kant.jpg + kant1.jpg
+  // 'nietzsche': 2,
+};
+/* Merkt sich die einmal getroffene Zufallswahl pro Slug (kein Flackern bei Re-Render) */
+const _chosenVariant = {};
+function resolveSlug(slug) {
+  const n = MULTI_PORTRAITS[slug];
+  if (!n || n < 2) return slug;
+  if (_chosenVariant[slug] === undefined) {
+    const pick = Math.floor(Math.random() * n); // 0 … n-1
+    _chosenVariant[slug] = pick === 0 ? slug : slug + pick; // 0 → Basis, sonst slugN
+  }
+  return _chosenVariant[slug];
+}
+
+/* Portrait base path (without extension) */
+function portraitBase(p) {
+  const raw = FAV_SLUGS[p.name] || p.slug;
+  if (!raw) return null;
+  return 'assets/images/philosophen/' + resolveSlug(raw);
+}
+/* Full portrait URL using the detected best format */
+function portraitUrl(p) {
+  const base = portraitBase(p);
+  return base ? base + '.' + _imgExt : null;
+}
+
+/* CORRECT death/birth handling — null means "lives" */
+function deathYearForPos(p) {
+  // For position calculations, treat alive as 2025
+  return p.death === null || p.death === undefined ? 2025 : p.death;
+}
+function formatYear(y) {
+  if (y < 0) return Math.abs(y) + ' v.\u202fChr.';
+  if (y === 0) return '1 n.\u202fChr.';
+  return String(y);
+}
+function formatYearShort(y, alive) {
+  if (alive) return '→';
+  if (y < 0) return Math.abs(y) + 'v';
+  return String(y);
+}
+function lifeStr(p) {
+  const b = formatYear(p.birth);
+  if (p.death === null || p.death === undefined) return b + ' – heute';
+  return b + ' – ' + formatYear(p.death);
+}
 
 function el(tag, attrs, txt) {
   const ns = 'http://www.w3.org/2000/svg';
@@ -153,7 +482,7 @@ function el(tag, attrs, txt) {
   return e;
 }
 
-/* ── Main render ── */
+/* ════════ MAIN RENDER ════════ */
 function render() {
   const W   = svgW();
   const svg = document.getElementById('tl-svg');
@@ -162,23 +491,28 @@ function render() {
   svg.setAttribute('height', SVG_H);
   svg.innerHTML = '';
 
-  const dk  = dark();
-  const bgCard  = dk ? '#181824' : '#ffffff';
-  const textCol = dk ? '#e8e8f0' : '#18181f';
-  const mutedCol= dk ? '#606078' : '#9090a8';
+  const dk        = dark();
+  const bgCard    = dk ? '#181824' : '#ffffff';
+  const textCol   = dk ? '#e8e8f0' : '#18181f';
+  const mutedCol  = dk ? '#606078' : '#9090a8';
   const borderCol = cv('--border');
 
-  /* 0. DEFS */
+  /* 0. DEFS — markers, gradients, portrait clips */
   const defs = el('defs');
   Object.entries(INFL_COL).forEach(([t, c]) => {
     const m = el('marker', { id:'arr-'+t, markerWidth:9, markerHeight:9, refX:7, refY:3, orient:'auto', markerUnits:'strokeWidth' });
     m.appendChild(el('path', { d:'M0,0 L0,6 L9,3 z', fill:c }));
     defs.appendChild(m);
   });
-  /* axis gradient */
   const ag = el('linearGradient', { id:'axGrad', x1:'0%', y1:'0%', x2:'100%', y2:'0%' });
   ag.innerHTML = `<stop offset="0%" stop-color="${cv('--accent')}"/><stop offset="100%" stop-color="${cv('--accent2')}"/>`;
   defs.appendChild(ag);
+
+  /* circular clip for portraits */
+  const clipPortrait = el('clipPath', { id:'clip-portrait' });
+  clipPortrait.appendChild(el('circle', { cx:0, cy:0, r:14 }));
+  defs.appendChild(clipPortrait);
+
   svg.appendChild(defs);
 
   /* 1. EPOCH BANDS */
@@ -187,38 +521,58 @@ function render() {
   const epochRanges = {};
   phils().forEach(p => {
     if (!epochRanges[p.epoch]) epochRanges[p.epoch] = { min:Infinity, max:-Infinity, c: epochColors[p.epoch]||'#888' };
-    const d = p.death > 0 ? p.death : Math.max(p.birth+40, 2020);
+    const d = deathYearForPos(p);
     epochRanges[p.epoch].min = Math.min(epochRanges[p.epoch].min, p.birth);
     epochRanges[p.epoch].max = Math.max(epochRanges[p.epoch].max, d);
   });
   const bandG = el('g');
-  Object.entries(epochRanges).forEach(([eName, r]) => {
-    const x1 = xOf(r.min - 20), x2 = xOf(r.max + 20);
-    const isActive = epoch === eName;
-    bandG.appendChild(el('rect', { x:x1, y:0, width:Math.max(1, x2-x1), height:SVG_H,
-      fill: r.c + (isActive ? '22' : dk ? '0f' : '09') }));
-    if (x2 - x1 > 50) {
+  if (zoom < MEGA_ZOOM) {
+    /* GROBE EINTEILUNG: nur drei Großepochen-Bänder (Antike/Mittelalter/Neuzeit) */
+    const ERA_BANDS = [
+      { name:'Antike',      from:-600, to:600,  c:'#d98c3f' },
+      { name:'Mittelalter', from:480,  to:1370, c:'#7b9acc' },
+      { name:'Neuzeit',     from:1300, to:2026, c:'#5fb87a' },
+    ];
+    ERA_BANDS.forEach(b => {
+      const x1 = xOf(b.from), x2 = xOf(b.to);
+      bandG.appendChild(el('rect', { x:x1, y:0, width:Math.max(1, x2-x1), height:SVG_H,
+        fill: b.c + (dk ? '14' : '12') }));
       const lx = (x1+x2)/2;
-      const sz = Math.min(12, Math.max(7, (x2-x1)*0.06));
-      bandG.appendChild(el('text', { x:lx, y:AXIS_Y+34, 'text-anchor':'middle',
-        fill:r.c, 'font-size':sz, 'font-family':"'JetBrains Mono',monospace", opacity:'0.45' }, eName));
-    }
-  });
+      bandG.appendChild(el('text', { x:lx, y:AXIS_Y+48, 'text-anchor':'middle',
+        fill:b.c, 'font-size':22, 'font-family':"'Syne',sans-serif",
+        opacity:'0.55', 'font-weight':'800', 'letter-spacing':'0.05em' }, b.name));
+    });
+  } else {
+    /* FEINE EINTEILUNG: einzelne Epochen-Bänder */
+    Object.entries(epochRanges).forEach(([eName, r]) => {
+      const x1 = xOf(r.min - 20), x2 = xOf(r.max + 20);
+      const isActive = epoch === eName;
+      bandG.appendChild(el('rect', { x:x1, y:0, width:Math.max(1, x2-x1), height:SVG_H,
+        fill: r.c + (isActive ? '24' : dk ? '10' : '0a') }));
+      if (x2 - x1 > 50) {
+        const lx = (x1+x2)/2;
+        const sz = Math.min(13, Math.max(8, (x2-x1)*0.06));
+        bandG.appendChild(el('text', { x:lx, y:AXIS_Y+38, 'text-anchor':'middle',
+          fill:r.c, 'font-size':sz, 'font-family':"'JetBrains Mono',monospace",
+          opacity: isActive ? '0.7' : '0.42', 'font-weight':'600' }, eName));
+      }
+    });
+  }
   svg.appendChild(bandG);
 
   /* 2. AXIS */
-  svg.appendChild(el('line', { x1:0, y1:AXIS_Y, x2:W, y2:AXIS_Y, stroke:'url(#axGrad)', 'stroke-width':2.5 }));
-  const step = zoom >= 4 ? 25 : zoom >= 2.5 ? 50 : zoom >= 1.5 ? 100 : 200;
+  svg.appendChild(el('line', { x1:0, y1:AXIS_Y, x2:W, y2:AXIS_Y, stroke:'url(#axGrad)', 'stroke-width':3 }));
+  const step  = zoom >= 4 ? 25 : zoom >= 2.5 ? 50 : zoom >= 1.5 ? 100 : 200;
   const major = step * 2;
   for (let y = -600; y <= 2025; y += step) {
     const x = xOf(y), isMajor = y % major === 0;
-    svg.appendChild(el('line', { x1:x, y1:AXIS_Y-(isMajor?9:5), x2:x, y2:AXIS_Y+(isMajor?9:5),
+    svg.appendChild(el('line', { x1:x, y1:AXIS_Y-(isMajor?10:5), x2:x, y2:AXIS_Y+(isMajor?10:5),
       stroke:borderCol, 'stroke-width':isMajor?1.5:0.8, opacity:isMajor?'1':'0.5' }));
     if (isMajor || zoom > 1.5) {
       const lbl = y < 0 ? Math.abs(y)+' v.Chr.' : y === 0 ? '0 n.Chr.' : String(y);
-      svg.appendChild(el('text', { x, y:AXIS_Y+22, 'text-anchor':'middle',
+      svg.appendChild(el('text', { x, y:AXIS_Y+24, 'text-anchor':'middle',
         fill:mutedCol, 'font-size':isMajor?10:8, 'font-family':"'JetBrains Mono',monospace",
-        opacity:isMajor?'0.85':'0.45' }, lbl));
+        opacity:isMajor?'0.88':'0.5' }, lbl));
     }
   }
 
@@ -226,10 +580,14 @@ function render() {
   const posMap = {};
   phils().forEach(p => {
     if (!visible(p)) return;
-    posMap[p.name] = xOf((p.birth + (p.death > 0 ? p.death : 2020)) / 2);
+    posMap[p.name] = xOf((p.birth + deathYearForPos(p)) / 2);
   });
 
   const inflG = el('g', { id:'infl-g' });
+  /* In focus mode, only draw lines touching the focused philosopher.
+     This keeps dense regions far cleaner. When no node is focused,
+     focus mode shows nothing; 'all' mode shows everything (faint). */
+  const focusActive = inflMode === 'focus' && _chainSet.size > 0;
   phils().forEach(p => {
     if (!visible(p) || !p.influences) return;
     p.influences.forEach(inf => {
@@ -237,136 +595,638 @@ function render() {
       const tx = posMap[inf.to];
       if (tx === undefined) return;
       const fx = posMap[p.name];
+
+      /* Kante berührt den aktuell gehoverten Knoten? (→ kräftiger Stil) */
+      const touchesFocus = focusName && (p.name === focusName || inf.to === focusName);
+      /* Kante liegt innerhalb der Hover-Kette? */
+      const inChain = _chainSet.size > 0 && _chainSet.has(p.name) && _chainSet.has(inf.to);
+
+      /* Visibility logic */
+      if (inflMode === 'focus') {
+        if (!_chainSet.size) return;   /* focus mode, keine Kette → keine Linien */
+        if (!inChain) return;          /* nur Kanten innerhalb der Kette */
+      }
+
       const c  = INFL_COL[inf.type];
-      const isHighlighted = search && (p.name.toLowerCase().includes(search) || inf.to.toLowerCase().includes(search));
-      const isDimmedLine  = (epoch && p.epoch !== epoch && (byName(inf.to)?.epoch) !== epoch) ||
-                            (search && !isHighlighted);
-      const dist = Math.abs(tx - fx);
-      const curve = inf.type === 'student' ? -50 : inf.type === 'critic' ? 48 : -35;
+      const isSearchHl = search && (p.name.toLowerCase().includes(search) || inf.to.toLowerCase().includes(search));
+      const isDim = !focusActive && ((epoch && p.epoch !== epoch && (byName(inf.to)?.epoch) !== epoch) ||
+                    (search && !isSearchHl));
+      const strong = touchesFocus || isSearchHl;
+      const curve = inf.type === 'student' ? -55 : inf.type === 'critic' ? 50 : -40;
       const mx = (fx + tx) / 2;
       const d  = `M${fx},${AXIS_Y} C${mx},${AXIS_Y+curve} ${mx},${AXIS_Y+curve} ${tx},${AXIS_Y}`;
       const dash = inf.type==='critic' ? '6,3' : inf.type==='develops' ? '3,3' : 'none';
-      inflG.appendChild(el('path', { d, fill:'none', stroke:c, 'stroke-width':isHighlighted?2.5:1.5,
-        'stroke-dasharray':dash, opacity:isDimmedLine?'0.04':isHighlighted?'0.75':'0.35',
+      inflG.appendChild(el('path', { d, fill:'none', stroke:c,
+        'stroke-width': strong ? 2.6 : 1.4,
+        'stroke-dasharray':dash,
+        opacity: isDim ? '0.04' : strong ? '0.85' : '0.32',
         'marker-end':`url(#arr-${inf.type})` }));
     });
   });
   svg.appendChild(inflG);
 
-  /* 4. PHILOSOPHER NODES */
+  /* ── 4a. CLUSTER DETECTION ──
+     Spread overlapping cards across rows AND alternate above/below
+     so dense regions (e.g. the modern era) don't pile up. */
+  const SLOT_GAP_X = CARD_W - 6;  /* min horizontal gap before pushing to next row */
+  const ROW_HEIGHT_BASE = 28;   /* Wunsch-Zeilenabstand bei genug Platz */
+  const ROW_HEIGHT_MIN  = 13;   /* engster Abstand, bevor Karten unlesbar überlappen */
+  let ROW_HEIGHT = ROW_HEIGHT_BASE;  /* wird unten an die Dichte angepasst (A+C: stauchen) */
+
+  /* Layout pro Zoomstufe gecacht: Bei gegebenem Zoom ist die Anordnung FIX
+     (Hover verschiebt nichts → kein Flackern). Es wird aus den bei DIESEM Zoom
+     sichtbaren Karten berechnet (kompakt), aber NICHT vom Hover beeinflusst.
+     Cache-Key = Zoomstufe; ein Hover ändert den Key nicht. */
+  const _layoutKey = 'z' + zoom.toFixed(3) + (femaleOnly ? 'F' : '');
+  if (!window._layoutCache || window._layoutCache.key !== _layoutKey) {
+    const sideMap = {}, rowMap = {};
+    const rowEnds = { above: [], below: [] };
+    /* nur die bei diesem Zoom (ohne Hover) sichtbaren Karten anordnen → kompakt */
+    const layoutPhils = phils().filter(baseVisible)
+      .sort((a,b) => posMap[a.name] - posMap[b.name]);
+    layoutPhils.forEach(p => {
+      const cx = posMap[p.name];
+      function lowestRowFor(side) {
+        const ends = rowEnds[side];
+        let r = 0;
+        while (ends[r] !== undefined && cx - ends[r] < SLOT_GAP_X) r++;
+        return r;
+      }
+      const rowAboveCand = lowestRowFor('above');
+      const rowBelowCand = lowestRowFor('below');
+      const natural = p.above ? 'above' : 'below';
+      const other   = p.above ? 'below' : 'above';
+      const natRow  = natural === 'above' ? rowAboveCand : rowBelowCand;
+      const othRow  = other   === 'above' ? rowAboveCand : rowBelowCand;
+      let chosenSide, chosenRow;
+      if (othRow < natRow) { chosenSide = other;   chosenRow = othRow; }
+      else                 { chosenSide = natural; chosenRow = natRow; }
+      sideMap[p.name] = chosenSide;
+      rowMap[p.name]  = chosenRow;
+      rowEnds[chosenSide][chosenRow] = cx;
+    });
+    window._layoutCache = { key: _layoutKey, sideMap, rowMap };
+  }
+  const sideMap = window._layoutCache.sideMap;
+  const rowMap  = window._layoutCache.rowMap;
+  /* Hover-Extra-Knoten, die noch keine Position haben, bekommen ihre natürliche Seite
+     (ohne die gecachte Belegung zu verändern) */
+  phils().forEach(p => {
+    if (sideMap[p.name] === undefined) {
+      sideMap[p.name] = p.above ? 'above' : 'below';
+      rowMap[p.name]  = 0;
+    }
+  });
+  const visiblePhils = phils().filter(baseVisible);
+
+  /* Compute max rows for SVG height */
+  let maxRowAbove = 0, maxRowBelow = 0;
+  visiblePhils.forEach(p => {
+    const r = rowMap[p.name] || 0;
+    if (sideMap[p.name] === 'above') maxRowAbove = Math.max(maxRowAbove, r);
+    else maxRowBelow = Math.max(maxRowBelow, r);
+  });
+
+  /* ── A+C: Zeilenabstand an die Dichte anpassen, damit nichts über den
+     festen Viewport hinausragt. Wir berechnen, wie viel vertikaler Platz
+     EINE Seite (oben bzw. unten) hat: von der Achse bis zum Viewport-Rand,
+     minus dem Karten-Grundabstand (PAD) und der Kartenhöhe selbst.
+     Passt die tiefste Zeile nicht hinein, wird ROW_HEIGHT gestaucht. */
+  PAD = 85;  /* Basiswert pro Render zurücksetzen, dann ggf. stauchen */
+  const maxRowEither = Math.max(maxRowAbove, maxRowBelow);
+  const wrapEl0 = document.getElementById('tl-wrap');
+  const viewH = wrapEl0 ? wrapEl0.clientHeight : SVG_H;
+  /* halbe verfügbare Höhe (eine Seite der Achse), minus Sicherheitsrand */
+  const halfAvail = (viewH / 2) - 6;
+  /* PAD (Achse→erste Karte) bei wenig Platz reduzieren: bis runter auf PAD_MIN.
+     So gewinnen besonders kleine Fenster den nötigen Raum. */
+  const PAD_MIN = 30;
+  if (halfAvail < PAD + CARD_H + maxRowEither * ROW_HEIGHT_MIN) {
+    /* Selbst mit engsten Zeilen zu eng → auch PAD schrumpfen */
+    PAD = Math.max(PAD_MIN, halfAvail - CARD_H - maxRowEither * ROW_HEIGHT_MIN);
+  }
+  if (maxRowEither > 0) {
+    /* verfügbarer Platz für die gestapelten Zeilen (nach Karte+PAD) */
+    const avail = halfAvail - PAD - CARD_H;
+    const fit = avail / maxRowEither;
+    ROW_HEIGHT = Math.max(ROW_HEIGHT_MIN, Math.min(ROW_HEIGHT_BASE, fit));
+  }
+
+  const extraBelow = maxRowBelow * ROW_HEIGHT;
+  const extraAbove = maxRowAbove * ROW_HEIGHT;
+  /* FESTE Höhe = Viewport (zoom-unabhängig). Die Achse liegt bei AXIS_Y = SVG_H/2,
+     also IMMER vertikal zentriert. Karten gehen symmetrisch nach oben/unten weg.
+     Falls die Zeilen die halbe Höhe übersteigen, vergrößern wir das SVG symmetrisch
+     (gleich viel oben wie unten), sodass die Achse trotzdem exakt mittig bleibt
+     und beim Zoomen NICHT springt. */
+  const halfNeeded = Math.max(extraAbove, extraBelow) + SVG_H / 2;
+  const fixedH = Math.max(SVG_H, halfNeeded * 2);
+  svg.setAttribute('height', fixedH);
+  /* Achse exakt in die Mitte der (ggf. vergrößerten) Fläche legen */
+  const centeredAxis = fixedH / 2;
+  window._contentShiftY = centeredAxis - AXIS_Y;
+
+  /* ── 4b. RENDER NODES ── */
+  /* Set der mit dem fokussierten Knoten verbundenen Namen (module-level, auch von visible() genutzt) */
+  const connectedNames = _connectedToFocus;
+
   const nodeG = el('g', { id:'node-g' });
-  let cnt = 0;
+  let cnt = 0;       /* sichtbar (Zoomstufe) */
+  let hlCnt = 0;     /* hervorgehoben (entspricht Filterkriterien, nicht gedimmt) */
 
   phils().forEach(p => {
     if (!visible(p)) return;
     cnt++;
+    if (!dimmed(p)) hlCnt++;
     const cx    = posMap[p.name];
-    const above = p.above;
-    const dm    = dimmed(p);
+    const above = sideMap[p.name] === 'above';
+    const row   = rowMap[p.name] || 0;
+    const rowOffset = row * ROW_HEIGHT * (above ? -1 : 1);
+
+    /* Focus-mode dimming: when a node is focused, fade unrelated cards */
+    let focusDim = false, isFocused = false, isConnected = false;
+    if (_chainSet.size) {
+      isFocused = p.name === focusName;
+      if (!isFocused) {
+        isConnected = _chainSet.has(p.name);
+        focusDim = !isConnected;
+      }
+    }
+    const dm = dimmed(p) || focusDim;
+    const fav   = isFav(p);
     const fsize = p.tier === 1 ? 11.5 : p.tier === 2 ? 10 : 9;
     const showDates = zoom >= 0.85;
     const showEpoch = zoom >= 1.25;
+    const pPortrait = portraitUrl(p);
+    const showPortrait = !!pPortrait;  /* Porträts immer sichtbar, jede Zoomstufe */
     const cH    = CARD_H + (showEpoch ? 13 : 0);
-    const cardY = above ? AXIS_Y - PAD - cH : AXIS_Y + PAD;
+    const cardY = (above ? AXIS_Y - PAD - cH : AXIS_Y + PAD) + rowOffset;
     const ly1   = above ? cardY + cH + 2 : AXIS_Y + 6;
     const ly2   = above ? AXIS_Y - 6 : cardY - 2;
-    const dotR  = p.tier === 1 ? 7 : p.tier === 2 ? 5 : 4;
+    const dotR  = fav ? 8 : p.tier === 1 ? 7 : p.tier === 2 ? 5 : 4;
 
     const g = el('g', { class:'phil-node-group', opacity: dm ? '0.08' : '1', transform:`translate(${cx},0)` });
+    g.setAttribute('data-name', p.name);
 
     /* connector */
-    g.appendChild(el('line', { x1:0, y1:ly1, x2:0, y2:ly2, stroke:p.color+'55', 'stroke-width':1.5 }));
+    g.appendChild(el('line', { x1:0, y1:ly1, x2:0, y2:ly2, stroke:p.color+'66', 'stroke-width':1.5 }));
 
-    /* dot */
+    /* dot — bigger and outlined for favorites */
     g.appendChild(el('circle', { cx:0, cy:AXIS_Y, r:dotR, fill:p.color,
-      stroke: dk?'#0a0a0f':'#ffffff', 'stroke-width':2.5 }));
+      stroke: dk?'#0a0a0f':'#ffffff', 'stroke-width': fav ? 3 : 2.5 }));
+    if (fav) {
+      /* outer ring for favs */
+      g.appendChild(el('circle', { cx:0, cy:AXIS_Y, r:dotR+3, fill:'none',
+        stroke:p.color, 'stroke-width':1.2, opacity:'0.55' }));
+    }
 
-    /* card shadow (tier 1 glow) */
-    if (p.tier === 1 && !dm) {
+    /* Card shadow for Tier 1 + Favs */
+    if ((p.tier === 1 || fav) && !dm) {
       g.appendChild(el('rect', { x:-CARD_W/2-4, y:cardY-4, width:CARD_W+8, height:cH+8,
-        fill:'none', stroke:p.color, 'stroke-width':0.7, rx:11, ry:11, opacity:'0.3' }));
+        fill:'none', stroke:p.color, 'stroke-width':0.8, rx:11, ry:11, opacity: fav ? '0.5' : '0.32' }));
     }
 
     /* card */
     const cardBg = bgCard + (p.tier===1?'':'ee');
     g.appendChild(el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH,
-      fill:cardBg, stroke:p.color, 'stroke-width': p.tier===1 ? 2 : 0.8, rx:8, ry:8 }));
+      fill:cardBg, stroke:p.color, 'stroke-width': fav ? 2.2 : p.tier===1 ? 2 : 0.9, rx:8, ry:8 }));
+
+    /* Fav-Star in corner */
+    if (fav) {
+      g.appendChild(el('text', { x:CARD_W/2-9, y:cardY+11, 'text-anchor':'end',
+        fill:p.color, 'font-size':10, 'font-weight':'700' }, '★'));
+    }
+
+    /* Tier-Marker oben links — farbig nach Tier (auffällig, eigene Info) */
+    const tierCol = TIER_RING[p.tier] || '#9b7cff';
+    g.appendChild(el('text', { x:-CARD_W/2+8, y:cardY+12, 'text-anchor':'start',
+      fill:tierCol, 'font-size':8.5, 'font-weight':'800',
+      'font-family':"'JetBrains Mono',monospace" }, 'T'+p.tier));
 
     /* name */
-    const nameShort = p.name.length > 17 ? p.name.substring(0,16)+'…' : p.name;
-    g.appendChild(el('text', { x:0, y:cardY+16, 'text-anchor':'middle',
-      fill:textCol, 'font-size':fsize, 'font-weight':p.tier<=2?'700':'600',
-      'font-family':"'Syne',sans-serif" }, nameShort));
+    const _dn = dispName(p);
+    const nameWeight = p.tier<=2 ? '700' : '600';
+    if (_dn.length <= 17) {
+      g.appendChild(el('text', { x:0, y:cardY+15, 'text-anchor':'middle',
+        fill:textCol, 'font-size':fsize, 'font-weight':nameWeight,
+        'font-family':"'Syne',sans-serif" }, _dn));
+    } else {
+      const parts = _dn.split(' ');
+      let line1 = '', line2 = '';
+      if (parts.length === 1) {
+        line1 = _dn.substring(0, 16) + '…';
+      } else {
+        const half = _dn.length / 2;
+        let acc = 0, idx = 0;
+        for (; idx < parts.length - 1; idx++) {
+          acc += parts[idx].length + 1;
+          if (acc >= half) { idx++; break; }
+        }
+        line1 = parts.slice(0, idx).join(' ');
+        line2 = parts.slice(idx).join(' ');
+        if (line1.length > 19) line1 = line1.substring(0,18)+'…';
+        if (line2.length > 19) line2 = line2.substring(0,18)+'…';
+      }
+      const fs2 = Math.max(7.5, fsize - 1.5);
+      g.appendChild(el('text', { x:0, y:cardY+11, 'text-anchor':'middle',
+        fill:textCol, 'font-size':fs2, 'font-weight':nameWeight,
+        'font-family':"'Syne',sans-serif" }, line1));
+      if (line2) g.appendChild(el('text', { x:0, y:cardY+11+fs2+1, 'text-anchor':'middle',
+        fill:textCol, 'font-size':fs2, 'font-weight':nameWeight,
+        'font-family':"'Syne',sans-serif" }, line2));
+    }
 
     /* dates */
     if (showDates) {
-      const bs = p.birth<0 ? Math.abs(p.birth)+'v' : String(p.birth);
-      const ds = p.death<=0 ? '→' : p.death<0 ? Math.abs(p.death)+'v' : String(p.death);
-      g.appendChild(el('text', { x:0, y:cardY+29, 'text-anchor':'middle',
+      const alive = p.death === null || p.death === undefined;
+      const bs = formatYearShort(p.birth, false);
+      const ds = formatYearShort(p.death, alive);
+      g.appendChild(el('text', { x:0, y:cardY+28, 'text-anchor':'middle',
         fill:mutedCol, 'font-size':7.5, 'font-family':"'JetBrains Mono',monospace" }, bs+'–'+ds));
+    }
+
+    /* Portrait IN MIDDLE of card (between dates and epoch) */
+    if (showPortrait) {
+      const portraitY = cardY + 32; /* below dates */
+      /* single circular background + Epochen-Ring (kein Tier-Doppelring) */
+      g.appendChild(el('circle', { cx:0, cy:portraitY+19, r:19, fill:bgCard,
+        stroke:p.color, 'stroke-width':2 }));
+      /* fallback initial behind the image */
+      g.appendChild(el('text', { x:0, y:portraitY+24, 'text-anchor':'middle',
+        fill:p.color, 'font-size':15, 'font-weight':'800',
+        'font-family':"'Syne',sans-serif", opacity:'0.5' }, dispName(p).replace(/^(Ps\.-|al-)/i,'').charAt(0)));
+      /* image (covers initial when it loads; falls back avif→webp→jpg→hide) */
+      const pBase = portraitBase(p);
+      const img = el('image', {
+        x:-17, y:portraitY+2, width:34, height:34,
+        href: pPortrait,
+        preserveAspectRatio:'xMidYMid slice',
+        'clip-path':'circle(17px at 17px 17px)'
+      });
+      /* Fallback chain via data attribute */
+      img.setAttribute('data-fallback', _imgExt === 'avif' ? 'webp' : _imgExt === 'webp' ? 'jpg' : '');
+      img.addEventListener('error', function(){
+        const fb = img.getAttribute('data-fallback');
+        if (fb === 'webp') { img.setAttribute('data-fallback','jpg'); img.setAttributeNS('http://www.w3.org/1999/xlink','href', pBase+'.webp'); img.setAttribute('href', pBase+'.webp'); }
+        else if (fb === 'jpg') { img.setAttribute('data-fallback',''); img.setAttributeNS('http://www.w3.org/1999/xlink','href', pBase+'.jpg'); img.setAttribute('href', pBase+'.jpg'); }
+        else { img.style.display='none'; }
+      });
+      g.appendChild(img);
     }
 
     /* epoch */
     if (showEpoch) {
       const eShort = p.epoch.length>15 ? p.epoch.substring(0,14)+'…' : p.epoch;
       g.appendChild(el('text', { x:0, y:cardY+cH-7, 'text-anchor':'middle',
-        fill:p.color, 'font-size':7, 'font-family':"'JetBrains Mono',monospace", opacity:'0.8' }, eShort));
+        fill:p.color, 'font-size':7, 'font-family':"'JetBrains Mono',monospace", opacity:'0.85' }, eShort));
     }
 
-    /* invisible hit rect */
-    const hit = el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH, fill:'transparent' });
+    /* invisible hit rect — for hover + click */
+    const hit = el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH, fill:'transparent', style:'cursor:pointer' });
     hit.addEventListener('click', () => tlOpenModal(p));
+    hit.addEventListener('mouseenter', () => {
+      if (_unfocusTimer) { clearTimeout(_unfocusTimer); _unfocusTimer = null; }
+      showHoverCard(p, cx, above, cardY, cH);
+      setFocus(p.name);
+    });
+    hit.addEventListener('mouseleave', () => {
+      /* Verzögert entfokussieren — wechselt die Maus auf einen verbundenen
+         Knoten, wird der neue Fokus gesetzt und dieser Timer abgebrochen.
+         Das verhindert das Flacker-Pingpong in Überlappungszonen. */
+      if (_unfocusTimer) clearTimeout(_unfocusTimer);
+      _unfocusTimer = setTimeout(() => {
+        hideHoverCard();
+        setFocus(null);
+        _unfocusTimer = null;
+      }, 90);
+    });
+    /* ── Touch (C11): erster Tap wirkt wie Hover, zweiter Tap öffnet Details ── */
+    hit.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      _tchX = t.clientX; _tchY = t.clientY; _tchT = Date.now();
+    }, { passive: true });
+    hit.addEventListener('touchend', (e) => {
+      const t = e.changedTouches[0];
+      const movedPx = Math.hypot(t.clientX - _tchX, t.clientY - _tchY);
+      if (movedPx > 12 || Date.now() - _tchT > 600) return;  /* Wischen/Halten = kein Tap */
+      e.preventDefault();   /* unterdrückt synthetische mouseenter/click-Events */
+      if (_lastTapName === p.name) {
+        /* zweiter Tap auf dieselbe Karte → Detail-Modal */
+        hideHoverCard();
+        tlOpenModal(p);
+        _lastTapName = null;
+      } else {
+        /* erster Tap → wie Hover: Info-Karte + Fokus/Kette (erweitert sich
+           beim Tappen auf verbundene Karten, genau wie am Desktop) */
+        if (_unfocusTimer) { clearTimeout(_unfocusTimer); _unfocusTimer = null; }
+        showHoverCard(p, cx, above, cardY, cH);
+        setFocus(p.name);
+        _lastTapName = p.name;
+      }
+    }, { passive: false });
     g.appendChild(hit);
     nodeG.appendChild(g);
   });
 
   svg.appendChild(nodeG);
 
+  /* Achse mittig: alle Inhalte (außer <defs>) vertikal so verschieben,
+     dass die Zeitachse exakt in der Mitte der SVG-Fläche liegt. */
+  if (window._contentShiftY) {
+    const shiftG = el('g', { transform: 'translate(0,' + window._contentShiftY + ')' });
+    const toMove = [];
+    Array.from(svg.childNodes).forEach(ch => {
+      if (ch.tagName && ch.tagName.toLowerCase() === 'defs') return;
+      toMove.push(ch);
+    });
+    toMove.forEach(ch => shiftG.appendChild(ch));
+    svg.appendChild(shiftG);
+  }
+  /* Container vertikal zur Achse zentrieren, falls das SVG höher als der Viewport ist.
+     So bleibt die Achse IMMER auf derselben sichtbaren Höhe — kein Sprung beim Zoomen. */
+  const wrapEl = document.getElementById('tl-wrap');
+  if (wrapEl) {
+    const svgH = parseFloat(svg.getAttribute('height')) || SVG_H;
+    const axisAbsY = svgH / 2;   /* Achse sitzt mittig im SVG */
+    const target = Math.max(0, axisAbsY - wrapEl.clientHeight / 2);
+    wrapEl.scrollTop = target;
+  }
+
   /* update count */
   const vc = document.getElementById('vis-count');
-  if (vc) vc.textContent = cnt + ' Philosophen sichtbar';
+  if (vc) {
+    const filterActive = epoch || window._currentEra || search || discFilter || movFilter || posFilter || themaFilter;
+    if (filterActive) {
+      vc.innerHTML = '<span class="vc-hl">' + hlCnt + ' hervorgehoben</span>'
+        + '<span class="vc-sep"> · </span>'
+        + '<span class="vc-dim">' + cnt + ' sichtbar</span>';
+    } else {
+      vc.textContent = cnt + ' Philosoph:innen sichtbar';
+    }
+  }
+
+  if (viewMode === 'table') renderTable();
 }
 
-/* ── Zoom ── */
+/* ════════ Hover Card ════════ */
+function showHoverCard(p, cx, above, cardY, cH) {
+  const card = document.getElementById('tl-hover');
+  const wrap = document.getElementById('tl-wrap');
+  if (!card || !wrap) return;
+  const fav = isFav(p);
+  const pPortrait = portraitUrl(p);
+  const hb = portraitBase(p);
+  card.innerHTML = (pPortrait ?
+    `<picture><source srcset="${hb}.avif" type="image/avif"><source srcset="${hb}.webp" type="image/webp">`
+    + `<img class="tl-hc-portrait" src="${hb}.jpg" alt="${dispName(p)}" onerror="this.closest('picture').style.display='none'"></picture>` : '')
+    + `<span class="tl-hc-epoch" style="background:${p.color}">${p.epoch}</span>`
+    + `<div class="tl-hc-name">${dispName(p)}${fav ? ' <span style="color:'+p.color+';font-size:.9rem">★</span>' : ''}</div>`
+    + `<div class="tl-hc-dates">${lifeStr(p)}</div>`
+    + `<div class="tl-hc-desc">${(p.desc||'').substring(0,180)}${(p.desc||'').length>180?'…':''}</div>`;
+  card.style.borderColor = p.color;
+  /* Position: relative to wrap viewport */
+  const scrollLeft = wrap.scrollLeft;
+  const wrapRect = wrap.getBoundingClientRect();
+  const outerRect = document.getElementById('tl-outer').getBoundingClientRect();
+  const screenX = cx - scrollLeft;
+  /* prefer above the card if card is below axis, else below */
+  let left = screenX - 130;
+  if (left < 10) left = 10;
+  if (left + 260 > wrapRect.width) left = wrapRect.width - 270;
+  let top;
+  if (above) {
+    /* card is above axis → show hover further above */
+    top = cardY - 130;
+  } else {
+    /* card is below axis → show hover above the card */
+    top = cardY - 145;
+  }
+  if (top < 10) top = AXIS_Y + 120;
+  card.style.left = left + 'px';
+  card.style.top  = top + 'px';
+  card.classList.add('show');
+}
+function hideHoverCard() {
+  document.getElementById('tl-hover')?.classList.remove('show');
+}
+
+/* ════════ Zoom / Search ════════ */
+/* Während des Zoomens Karten-Transitions abschalten → kein Aufblitzen/Nachziehen */
+let _zoomAnimTimer = null;
+function markZooming() {
+  const w = document.getElementById('tl-wrap');
+  if (!w) return;
+  w.classList.add('zooming');
+  if (_zoomAnimTimer) clearTimeout(_zoomAnimTimer);
+  _zoomAnimTimer = setTimeout(() => w.classList.remove('zooming'), 180);
+}
+
 window.tlZoom = function(f) {
   const wrap = document.getElementById('tl-wrap');
   const ratio = wrap ? wrap.scrollLeft / Math.max(1, wrap.scrollWidth) : 0;
-  zoom = Math.max(0.4, Math.min(5.5, zoom * f));
+  markZooming();
+  zoom = Math.max(0.28, Math.min(8.0, zoom * f));
   document.getElementById('zoom-lbl').textContent = '×' + zoom.toFixed(1);
   render();
-  if (wrap) requestAnimationFrame(() => { wrap.scrollLeft = ratio * wrap.scrollWidth; });
+  /* scrollLeft SOFORT (synchron) setzen — nicht im nächsten Frame.
+     Mit scroll-behavior:auto springt er instantan → kein sichtbares Nachrücken. */
+  if (wrap) wrap.scrollLeft = ratio * wrap.scrollWidth;
+  hideHoverCard();
 };
 
 window.tlReset = function() {
   zoom = 1.0;
   document.getElementById('zoom-lbl').textContent = '×1.0';
-  epoch = ''; search = '';
-  document.getElementById('phil-search').value = '';
-  document.querySelectorAll('.epoch-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.epoch-btn')?.classList.add('active');
+  epoch = ''; search = ''; window._currentEra = '';
+  filterMode = 'epoch'; discFilter = ''; movFilter = ''; posFilter = ''; themaFilter = '';
+  const si = document.getElementById('phil-search');
+  if (si) si.value = '';
+  /* Modus-Buttons auf "Epoche" zurücksetzen */
+  document.querySelectorAll('.fm-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.fm-btn[data-mode="epoch"]')?.classList.add('active');
+  /* Dropdown zurücksetzen */
+  const dd = document.getElementById('epoch-dd');
+  if (dd) dd.value = '';
+  if (window._fillEpochDropdown) window._fillEpochDropdown();
   render();
   const wrap = document.getElementById('tl-wrap');
   if (wrap) setTimeout(() => { wrap.scrollLeft = BASE_W * 0.22; }, 60);
 };
 
-/* ── Search ── */
-window.tlSearch = function(val) {
-  search = val.toLowerCase().trim();
-  render();
-  if (search.length > 1) {
-    const found = phils().find(p => p.name.toLowerCase().includes(search));
-    if (found) {
-      const wrap = document.getElementById('tl-wrap');
-      const cx = ((found.birth + (found.death>0?found.death:2020))/2 - YEAR_MIN) / YEAR_RANGE * svgW();
-      if (wrap) wrap.scrollLeft = cx - wrap.clientWidth / 2;
+/* ════════ Focus (hover highlight) ════════ */
+let _focusRaf = null;
+function setFocus(name) {
+  if (focusName === name) return;
+  focusName = name;
+  if (name) {
+    const nb = computeConnected(name);
+    if (_chainSet.has(name)) {
+      /* Knoten gehört zur bestehenden Kette → erweitern (Linien nachverfolgen) */
+      nb.forEach(x => _chainSet.add(x));
+      _chainSet.add(name);
+    } else {
+      /* unverbundener Knoten → neue Kette beginnen */
+      _chainSet = new Set(nb);
+      _chainSet.add(name);
+    }
+    _connectedToFocus = new Set(_chainSet);
+    _connectedToFocus.delete(name);
+  }
+  /* name === null (Karte verlassen): Kette bewusst NICHT löschen —
+     sie bleibt hervorgehoben, bis die Maus die Timeline verlässt. */
+
+  /* Volles Re-Render nur, wenn dadurch WIRKLICH neue Knoten ins DOM müssen,
+     die aktuell weder im DOM sind noch es nach dem Wechsel wären.
+     Wenn die Maus zwischen zwei bereits sichtbaren (verbundenen) Karten wechselt,
+     reicht das leichte Update → kein DOM-Neuaufbau → kein Flackern. */
+  function domHas(nm){ return !!document.querySelector('.phil-node-group[data-name="'+(window.CSS&&CSS.escape?CSS.escape(nm):nm)+'"]'); }
+  let needsFullRender = false;
+  if (name) {
+    for (const cn of _connectedToFocus) {
+      const cp = byName(cn);
+      if (!cp) continue;
+      const baseShow = (zoom >= MEGA_ZOOM) ? (zoom >= (TIER_VIS[cp.tier] || 1)) : MEGA.has(cp.name);
+      /* Knoten fehlt im DOM UND wäre ohne Fokus nicht sichtbar → muss neu gezeichnet werden */
+      if (!baseShow && !domHas(cn)) { needsFullRender = true; break; }
+    }
+    /* der fokussierte Knoten selbst muss da sein */
+    const fp = byName(name);
+    if (fp) {
+      const baseShowSelf = (zoom >= MEGA_ZOOM) ? (zoom >= (TIER_VIS[fp.tier] || 1)) : MEGA.has(fp.name);
+      if (!baseShowSelf && !domHas(name)) needsFullRender = true;
     }
   }
+  if (_focusRaf) cancelAnimationFrame(_focusRaf);
+  if (needsFullRender) {
+    _focusRaf = requestAnimationFrame(() => { render(); });
+  } else {
+    _focusRaf = requestAnimationFrame(() => { updateFocusVisuals(); });
+  }
+}
+
+/* Lightweight update: only redraw influence lines + adjust node opacity,
+   without rebuilding the entire SVG (prevents hover flicker). */
+function updateFocusVisuals() {
+  const svg = document.getElementById('tl-svg');
+  if (!svg) return;
+
+  /* 1. Update node opacity — Kette bleibt hervorgehoben, Rest gedimmt */
+  svg.querySelectorAll('.phil-node-group').forEach(g => {
+    const nm = g.getAttribute('data-name');
+    const p  = byName(nm);
+    let dim = p ? dimmed(p) : false;
+    if (_chainSet.size && nm !== focusName && !_chainSet.has(nm)) dim = true;
+    g.setAttribute('opacity', dim ? '0.08' : '1');
+  });
+
+  /* 2. Rebuild influence layer */
+  const old = document.getElementById('infl-g');
+  if (!old) return;
+  const W = svgW();
+  const posMap = {};
+  phils().forEach(p => { if (visible(p)) posMap[p.name] = xOf((p.birth + deathYearForPos(p)) / 2); });
+
+  const inflG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  inflG.setAttribute('id', 'infl-g');
+  const focusActive = inflMode === 'focus' && _chainSet.size > 0;
+
+  phils().forEach(p => {
+    if (!visible(p) || !p.influences) return;
+    p.influences.forEach(inf => {
+      if (!inflOn[inf.type]) return;
+      const tx = posMap[inf.to]; if (tx === undefined) return;
+      const fx = posMap[p.name];
+      const touchesFocus = focusName && (p.name === focusName || inf.to === focusName);
+      const inChain = _chainSet.size > 0 && _chainSet.has(p.name) && _chainSet.has(inf.to);
+      if (inflMode === 'focus') { if (!_chainSet.size) return; if (!inChain) return; }
+      const c = INFL_COL[inf.type];
+      const isSearchHl = search && (p.name.toLowerCase().includes(search) || inf.to.toLowerCase().includes(search));
+      const isDim = !focusActive && ((epoch && p.epoch !== epoch && (byName(inf.to)?.epoch) !== epoch) || (search && !isSearchHl));
+      const strong = touchesFocus || isSearchHl;
+      const curve = inf.type === 'student' ? -55 : inf.type === 'critic' ? 50 : -40;
+      const mx = (fx + tx) / 2;
+      const d = `M${fx},${AXIS_Y} C${mx},${AXIS_Y+curve} ${mx},${AXIS_Y+curve} ${tx},${AXIS_Y}`;
+      const dash = inf.type==='critic' ? '6,3' : inf.type==='develops' ? '3,3' : 'none';
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('fill', 'none');
+      path.setAttribute('stroke', c);
+      path.setAttribute('stroke-width', strong ? 2.6 : 1.4);
+      path.setAttribute('stroke-dasharray', dash);
+      path.setAttribute('opacity', isDim ? '0.04' : strong ? '0.85' : '0.32');
+      path.setAttribute('marker-end', `url(#arr-${inf.type})`);
+      inflG.appendChild(path);
+    });
+  });
+  old.replaceWith(inflG);
+}
+
+window.tlSearch = function(val) {
+  search = val.toLowerCase().trim();
+  if (search.length > 1) {
+    const found = phils().find(p => p.name.toLowerCase().includes(search) || dispName(p).toLowerCase().includes(search));
+    if (found) {
+      /* Ensure the found philosopher is visible: bump zoom to their tier threshold */
+      const neededZoom = TIER_VIS[found.tier] || 1;
+      if (zoom < neededZoom) {
+        zoom = neededZoom;
+        const zl = document.getElementById('zoom-lbl');
+        if (zl) zl.textContent = '×' + zoom.toFixed(1);
+      }
+      render();
+      /* Center on the found philosopher */
+      const wrap = document.getElementById('tl-wrap');
+      const cx = ((found.birth + deathYearForPos(found))/2 - YEAR_MIN) / YEAR_RANGE * svgW();
+      if (wrap) {
+        requestAnimationFrame(() => {
+          wrap.scrollLeft = cx - wrap.clientWidth / 2;
+        });
+      }
+      return;
+    }
+  }
+  render();
 };
 
-/* ── Influence toggles ── */
+/* Influence-Linien-Modus umschalten (Hover-only ↔ immer alle) */
+window.tlToggleInflMode = function() {
+  inflMode = (inflMode === 'focus') ? 'all' : 'focus';
+  const btn = document.getElementById('infl-mode-btn');
+  if (btn) {
+    const allOn = inflMode === 'all';
+    btn.classList.toggle('active', allOn);
+    btn.textContent = allOn ? '⚡ Linien: immer alle' : '⚡ Linien: bei Hover';
+    btn.style.background = allOn ? 'var(--accent)' : '';
+    btn.style.color = allOn ? '#fff' : '';
+    btn.style.borderColor = allOn ? 'transparent' : '';
+  }
+  render();
+};
+
+/* Philosophinnen-Filter umschalten */
+window.tlToggleFemale = function() {
+  femaleOnly = !femaleOnly;
+  const btn = document.getElementById('female-btn');
+  if (btn) {
+    btn.classList.toggle('active', femaleOnly);
+    btn.style.background = femaleOnly ? 'var(--accent2, #c0559a)' : '';
+    btn.style.color = femaleOnly ? '#fff' : '';
+    btn.style.borderColor = femaleOnly ? 'transparent' : '';
+  }
+  /* Beim Aktivieren auf niedrigen Zoom, damit alle (selteneren) Philosophinnen sichtbar sind */
+  if (femaleOnly && zoom < 1.0) {
+    zoom = 1.0;
+    const zl = document.getElementById('zoom-lbl');
+    if (zl) zl.textContent = '×1.0';
+  }
+  render();
+};
+
+/* ════════ Toggles ════════ */
 function buildInflToggles() {
   const c = document.getElementById('infl-toggles');
   if (!c) return;
+  c.innerHTML = '';
   const labels = { student:'Lehrer→Schüler', inspires:'Inspiration', critic:'Kritik', develops:'Weiterentwicklung' };
   Object.entries(INFL_COL).forEach(([type, color]) => {
     const b = document.createElement('button');
@@ -383,56 +1243,505 @@ function buildInflToggles() {
     };
     c.appendChild(b);
   });
+
+  /* "Linien: bei Hover/immer"-Umschalter direkt neben die Verbindungstyp-Buttons */
+  const modeBtn = document.createElement('button');
+  modeBtn.className = 'itbtn'; modeBtn.id = 'infl-mode-btn';
+  modeBtn.style.marginLeft = '.5rem';
+  modeBtn.title = 'Verbindungslinien: bei Hover oder dauerhaft';
+  modeBtn.textContent = '⚡ Linien: bei Hover';
+  modeBtn.onclick = () => window.tlToggleInflMode();
+  c.appendChild(modeBtn);
 }
 
-/* ── Epoch filter ── */
 function buildEpochFilter() {
-  const c = document.getElementById('epoch-filter-row');
-  if (!c) return;
-  c.innerHTML = '';
-  const all = document.createElement('button');
-  all.className = 'epoch-btn active'; all.textContent = 'Alle Epochen';
-  all.onclick = () => { epoch=''; c.querySelectorAll('.epoch-btn').forEach(b=>b.classList.remove('active')); all.classList.add('active'); all.style.background=''; all.style.color=''; render(); };
-  c.appendChild(all);
-  (typeof EPOCHS_META_V2 !== 'undefined' ? EPOCHS_META_V2 : []).forEach(e => {
-    const b = document.createElement('button');
-    b.className = 'epoch-btn'; b.style.borderColor = e.color+'55';
-    b.innerHTML = `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${e.color};margin-right:4px;vertical-align:middle"></span>${e.name}`;
-    b.onclick = () => {
-      epoch = e.name;
-      c.querySelectorAll('.epoch-btn').forEach(x=>{ x.classList.remove('active'); x.style.background=''; x.style.color=''; });
-      b.classList.add('active'); b.style.background=e.color; b.style.color='#fff';
-      render();
-    };
-    c.appendChild(b);
+  const dd = document.getElementById('epoch-dd');
+  if (!dd) return;
+
+  /* Zeiträume + Großepochen-Zuordnung. Konsistent mit der App, nicht streng historisch.
+     era: 'Antike' | 'Mittelalter' | 'Neuzeit'  */
+  const EPOCH_META = {
+    'Vorsokratik':        { era:'Antike',      from:-600, to:-430 },
+    'Sophistik':          { era:'Antike',      from:-485, to:-380 },
+    'Klassisch':          { era:'Antike',      from:-450, to:-320 },
+    'Kynismus':           { era:'Antike',      from:-410, to:-320 },
+    'Hellenismus':        { era:'Antike',      from:-335, to:220  },
+    'Spätantike':         { era:'Antike',      from:120,  to:600  },
+    'Frühes MA':          { era:'Mittelalter', from:480,  to:1080 },
+    'Islamisch':          { era:'Mittelalter', from:800,  to:1330 },
+    'Scholastik':         { era:'Mittelalter', from:1000, to:1430 },
+    'Mystik':             { era:'Mittelalter', from:1090, to:1370 },
+    'Renaissance':        { era:'Neuzeit',     from:1300, to:1650 },
+    'Rationalismus':      { era:'Neuzeit',     from:1590, to:1720 },
+    'Empirismus':         { era:'Neuzeit',     from:1560, to:1780 },
+    'Aufklärung':         { era:'Neuzeit',     from:1690, to:1800 },
+    'Dt. Idealismus':     { era:'Neuzeit',     from:1780, to:1840 },
+    '19. Jh.':            { era:'Neuzeit',     from:1800, to:1910 },
+    'Lebensphilosophie':  { era:'Neuzeit',     from:1870, to:1960 },
+    'Phänomenologie':     { era:'Neuzeit',     from:1890, to:1990 },
+    'Existenz.':          { era:'Neuzeit',     from:1840, to:1990 },
+    'Strukturalismus':    { era:'Neuzeit',     from:1910, to:1980 },
+    'Analytisch':         { era:'Neuzeit',     from:1900, to:2025 },
+    'Krit. Theorie':      { era:'Neuzeit',     from:1920, to:2000 },
+    'Wissenschaftsphilo.':{ era:'Neuzeit',     from:1920, to:2000 },
+    'Hermeneutik':        { era:'Neuzeit',     from:1900, to:2010 },
+    'Politische Philo.':  { era:'Neuzeit',     from:1900, to:2010 },
+    'Poststrukturalismus':{ era:'Neuzeit',     from:1920, to:2010 },
+    'Pragmatismus':       { era:'Neuzeit',     from:1870, to:1960 },
+    'Neopragmatismus':    { era:'Neuzeit',     from:1930, to:2010 },
+    'Gegenwart':          { era:'Neuzeit',     from:1940, to:2025 },
+  };
+  window._EPOCH_META = EPOCH_META;
+
+  /* Nur Epochen anzeigen, die tatsächlich Philosoph:innen haben */
+  const present = new Set(phils().map(p => p.epoch));
+  const meta = (typeof EPOCHS_META_V2 !== 'undefined' ? EPOCHS_META_V2 : []);
+  const colorOf = {}; meta.forEach(e => colorOf[e.name] = e.color);
+
+  function fmtYr(y){ return y < 0 ? Math.abs(y)+' v.Chr.' : ''+y; }
+
+  /* Großepochen-Zeiträume (für die Dropdown-Beschriftung) */
+  const ERA_RANGES = {
+    'Antike':      '600 v.Chr.–600',
+    'Mittelalter': '480–1370',
+    'Neuzeit':     '1300–Jetzt (2026)',
+  };
+
+  /* Dropdown füllen: Alle → Großepochen → Einzelepochen (gruppiert) */
+  function fillDropdown() {
+    dd.innerHTML = '';
+
+    /* 1) Alle Epochen */
+    const optAll = document.createElement('option');
+    optAll.value = ''; optAll.textContent = 'Alle Epochen';
+    dd.appendChild(optAll);
+
+    /* 2) Großepochen als eigene Gruppe */
+    const gEra = document.createElement('optgroup');
+    gEra.label = 'Großepochen';
+    ['Antike','Mittelalter','Neuzeit'].forEach(era => {
+      const o = document.createElement('option');
+      o.value = 'era:' + era;
+      o.textContent = `${era} (${ERA_RANGES[era]})`;
+      gEra.appendChild(o);
+    });
+    dd.appendChild(gEra);
+
+    /* 3) Einzelepochen, gruppiert nach Großepoche, nach Zeit sortiert */
+    const items = Object.keys(EPOCH_META)
+      .filter(name => present.has(name))
+      .sort((a,b) => EPOCH_META[a].from - EPOCH_META[b].from);
+    let currentEra = null, optgroup = null;
+    items.forEach(name => {
+      const m = EPOCH_META[name];
+      if (m.era !== currentEra) {
+        currentEra = m.era;
+        optgroup = document.createElement('optgroup');
+        optgroup.label = m.era + ' — Epochen';
+        dd.appendChild(optgroup);
+      }
+      const o = document.createElement('option');
+      o.value = name;
+      o.textContent = `${name} (${fmtYr(m.from)}–${fmtYr(m.to)})`;
+      optgroup.appendChild(o);
+    });
+
+    /* aktuellen Wert wiederherstellen */
+    dd.value = window._currentEra ? ('era:' + window._currentEra) : (epoch || '');
+  }
+
+  /* Disziplinen + Strömungen aus den Daten sammeln (mit Häufigkeit) */
+  function collectField(field) {
+    const counts = {};
+    phils().forEach(p => {
+      (p[field] || []).forEach(v => { counts[v] = (counts[v] || 0) + 1; });
+    });
+    return Object.keys(counts).sort((a,b) => counts[b] - counts[a] || a.localeCompare(b))
+                 .map(name => ({ name, count: counts[name] }));
+  }
+
+  /* Dropdown je nach Modus füllen */
+  const MODE_META = {
+    disc:  { field:'disc',  label:'Alle Disziplinen' },
+    mov:   { field:'mov',   label:'Alle Strömungen' },
+    pos:   { field:'pos',   label:'Alle Grundpositionen' },
+    thema: { field:'thema', label:'Alle Themen' },
+  };
+  /* Themen intern gegliedert (B7): Reihenfolge = Anzeige-Reihenfolge im Dropdown */
+  const THEMA_GROUPS = [
+    ['Metaphysik',            ['Sein','Nichts','Zeit','Ewigkeit','Unendlichkeit','Kausalität','Modalität','Natur','Gott','Ideen']],
+    ['Mensch & Geist',        ['Mensch','Seele','Körper','Person','Identität','Bewusstsein']],
+    ['Erkenntnis & Sprache',  ['Erkenntnis','Wahrheit','Vernunft','Sprache']],
+    ['Praxis & Gesellschaft', ['Freiheit','Wille','Gerechtigkeit','Politik','Glück']],
+    ['Existenz & Ästhetik',   ['Tod','Liebe','Tragik','Langeweile','Schönheit']],
+  ];
+  function fillForMode() {
+    if (filterMode === 'epoch') { fillDropdown(); return; }
+    const meta = MODE_META[filterMode];
+    if (!meta) return;
+    dd.innerHTML = '';
+    const optAll = document.createElement('option');
+    optAll.value = ''; optAll.textContent = meta.label;
+    dd.appendChild(optAll);
+    const items = collectField(meta.field);
+    if (filterMode === 'thema') {
+      /* gruppiert nach THEMA_GROUPS; Zähler aus collectField */
+      const countOf = {}; items.forEach(it => countOf[it.name] = it.count);
+      const placed = new Set();
+      THEMA_GROUPS.forEach(([grpLabel, themen]) => {
+        const present = themen.filter(t => countOf[t]);
+        if (!present.length) return;
+        const og = document.createElement('optgroup');
+        og.label = grpLabel;
+        present.forEach(t => {
+          const o = document.createElement('option');
+          o.value = t; o.textContent = `${t} (${countOf[t]})`;
+          og.appendChild(o); placed.add(t);
+        });
+        dd.appendChild(og);
+      });
+      /* nicht gruppierte Themen (falls künftig welche dazukommen) ans Ende */
+      const rest = items.filter(it => !placed.has(it.name));
+      if (rest.length) {
+        const og = document.createElement('optgroup');
+        og.label = 'Weitere';
+        rest.forEach(it => {
+          const o = document.createElement('option');
+          o.value = it.name; o.textContent = `${it.name} (${it.count})`;
+          og.appendChild(o);
+        });
+        dd.appendChild(og);
+      }
+    } else {
+      items.forEach(item => {
+        const o = document.createElement('option');
+        o.value = item.name;
+        o.textContent = `${item.name} (${item.count})`;
+        dd.appendChild(o);
+      });
+    }
+    const cur = { disc:discFilter, mov:movFilter, pos:posFilter, thema:themaFilter }[filterMode];
+    dd.value = cur || '';
+  }
+
+  window._fillEpochDropdown = fillForMode;
+  fillForMode();
+}
+
+/* Dropdown-Auswahl je nach aktivem Modus */
+/* ── Tabellenansicht ── */
+function tableVisiblePhils() {
+  const seen = new Set();
+  return phils().filter(p => {
+    if (!p.slug || seen.has(p.slug)) return false;
+    seen.add(p.slug);
+    if (femaleOnly && !p.female) return false;
+    return !dimmed(p);   /* aktive Filter (Epoche/Disziplin/Strömung/Grundposition/Thema) + Suche */
   });
 }
+function tlBadges(arr, hlVal) {
+  if (!arr || !arr.length) return '<span style="opacity:.35">–</span>';
+  return arr.map(v => '<span class="tl-badge' + (hlVal && v === hlVal ? ' hl' : '') + '">' + v + '</span>').join('');
+}
+window._tblRows = [];
+window._tblOpenRow = function(i) {
+  const p = window._tblRows[i];
+  if (p) tlOpenModal(p);
+};
+window.tlTblSort = function(key) {
+  if (_tblSort.key === key) _tblSort.dir *= -1;
+  else { _tblSort.key = key; _tblSort.dir = 1; }
+  renderTable();
+};
+function renderTable() {
+  const body = document.getElementById('tl-table-body');
+  const meta = document.getElementById('tl-table-meta');
+  if (!body) return;
+  const rows = tableVisiblePhils();
+  /* Sortierung */
+  const k = _tblSort.key, d = _tblSort.dir;
+  rows.sort((a,b) => {
+    let va, vb;
+    if (k === 'name') { va = dispName(a).toLowerCase(); vb = dispName(b).toLowerCase(); }
+    else if (k === 'epoch') { va = a.epoch || ''; vb = b.epoch || ''; }
+    else { va = a.birth; vb = b.birth; }
+    return va < vb ? -d : va > vb ? d : 0;
+  });
+  /* Sortier-Pfeile */
+  ['name','birth','epoch'].forEach(kk => {
+    const el2 = document.getElementById('arr-' + kk);
+    if (el2) el2.textContent = (_tblSort.key === kk) ? (_tblSort.dir === 1 ? '▲' : '▼') : '';
+  });
+  window._tblRows = rows;
+  /* aktiver Filterwert je Achse → Badge hervorheben */
+  const hlDisc = filterMode==='disc' ? discFilter : '';
+  const hlMov  = filterMode==='mov'  ? movFilter  : '';
+  const hlPos  = filterMode==='pos'  ? posFilter  : '';
+  const hlThe  = filterMode==='thema'? themaFilter: '';
+  /* Meta-Zeile */
+  const fLabel = hlDisc || hlMov || hlPos || hlThe || (epoch || window._currentEra || '');
+  meta.textContent = rows.length + ' Philosoph' + (rows.length === 1 ? ':in' : ':innen')
+    + (fLabel ? ' · Filter: ' + fLabel : '') + (femaleOnly ? ' · nur Frauen' : '')
+    + (search ? ' · Suche: „' + search + '"' : '');
+  body.innerHTML = rows.map((p, i) =>
+    '<tr onclick="window._tblOpenRow(' + i + ')">'
+    + '<td class="tl-tbl-name"><span class="tl-tbl-dot" style="background:' + (p.color||'#888') + '"></span>' + dispName(p) + '</td>'
+    + '<td class="tl-tbl-life">' + lifeStr(p) + '</td>'
+    + '<td class="tl-tbl-epoch">' + (p.epoch ? '<span class="tl-epoch-pill" style="color:' + (p.color||'#999') + ';background:' + (p.color||'#999') + '1a;border-color:' + (p.color||'#999') + '55">' + p.epoch + '</span>' : '') + '</td>'
+    + '<td>' + tlBadges(p.disc, hlDisc) + '</td>'
+    + '<td>' + tlBadges(p.mov, hlMov) + '</td>'
+    + '<td class="opt-col">' + tlBadges(p.pos, hlPos) + '</td>'
+    + '<td class="opt-col">' + tlBadges(p.thema, hlThe) + '</td>'
+    + '</tr>'
+  ).join('');
+}
+/* CSV-Export der aktuellen Tabellenansicht (respektiert Filter/Sortierung) */
+window.tlTblExport = function() {
+  const rows = window._tblRows || [];
+  if (!rows.length) return;
+  const esc = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+  const head = ['Philosoph','Geboren','Gestorben','Epoche','Disziplinen','Strömungen','Grundpositionen','Themen'];
+  const lines = [head.map(esc).join(';')];
+  rows.forEach(p => lines.push([
+    dispName(p),
+    p.birth,
+    (p.death == null ? '' : p.death),
+    p.epoch || '',
+    (p.disc || []).join(', '),
+    (p.mov || []).join(', '),
+    (p.pos || []).join(', '),
+    (p.thema || []).join(', ')
+  ].map(esc).join(';')));
+  /* BOM + Semikolon → öffnet sauber in deutschem Excel/LibreOffice */
+  const blob = new Blob(['\ufeff' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  const fLabel = (filterMode==='disc'&&discFilter) || (filterMode==='mov'&&movFilter)
+    || (filterMode==='pos'&&posFilter) || (filterMode==='thema'&&themaFilter) || epoch || window._currentEra || '';
+  const suffix = fLabel ? '-' + fLabel.toLowerCase().replace(/[^a-z0-9äöüß]+/gi,'-') : '';
+  a.href = URL.createObjectURL(blob);
+  a.download = 'philosophen' + suffix + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 100);
+};
 
-/* ── Drag scroll ── */
+/* ── Epochen-Farblegende (C13) ── */
+function buildEpochLegend() {
+  const grid = document.getElementById('epoch-legend-grid');
+  if (!grid || typeof EPOCHS_META_V2 === 'undefined') return;
+  grid.innerHTML = EPOCHS_META_V2.map(e =>
+    '<div class="epoch-leg-item" data-epoch="' + e.name + '" onclick="legendPickEpoch(\'' + e.name.replace(/'/g,"\\'") + '\')">'
+    + '<span class="epoch-leg-swatch" style="background:' + e.color + '"></span>'
+    + e.name + '</div>'
+  ).join('');
+  updateEpochLegendActive();
+}
+function updateEpochLegendActive() {
+  document.querySelectorAll('.epoch-leg-item').forEach(it => {
+    it.classList.toggle('active', it.getAttribute('data-epoch') === epoch);
+  });
+}
+window.toggleEpochLegend = function() {
+  const el2 = document.getElementById('epoch-legend');
+  const hint = document.getElementById('epoch-legend-hint');
+  if (!el2) return;
+  el2.classList.toggle('collapsed');
+  if (hint) hint.textContent = el2.classList.contains('collapsed') ? '— anzeigen' : '— Klick filtert nach Epoche';
+};
+window.legendPickEpoch = function(name) {
+  /* in den Epochen-Modus wechseln und nach dieser Epoche filtern (Toggle) */
+  filterMode = 'epoch';
+  document.querySelectorAll('.fm-btn').forEach(b => b.classList.remove('active'));
+  const epBtn = document.querySelector('.fm-btn[data-mode="epoch"]');
+  if (epBtn) epBtn.classList.add('active');
+  discFilter = ''; movFilter = ''; posFilter = ''; themaFilter = ''; window._currentEra = '';
+  epoch = (epoch === name) ? '' : name;   /* erneuter Klick hebt Filter auf */
+  if (window._fillEpochDropdown) window._fillEpochDropdown();
+  render();
+  updateEpochLegendActive();
+};
+
+window.tlSetView = function(mode) {
+  viewMode = mode;
+  const outer = document.getElementById('tl-outer');
+  const twrap = document.getElementById('tl-table-wrap');
+  const legend = document.querySelector('.tier-legend');
+  document.getElementById('vs-timeline')?.classList.toggle('active', mode === 'timeline');
+  document.getElementById('vs-table')?.classList.toggle('active', mode === 'table');
+  if (mode === 'table') {
+    if (outer) outer.style.display = 'none';
+    if (legend) legend.style.display = 'none';
+    if (twrap) twrap.classList.add('active');
+    renderTable();
+  } else {
+    if (outer) outer.style.display = '';
+    if (legend) legend.style.display = '';
+    if (twrap) twrap.classList.remove('active');
+  }
+};
+
+window.tlSetFilter = function(value) {
+  if (filterMode === 'epoch') {
+    if (!value) { epoch = ''; window._currentEra = ''; }
+    else if (value.indexOf('era:') === 0) { window._currentEra = value.slice(4); epoch = ''; }
+    else { epoch = value; window._currentEra = ''; }
+  }
+  if (window.updateEpochLegendActive) updateEpochLegendActive(); else if (filterMode === 'disc') {
+    discFilter = value || '';
+  } else if (filterMode === 'mov') {
+    movFilter = value || '';
+  } else if (filterMode === 'pos') {
+    posFilter = value || '';
+  } else if (filterMode === 'thema') {
+    themaFilter = value || '';
+  }
+  render();
+};
+
+/* Filter-Modus umschalten (Epoche / Disziplin / Strömung) */
+window.tlSetMode = function(mode, btn) {
+  filterMode = mode;
+  document.querySelectorAll('.fm-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  /* andere Filter zurücksetzen, damit sich Modi nicht überlagern */
+  epoch = ''; window._currentEra = ''; discFilter = ''; movFilter = ''; posFilter = ''; themaFilter = '';
+  if (window._fillEpochDropdown) window._fillEpochDropdown();
+  render();
+  if (window.updateEpochLegendActive) updateEpochLegendActive();
+};
+
+/* ════════ Drag scroll ════════ */
 function setupDrag() {
   const w = document.getElementById('tl-wrap');
   if (!w) return;
-  let dn=false, sx, sl;
-  w.addEventListener('mousedown', e=>{dn=true; sx=e.pageX-w.offsetLeft; sl=w.scrollLeft;});
-  w.addEventListener('mouseleave',()=>{dn=false;});
+  let dn=false, sx, sl, moved=false;
+  /* Maus verlässt die Timeline komplett → Hover-Kette auflösen, Filter-Ansicht zurück */
+  w.addEventListener('mouseleave', () => {
+    if (_unfocusTimer) { clearTimeout(_unfocusTimer); _unfocusTimer = null; }
+    _lastTapName = null;
+    if (_chainSet.size || focusName) {
+      _chainSet = new Set();
+      _connectedToFocus = new Set();
+      focusName = null;
+      hideHoverCard();
+      requestAnimationFrame(() => render());
+    }
+  });
+  /* Touch (C11): Tap auf den Timeline-HINTERGRUND löst die Kette auf
+     (Äquivalent zum Verlassen der Timeline mit der Maus) */
+  w.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    _tchX = t.clientX; _tchY = t.clientY; _tchT = Date.now();
+  }, { passive: true });
+  w.addEventListener('touchend', (e) => {
+    const t = e.changedTouches[0];
+    const movedPx = Math.hypot(t.clientX - _tchX, t.clientY - _tchY);
+    if (movedPx > 12 || Date.now() - _tchT > 600) return;   /* Wischen = Scrollen, kein Tap */
+    const onCard = e.target && e.target.closest && e.target.closest('.phil-node-group');
+    if (onCard) return;   /* Karten-Taps behandelt der Karten-Handler */
+    _lastTapName = null;
+    if (_chainSet.size || focusName) {
+      _chainSet = new Set();
+      _connectedToFocus = new Set();
+      focusName = null;
+      hideHoverCard();
+      requestAnimationFrame(() => render());
+    }
+  }, { passive: true });
+  w.addEventListener('mousedown', e=>{dn=true; moved=false; sx=e.pageX-w.offsetLeft; sl=w.scrollLeft;});
+  w.addEventListener('mouseleave',()=>{dn=false; hideHoverCard(); setFocus(null);});
   w.addEventListener('mouseup',  ()=>{dn=false;});
-  w.addEventListener('mousemove', e=>{if(!dn)return; e.preventDefault(); w.scrollLeft=sl-(e.pageX-w.offsetLeft-sx);});
+  w.addEventListener('mousemove', e=>{if(!dn)return; e.preventDefault(); moved=true; w.scrollLeft=sl-(e.pageX-w.offsetLeft-sx); hideHoverCard();});
   let ts, tsl;
   w.addEventListener('touchstart', e=>{ts=e.touches[0].pageX-w.offsetLeft; tsl=w.scrollLeft;},{passive:true});
   w.addEventListener('touchmove',  e=>{w.scrollLeft=tsl-(e.touches[0].pageX-w.offsetLeft-ts);},{passive:true});
+
+  /* ── Mausrad-Zoom: zoomt zum Cursor hin ── */
+  let wheelRaf = null;
+  let pendingFactor = 1;
+  let pendingClientX = 0;
+  w.addEventListener('wheel', e => {
+    /* Only zoom on vertical wheel; let shift+wheel scroll horizontally */
+    if (e.shiftKey) return;  /* shift+wheel = native horizontal scroll */
+    e.preventDefault();
+    hideHoverCard();
+    /* Accumulate factor; apply on next animation frame for smoothness */
+    const step = e.deltaY < 0 ? 1.12 : 1/1.12;
+    pendingFactor *= step;
+    pendingClientX = e.clientX;
+    if (wheelRaf) return;
+    wheelRaf = requestAnimationFrame(() => {
+      applyWheelZoom(pendingFactor, pendingClientX);
+      pendingFactor = 1;
+      wheelRaf = null;
+    });
+  }, { passive:false });
 }
 
-/* ── Modal ── */
+/* Zoom by factor f, keeping the point under the cursor stationary */
+function applyWheelZoom(f, clientX) {
+  const w = document.getElementById('tl-wrap');
+  if (!w) return;
+  const prevZoom = zoom;
+  const newZoom = Math.max(0.28, Math.min(8.0, zoom * f));
+  if (newZoom === prevZoom) return;
+
+  /* The x-coordinate (in SVG space) currently under the cursor */
+  const rect = w.getBoundingClientRect();
+  const cursorInWrap = clientX - rect.left;          /* px from left of viewport */
+  const svgXUnderCursor = w.scrollLeft + cursorInWrap; /* px in old SVG space */
+  const ratio = svgXUnderCursor / Math.max(1, svgW()); /* fractional position */
+
+  markZooming();
+  zoom = newZoom;
+  document.getElementById('zoom-lbl').textContent = '×' + zoom.toFixed(1);
+  render();
+
+  /* Cursor-Punkt SOFORT (synchron) wiederherstellen — kein Frame mit falscher Position */
+  const newSvgX = ratio * svgW();
+  w.scrollLeft = newSvgX - cursorInWrap;
+}
+
+/* ════════ Modal ════════ */
 window.tlOpenModal = function(p) {
   const modal = document.getElementById('pmodal');
   if (!modal) return;
-  document.getElementById('pm-epoch').innerHTML = `<span style="color:${p.color}">${p.epoch}</span><span class="tier-badge">Tier ${p.tier}</span>`;
-  document.getElementById('pm-name').textContent  = p.name;
-  const b = p.birth<0 ? Math.abs(p.birth)+' v.&thinsp;Chr.' : p.birth;
-  const d = p.death<=0 ? 'heute' : p.death<0 ? Math.abs(p.death)+' v.&thinsp;Chr.' : p.death;
-  document.getElementById('pm-dates').innerHTML = `${b} &ndash; ${d}`;
-  document.getElementById('pm-desc').textContent  = p.desc;
-  document.getElementById('pm-ideas').innerHTML   = (p.ideas||[]).map(i=>`<li>${i}</li>`).join('');
+  const fav = isFav(p);
+  const slug = favSlug(p);
+  
+  /* Portrait — <picture> with avif→webp→jpg, all from zitate/ */
+  const portraitWrap = document.getElementById('pm-portrait-wrap');
+  const pBase = portraitBase(p);
+  const initial = p.name.replace(/^(Ps\.-|al-)/i,'').charAt(0);
+  if (pBase) {
+    portraitWrap.innerHTML = `<picture>`
+      + `<source srcset="${pBase}.avif" type="image/avif">`
+      + `<source srcset="${pBase}.webp" type="image/webp">`
+      + `<img src="${pBase}.jpg" alt="${dispName(p)}" onerror="this.closest('picture').outerHTML='<div class=\\'pmodal-portrait-fallback\\' style=\\'color:${p.color}\\'>${initial}</div>'">`
+      + `</picture>`;
+  } else {
+    portraitWrap.innerHTML = `<div class="pmodal-portrait-fallback" style="color:${p.color}">${initial}</div>`;
+  }
+  portraitWrap.style.borderColor = p.color;
+  
+  document.getElementById('pm-epoch').innerHTML = `<span style="color:${p.color}">${p.epoch}</span>`
+    + `<span class="tier-badge" style="background:${(TIER_RING[p.tier]||'#7a7f87')}22;color:${TIER_RING[p.tier]||'#7a7f87'};border:1px solid ${TIER_RING[p.tier]||'#7a7f87'}55">`
+    + `● Tier ${p.tier} · ${tierName(p)}</span>`
+    + `${fav?'<span class="fav-badge">★ FAVORIT</span>':''}`;
+  document.getElementById('pm-name').textContent = dispName(p);
+  document.getElementById('pm-dates').innerHTML = lifeStr(p);
+  document.getElementById('pm-desc').textContent = p.desc;
+  document.getElementById('pm-ideas').innerHTML = (p.ideas||[]).map(i=>`<li>${i}</li>`).join('');
+
+  /* Hauptwerke (falls vorhanden) */
+  const worksEl = document.getElementById('pm-works');
+  if (p.works && p.works.length) {
+    worksEl.innerHTML = '<span class="pmodal-works-lbl">Hauptwerke</span><div class="pmodal-works">'
+      + p.works.map(w => `<div class="pmodal-work"><span class="pmodal-work-icon">\u25c8</span>${w}</div>`).join('')
+      + '</div>';
+  } else {
+    worksEl.innerHTML = '';
+  }
 
   /* influence section */
   const out = (p.influences||[]);
@@ -440,7 +1749,7 @@ window.tlOpenModal = function(p) {
                      .map(q=>({from:q.name, type:q.influences.find(i=>i.to===p.name).type}));
   let html = '';
   if (out.length) {
-    html += `<span class="pmodal-infl-lbl">Hat beeinflusst:</span><div class="pmodal-chips">`;
+    html += `<span class="pmodal-infl-lbl">Hat beeinflusst</span><div class="pmodal-chips">`;
     out.forEach(i=>{
       const c=INFL_COL[i.type];
       const safeN = i.to.replace(/'/g,"\\'");
@@ -452,7 +1761,7 @@ window.tlOpenModal = function(p) {
     html += '</div>';
   }
   if (inc.length) {
-    html += `<span class="pmodal-infl-lbl">Wurde beeinflusst durch:</span><div class="pmodal-chips">`;
+    html += `<span class="pmodal-infl-lbl">Wurde beeinflusst durch</span><div class="pmodal-chips">`;
     inc.forEach(i=>{
       const c=INFL_COL[i.type];
       const safeN = i.from.replace(/'/g,"\\'");
@@ -465,22 +1774,27 @@ window.tlOpenModal = function(p) {
   }
   document.getElementById('pm-infl').innerHTML = html;
   modal.classList.add('open');
+  hideHoverCard();
 };
 window.tlCloseModal = function() { document.getElementById('pmodal')?.classList.remove('open'); };
-window.tlByName     = byName;
+window.tlByName = byName;
 
-/* ── Responsive height ── */
+/* ════════ Responsive height ════════ */
 function setH() {
-  const h = Math.max(400, window.innerHeight - 290);
+  /* Feste Viewport-Höhe zwischen Filtern und Footer (zoom-unabhängig). */
+  const h = Math.max(460, window.innerHeight - 290);
   const w = document.getElementById('tl-wrap');
   const o = document.getElementById('tl-outer');
   if (w) w.style.height = h+'px';
   if (o) o.style.height = h+'px';
+  /* SVG-Höhe = Container-Höhe; Achse exakt mittig. */
+  SVG_H  = h;
+  AXIS_Y = Math.round(h / 2);
 }
 
-/* ── Init ── */
+/* ════════ Init ════════ */
 function init() {
-  // rAF ensures DOM is laid out so height calculations work
+  detectImageFormat();
   requestAnimationFrame(() => {
     setH();
     window.addEventListener('resize', ()=>{ setH(); render(); });
@@ -489,6 +1803,7 @@ function init() {
 
     buildInflToggles();
     buildEpochFilter();
+    buildEpochLegend();
     setupDrag();
 
     const tryRender = (attempts) => {
@@ -506,7 +1821,6 @@ function init() {
   });
 }
 
-// Always call init directly — this script runs after innerHTML injection
 init();
 
 })();

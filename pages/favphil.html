@@ -1,8 +1,305 @@
+<style>
+/* ── Banner: Porträt links (vollständig sichtbar), Info rechts ── */
+.favphil-banner{
+  position:relative;height:340px;overflow:hidden;
+  background:linear-gradient(135deg,var(--bg2) 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+}
+/* Soft glow background that picks up the active accent color */
+.fpb-bg-glow{
+  position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse 60% 80% at 30% 50%,
+    var(--fpb-color,rgba(94,67,179,.15)) 0%,transparent 70%);
+  transition:background .9s ease;
+  pointer-events:none;
+}
+.fpb-slide{
+  position:absolute;inset:0;z-index:1;
+  display:grid;grid-template-columns:340px 1fr;
+  gap:2.5rem;align-items:center;
+  padding:2rem 3.5rem 2rem 2.5rem;
+  opacity:0;transition:opacity .9s ease-in-out;
+}
+.fpb-slide.active{opacity:1;z-index:2;}
+/* beim allerersten Aufbau keine Einblend-Animation (verhindert Flackern beim Seitenwechsel) */
+.favphil-banner.no-anim .fpb-slide{transition:none;}
+
+/* Portrait — fully visible, hochkant */
+.fpb-portrait{
+  width:240px;height:300px;position:relative;
+  border-radius:8px;overflow:hidden;
+  background:var(--surface);
+  box-shadow:0 12px 40px rgba(0,0,0,.25),
+             0 0 0 1px var(--border);
+  margin:0 auto;
+}
+.fpb-portrait img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 18%;
+  display:block;
+  filter:contrast(1.05) saturate(.9);
+}
+.fpb-portrait-mono{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--surface),var(--bg2));
+  font-family:var(--fh);font-size:6rem;font-weight:800;
+  opacity:.4;color:var(--accent);
+}
+
+/* Info column right */
+.fpb-info{
+  display:flex;flex-direction:column;justify-content:center;
+  min-width:0;
+}
+.fpb-era-badge{
+  display:inline-block;align-self:flex-start;
+  font-family:var(--fm);font-size:.66rem;letter-spacing:.16em;
+  text-transform:uppercase;font-weight:600;
+  padding:.3rem .75rem;border-radius:12px;
+  color:#fff;margin-bottom:.85rem;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.fpb-name{
+  font-family:var(--fh);font-size:clamp(1.8rem,3.4vw,2.8rem);
+  font-weight:800;letter-spacing:-.025em;line-height:1.05;
+  color:var(--text);margin-bottom:.3rem;
+}
+.fpb-dates{
+  font-family:var(--fm);font-size:.85rem;letter-spacing:.04em;
+  color:var(--text3);margin-bottom:1.1rem;
+}
+.fpb-quote{
+  font-family:var(--fh);font-style:italic;
+  font-size:1rem;line-height:1.6;color:var(--text2);
+  padding-left:1rem;border-left:3px solid var(--fpb-color,var(--accent));
+  max-width:540px;
+}
+
+/* Controls — discrete */
+.fpb-controls{
+  position:absolute;top:1.1rem;right:1.4rem;z-index:5;
+  display:flex;gap:.4rem;align-items:center;
+}
+.fpb-btn{
+  background:var(--bg);backdrop-filter:blur(8px);
+  border:1px solid var(--border);color:var(--text2);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;
+}
+.fpb-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+.fpb-dots{
+  position:absolute;left:0;right:0;bottom:.7rem;z-index:5;
+  display:flex;gap:.3rem;justify-content:center;padding:0 1rem;
+  flex-wrap:wrap;
+}
+.fpb-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--border2);
+  transition:all .25s;cursor:pointer;
+}
+.fpb-dot.active{background:var(--accent);width:18px;border-radius:3px;}
+
+@media(max-width:780px){
+  .favphil-banner{height:auto;min-height:380px;}
+  .fpb-slide{
+    grid-template-columns:1fr;grid-template-rows:auto auto;
+    padding:1.5rem 1.5rem 2rem;gap:1.2rem;
+    text-align:center;
+  }
+  .fpb-portrait{width:180px;height:230px;}
+  .fpb-info{align-items:center;}
+  .fpb-quote{border-left:none;padding-left:0;padding-top:.7rem;border-top:1px solid var(--border);text-align:center;}
+}
+
+/* ── Bild-Positions-Overrides pro Person ──────────────────────── */
+/* Kierkegaard: Bild liegt zu tief → weiter nach oben (kleinerer Y-Wert) */
+.fpb-portrait img[alt*="Kierkegaard"]{object-position:center 8% !important;}
+/* Derrida: leicht herausgezoomt (contain statt cover) */
+.fpb-portrait img[alt*="Derrida"]{object-fit:contain !important;background:var(--surface);}
+
+/* Auch für die Karten unten */
+.favphil-portrait img[alt*="Kierkegaard"]{object-position:center 10% !important;}
+.favphil-portrait img[alt*="Derrida"]{object-fit:contain !important;background:var(--surface);}
+</style>
+
+<!-- ── Header (konsistent mit übrigen Seiten) ── -->
+<div class="page-hero">
+  <div class="page-hero-glow"></div>
+  <p class="hero-tag">Persönlicher Kanon</p>
+  <h1 class="page-title">Lieblingsphilosophen<span>.</span></h1>
+  <p class="page-desc">Die Denker, die mich am meisten geprägt haben — von der Vorsokratik bis zur Gegenwart.</p>
+</div>
+
+<!-- ── Banner mit rotierendem Einzelporträt ── -->
+<div class="favphil-banner" id="favphil-banner">
+  <div class="fpb-bg-glow" id="fpb-bg-glow"></div>
+  <div class="fpb-controls">
+    <button class="fpb-btn" onclick="fpbPrev()" title="Zurück">‹</button>
+    <button class="fpb-btn" onclick="fpbPause()" id="fpb-pause" title="Pausieren">⏸</button>
+    <button class="fpb-btn" onclick="fpbNext()" title="Weiter">›</button>
+  </div>
+  <div class="fpb-dots" id="fpb-dots"></div>
+</div>
+<script>
+window.buildFavphilBanner = function(){
+  const tiles = [
+    {slug:'parmenides',name:'Parmenides',era:'Vorsokratik',dates:'ca. 520-460 v. Chr.',color:'#f7971e',quotes:['Denn dasselbe ist Denken und Sein.','Es ist; nicht-sein aber ist unmöglich.','Du wirst das Nichtseiende weder erkennen noch aussprechen können.']},
+    {slug:'anaximander',name:'Anaximander',era:'Vorsokratik',dates:'ca. 610-546 v. Chr.',color:'#f7971e',quotes:['Woraus aber das Werden ist den seienden Dingen, in das hinein geschieht auch ihr Vergehen nach der Notwendigkeit.','Der Urgrund aller Dinge ist das Apeiron — das Unbegrenzte.','Sie zahlen einander Strafe und Buße für ihre Ungerechtigkeit, gemäß der Ordnung der Zeit.']},
+    {slug:'heraklit',name:'Heraklit',era:'Vorsokratik',dates:'ca. 540-480 v. Chr.',color:'#f7971e',quotes:['Alles fließt — und niemand steigt zweimal in denselben Fluss.','Der Krieg ist der Vater aller Dinge.','Den Wachenden ist eine einzige gemeinsame Welt; die Schlafenden aber wenden sich ein jeder in seine eigene.']},
+    {slug:'platon',name:'Platon',era:'Klassische Antike',dates:'428-348 v. Chr.',color:'#f7971e',quotes:['Das ungeprüfte Leben ist nicht wert, gelebt zu werden.','Die Idee des Guten steht jenseits des Seins an Würde und Macht.','Die Zeit ist ein bewegliches Abbild der im Einen verharrenden Ewigkeit.']},
+    {slug:'aristoteles',name:'Aristoteles',era:'Klassische Antike',dates:'384-322 v. Chr.',color:'#f7971e',quotes:['In allen natürlichen Dingen ist etwas Erstaunliches.',"Die Zeit ist die Maßzahl der Bewegung hinsichtlich des ‚davor' und ‚danach'.",'Alle Menschen streben von Natur aus nach Wissen.']},
+    {slug:'plotin',name:'Plotin',era:'Neuplatonismus',dates:'204-270 n. Chr.',color:'#ff8060',quotes:['Alles, was ist, ist durch das Eine.','Das Schöne ist das Glänzen der ewigen Ideen durch die Materie.','Niemand findet das Eine, der nicht aufhört, es zu suchen.']},
+    {slug:'eriugena',name:'Johannes Scottus Eriugena',era:'Karolingische Zeit',dates:'ca. 815-877',color:'#ff8060',quotes:['Gott ist das Wesen aller Dinge, jenseits aller Wesen, das Nichts wegen seiner Überfülle.','Niemand betritt den Himmel, außer durch Philosophie.','Die Autorität ist aus der wahren Vernunft hervorgegangen, nicht die Vernunft aus der Autorität.']},
+    {slug:'augustinus',name:'Augustinus',era:'Spätantike',dates:'354-430',color:'#ff6584',quotes:['Was ist also die Zeit? Wenn mich niemand darnach fragt, weiß ich es, wenn ich es aber einem, der mich fragt, erklären sollte, weiß ich es nicht.','Was tat Gott, bevor er Himmel und Erde schuf? [...] Er bereitet denen, die sich vermessen, jene hohen Geheimnisse zu ergründen, Höllen.','Liebe — und tu, was du willst.']},
+    {slug:'boehme',name:'Jakob Böhme',era:'Mystik',dates:'1575-1624',color:'#d090f0',quotes:['Das Nichts hungert nach dem Etwas.','Der Ungrund ist ein ewig Nichts und machet aber einen ewigen Anfang, als eine Sucht; Dann das Nichts ist eine Sucht nach Etwas','Das Nichts will nicht ein Nichts seyn und kann nicht ein Nichts seyn.']},
+    {slug:'pascal',name:'Blaise Pascal',era:'Frühe Neuzeit',dates:'1623-1662',color:'#e85878',quotes:['Der Mensch ist nur ein Schilfrohr, das schwächste der Natur; aber er ist ein denkendes Schilfrohr.','Das Herz hat seine Gründe, die der Verstand nicht kennt.','Das ewige Schweigen dieser unendlichen Räume macht mir Angst.']},
+    {slug:'malebranche',name:'Nicolas Malebranche',era:'Rationalismus',dates:'1638-1715',color:'#f85888',quotes:['Wir sehen alle Dinge in Gott.','Aufmerksamkeit ist das natürliche Gebet der Seele.','Die Ordnung ist das unwandelbare Gesetz der Geister.']},
+    {slug:'kant',name:'Immanuel Kant',era:'Aufklärung',dates:'1724-1804',color:'#e8c040',quotes:['Jede Wissenschaft ist so weit Wissenschaft, wie Mathematik in ihr ist.', 'Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie allgemeines Gesetz werde.','Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden.','Zwei Dinge erfüllen das Gemüt mit immer neuer Bewunderung: der bestirnte Himmel über mir und das moralische Gesetz in mir.']},
+    {slug:'schelling',name:'F. W. J. Schelling',era:'Dt. Idealismus',dates:'1775-1854',color:'#c8a020',quotes:['Nur wer Freiheit gekostet hat, kann das Verlangen empfinden, ihr alles analog zu machen.','Der Anfang ist nur als Anfang vom Ende her.','Das Wollen ist Urseyn.']},
+    {slug:'hegel',name:'G. W. F. Hegel',era:'Dt. Idealismus',dates:'1770-1831',color:'#d0a830',quotes:['Das Wahre ist das Ganze.','Die Eule der Minerva beginnt erst mit der einbrechenden Dämmerung ihren Flug.','Was vernünftig ist, das ist wirklich; und was wirklich ist, das ist vernünftig.']},
+    {slug:'hoelderlin',name:'Friedrich Hölderlin',era:'Lyrik / Idealismus',dates:'1770-1843',color:'#b89040',quotes:['Wo aber Gefahr ist, wächst das Rettende auch.','Voll Verdienst, doch dichterisch, wohnet der Mensch auf dieser Erde.','Was bleibet aber, stiften die Dichter.']},
+    {slug:'heidegger',name:'Martin Heidegger',era:'Phänomenologie',dates:'1889-1976',color:'#5b80e8',quotes:['Das Dasein ist ein Seiendes, dem es in seinem Sein um dieses Sein selbst geht.','Die Sprache ist das Haus des Seins.','Nur ein Gott kann uns noch retten.']},
+    {slug:'levinas',name:'Emmanuel Levinas',era:'Phänomenologie / Ethik',dates:'1906-1995',color:'#7b60d8',quotes:['Das Antlitz des Anderen ist der Ort, an dem die Unendlichkeit in die Endlichkeit einbricht.','Die Ethik ist die erste Philosophie.','Das Antlitz spricht: Du sollst nicht töten.']},
+    {slug:'tengelyi',name:'László Tengelyi',era:'Phänomenologie',dates:'1954-2014',color:'#6890c0',quotes:['Vom platonischen Sokrates stammt der Gedanke, dass das Leben erst dann wert ist, gelebt zu werden, wenn es untersucht wird.','Das Spezifische der Philosophie besteht für mich darin, das Leben innerhalb der Welt zu lokalisieren und im Gesamtzusammenhang der Welt zu betrachten.','Als Gesamtprojekt sollte sich die Phänomenologie m. E. als ein Weltentwurf verstehen.']},
+    {slug:'leibniz',name:'Gottfried W. Leibniz',era:'Rationalismus',dates:'1646-1716',color:'#e87060',quotes:['Diese Welt ist die beste aller möglichen Welten.','Nichts ist im Verstand, was nicht zuvor in den Sinnen war — außer der Verstand selbst.','Die Gegenwart ist schwanger mit der Zukunft.']},
+    {slug:'jacobi',name:'F. H. Jacobi',era:'Glaubensphilosophie',dates:'1743-1819',color:'#e89060',quotes:['Mit dem Eintreten der Zeit verwandeln sich die Begriffe von Grund und Folge in die Begriffe von Ursache und Wirkung.','Diesen Fehler beging also Spinoza nicht; aber was er eigentlich zu Stande bringen wollte: eine natürliche Erklärung des Daseyns erdHcher und successiver Dinge, konnte durch seine neue Vorstellungsart so wenig, als durch irgend eine andre erreicht werden.','Denn die Folge, welche in den mathematischen gleichnissen vorgestellt wird, ist keine objektive und wirkliche, sondern eine subjektive und bloß idealische, die auch nicht einmal idealisch vorhanden sein könnte, wenn ihr nicht eine wirkliche Sukzession in dem Subjekt, welche sie in Gedanken erzeugt, zu Grunde läge, und dadurch das Stehende in ein Fließendes verwandelt würde.']},
+    {slug:'kierkegaard',name:'Søren Kierkegaard',era:'Existenzphilosophie',dates:'1813-1855',color:'#5070b0',quotes:['Ich stecke den Finger ins Dasein - es riecht nach nichts.','Angst ist der Schwindel der Freiheit.','Das Leben kann nur rückwärts verstanden, aber muss vorwärts gelebt werden.']},
+    {slug:'spinoza',name:'Baruch de Spinoza',era:'Rationalismus',dates:'1632-1677',color:'#f85888',quotes:['Deus sive Natura - Gott oder die Natur.','Weine nicht, lache nicht, verstehe.','Frieden ist nicht die Abwesenheit von Krieg, sondern eine Tugend, die aus seelischer Stärke entspringt.']},
+    {slug:'schopenhauer',name:'Arthur Schopenhauer',era:'Postidealismus',dates:'1788-1860',color:'#a05050',quotes:['Das Leben ist eine missliche Sache. Ich habe mir vorgesetzt, es damit hinzubringen, über dasselbe nachzudenken.','Das Leben pendelt wie ein Pendel hin und her zwischen Schmerz und Langeweile.','Jeder hält die Grenzen seines eigenen Gesichtsfeldes für die Grenzen der Welt.']},
+    {slug:'nietzsche',name:'Friedrich Nietzsche',era:'19. Jh.',dates:'1844-1900',color:'#fb923c',quotes:['Gott ist tot. Und wir haben ihn getötet.','Was mich nicht umbringt, macht mich stärker.','Wer mit Ungeheuern kämpft, mag zusehen, dass er nicht dabei zum Ungeheuer wird.']},
+    {slug:'freud',name:'Sigmund Freud',era:'Psychoanalyse',dates:'1856-1939',color:'#7060b0',quotes:['Das Ich ist nicht Herr im eigenen Haus.','Wo Es war, soll Ich werden.','Unsere Kultur ist ganz allgemein auf der Unterdrückung von Trieben aufgebaut.']},
+    {slug:'cioran',name:'Emil Cioran',era:'20. Jh.',dates:'1911-1995',color:'#606080',quotes:['Ein Buch ist ein aufgeschobener Selbstmord.','Es genügt nicht, geboren zu werden — man muss auch sterben.','Ich würde eine Welt lieben, in der es gar kein Kriterium gäbe, keine Form und keinerlei Prinzip, eine Welt der absoluten Unbestimmtheit. Denn in unserer Welt sind alle Kriterien, Formen und Prinzipien schal.', 'Ich weiß überhaupt nicht, weshalb wir hienieden etwas tun, warum wir Freude und Bestrebungen, Hoffnungen und Träume haben müssen. […] Aber was gibt es in dieser Welt schon zu gewinnen? […] Es gibt keinerlei Argumente für das Leben.', 'Es leuchtet ein, dass Gott eine Lösung war und dass man nie wieder eine ebenso befriedigende finden wird.']},
+    {slug:'derrida',name:'Jacques Derrida',era:'Poststrukturalismus',dates:'1930-2004',color:'#7060b0',quotes:['Es gibt kein Außerhalb des Textes.','Die Dekonstruktion findet statt, ich werde nichts machen.','Die Spur ist die Wiederkehr des Anderen im Selben.']},
+    {slug:'hume',name:'David Hume',era:'Empirismus',dates:'1711-1776',color:'#50b080',quotes:['Aus dem Sein folgt kein Sollen.','Die Vernunft ist Sklavin der Leidenschaften.','Gewohnheit ist die große Führerin des menschlichen Lebens.']},
+    {slug:'n-hartmann',name:'Nicolai Hartmann',era:'Ontologie',dates:'1882-1950',color:'#6890c0',quotes:['Die Welt ist ein Schichtenbau realer Seinsweisen.','Das Reale ist das schwerere Sein gegenüber dem Ideellen.','Aporetik ist die unvollendete Methode der Philosophie.']},
+    {slug:'wjames',name:'William James',era:'Pragmatismus',dates:'1842-1910',color:'#80b070',quotes:['Truth happens to an idea.','Glauben heißt, das zu tun, was wir wollen, vorausgesetzt, dass wir die Folgen tragen wollen.','Das größte Werkzeug gegen Stress ist unsere Fähigkeit, einen Gedanken einem anderen vorzuziehen.']},
+    {slug:'scholem',name:'Gershom Scholem',era:'Religionsphilosophie',dates:'1897-1982',color:'#a08060',quotes:['Mystik ist die Stimme dessen, was in der Religion verstummt ist.','Jeder bedeutende Gedanke birgt in sich einen Widerspruch.','Es gibt eine Wahrheit, aber sie ist nicht eine Aussage.']},
+  ];
+
+  // Shuffle for random initial order
+  for(let i=tiles.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [tiles[i],tiles[j]]=[tiles[j],tiles[i]];
+  }
+
+  const wrap = document.getElementById('favphil-banner');
+  const glow = document.getElementById('fpb-bg-glow');
+  if(!wrap) return;
+  
+  /* Hide wrap during construction to prevent flash */
+  wrap.style.visibility = 'hidden';
+  wrap.classList.add('no-anim');   /* erstes Slide ohne Einblend-Transition zeigen */
+
+  // Idempotent: remove any existing slides if function was called before
+  wrap.querySelectorAll('.fpb-slide').forEach(function(s){ s.remove(); });
+  const oldDots = document.getElementById('fpb-dots');
+  if(oldDots) oldDots.innerHTML = '';
+
+  // Create slides
+  const slides = tiles.map(function(t,i){
+    const s = document.createElement('div');
+    s.className = 'fpb-slide' + (i===0?' active':'');
+    const _tslug = (window.resolveFavSlug ? window.resolveFavSlug(t.slug) : t.slug);
+    const _loading = (i===0 ? 'eager' : 'lazy');   /* erstes Bild sofort → kein Flackern beim Seitenwechsel */
+    s.innerHTML =
+      '<div class="fpb-portrait">'
+        +'<picture>'
+        +'<source srcset="assets/images/philosophen/'+_tslug+'.avif" type="image/avif">'
+        +'<source srcset="assets/images/philosophen/'+_tslug+'.webp" type="image/webp">'
+        +'<img src="assets/images/philosophen/'+_tslug+'.jpg" alt="'+t.name+'" loading="'+_loading+'" '
+        +'onerror="this.closest(\'picture\').style.display=\'none\';this.closest(\'picture\').nextElementSibling.style.display=\'flex\';">'
+        +'</picture>'
+        +'<div class="fpb-portrait-mono" style="display:none;color:'+t.color+';">'+t.name.split(' ').pop().charAt(0)+'</div>'
+      +'</div>'
+      +'<div class="fpb-info">'
+        +'<span class="fpb-era-badge" style="background:'+t.color+';">'+t.era+'</span>'
+        +'<div class="fpb-name">'+t.name+'</div>'
+        +'<div class="fpb-dates">'+t.dates+'</div>'
+        +'<div class="fpb-quote" style="--fpb-color:'+t.color+';">\u201E'+(t.quotes?t.quotes[Math.floor(Math.random()*t.quotes.length)]:t.quote)+'\u201C</div>'
+      +'</div>';
+    wrap.appendChild(s);
+    return s;
+  });
+
+  // Dots
+  const dotsEl = document.getElementById('fpb-dots');
+  tiles.forEach(function(_,i){
+    const d = document.createElement('div');
+    d.className = 'fpb-dot' + (i===0?' active':'');
+    d.onclick = function(){ goTo(i); };
+    dotsEl.appendChild(d);
+  });
+
+  let idx = 0, paused = false, timer = null;
+  const INTERVAL = 6000;
+
+  function hexToRgba(hex,a){
+    const m=hex.replace('#','');
+    const r=parseInt(m.substring(0,2),16),g=parseInt(m.substring(2,4),16),b=parseInt(m.substring(4,6),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
+  }
+  function applyGlow(color){
+    glow.style.background='radial-gradient(ellipse 60% 80% at 30% 50%,'+hexToRgba(color,.18)+' 0%,transparent 70%)';
+  }
+  function show(i){
+    slides[idx].classList.remove('active');
+    dotsEl.children[idx].classList.remove('active');
+    idx = (i + slides.length) % slides.length;
+    slides[idx].classList.add('active');
+    dotsEl.children[idx].classList.add('active');
+    applyGlow(tiles[idx].color);
+  }
+  function next(){ show(idx+1); }
+  function start(){
+    if(timer) clearInterval(timer);
+    if(!paused) timer = setInterval(next, INTERVAL);
+  }
+  function goTo(i){ show(i); start(); }
+
+  window.fpbNext = function(){ next(); start(); };
+  window.fpbPrev = function(){ show(idx-1); start(); };
+  window.fpbPause = function(){
+    paused = !paused;
+    const btn = document.getElementById('fpb-pause');
+    btn.textContent = paused ? '▶' : '⏸';
+    btn.title = paused ? 'Fortsetzen' : 'Pausieren';
+    if(paused){ clearInterval(timer); } else { start(); }
+  };
+
+  applyGlow(tiles[0].color);
+  start();
+  /* Show wrap atomically */
+  wrap.style.visibility = 'visible';
+  /* nach dem ersten Frame Transitions wieder aktivieren (für sanfte Wechsel danach) */
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ wrap.classList.remove('no-anim'); }); });
+};
+/* Defensive: if renderFavphil is registered, let it call us — else self-trigger */
+if (typeof window.renderFavphil === 'function') {
+  window.renderFavphil();
+} else {
+  /* Fallback: render banner only, render grid when renderFavphil becomes available */
+  window.buildFavphilBanner();
+  let attempts = 0;
+  const waitForRender = setInterval(function(){
+    attempts++;
+    if (typeof window.renderFavphil === 'function') {
+      clearInterval(waitForRender);
+      window.renderFavphil();
+    } else if (attempts > 30) {
+      clearInterval(waitForRender);
+    }
+  }, 50);
+}
+</script>
+
 <div class="page-hero">
     <div class="page-hero-glow"></div>
-    <p class="hero-tag">Pers&ouml;nliche Auswahl</p>
+    <p class="hero-tag">Persönliche Auswahl</p>
     <h1 class="page-title">Lieblingsphilosophen<span>.</span></h1>
-    <p class="page-desc">Acht Denker, die mein philosophisches Denken gepr&auml;gt haben &mdash; von Platon bis Levinas.</p>
+    <p class="page-desc">31 Denker*innen, die mein philosophisches Denken geprägt haben.</p>
   </div>
   <div class="sec">
     <div class="favphil-grid" id="favphil-grid"></div>

@@ -207,7 +207,10 @@ const NAV = [
     {id:'nature', icon:'🌿', label:'Natur'},
     {id:'math',   icon:'∑',  label:'Mathematik'},
   ]},
-  {type:'direct', id:'kontakt', label:'kontakt'},
+  {type:'group', label:'Kontakt', items:[
+    {id:'kontakt',   icon:'✉', label:'Kontakt'},
+    {id:'impressum', icon:'§', label:'Impressum & Recht'},
+  ]},
 ];
 
 // ── Page inits (called every visit) ──────────────
@@ -355,11 +358,12 @@ function buildNav() {
 function buildFooter() {
   const f = document.getElementById('site-footer');
   if (!f) return;
-  f.innerHTML = `<p class="footer-txt">&copy; 2025 Alexander Schmidt</p>
+  f.innerHTML = `<p class="footer-txt">&copy; 2026 Alexander Schmidt</p>
     <div class="footer-links">
       <a href="https://github.com/aschmidtphil" target="_blank" rel="noopener">GitHub</a>
       <a href="https://linkedin.com/in/alexander-schmidt" target="_blank" rel="noopener">LinkedIn</a>
       <a href="mailto:aschmidtphil@gmail.com">Email</a>
+      <a href="#impressum" onclick="showPage('impressum');return false;">Impressum &amp; Recht</a>
     </div>`;
 }
 

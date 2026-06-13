@@ -32,6 +32,12 @@
 .gb-sotc  {background:#fff4e0;color:#8a5a00} [data-theme="dark"] .gb-sotc  {background:#3a2600;color:#ffcc66}
 .gb-hk    {background:#fff0f4;color:#8a0030} [data-theme="dark"] .gb-hk    {background:#3a0015;color:#ff88aa}
 .gb-ff    {background:#e0f0ff;color:#003a8a} [data-theme="dark"] .gb-ff    {background:#001a3a;color:#66aaff}
+.gb-pokemon{background:#ffe8e8;color:#b01010} [data-theme="dark"] .gb-pokemon{background:#3a0808;color:#ff6666}
+.gb-hkss  {background:#e8fff4;color:#0a7a4a} [data-theme="dark"] .gb-hkss  {background:#04261a;color:#44ddaa}
+.gb-ff7   {background:#e8eeff;color:#1a2a8a} [data-theme="dark"] .gb-ff7   {background:#0a1030;color:#7799ff}
+.gb-ff8   {background:#f0e8ff;color:#5a1a8a} [data-theme="dark"] .gb-ff8   {background:#1a0a30;color:#aa77ff}
+.gb-ff9   {background:#fff4e0;color:#8a5a00} [data-theme="dark"] .gb-ff9   {background:#2a1a00;color:#ddaa44}
+.gb-ff10  {background:#e0faff;color:#006a8a} [data-theme="dark"] .gb-ff10  {background:#001a26;color:#44ccee}
 .gb-sc    {background:#dce8ff;color:#1a3a8a} [data-theme="dark"] .gb-sc    {background:#1a2a4a;color:#88aaff}
 .gb-diablo{background:#fde8e8;color:#9a1111} [data-theme="dark"] .gb-diablo{background:#2d0a0a;color:#ff8888}
 .gb-lufia {background:#e8f0ff;color:#2a4a9a} [data-theme="dark"] .gb-lufia {background:#1a2a5a;color:#88aaff}

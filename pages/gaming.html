@@ -1,9 +1,10 @@
 <style>
 /* Game image lightbox */
 .game-lb{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:3000;display:none;align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;}
+.game-lb.open{z-index:10010;}
 .game-lb.open{display:flex;}
 .game-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:10px;box-shadow:0 8px 64px rgba(0,0,0,.7);cursor:default;user-select:none;}
-.game-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:3001;}
+.game-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:10011;}
 .game-lb-x:hover{background:rgba(255,255,255,.3);}
 .game-lb-caption{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-family:var(--fm);font-size:.78rem;letter-spacing:.04em;pointer-events:none;text-align:center;}
 /* Make cover image show pointer cursor */
@@ -48,8 +49,40 @@
 
 
 <div class="g-section"        id="gs-sotc"> <div class="game-grid" id="sotc-grid"></div></div>
-<div class="g-section"        id="gs-hk">   <div class="game-grid" id="hk-grid"></div></div>
-<div class="g-section"        id="gs-ff">   <div class="game-grid" id="ff-grid"></div></div>
+<div class="g-section"        id="gs-hk">
+  <div class="g-subtabs">
+    <button class="g-subtab active" id="hksub-hk" onclick="showHKSub('hk')">Hollow Knight</button>
+    <button class="g-subtab" id="hksub-hkss" onclick="showHKSub('hkss')">Silksong</button>
+  </div>
+  <div class="hk-sub" id="hksub-pane-hk"><div class="game-grid" id="hk-grid"></div></div>
+  <div class="hk-sub" id="hksub-pane-hkss" style="display:none"><div class="game-grid" id="hkss-grid"></div></div>
+</div>
+<div class="g-section"        id="gs-ff">
+  <div class="g-subtabs">
+    <button class="g-subtab active" id="ffsub-7" onclick="showFFSub('7')">FF VII</button>
+    <button class="g-subtab" id="ffsub-8" onclick="showFFSub('8')">FF VIII</button>
+    <button class="g-subtab" id="ffsub-9" onclick="showFFSub('9')">FF IX</button>
+    <button class="g-subtab" id="ffsub-10" onclick="showFFSub('10')">FF X</button>
+  </div>
+
+  <!-- FF VII with its own sub-sub-tabs -->
+  <div class="ff-pane" id="ffpane-7">
+    <div class="g-subtabs" style="margin-bottom:1rem;">
+      <button class="g-subtab2 active" id="ff7-remake" onclick="showFF7('remake')">Remake</button>
+      <button class="g-subtab2" id="ff7-rebirth" onclick="showFF7('rebirth')">Rebirth</button>
+      <button class="g-subtab2" id="ff7-revelation" onclick="showFF7('revelation')">Revelation</button>
+      <button class="g-subtab2" id="ff7-original" onclick="showFF7('original')">FF VII Original</button>
+    </div>
+    <div class="ff7-pane" id="ff7pane-remake"><div class="game-grid" id="ff7remake-grid"></div></div>
+    <div class="ff7-pane" id="ff7pane-rebirth" style="display:none"><div class="game-grid" id="ff7rebirth-grid"></div></div>
+    <div class="ff7-pane" id="ff7pane-revelation" style="display:none"><div class="game-grid" id="ff7revelation-grid"></div></div>
+    <div class="ff7-pane" id="ff7pane-original" style="display:none"><div class="game-grid" id="ff7original-grid"></div></div>
+  </div>
+
+  <div class="ff-pane" id="ffpane-8" style="display:none"><div class="game-grid" id="ff8-grid"></div></div>
+  <div class="ff-pane" id="ffpane-9" style="display:none"><div class="game-grid" id="ff9-grid"></div></div>
+  <div class="ff-pane" id="ffpane-10" style="display:none"><div class="game-grid" id="ff10-grid"></div></div>
+</div>
 <div class="g-section"        id="gs-lufia"><div class="game-grid" id="lufia-grid"></div></div>
 <div class="g-section"        id="gs-kknd"> <div class="game-grid" id="kknd-grid"></div></div>
 <div class="g-section"        id="gs-fc">   <div class="game-grid" id="fc-grid"></div></div>
@@ -115,6 +148,7 @@
 </div>
 
 <div class="g-section" id="gs-pokemon">
+  <div class="game-grid" id="pokemon-grid" style="margin-bottom:2rem;"></div>
   <div class="poke-detail-area" id="poke-detail"></div>
   <div class="poke-controls">
     <input class="ctrl-input" type="text" id="poke-search"
@@ -166,45 +200,84 @@
    All games use assets/images/games/GAMEID_N.avif (+ .webp fallback)
    Place your files with these exact names:
 
-   wc3_1.avif/.webp    wc3_2.avif/.webp    wc3_3.avif/.webp
-   sc_1.avif/.webp     sc_2.avif/.webp     sc_3.avif/.webp
-   diablo_1.avif/.webp diablo_2.avif/.webp diablo_3.avif/.webp
-   sotc_1.avif/.webp   sotc_2.avif/.webp   sotc_3.avif/.webp
-   hk_1.avif/.webp     hk_2.avif/.webp     hk_3.avif/.webp
-   ff_1.avif/.webp     ff_2.avif/.webp     ff_3.avif/.webp
-   lufia_1.avif/.webp  lufia_2.avif/.webp  lufia_3.avif/.webp
+   wc3_1.avif/.webp    wc3_2.avif/.webp    wc3_3.avif/.webp    wc3_4.avif/.webp
+   sc_1.avif/.webp     sc_2.avif/.webp     sc_3.avif/.webp   _4.avif/.webp
+   diablo_1.avif/.webp diablo_2.avif/.webp diablo_3.avif/.webp   _4.avif/.webp
+   sotc_1.avif/.webp   sotc_2.avif/.webp   sotc_3.avif/.webp   _4.avif/.webp
+   hk_1.avif/.webp     hk_2.avif/.webp     hk_3.avif/.webp   _4.avif/.webp
+   ff_1.avif/.webp     ff_2.avif/.webp     ff_3.avif/.webp   _4.avif/.webp
+   lufia_1.avif/.webp  lufia_2.avif/.webp  lufia_3.avif/.webp   _4.avif/.webp
    kknd2_1.avif/.webp  kknd2_2.avif/.webp  kknd2_3.avif/.webp
-   future_cop_1.avif/.webp  future_cop_2.avif/.webp  future_cop_3.avif/.webp
-   sg_1.avif/.webp     sg_2.avif/.webp     sg_3.avif/.webp
-   pw_1.avif/.webp     pw_2.avif/.webp     pw_3.avif/.webp
-   mmbn_1.avif/.webp   mmbn_2.avif/.webp   mmbn_3.avif/.webp
+   future_cop_1.avif/.webp  future_cop_2.avif/.webp  future_cop_3.avif/.webp   _4.avif/.webp
+   sg_1.avif/.webp     sg_2.avif/.webp     sg_3.avif/.webp   _4.avif/.webp
+   pw_1.avif/.webp     pw_2.avif/.webp     pw_3.avif/.webp   _4.avif/.webp
+   mmbn_1.avif/.webp   mmbn_2.avif/.webp   mmbn_3.avif/.webp   _4.avif/.webp
+   hs_1.avif/.webp     hs_2.avif/.webp     hs_3.avif/.webp     hs_4.avif/.webp
 ──────────────────────────────────────────────────────────────── */
 var IMG = {
-  wc3:    ['assets/images/games/wc3_1',   'assets/images/games/wc3_2',   'assets/images/games/wc3_3'],
-  sc:     ['assets/images/games/sc_1',    'assets/images/games/sc_2',    'assets/images/games/sc_3'],
-  diablo: ['assets/images/games/diablo_1','assets/images/games/diablo_2','assets/images/games/diablo_3'],
-  sotc:   ['assets/images/games/sotc_1',  'assets/images/games/sotc_2',  'assets/images/games/sotc_3'],
-  hk:     ['assets/images/games/hk_1',    'assets/images/games/hk_2',    'assets/images/games/hk_3'],
-  ff:     ['assets/images/games/ff_1',    'assets/images/games/ff_2',    'assets/images/games/ff_3'],
-  lufia:  ['assets/images/games/lufia_1', 'assets/images/games/lufia_2', 'assets/images/games/lufia_3'],
-  kknd:   ['assets/images/games/kknd2_1', 'assets/images/games/kknd2_2', 'assets/images/games/kknd2_3'],
-  fc:     ['assets/images/games/future_cop_1','assets/images/games/future_cop_2','assets/images/games/future_cop_3'],
-  sg:     ['assets/images/games/sg_1',    'assets/images/games/sg_2',    'assets/images/games/sg_3'],
-  pw:     ['assets/images/games/pw_1',    'assets/images/games/pw_2',    'assets/images/games/pw_3'],
-  mmbn:   ['assets/images/games/mmbn_1',  'assets/images/games/mmbn_2',  'assets/images/games/mmbn_3'],
+  wc3:    ['assets/images/games/wc3_1',   'assets/images/games/wc3_2',   'assets/images/games/wc3_3', 'assets/images/games/wc3_4'],
+  sc:     ['assets/images/games/sc_1',    'assets/images/games/sc_2',    'assets/images/games/sc_3', 'assets/images/games/sc_4'],
+  diablo: ['assets/images/games/diablo_1','assets/images/games/diablo_2','assets/images/games/diablo_3', 'assets/images/games/diablo_4'],
+  sotc:   ['assets/images/games/sotc_1',  'assets/images/games/sotc_2',  'assets/images/games/sotc_3', 'assets/images/games/sotc_4'],
+  hk:     ['assets/images/games/hk_1',    'assets/images/games/hk_2',    'assets/images/games/hk_3', 'assets/images/games/hk_4'],
+  hkss:   ['assets/images/games/hkss_1',  'assets/images/games/hkss_2',  'assets/images/games/hkss_3', 'assets/images/games/hkss_4'],
+  ff7remake:  ['assets/images/games/ff7remake_1','assets/images/games/ff7remake_2','assets/images/games/ff7remake_3','assets/images/games/ff7remake_4'],
+  ff7rebirth: ['assets/images/games/ff7rebirth_1','assets/images/games/ff7rebirth_2','assets/images/games/ff7rebirth_3','assets/images/games/ff7rebirth_4'],
+  ff7revelation: ['assets/images/games/ff7revelation_1','assets/images/games/ff7revelation_2','assets/images/games/ff7revelation_3','assets/images/games/ff7revelation_4'],
+  ff7original: ['assets/images/games/ff7original_1','assets/images/games/ff7original_2','assets/images/games/ff7original_3','assets/images/games/ff7original_4'],
+  ff8:    ['assets/images/games/ff8_1',   'assets/images/games/ff8_2',   'assets/images/games/ff8_3',   'assets/images/games/ff8_4'],
+  ff9:    ['assets/images/games/ff9_1',   'assets/images/games/ff9_2',   'assets/images/games/ff9_3',   'assets/images/games/ff9_4'],
+  ff10:   ['assets/images/games/ff10_1',  'assets/images/games/ff10_2',  'assets/images/games/ff10_3',  'assets/images/games/ff10_4'],
+
+  ff:     ['assets/images/games/ff_1',    'assets/images/games/ff_2',    'assets/images/games/ff_3', 'assets/images/games/ff_4'],
+  lufia:  ['assets/images/games/lufia_1', 'assets/images/games/lufia_2', 'assets/images/games/lufia_3', 'assets/images/games/lufia_4'],
+  kknd:   ['assets/images/games/kknd2_1', 'assets/images/games/kknd2_2', 'assets/images/games/kknd2_3', 'assets/images/games/kknd2_4'],
+  fc:     ['assets/images/games/future_cop_1','assets/images/games/future_cop_2','assets/images/games/future_cop_3', 'assets/images/games/future_cop_4'],
+  sg:     ['assets/images/games/sg_1',    'assets/images/games/sg_2',    'assets/images/games/sg_3', 'assets/images/games/sg_4'],
+  pw:     ['assets/images/games/pw_1',    'assets/images/games/pw_2',    'assets/images/games/pw_3', 'assets/images/games/pw_4'],
+  mmbn:   ['assets/images/games/mmbn_1',  'assets/images/games/mmbn_2',  'assets/images/games/mmbn_3', 'assets/images/games/mmbn_4'],
+  pokemon:['assets/images/games/pkmn_1',  'assets/images/games/pkmn_2',  'assets/images/games/pkmn_3', 'assets/images/games/pkmn_4'],
+  hs:     ['assets/images/games/hs_1',    'assets/images/games/hs_2',    'assets/images/games/hs_3',    'assets/images/games/hs_4'],
 };
 
 // Per-image object-position overrides (index matches IMG array)
 // Format: 'left|center|right top|center|bottom' or 'X% Y%'
 var IMG_POS = {
   kknd: ['left bottom', 'left bottom', 'center center'],
+  wc3:  ['center top', null, null, null],            // wc3_1 oberer Ausschnitt
+  pw:   ['center 20%', 'center top', null, 'center top'], // pw_1 leicht runter; pw_2, pw_4 oben; pw_3 zentriert
   // Add overrides for other games as needed, e.g.:
   // fc: ['center bottom', null, null],
 };
 
-var EMOJI = {wc3:'⚔️',sc:'🚀',diablo:'💀',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾'};
+var EMOJI = {wc3:'⚔️',sc:'🚀',diablo:'💀',hs:'🃏',sotc:'🗿',hk:'🦋',ff:'✨',lufia:'🗡️',kknd:'💥',fc:'🤖',sg:'⏰',pw:'⚖️',mmbn:'💾',pokemon:'🔴',hkss:'🪡',ff7remake:'✨',ff7rebirth:'✨',ff7revelation:'✨',ff7original:'✨',ff8:'✨',ff9:'✨',ff10:'✨'};
 
 /* ─── Tab switching ─────────────────────────────────────────────── */
+window.showFFSub = function(which) {
+  ['7','8','9','10'].forEach(function(k){
+    var pane = document.getElementById('ffpane-' + k);
+    var btn = document.getElementById('ffsub-' + k);
+    if (pane) pane.style.display = (k === which) ? '' : 'none';
+    if (btn) btn.classList.toggle('active', k === which);
+  });
+};
+window.showFF7 = function(which) {
+  ['remake','rebirth','revelation','original'].forEach(function(k){
+    var pane = document.getElementById('ff7pane-' + k);
+    var btn = document.getElementById('ff7-' + k);
+    if (pane) pane.style.display = (k === which) ? '' : 'none';
+    if (btn) btn.classList.toggle('active', k === which);
+  });
+};
+window.showHKSub = function(which) {
+  ['hk','hkss'].forEach(function(k){
+    var pane = document.getElementById('hksub-pane-' + k);
+    var btn = document.getElementById('hksub-' + k);
+    if (pane) pane.style.display = (k === which) ? '' : 'none';
+    if (btn) btn.classList.toggle('active', k === which);
+  });
+};
+
 window.showGTab = function(name, idx) {
   document.querySelectorAll('.g-section').forEach(function(s){ s.classList.remove('active'); });
   document.querySelectorAll('.gtab').forEach(function(b){ b.classList.remove('active'); });
@@ -323,10 +396,10 @@ function renderGameCards() {
       var card = document.createElement('div');
       card.className = 'game-card';
 
-      if (imgs) {
-        var base = imgs[idx % imgs.length];
+      if (imgs && idx < imgs.length) {
+        var base = imgs[idx];
         var posArr = IMG_POS[s] || [];
-        var pos = posArr[idx % imgs.length] || null;
+        var pos = posArr[idx] || null;
         card.appendChild(makePicture(base, item.title, emoji, pos));
       } else {
         var ph = document.createElement('div');
@@ -472,7 +545,7 @@ renderGameCards();
      ═══════════════════════════════════════════════════════════════ -->
 <style>
 /* ── Fireworks canvas ── */
-#sky-fireworks{position:fixed;inset:0;pointer-events:none;z-index:9999;display:none;}
+#sky-fireworks{position:fixed;inset:0;pointer-events:none;z-index:10001;display:none;}
 #sky-fireworks.active{display:block;}
 
 /* ── Soundboard modal ── */
@@ -604,11 +677,50 @@ renderGameCards();
   border-radius:3px;padding:.05rem .35rem;font-family:inherit;color:#fca5a5;
 }
 
+/* ── Game Sub-Tabs (Hollow Knight / Silksong, Final Fantasy) ── */
+.g-subtabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.g-subtab{background:var(--surface);border:1px solid var(--border);color:var(--text2);
+  padding:.45rem .95rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.78rem;transition:all .15s;}
+.g-subtab:hover{border-color:var(--accent);}
+.g-subtab.active{background:var(--accent);color:#fff;border-color:transparent;}
+.g-subtab2{background:transparent;border:1px solid var(--border2);color:var(--text3);padding:.35rem .8rem;border-radius:6px;cursor:pointer;font-family:var(--fm);font-size:.72rem;transition:all .15s;}
+.g-subtab2:hover{border-color:var(--accent);color:var(--text2);}
+.g-subtab2.active{background:var(--accent2,var(--accent));color:#fff;border-color:transparent;}
+
+/* ── Soundboard Flanken-Bilder (Sky Captain) ── */
+.sky-flank{
+  position:fixed;top:50%;transform:translateY(-50%);
+  width:clamp(140px,14vw,240px);z-index:10001;
+  filter:drop-shadow(0 0 30px rgba(220,38,38,.5));
+  animation:skyFlankIn .7s cubic-bezier(.18,1.1,.5,1) .3s backwards;
+}
+.sky-flank picture,.sky-flank img{width:100%;height:auto;display:block;border-radius:10px;}
+.sky-flank img{cursor:zoom-in;transition:transform .2s,box-shadow .2s;}
+.sky-flank img:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(220,38,38,.7);}
+.sky-flank.left{left:max(1rem,calc(50% - 550px - 16vw));}
+.sky-flank.right{right:max(1rem,calc(50% - 550px - 16vw));}
+@keyframes skyFlankIn{from{opacity:0;transform:translateY(-50%) scale(.85);}to{opacity:1;transform:translateY(-50%) scale(1);}}
+/* Auf schmalen Screens ausblenden (Platz reicht nicht) */
+@media (max-width:1300px){ .sky-flank{display:none;} }
 
 </style>
 
 <canvas id="sky-fireworks"></canvas>
 <div class="sky-modal" id="sky-modal" onclick="if(event.target===this)skyClose()">
+  <div class="sky-flank left">
+    <picture>
+      <source srcset="assets/images/games/skycaptain.avif" type="image/avif">
+      <source srcset="assets/images/games/skycaptain.webp" type="image/webp">
+      <img src="assets/images/games/skycaptain.webp" alt="Sky Captain" onclick="gameLbOpen('assets/images/games/skycaptain.webp','Sky Captain · Future Cop: L.A.P.D.')" onerror="this.closest('.sky-flank').style.display='none'">
+    </picture>
+  </div>
+  <div class="sky-flank right">
+    <picture>
+      <source srcset="assets/images/games/skycaptain1.avif" type="image/avif">
+      <source srcset="assets/images/games/skycaptain1.webp" type="image/webp">
+      <img src="assets/images/games/skycaptain1.webp" alt="Sky Captain" onclick="gameLbOpen('assets/images/games/skycaptain1.webp','Sky Captain · Future Cop: L.A.P.D.')" onerror="this.closest('.sky-flank').style.display='none'">
+    </picture>
+  </div>
   <div class="sky-box">
     <div class="sky-header">
       <div>
@@ -859,8 +971,11 @@ renderGameCards();
   // TRIGGER: open soundboard
   // ────────────────────────────────────────
   window.skyOpenEasterEgg = function(){
+    // Don't re-open if already active
+    var modal = document.getElementById('sky-modal');
+    if(modal && modal.classList.contains('active')) return;
     skyBuild();
-    skyFireworks(2200);
+    skyFireworks(3500);
     // Delay modal to let the first salvo show
     setTimeout(function(){
       document.getElementById('sky-modal').classList.add('active');
@@ -870,7 +985,7 @@ renderGameCards();
       var pick = clips[Math.floor(Math.random()*Math.min(3, clips.length))]; // first 3 = grand intro lines
       var fakeBtn = {classList:{add:function(){},remove:function(){}}, style:{}};
       skyPlay(pick, fakeBtn);
-    }, 700);
+    }, 300);
   };
 
   window.skyClose = function(){
@@ -904,7 +1019,10 @@ renderGameCards();
     }
     // Don't track when typing in inputs
     if(['INPUT','TEXTAREA'].indexOf(document.activeElement.tagName)>=0) return;
-    if(e.key && e.key.length === 1){
+    // Don't track typed letters while soundboard is open (avoids re-trigger spam)
+    var modalOpen = document.getElementById('sky-modal');
+    modalOpen = modalOpen && modalOpen.classList.contains('active');
+    if(!modalOpen && e.key && e.key.length === 1){
       typedBuffer = (typedBuffer + e.key.toLowerCase()).slice(-20);
       triggers.forEach(function(trig){
         if(typedBuffer.indexOf(trig) >= 0){

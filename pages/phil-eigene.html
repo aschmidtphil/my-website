@@ -1,50 +1,719 @@
-<div class="pe-hero">
-    <div class="pe-glow1"></div><div class="pe-glow2"></div>
-    <p class="hero-tag">Eigenst&auml;ndiges Denken &middot; Radikale Endlichkeit</p>
-    <h1 style="font-family:var(--fh);font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-.04em;color:var(--text);line-height:.95;margin-bottom:1rem">
-      Philosophie der<br><span style="color:var(--accent2)">radikalen Endlichkeit</span><span style="color:var(--text)">.</span></h1>
-    <p style="color:var(--text2);max-width:640px;line-height:1.75;font-size:.92rem;margin-top:.7rem">
-      Ein eigenst&auml;ndiger philosophischer Ansatz aus der Auseinandersetzung mit Schelling, Heidegger und der ph&auml;nomenologischen Tradition.</p>
+<!-- ════════════════════════════════════════════════════════════════
+     EIGENE PHILOSOPHIE — überarbeitet, breiter, lebendiger
+     ════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── Forschungsinteressen-Bar ─────────────────────────────────── */
+.forschung-bar{padding:1.8rem 3rem 0;}
+.forschung-label{font-family:var(--fm);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.forschung-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);}
+.forschung-chips{display:flex;flex-wrap:wrap;gap:.5rem;}
+.forschung-chip{font-family:var(--fh);font-size:.88rem;font-weight:500;padding:.4rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;color:var(--text);transition:all .15s;cursor:default;}
+.forschung-chip:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-1px);}
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.phe-hero{padding:3.5rem 3.5rem 2.2rem;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.phe-hero-glow{position:absolute;right:-100px;top:-50px;width:450px;height:450px;background:radial-gradient(circle,var(--glow-accent2) 0%,transparent 70%);pointer-events:none;}
+.phe-hero h1{font-family:var(--fh);font-size:clamp(2rem,4.5vw,3rem);font-weight:800;letter-spacing:-.035em;color:var(--text);line-height:1.05;margin:.3rem 0 .9rem;}
+.phe-hero h1 .accent{color:var(--accent2);}
+.phe-hero .lead{color:var(--text2);max-width:720px;line-height:1.75;font-size:.95rem;font-style:italic;border-left:3px solid var(--accent);padding-left:1rem;}
+
+/* ── Kapitel-Navigation (sticky, ersetzt TOC mit kaputten Ankern) ── */
+.phe-chapnav{
+  position:sticky;top:0;z-index:50;
+  background:var(--bg);border-bottom:1px solid var(--border);
+  padding:.85rem 3rem;display:flex;gap:.4rem;overflow-x:auto;
+  scrollbar-width:thin;
+}
+.phe-chap-btn{
+  flex-shrink:0;display:flex;align-items:center;gap:.45rem;
+  font-family:var(--fm);font-size:.72rem;letter-spacing:.04em;font-weight:600;
+  padding:.45rem .85rem;border-radius:18px;cursor:pointer;
+  background:transparent;border:1px solid var(--border);color:var(--text2);
+  transition:all .15s;white-space:nowrap;
+}
+.phe-chap-btn:hover{border-color:var(--accent);color:var(--accent);}
+.phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.phe-chap-btn .num{font-size:.65rem;opacity:.7;}
+
+/* ── Layout: 3-Spalten Grid mit Margin-Spalten links/rechts für Glossen ── */
+.phe-essay{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,3fr) minmax(0,1fr);
+  gap:2rem;
+  max-width:1400px;
+  margin:0 auto;
+  padding:2.5rem 3rem 4rem;
+}
+.phe-chapter{
+  display:contents;  /* lets children participate in parent grid */
+}
+.phe-chapter:not(.active){display:none;}
+
+/* Marginalia LEFT — quotes, key concepts */
+.phe-margin-left{
+  grid-column:1;
+  padding-top:3.5rem;
+  display:flex;flex-direction:column;gap:1.5rem;
+}
+.phe-margin-stat{
+  font-family:var(--fh);font-size:2.6rem;font-weight:800;
+  letter-spacing:-.04em;line-height:.95;color:var(--accent2);
+}
+.phe-margin-stat-label{
+  font-family:var(--fm);font-size:.65rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text3);margin-top:.3rem;
+}
+.phe-margin-key{
+  padding:1rem 1.1rem;border-radius:10px;
+  background:var(--surface);border-left:3px solid var(--accent);
+}
+.phe-margin-key-label{
+  font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.45rem;
+}
+.phe-margin-key-text{
+  font-family:var(--fh);font-size:.85rem;line-height:1.6;color:var(--text);
+}
+
+/* CENTER — main content */
+.phe-main{grid-column:2;min-width:0;}
+.phe-ch-num{
+  font-family:var(--fm);font-size:.72rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;
+  margin-bottom:.3rem;
+}
+.phe-ch-title{
+  font-family:var(--fh);font-size:2.2rem;font-weight:800;letter-spacing:-.025em;
+  color:var(--text);line-height:1.1;margin-bottom:.5rem;
+}
+.phe-ch-subtitle{
+  font-family:var(--fh);font-style:italic;color:var(--text3);
+  font-size:1rem;margin-bottom:1.5rem;line-height:1.5;
+}
+.phe-main p{
+  font-family:var(--fh);font-size:1.04rem;line-height:1.78;
+  color:var(--text);margin-bottom:1.1rem;
+}
+.phe-main p:first-of-type::first-letter{
+  font-family:var(--fh);font-size:3.6rem;font-weight:800;
+  float:left;line-height:.85;padding:.3rem .55rem 0 0;
+  color:var(--accent2);
+}
+.phe-main strong{color:var(--accent2);font-weight:600;}
+.phe-main em{font-style:italic;color:var(--text);}
+
+.phe-pullquote{
+  margin:1.6rem 0;padding:1.2rem 1.6rem;
+  border-left:4px solid var(--accent2);
+  background:linear-gradient(90deg,rgba(0,0,0,.04),transparent);
+  font-family:var(--fh);font-size:1.18rem;font-weight:600;line-height:1.5;
+  color:var(--text);font-style:italic;border-radius:0 8px 8px 0;
+}
+
+/* RIGHT margin — humorvolle Glossen + Bezüge */
+.phe-margin-right{
+  grid-column:3;
+  padding-top:3.5rem;
+  display:flex;flex-direction:column;gap:1.3rem;
+}
+.phe-glosse{
+  padding:.85rem 1.1rem;border-radius:8px;
+  background:var(--bg2);border:1px dashed var(--border);
+  font-family:'JetBrains Mono',monospace;font-size:.78rem;
+  color:var(--text2);font-style:italic;line-height:1.6;
+  position:relative;
+}
+.phe-glosse::before{
+  content:'※';position:absolute;top:.8rem;left:-.5rem;
+  background:var(--accent);color:#fff;
+  width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-style:normal;font-size:.7rem;font-weight:700;
+}
+.phe-glosse-tag{
+  font-family:var(--fm);font-size:.58rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text3);font-style:normal;
+  margin-bottom:.4rem;display:block;
+}
+.phe-refs{
+  padding:.85rem 1.1rem;border-radius:8px;
+  background:var(--surface);
+}
+.phe-refs-label{
+  font-family:var(--fm);font-size:.58rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.55rem;font-weight:700;
+}
+.phe-refs-list{
+  font-family:var(--fh);font-size:.82rem;color:var(--text2);line-height:1.65;
+}
+.phe-refs-list span{display:block;}
+
+/* ── Schluss-Card ──────────────────────────────────────────────── */
+.phe-coda-wrap{
+  max-width:1400px;margin:0 auto;padding:0 3rem 5rem;
+}
+.phe-coda{
+  padding:2.5rem 3rem;
+  background:linear-gradient(135deg,rgba(0,0,0,.03),rgba(0,0,0,.08));
+  border:1px solid var(--border);border-radius:14px;position:relative;
+}
+.phe-coda::before{
+  content:'∞';position:absolute;top:-18px;left:32px;
+  background:var(--bg);padding:0 .6rem;font-size:1.8rem;color:var(--accent);
+}
+.phe-coda-label{
+  font-family:var(--fm);font-size:.65rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:.9rem;
+}
+.phe-coda-text{
+  font-family:var(--fh);font-size:1.15rem;line-height:1.75;
+  color:var(--text);font-style:italic;max-width:900px;
+}
+
+/* ── Downloads-Box ─────────────────────────────────────────────── */
+.phe-downloads{
+  max-width:1400px;margin:0 auto;padding:0 3rem 4rem;
+}
+.phe-downloads-inner{
+  padding:1.6rem 2rem;border:1px dashed var(--border);border-radius:10px;
+  background:var(--bg);
+}
+.phe-downloads-label{
+  font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.6rem;font-weight:700;
+}
+.phe-downloads-hint{
+  font-size:.85rem;color:var(--text3);font-style:italic;line-height:1.6;
+}
+
+/* ── Mobile/Tablet: 3-Spalten → Single-Column ──────────────────── */
+@media(max-width:1200px){
+  .phe-essay{
+    grid-template-columns:1fr;
+    gap:1.5rem;
+    padding:2rem 1.5rem 3rem;
+  }
+  .phe-margin-left,.phe-main,.phe-margin-right{grid-column:1;}
+  .phe-margin-left{padding-top:0;flex-direction:row;flex-wrap:wrap;gap:1rem;}
+  .phe-margin-left > *{flex:1 1 200px;}
+  .phe-margin-right{padding-top:0;}
+  .phe-ch-title{font-size:1.7rem;}
+}
+@media(max-width:700px){
+  .phe-chapnav{padding:.85rem 1.2rem;}
+  .phe-coda-wrap,.phe-downloads{padding-left:1.2rem;padding-right:1.2rem;}
+}
+</style>
+
+<!-- ─────────────── Forschungsinteressen ─────────────── -->
+<div class="forschung-bar">
+  <div class="forschung-label">Forschungsinteressen</div>
+  <div class="forschung-chips">
+    <span class="forschung-chip">Metaphysik &amp; Metaphysikkritik</span>
+    <span class="forschung-chip">Ontologie</span>
+    <span class="forschung-chip">Freiheit</span>
+    <span class="forschung-chip">Transzendenz</span>
+    <span class="forschung-chip">Tragik</span>
+    <span class="forschung-chip">Tod</span>
+    <span class="forschung-chip">Langeweile</span>
+    <span class="forschung-chip">Atheismus</span>
+    <span class="forschung-chip">Geschichte der Philosophie</span>
   </div>
-  <div class="pe-thesis">
-    <div class="pe-thesis-quote">&bdquo;Endlichkeit ist nicht das Gegenteil von Unendlichkeit, sondern ihre innere Bedingung. Was unendlich ist, muss zuerst enden k&ouml;nnen.&ldquo;</div>
-    <div class="pe-thesis-sub">Endlichkeit nicht als Mangel, sondern als Erm&ouml;glichungsstruktur von Sein &uuml;berhaupt. Endlichkeit ist produktiv &mdash; sie gibt dem Sein Kontur, Richtung und Intensit&auml;t.</div>
+</div>
+
+<!-- ─────────────── HERO ─────────────── -->
+<div class="phe-hero">
+  <div class="phe-hero-glow"></div>
+  <p class="hero-tag">Eigenständiges Denken</p>
+  <h1>Grundzüge meiner <span class="accent">Philosophie</span><span style="color:var(--text)">.</span></h1>
+  <p class="lead">Ein endliches, erzählendes, fragendes und handelndes Wesen in einer Welt, die es nicht vollständig verstehen oder beherrschen kann — und die es dennoch notwendig deutet.</p>
+</div>
+
+<!-- ─────────────── Kapitel-Navigation ─────────────── -->
+<nav class="phe-chapnav" id="phe-chapnav">
+  <button class="phe-chap-btn active" data-ch="1"><span class="num">01</span> Tragik</button>
+  <button class="phe-chap-btn" data-ch="2"><span class="num">02</span> Erzählen</button>
+  <button class="phe-chap-btn" data-ch="3"><span class="num">03</span> Endlichkeit</button>
+  <button class="phe-chap-btn" data-ch="4"><span class="num">04</span> Metaphysik</button>
+  <button class="phe-chap-btn" data-ch="5"><span class="num">05</span> Wissenschaft</button>
+  <button class="phe-chap-btn" data-ch="6"><span class="num">06</span> Freiheit &amp; Moral</button>
+  <button class="phe-chap-btn" data-ch="7"><span class="num">07</span> Individuum</button>
+  <button class="phe-chap-btn" data-ch="8"><span class="num">08</span> Biografie</button>
+  <button class="phe-chap-btn" data-ch="9"><span class="num">09</span> Wissen &amp; Meinung</button>
+  <button class="phe-chap-btn" data-ch="coda"><span class="num">∞</span> Schluss</button>
+</nav>
+
+<!-- ─────────────── Kapitel ─────────────── -->
+<article class="phe-essay" id="phe-essay">
+
+  <!-- Ch 1 -->
+  <section class="phe-chapter active" data-ch="1">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">01</div>
+        <div class="phe-margin-stat-label">Erster Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Schlüsselbegriff</div>
+        <div class="phe-margin-key-text"><strong>Schuldlos schuldig.</strong> Verantwortung ohne vollständige Schuld — Schuld ohne vollständige Verantwortung.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 01</div>
+      <h2 class="phe-ch-title">Endlichkeit und Tragik</h2>
+      <div class="phe-ch-subtitle">Tragik nicht als Leid, sondern als Strukturmerkmal menschlicher Existenz.</div>
+
+      <p>Im Zentrum meines Denkens steht die Überzeugung, dass menschliches Leben grundlegend tragisch verfasst ist. Tragik bedeutet hier nicht bloß Leid oder Unglück, sondern eine strukturelle Eigenschaft menschlicher Existenz: Der Mensch handelt in einer Welt, deren Konsequenzen er niemals vollständig überblicken oder kontrollieren kann.</p>
+
+      <p>Jede Handlung kann ungewollte Folgen haben, die sich weit über die ursprüngliche Absicht hinaus entfalten — manchmal bis über den Tod des Handelnden hinaus. In diesem Sinn wird der Mensch <em>schuldlos schuldig</em>: verantwortlich für das, was aus seinem Handeln folgt, ohne diese Folgen gewollt zu haben. Zwischen Absicht und Wirkung klafft eine irreduzible Differenz.</p>
+
+      <div class="phe-pullquote">Der Mensch wird im Leben unausweichlich schuldlos schuldig.</div>
+
+      <p>Diese Tragik ist untrennbar mit der Endlichkeit verbunden: Alles menschliche Leben ist zeitlich begrenzt, situiert und unverfügbar. Auch die Welt selbst erscheint nicht als vollständig geordnete oder auf den Menschen hin ausgerichtete Struktur, sondern als offenes Gefüge kontingenter Entwicklungen.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Wer einmal versucht hat, ein Geschenk zu machen, das jemandem dann mehr Ärger als Freude bringt, hat den Anaximander-Moment schon erlebt. Nur eben ohne Toga.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Anaximander</span>
+          <span>Heidegger (Geworfenheit)</span>
+          <span>Schopenhauer</span>
+          <span>Schelling</span>
+          <span>Max Scheler</span>
+          <span>Herbert Marcuse</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 2 -->
+  <section class="phe-chapter" data-ch="2">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">02</div>
+        <div class="phe-margin-stat-label">Zweiter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">These</div>
+        <div class="phe-margin-key-text">Identität ist <strong>keine Substanz</strong>, sondern eine fortlaufend erzählte Struktur.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 02</div>
+      <h2 class="phe-ch-title">Der Mensch als erzählendes Wesen</h2>
+      <div class="phe-ch-subtitle">Selbst und Geschichte fallen in eins — narrative Identität als Grundstruktur.</div>
+
+      <p>Der Mensch ist für mich wesentlich ein erzählendes Wesen. Er lebt nicht nur, sondern deutet sein Leben, ordnet Erfahrungen und bildet Zusammenhänge durch Geschichten. Identität entsteht nicht als feste Substanz, sondern als narrative Struktur — durch das Zusammenspiel von Selbstdeutungen, Erinnerungen und den Geschichten, die andere über uns erzählen.</p>
+
+      <p>Auch dort, wo Sprache oder Bewusstsein eingeschränkt sind, bleibt der Mensch Teil einer erzählten Lebensgeschichte. Das Selbst ist nicht unabhängig von diesen narrativen Prozessen, sondern wird durch sie hindurch gebildet.</p>
+
+      <div class="phe-pullquote">Der Mensch ist nicht jemand, der Geschichten hat — er ist eine Geschichte.</div>
+
+      <p>Diese Geschichten sind jedoch niemals vollständig abgeschlossen oder widerspruchsfrei. Sie bleiben offen, fragmentarisch und veränderlich, weil sie auf einem endlichen Leben beruhen. Möglicherweise geht dem erzählenden Selbst ein vorsprachliches, leibliches <em>Protoselbst</em> voraus — das eigentliche personale Selbst des erwachsenen Menschen bildet sich aber wesentlich durch narrative Prozesse aus.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Auch das Tinder-Profil ist Metaphysik. Vermutlich besonders das.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Hannah Arendt</span>
+          <span>Wilhelm Schapp</span>
+          <span>Nietzsche</span>
+          <span>Husserl</span>
+          <span>Charles Taylor</span>
+          <span>László Tengelyi</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 3 -->
+  <section class="phe-chapter" data-ch="3">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">03</div>
+        <div class="phe-margin-stat-label">Der fundamentalste Gedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Kerngedanke</div>
+        <div class="phe-margin-key-text">Das Unendliche ist <strong>kein Gegenstand</strong>, sondern eine Negation. Endlichkeit ist primär.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 03</div>
+      <h2 class="phe-ch-title">Endlichkeit und das Denken des Unendlichen</h2>
+      <div class="phe-ch-subtitle">Radikale Endlichkeit — und das Unendliche als Grenzbegriff endlichen Denkens.</div>
+
+      <p>Ein weiterer zentraler Gedanke meiner Philosophie ist die radikale Endlichkeit aller Existenz. Alles, was gedacht, erlebt oder erkannt wird, geschieht innerhalb zeitlicher, begrenzter Strukturen. Auch das Denken des Unendlichen bleibt selbst ein endlicher Akt.</p>
+
+      <p>Das sogenannte <em>Unendliche</em> erscheint mir daher nicht als positiv gegebene Wirklichkeit, sondern als Grenzbegriff des endlichen Denkens. Der menschliche Geist kann Regeln der unbegrenzten Fortsetzung formulieren — etwa im Zählen oder in formalen Systemen — doch er erreicht niemals eine tatsächlich gegebene Totalität. Selbst wenn jede mögliche Fortsetzung gedacht wird, bleibt sie im Modus des Endlichen.</p>
+
+      <div class="phe-pullquote">Das Unendliche ist dem endlichen Leben inkommensurabel.</div>
+
+      <p>Gleichzeitig gilt: Jede Vorstellung von Ewigkeit, Wahrheit oder Absolutheit setzt bereits ein endliches Bewusstsein voraus, das überhaupt erst fähig ist, solche Begriffe zu bilden. <strong>Die Sehnsucht nach dem Unendlichen ist selbst ein Ausdruck der Endlichkeit.</strong></p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Das Universum kümmert sich nicht darum, dass es uns gibt. Den Rückweg gibt es trotzdem nicht.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Kant</span>
+          <span>Heidegger</span>
+          <span>Derrida</span>
+          <span>Pascal</span>
+          <span>Levinas</span>
+          <span>Phänomenologie</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 4 -->
+  <section class="phe-chapter" data-ch="4">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">04</div>
+        <div class="phe-margin-stat-label">Vierter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Definition</div>
+        <div class="phe-margin-key-text">Metaphysik = <strong>Weltverhältnis</strong>. Nicht System, sondern Grundbewegung des Daseins.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 04</div>
+      <h2 class="phe-ch-title">Metaphysik als unvermeidliches Weltverhältnis</h2>
+      <div class="phe-ch-subtitle">Animal metaphysicum — auch wer Metaphysik ablehnt, betreibt sie.</div>
+
+      <p>Trotz aller Kritik an metaphysischen Systemen halte ich Metaphysik für unvermeidlich. Der Mensch ist ein <em>animal metaphysicum</em>: ein Wesen, das sich notwendig zur Welt als Ganzer verhält.</p>
+
+      <p>Metaphysik verstehe ich dabei nicht primär als spekulatives System, sondern als grundlegendes Weltverhältnis — als die Weise, in der Menschen implizit oder explizit die Welt deuten. Jeder Mensch lebt mit Annahmen über Sinn, Ursprung, Tod, Zeit und Wirklichkeit, selbst wenn diese nie ausdrücklich formuliert werden. Metaphysik beginnt bereits dort, wo Fragen entstehen: <em>Warum ist überhaupt etwas? Warum muss ich sterben? Was ist der Sinn meines Lebens?</em></p>
+
+      <div class="phe-pullquote">Der Mensch fragt nach dem Ganzen, obwohl er nie außerhalb des Endlichen steht.</div>
+
+      <p>Diese Fragen lassen sich nicht abschließend beantworten, aber sie lassen sich auch nicht vollständig vermeiden. Auch der Versuch, Metaphysik zurückzuweisen, bleibt häufig selbst noch metaphysisch, weil er bereits bestimmte Annahmen über Wirklichkeit, Wahrheit und Sinn voraussetzt.</p>
+
+      <p>Gleichzeitig muss jede Form von Metaphysik die Kritik von Kant, Nietzsche, Heidegger, Derrida und anderen ernst nehmen. Eine unreflektierte Metaphysik droht dogmatisch zu werden, wenn sie ihre eigenen Voraussetzungen vergisst.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Auch der Reddit-Atheist mit dem Pfeil-im-Profilbild macht Metaphysik. Er hat es nur noch nicht bemerkt.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Kant</span>
+          <span>Nietzsche</span>
+          <span>Heidegger</span>
+          <span>Derrida</span>
+          <span>Schelling</span>
+          <span>Metaphysikkritik</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 5 -->
+  <section class="phe-chapter" data-ch="5">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">05</div>
+        <div class="phe-margin-stat-label">Fünfter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Spannung</div>
+        <div class="phe-margin-key-text">Wissenschaft liefert die <strong>besten Erklärungen</strong> — aber sie bleibt das Werk endlicher Subjekte.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 05</div>
+      <h2 class="phe-ch-title">Wissenschaft, Kontingenz und die Stellung des Menschen</h2>
+      <div class="phe-ch-subtitle">Der Mensch als kontingentes Resultat — und die Wissenschaft als menschliches Unternehmen.</div>
+
+      <p>Ich halte viele wissenschaftliche Theorien für die bestmöglichen Erklärungen der Welt, die uns zur Verfügung stehen. Insbesondere die Evolutionstheorie und die moderne Kosmologie legen nahe, dass der Mensch kein notwendiger Endpunkt der Weltentwicklung ist, sondern ein kontingentes Ergebnis langer, zufälliger Prozesse.</p>
+
+      <p>In diesem Sinn ist der Mensch nicht das Zentrum des Universums, sondern ein randständiges, zeitlich begrenztes Phänomen in einer unvorstellbar großen Wirklichkeit. Diese Einsicht steht im Spannungsverhältnis zum menschlichen Bedürfnis nach Bedeutung. Menschen neigen dazu, sich selbst zu überschätzen und Sinn dort zu erzeugen, wo keine objektive Zweckstruktur erkennbar ist.</p>
+
+      <div class="phe-pullquote">Bedeutung nicht vorauszusetzen, sondern innerhalb einer Wirklichkeit zu denken, die sich nicht um unsere Bedeutung kümmert.</div>
+
+      <p>Mythen, Narrative und metaphysische Systeme können als Versuche verstanden werden, diese mögliche Bedeutungslosigkeit zu überformen. Gleichzeitig ist die wissenschaftliche Perspektive nicht selbst sinnstiftend. Sie beschreibt, aber sie beantwortet nicht die existenzielle Frage nach Bedeutung.</p>
+
+      <p>Auch die Wissenschaft selbst stößt an eine Grenze, die sie schwer reflektiert: Hinter jeder Theorie steht ein endliches Leben. Wissenschaftler sind nicht bloße Träger abstrakter Rationalität, sondern Personen mit Biografien, Interessen, Vorprägungen, Erfolgen und Kränkungen. Wissenschaft wird damit nicht relativiert, aber sie wird in ihrem menschlichen Charakter sichtbar.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Die nüchterne Erkenntnis, ein Ergebnis kontingenter Evolution zu sein, ist seltsam tröstlich. Niemand hat Erwartungen an dich, die du nicht selbst gestellt hast.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Evolutionstheorie</span>
+          <span>Kosmologie</span>
+          <span>Wissenschaftsphilosophie</span>
+          <span>Anthropologie der Endlichkeit</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 6 -->
+  <section class="phe-chapter" data-ch="6">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">06</div>
+        <div class="phe-margin-stat-label">Sechster Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">These</div>
+        <div class="phe-margin-key-text">Freiheit ist <strong>gelebte Erfahrung</strong>, nicht theoretische Schlussfolgerung.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 06</div>
+      <h2 class="phe-ch-title">Freiheit, Verantwortung und die Entstehung von Moral</h2>
+      <div class="phe-ch-subtitle">Moral entsteht im Leben — Theorien stabilisieren sie, erzeugen sie nicht.</div>
+
+      <p>Ich gehe davon aus, dass der Mensch frei ist — in einem grundlegenden, vor-theoretischen Sinn. Diese Freiheit ist nicht zuerst ein Problem der Kausalitätstheorie, sondern eine gelebte Erfahrung von Handlungsfähigkeit: Menschen erleben sich als Wesen, die handeln oder unterlassen können. Auf dieser Erfahrung basiert auch Verantwortung.</p>
+
+      <p>Daraus folgt die Möglichkeit moralischer Zurechnung, Strafe und Anerkennung. Auch gesellschaftliche Praktiken wie Urteil und Kritik beruhen letztlich auf dieser geteilten Grundannahme menschlicher Verantwortlichkeit.</p>
+
+      <div class="phe-pullquote">Moral entsteht nicht im Denken, sondern im Leben selbst.</div>
+
+      <p>Gleichzeitig bin ich überzeugt, dass moralische Überzeugungen nicht in erster Linie aus späteren theoretischen Reflexionen entstehen. Die Grundlage des Moralischen liegt tiefer: in frühkindlicher Entwicklung, in Beziehungserfahrungen, in psychologischen Grundstrukturen wie Vertrauen, Bindung und der Erfahrung von Verlässlichkeit oder deren Fehlen. Besonders prägend ist dabei das, was man als <strong>Urvertrauen</strong> bezeichnen kann.</p>
+
+      <p>Moralische Orientierung entsteht primär im gelebten sozialen Umfeld: in Familie, Kindheit, Erziehung, Schule, Freundschaften und frühen Beziehungserfahrungen. Philosophische Theorien können vorhandene moralische Intuitionen klären, reflektieren oder stabilisieren — aber sie erzeugen sie nur selten grundlegend neu.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Wer denkt, dass Kant einen schlechten Menschen zu einem guten gemacht hätte, hat noch nie versucht, mit einem schlechten Menschen über Kant zu reden.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Phänomenologie der Freiheit</span>
+          <span>Bindungstheorie (Bowlby, Erikson)</span>
+          <span>Schelling</span>
+          <span>Levinas</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 7 -->
+  <section class="phe-chapter" data-ch="7">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">07</div>
+        <div class="phe-margin-stat-label">Siebter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Paradox</div>
+        <div class="phe-margin-key-text">Der Mensch ist <strong>ersetzbar und unersetzlich zugleich</strong>.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 07</div>
+      <h2 class="phe-ch-title">Individuum, Sprache und das Unverfügbare</h2>
+      <div class="phe-ch-subtitle">Das Individuelle entzieht sich dem Begriff — und das ist kein Mangel.</div>
+
+      <p>Der Mensch ist zugleich ersetzbar und unersetzlich. In funktionalen Kontexten sind Menschen austauschbar — Rollen können neu besetzt, Aufgaben übernommen werden. Doch diese Ersetzbarkeit trifft nicht ohne Rest auf das zu, was wir Individualität nennen.</p>
+
+      <p>Die Vernunft arbeitet notwendig mit Allgemeinheiten, mit Begriffen, Regeln und Strukturen. Das Individuelle als Individuelles entzieht sich ihr immer ein Stück weit. Es bleibt ein Überschuss, der nicht vollständig begrifflich fixierbar ist.</p>
+
+      <div class="phe-pullquote">Jeder Mensch ist eine einmalige Verdichtung von Erfahrung, Beziehung, Erinnerung und gelebter Zeit.</div>
+
+      <p>Diese Spannung zeigt sich in zwischenmenschlichen Beziehungen, in denen Bedeutung entsteht, die sich nicht vollständig auf Funktion oder Begriff reduzieren lässt. Vielleicht ist das, was hier <em>Liebe</em> genannt werden kann, genau diese Erfahrung: dass endliche Wesen einander in einer Weise bedeuten, die nicht vollständig in Begriffe, Funktionen oder Rollen auflösbar ist, obwohl sie niemals außerhalb der Endlichkeit steht.</p>
+
+      <p>So bleibt der Mensch zugleich ersetzbar und unersetzlich, allgemeines Wesen und unaufhebbares Individuum — ein Spannungsverhältnis, das sich nicht auflösen lässt, sondern gelebt werden muss.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        LinkedIn ersetzt dich in zwei Wochen. Deine Großmutter nicht.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Existenzphilosophie</span>
+          <span>Levinas</span>
+          <span>Trawny (Philosophie der Liebe)</span>
+          <span>Phänomenologie des Individuellen</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 8 -->
+  <section class="phe-chapter" data-ch="8">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">08</div>
+        <div class="phe-margin-stat-label">Achter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Doppelhorizont</div>
+        <div class="phe-margin-key-text">Denken zielt auf <strong>Allgemeinheit</strong>, entsteht aber aus <strong>individuellem Leben</strong>.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 08</div>
+      <h2 class="phe-ch-title">Denken, Biografie und Wahrheit</h2>
+      <div class="phe-ch-subtitle">Kein Gedanke ist biografielos — und das macht das Denken nicht beliebig.</div>
+
+      <p>Philosophisches Denken ist nie rein abstrakt. Es entsteht aus einem konkreten Leben, aus Erfahrungen, Prägungen und individuellen Situationen. Auch wenn Philosophie auf Allgemeingültigkeit zielt, bleibt sie biografisch situiert.</p>
+
+      <p>In vielen philosophischen Texten entsteht der Eindruck, als würde Denken aus einem rein abstrakten Raum hervorgehen: aus logischen Strukturen, allgemeinen Prinzipien oder zeitlosen Wahrheiten. Der Philosoph spricht dann scheinbar aus einer Perspektive, die von seinem eigenen Leben vollständig abgelöst ist. Ich halte diese Vorstellung für problematisch.</p>
+
+      <div class="phe-pullquote">Jeder Gedanke bewegt sich zwischen dem konkreten Leben, aus dem er hervorgeht, und den allgemeinen Formen, in denen er sich ausdrückt.</div>
+
+      <p>Das bedeutet nicht, dass Wahrheit relativ ist, sondern dass sie immer durch endliche Subjekte hindurch gedacht wird. Zwischen Lebensgeschichte und begrifflicher Geltung besteht eine unauflösbare Spannung, die das Denken zugleich begrenzt und lebendig hält.</p>
+
+      <p>Der biografische Anteil des Denkens ist nicht bloß ein äußerlicher Faktor — er ist Teil seiner Lebendigkeit. Ohne ihn würde Philosophie leicht in Abstraktion erstarren und den Bezug zum menschlichen Leben verlieren, aus dem sie hervorgeht.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Jede transzendentale Deduktion hat eine Kindheit. Manchmal eine schwierige.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Nietzsche</span>
+          <span>Dilthey</span>
+          <span>Heidegger</span>
+          <span>Gadamer (Hermeneutik)</span>
+          <span>Wissenssoziologie</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- Ch 9 -->
+  <section class="phe-chapter" data-ch="9">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">09</div>
+        <div class="phe-margin-stat-label">Neunter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Doppelhorizont</div>
+        <div class="phe-margin-key-text">Metaphysisch <strong>graduell</strong>, pragmatisch <strong>stabil</strong>. Beides gilt zugleich.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 09</div>
+      <h2 class="phe-ch-title">Wissen, Meinung und pragmatische Unterscheidungen</h2>
+      <div class="phe-ch-subtitle">Keine harten metaphysischen Grenzen — und doch unverzichtbare Unterscheidungen.</div>
+
+      <p>Ich gehe davon aus, dass es auf einer strengsten metaphysischen Ebene keine absolut scharfen Grenzen zwischen Wissen und Meinung, Wahrheit und Interpretation gibt. Übergänge sind graduell, nie hart.</p>
+
+      <p>Dennoch sind solche Unterscheidungen im alltäglichen und wissenschaftlichen Kontext unverzichtbar und praktisch stabil. Sie besitzen keine absolute metaphysische Trennschärfe, aber eine <strong>funktionale Notwendigkeit</strong>. Wer Wissenschaft und Verschwörungsmythos für ununterscheidbar erklärt, weil sich keine absolute Grenze ziehen lässt, hat den Punkt der Argumentation verfehlt.</p>
+
+      <div class="phe-pullquote">Nicht absolut, aber auch nicht beliebig.</div>
+
+      <p>Erkenntnis bewegt sich zwischen graduellen Übergängen und pragmatischen Grenzziehungen. Das ist kein Widerspruch, sondern ein Doppelhorizont: Erkenntnis als graduell offen — Handlung als operativ stabil.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Dass sich Wissen und Meinung graduell verhalten, heißt nicht, dass Großonkel Klausʼ Telegram-Channel gleichberechtigt neben dem CERN steht. Sehr graduell verhält es sich da nicht.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Pragmatismus (James, Dewey)</span>
+          <span>Wissenschaftstheorie</span>
+          <span>Hermeneutik der Geltung</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+
+  <!-- Schluss -->
+  <section class="phe-chapter" data-ch="coda">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat" style="font-size:3.5rem;">∞</div>
+        <div class="phe-margin-stat-label">Schluss</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Spannungsfelder</div>
+        <div class="phe-margin-key-text">Endlichkeit ↔ Sinn · Tragik ↔ Freiheit · Wissenschaft ↔ Metaphysik · Individualität ↔ Allgemeinheit</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Schluss</div>
+      <h2 class="phe-ch-title">Endliches, erzählendes, fragendes Wesen</h2>
+      <div class="phe-ch-subtitle">Eine Philosophie, die beim Leben anfängt — nicht beim System.</div>
+
+      <p>Meine Philosophie bewegt sich insgesamt in einem Spannungsfeld aus Endlichkeit und Sinn, Tragik und Freiheit, Wissenschaft und Metaphysik, Individualität und Allgemeinheit.</p>
+
+      <div class="phe-pullquote">Sie beginnt nicht bei einem abstrakten System, sondern beim menschlichen Leben selbst.</div>
+
+      <p>Bei einem endlichen, erzählenden, fragenden und handelnden Wesen, das in einer Welt existiert, die es nicht vollständig verstehen oder beherrschen kann — und die es dennoch notwendig deutet.</p>
+
+      <p>Diese neun Kapitel bilden keinen abgeschlossenen Bau. Sie sind eher die Skizze eines Denkens, das aus einem bestimmten Leben hervorgegangen ist und in einem bestimmten Leben weitergeht. Was darin haltbar bleibt, was sich verändert, was sich noch zeigen wird — das gehört zur Bewegung selbst.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Letzte Randbemerkung</span>
+        Wenn ein Text endet, ist das selten ein Ende. Meist nur ein Punkt, an dem der Autor müde wurde.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Verwandte Seiten</div>
+        <div class="phe-refs-list">
+          <span>→ Lieblingsphilosophen</span>
+          <span>→ Zitate</span>
+          <span>→ Philosophie-Timeline</span>
+          <span>→ Dissertation</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+</article>
+
+
+
+<!-- ─────────────── PDFs ─────────────── -->
+<div class="phe-downloads">
+  <div class="phe-downloads-inner">
+    <div class="phe-downloads-label">Eigene Arbeiten</div>
+    <div class="phe-downloads-hint">Hier werden in Zukunft PDFs eigener Aufsätze und längerer Texte zur freien Verfügung stehen.</div>
   </div>
-  <div style="padding:1.5rem 3rem 0"><div class="section-divider">Kernbegriffe</div></div>
-  <div class="pe-concepts">
-    <div class="pe-card pe-c1"><div class="pe-icon">&#8987;</div><div class="pe-title">Radikale Endlichkeit</div><div class="pe-text">Endlichkeit als ontologische Grundstruktur, nicht als M&auml;ngelbeschreibung. Das Sein selbst ist endlich &mdash; Negativit&auml;t geh&ouml;rt zu seiner Struktur.</div><span class="pe-key">&rarr; Gegen: Hegels Aufhebung der Endlichkeit</span></div>
-    <div class="pe-card pe-c2"><div class="pe-icon">&#8734;</div><div class="pe-title">Unendlichkeit als Aufgabe</div><div class="pe-text">Unendlichkeit ist kein Zustand, sondern eine immer wieder aufzunehmende Praxis der &Uuml;berschreitung. Das Unendliche ist das Werk des Endlichen.</div><span class="pe-key">&rarr; Im Anschluss an: Schellings Weltalter</span></div>
-    <div class="pe-card pe-c3"><div class="pe-icon">&#11835;</div><div class="pe-title">Strukturierte Negativit&auml;t</div><div class="pe-text">Das Nichts ist nicht leer, sondern strukturiert. Es gibt Formen des Nicht-Seins, die dem Sein Kontur und Richtung geben.</div><span class="pe-key">&rarr; Ankn&uuml;pfung: Schellings Ungrund</span></div>
-    <div class="pe-card pe-c4"><div class="pe-icon">&#127754;</div><div class="pe-title">Zeit als Erm&ouml;glichung</div><div class="pe-text">Zeit ist nicht der Rahmen, in dem Dinge geschehen &mdash; sie ist das, was das Geschehen &uuml;berhaupt erst m&ouml;glich macht. Zeitlichkeit und Endlichkeit sind ein Begriff.</div><span class="pe-key">&rarr; Ankn&uuml;pfung: Schellings Zeittheorie</span></div>
-    <div class="pe-card pe-c5"><div class="pe-icon">&#129695;</div><div class="pe-title">Reflexive Immanenz</div><div class="pe-text">Es gibt keine Au&szlig;enperspektive &mdash; aber innerhalb der Immanenz ist Selbst-Reflexion m&ouml;glich. Das Denken kann sich selbst als endlich begreifen.</div><span class="pe-key">&rarr; Gegen: Transzendenzmodelle</span></div>
-    <div class="pe-card pe-c6"><div class="pe-icon">&#128205;</div><div class="pe-title">Situierte Vernunft</div><div class="pe-text">Vernunft ist immer schon situiert in Geschichte, Sprache und Leib. Diese Situiertheit ist keine Einschr&auml;nkung, sondern Bedingung von Erkenntnis.</div><span class="pe-key">&rarr; Im Anschluss an: Heidegger, Merleau-Ponty</span></div>
-  </div>
-  <div class="pe-tensions">
-    <div class="section-divider">Produktive Spannungen</div>
-    <div class="pe-tension"><div class="pe-ta">Endlichkeit</div><div class="pe-tv">&mdash; erm&ouml;glicht &mdash;</div><div class="pe-tb">Unendlichkeit</div></div>
-    <div class="pe-tension"><div class="pe-ta">Negativit&auml;t</div><div class="pe-tv">&mdash; strukturiert &mdash;</div><div class="pe-tb">Positivit&auml;t</div></div>
-    <div class="pe-tension"><div class="pe-ta">Zeit</div><div class="pe-tv">&mdash; als Bedingung von &mdash;</div><div class="pe-tb">Sein</div></div>
-    <div class="pe-tension"><div class="pe-ta">Immanenz</div><div class="pe-tv">&mdash; erm&ouml;glicht &mdash;</div><div class="pe-tb">Selbstreflexion</div></div>
-    <div class="pe-tension"><div class="pe-ta">Situiertheit</div><div class="pe-tv">&mdash; erm&ouml;glicht &mdash;</div><div class="pe-tb">Allgemeinheit</div></div>
-  </div>
-  <div class="pe-influences">
-    <div class="section-divider">Einfl&uuml;sse &amp; Denktraditionen</div>
-    <div class="pe-chips">
-      <span class="pe-chip">F. W. J. Schelling &middot; Weltalterphilosophie</span>
-      <span class="pe-chip">Martin Heidegger &middot; Sein und Zeit</span>
-      <span class="pe-chip">Marc Richir &middot; Ph&auml;nomenologie</span>
-      <span class="pe-chip">L&aacute;szl&oacute; Tengelyi &middot; Welt und Unendlichkeit</span>
-      <span class="pe-chip">Alexander Schnell &middot; Transzendentalphilosophie</span>
-      <span class="pe-chip">Hegel &middot; Dialektik (kritisch)</span>
-      <span class="pe-chip">Merleau-Ponty &middot; Leibph&auml;nomenologie</span>
-      <span class="pe-chip">Friedrich Jacobi &middot; Ungrund der Freiheit</span>
-      <span class="pe-chip">Emil Angehrn &middot; Ursprungsdenken</span>
-      <span class="pe-chip">Peter Trawny &middot; Philosophie der Liebe</span>
-      <span class="pe-chip">Emmanuel Levinas &middot; Ethik als erste Philosophie</span>
-      <span class="pe-chip">Meister Eckhart &middot; Abgeschiedenheit</span>
-    </div>
-    <div class="pe-bridge">
-      <div class="pe-bridge-label">// BR&Uuml;CKEN ZUM EMPIRISCHEN DENKEN</div>
-      <p class="pe-bridge-text">Philosophie und Data Science sind f&uuml;r mich keine Gegens&auml;tze. Daten sind endlich: Sie sind Schnitte durch eine Wirklichkeit, die sie nie vollst&auml;ndig erfassen k&ouml;nnen. Welche Daten erhoben werden, welche fehlen, was z&auml;hlt und was nicht &mdash; das ist eine zutiefst philosophische Frage, die tief in die Praxis der Datenanalyse eingreift.</p>
-    </div>
-  </div>
+</div>
+
+<script>
+(function(){
+  const nav = document.getElementById('phe-chapnav');
+  const essay = document.getElementById('phe-essay');
+  if(!nav || !essay) return;
+  const btns = nav.querySelectorAll('.phe-chap-btn');
+  const chs  = essay.querySelectorAll('.phe-chapter');
+  btns.forEach(function(b){
+    b.onclick = function(){
+      const target = b.getAttribute('data-ch');
+      btns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      chs.forEach(c => c.classList.toggle('active', c.getAttribute('data-ch') === target));
+      // scroll to top of essay
+      essay.scrollIntoView({behavior:'smooth', block:'start'});
+    };
+  });
+})();
+</script>

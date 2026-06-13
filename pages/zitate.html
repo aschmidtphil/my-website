@@ -1,95 +1,625 @@
-<div class="zitat-hero">
-  <div class="zitat-hero-glow"></div>
+<!-- ════════════════════════════════════════════════════════════════
+     ZITATE SEITE — visuell aufgewertet
+     ─────────────────────────────────────────────────────────────────
+     Datenformat:
+       text       : Zitat-Text (lange werden eingeklappt)
+       author     : Autor-Name
+       source     : Quellenangabe
+       kat        : Kategorie für Filter
+       url        : (optional) Link zur frei zugänglichen Quelle
+       original   : (optional) Originalsprache (z.B. Griechisch)
+       portrait   : (optional) Slug für assets/images/philosophen/<slug>.jpg
+       pullquote  : (optional) Hervorgehobener Schlüsselsatz für lange Zitate
+       note       : (optional) Persönliche Notiz
+     ════════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── Hero ────────────────────────────────────────────────────── */
+.zitat-page-hero{padding:4rem 3.5rem 2rem;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.zitat-page-hero-glow{position:absolute;right:-80px;top:-80px;width:400px;height:400px;background:radial-gradient(circle,var(--glow-accent2) 0%,transparent 70%);pointer-events:none;}
+.zitat-page-hero h1{font-family:var(--fh);font-size:3rem;font-weight:800;letter-spacing:-.04em;color:var(--text);margin:.3rem 0;}
+.zitat-page-hero h1 span{color:var(--accent2);}
+.zitat-page-hero p.lead{color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.92rem;}
+
+/* ── Zufalls-Showcase oben (groß, mit Porträt) ──────────────── */
+.zr-showcase-wrap{padding:2.5rem 3.5rem 1.2rem;}
+.zr-showcase{
+  position:relative;
+  display:grid;
+  grid-template-columns:180px 1fr;
+  gap:2rem;
+  background:linear-gradient(135deg,rgba(0,0,0,.025),rgba(0,0,0,.06));
+  border:1px solid var(--border);
+  border-left:4px solid var(--accent);
+  border-radius:0 14px 14px 0;
+  padding:2rem 2.25rem 1.85rem;
+  overflow:hidden;
+  min-height:200px;
+  transition:opacity .35s ease, transform .35s ease;
+}
+.zr-showcase.swap{opacity:0;transform:translateY(8px);}
+.zr-showcase::after{
+  content:'';position:absolute;right:-50px;top:-50px;
+  width:240px;height:240px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow-accent) 0%, transparent 70%);
+  opacity:.35;pointer-events:none;
+}
+.zr-portrait{
+  width:180px;height:220px;border-radius:8px;
+  background:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;
+  box-shadow:0 8px 24px rgba(0,0,0,.18), 0 0 0 1px var(--border);
+  position:relative;
+  z-index:1;
+}
+.zr-portrait picture{width:100%;height:100%;display:block;}
+.zr-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block;filter:contrast(1.05) saturate(.85);}
+.zr-portrait-mono{
+  font-family:var(--fh);font-size:4rem;font-weight:800;
+  color:var(--accent);opacity:.4;letter-spacing:-.05em;
+}
+.zr-body{flex:1;min-width:0;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;}
+.zr-label{
+  font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.7rem;display:flex;align-items:center;gap:.55rem;
+}
+.zr-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+.zr-quote{
+  font-family:var(--fh);font-size:1.18rem;line-height:1.6;font-weight:500;
+  color:var(--text);font-style:italic;margin-bottom:1rem;
+  position:relative;
+}
+.zr-quote::before{
+  content:'\201C';position:absolute;top:-1.8rem;left:-.6rem;
+  font-family:var(--fh);font-size:5rem;font-weight:800;
+  color:var(--accent);opacity:.18;line-height:1;
+}
+.zr-meta{font-family:var(--fm);font-size:.78rem;color:var(--text3);letter-spacing:.04em;}
+.zr-author{color:var(--accent2);font-weight:500;}
+.zr-reroll{
+  position:absolute;top:.9rem;right:1rem;z-index:2;
+  background:rgba(255,255,255,.5);backdrop-filter:blur(8px);
+  border:1px solid var(--border);color:var(--text3);
+  width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;
+}
+.zr-reroll:hover{border-color:var(--accent);color:var(--accent);transform:rotate(180deg);}
+[data-theme="dark"] .zr-reroll{background:rgba(0,0,0,.3);}
+
+@media(max-width:780px){
+  .zr-showcase{grid-template-columns:1fr;}
+  .zr-portrait{width:120px;height:150px;margin:0 auto;}
+}
+
+/* ── Dekoratives Trennornament ──────────────────────────────── */
+.zitat-ornament{
+  display:flex;align-items:center;justify-content:center;
+  padding:.4rem 3.5rem 0;
+  color:var(--text3);
+}
+.zitat-ornament-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);max-width:200px;}
+.zitat-ornament-glyph{margin:0 1.2rem;font-family:var(--fh);font-size:1rem;opacity:.5;letter-spacing:.5em;}
+
+/* ── Filter-Leiste ──────────────────────────────────────────── */
+.zitat-filter-bar{padding:1.5rem 3.5rem 0;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;}
+.zitat-filter-label{font-family:var(--fm);font-size:.65rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-right:.5rem;}
+.zitat-filter-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:.35rem .8rem;border-radius:20px;font-size:.75rem;cursor:pointer;font-family:inherit;transition:all .15s;}
+.zitat-filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+.zitat-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.zitat-filter-btn .ct{margin-left:.4rem;opacity:.7;font-size:.66rem;}
+.zitat-count{margin-left:auto;font-family:var(--fm);font-size:.72rem;color:var(--text3);letter-spacing:.05em;}
+
+/* ── Karten-Grid ────────────────────────────────────────────── */
+.zitat-masonry{columns:2;column-gap:1.5rem;padding:1.5rem 3.5rem 4rem;}
+@media(max-width:900px){.zitat-masonry{columns:1;}}
+
+.zitat-card{
+  break-inside:avoid;background:var(--bg);
+  border:1px solid var(--border);border-radius:12px;
+  padding:0;margin-bottom:1.5rem;
+  position:relative;transition:all .25s;
+  overflow:hidden;
+}
+.zitat-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-hover);}
+
+/* Karten-Kopf: Porträt + Autor-Namen schön gestylt */
+.zc-head{
+  display:flex;align-items:center;gap:.85rem;
+  padding:.95rem 1.3rem .85rem;
+  background:linear-gradient(180deg,rgba(0,0,0,.03),transparent);
+  border-bottom:1px solid var(--border);
+}
+.zc-portrait{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--surface);
+  overflow:hidden;flex-shrink:0;
+  box-shadow:0 0 0 2px var(--bg), 0 0 0 3px var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.zc-portrait picture{width:100%;height:100%;display:block;}
+.zc-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
+.zc-portrait-mono{font-family:var(--fh);font-weight:700;color:var(--accent);font-size:1.05rem;}
+.zc-author-block{flex:1;min-width:0;}
+.zc-author{font-family:var(--fh);font-weight:700;font-size:.95rem;color:var(--text);letter-spacing:-.01em;line-height:1.2;}
+.zc-source{font-family:var(--fm);font-size:.66rem;color:var(--text3);letter-spacing:.03em;margin-top:.15rem;}
+.zc-kat-tag{
+  font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-bg, rgba(94,67,179,.08));
+  padding:.2rem .55rem;border-radius:10px;flex-shrink:0;
+}
+
+.zc-body{padding:1.2rem 1.5rem 1.2rem;position:relative;}
+.zc-body::before{
+  content:'\201C';position:absolute;top:-.2rem;left:.8rem;
+  font-family:var(--fh);font-size:3.5rem;font-weight:800;
+  color:var(--accent);opacity:.09;line-height:1;pointer-events:none;
+}
+
+.zc-text{font-family:var(--fh);font-size:.93rem;line-height:1.72;color:var(--text);white-space:pre-wrap;position:relative;z-index:1;}
+.zc-original{
+  font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text2);
+  line-height:1.7;margin-bottom:.85rem;padding-bottom:.85rem;
+  border-bottom:1px dashed var(--border);font-style:italic;
+}
+
+/* Drop-Cap für lange Zitate */
+.zc-text-full > p:first-of-type::first-letter{
+  font-family:var(--fh);font-size:3.4rem;font-weight:800;
+  float:left;line-height:.85;padding:.3rem .55rem 0 0;
+  color:var(--accent);
+}
+.zc-text-full p{margin:0 0 .85rem;}
+.zc-text-full p:last-child{margin-bottom:0;}
+
+/* Pull-Quote für hervorgehobene Sätze */
+.zc-pullquote{
+  margin:1.2rem 0 1.3rem;padding:.95rem 1.3rem;
+  border-left:3px solid var(--accent2);
+  background:linear-gradient(90deg,rgba(0,0,0,.04),transparent);
+  font-family:var(--fh);font-size:1.05rem;font-weight:600;line-height:1.5;
+  color:var(--text);font-style:italic;
+  border-radius:0 8px 8px 0;
+}
+
+.zitat-card.is-long.is-collapsed .zc-text-full{display:none;}
+.zitat-card.is-long.is-expanded .zc-text-short{display:none;}
+.zc-toggle{
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:1rem;padding:.45rem .9rem;
+  font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);background:var(--surface);
+  border:1px solid var(--border);border-radius:6px;cursor:pointer;
+  transition:all .15s;
+}
+.zc-toggle:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+
+.zc-foot{
+  padding:.7rem 1.5rem .85rem;
+  border-top:1px solid var(--border);
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.02));
+  display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
+}
+.zc-source-link{
+  font-family:var(--fm);font-size:.7rem;color:var(--text3);
+  text-decoration:none;letter-spacing:.02em;
+  border-bottom:1px dotted var(--text3);
+}
+.zc-source-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
+.zc-source-full{font-family:var(--fm);font-size:.7rem;color:var(--text3);letter-spacing:.02em;flex:1;min-width:0;}
+
+.zc-note{
+  margin:0 1.5rem 1rem;padding:.7rem .9rem;
+  background:var(--surface);border-radius:6px;
+  font-size:.78rem;color:var(--text3);font-style:italic;
+  line-height:1.6;border-left:2px solid var(--accent2);
+}
+</style>
+
+<!-- ─────────────── HERO ─────────────── -->
+<div class="page-hero">
+  <div class="page-hero-glow"></div>
   <p class="hero-tag">Gedanken, die bleiben</p>
-  <h1 style="font-family:var(--fh);font-size:3rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">Zitate<span style="color:var(--accent2)">.</span></h1>
-  <p style="color:var(--text2);max-width:520px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
-    S&auml;tze, die sich festgesetzt haben. Aus B&uuml;chern, Vorlesungen, eigenen Notizen &mdash; philosophische, pers&ouml;nliche und analytische Gedanken.</p>
+  <h1 class="page-title">Zitate<span>.</span></h1>
+  <p class="page-desc">Sätze, die sich festgesetzt haben. Aus Büchern, Vorlesungen, eigenen Notizen — philosophische, persönliche und analytische Gedanken.</p>
 </div>
 
-<!-- Heine-Motto prominent -->
-<div class="zitat-motto">
-  <div class="zitat-motto-text">
-    &bdquo;Wenn aber Immanuel Kant, dieser gro&szlig;e Zerst&ouml;rer im Reiche der Gedanken, an Terrorismus den Maximilian Robespierre weit &uuml;bertraf, so hat er doch mit diesem manche &Auml;hnlichkeiten, die zu einer Vergleichung beider M&auml;nner auffordern. Zun&auml;chst finden wir in beiden dieselbe unerbittliche, schneidende, poesielose, n&uuml;chterne Ehrlichkeit. Dann finden wir in beiden dasselbe Talent des Mi&szlig;trauens, nur da&szlig; es der eine gegen Gedanken aus&uuml;bt und Kritik nennt, w&auml;hrend der andere es gegen Menschen anwendet und republikanische Tugend betitelt. Im h&ouml;chsten Grade jedoch zeigt sich in beiden der Typus des Spie&szlig;b&uuml;rgertums &mdash; die Natur hatte sie bestimmt, Kaffee und Zucker zu wiegen, aber das Schicksal wollte, da&szlig; sie andere Dinge abw&ouml;gen, und legte dem einen einen K&ouml;nig und dem anderen einen Gott auf die Waagschale &hellip; Und sie gaben das richtige Gewicht!&ldquo;
+<!-- ─────────────── ZUFALLSZITAT ─────────────── -->
+<div class="zr-showcase-wrap">
+  <div class="zr-showcase" id="zr-showcase">
+    <button class="zr-reroll" onclick="rerollRandom()" title="Anderes Zitat">⟲</button>
+    <div class="zr-portrait" id="zr-portrait">
+      <span class="zr-portrait-mono" id="zr-mono">∞</span>
+    </div>
+    <div class="zr-body" onclick="focusZitatFromRandom()" title="Zum Zitat in der Liste springen">
+      <div class="zr-label">Aus der Sammlung</div>
+      <div class="zr-quote" id="zr-quote"></div>
+      <div class="zr-meta" id="zr-meta"></div>
+    </div>
   </div>
-  <div class="zitat-motto-source">Heinrich Heine &mdash; Zur Geschichte der Religion und Philosophie in Deutschland (1834)</div>
-  <div class="zitat-motto-context">Das Motto meiner Dissertation &mdash; Schellings Zeittheorie zwischen Kant und dem Absoluten.</div>
 </div>
 
-<div class="zitat-filter" id="zitat-filter"></div>
+<div class="zitat-ornament">
+  <span class="zitat-ornament-line"></span>
+  <span class="zitat-ornament-glyph">∴</span>
+  <span class="zitat-ornament-line"></span>
+</div>
+
+<!-- ─────────────── FILTER + GRID ─────────────── -->
+<div class="zitat-filter-bar" id="zitat-filter">
+  <span class="zitat-filter-label">Filter:</span>
+</div>
 <div class="zitat-masonry" id="zitat-grid"></div>
 
 <script>
 (function(){
 'use strict';
+
+/* Mehrfach-Porträts: nutzt die geteilte Konfiguration window.MULTI_PORTRAITS.
+   Wählt zufällig <slug>, <slug>1, <slug>2 … und merkt sich die Wahl. */
+window.MULTI_PORTRAITS = window.MULTI_PORTRAITS || {};
+const _zChosen = {};
+function resolveZSlug(slug){
+  const n = window.MULTI_PORTRAITS[slug];
+  if (!n || n < 2) return slug;
+  if (_zChosen[slug] === undefined){
+    const pick = Math.floor(Math.random() * n);
+    _zChosen[slug] = pick === 0 ? slug : slug + pick;
+  }
+  return _zChosen[slug];
+}
+
+// ════════════════════════════════════════════════════════════════
+// ZITATE
+// ════════════════════════════════════════════════════════════════
 const ZITATE = [
-  // From Zitate.json
-  {text:'Alles Seiende ist durch das Eine.',author:'Plotin',source:'Enneaden VI,9 — Über das Gute oder das Eine',kat:'Metaphysik'},
-  {text:'Die Idee des Guten steht jenseits des Seins an Würde und Macht.',author:'Platon',source:'Politeia (Der Staat), Buch VI',kat:'Antike'},
-  {text:'Das wahrhaft Gute ist das, was um seiner selbst willen erstrebt wird.',author:'Aristoteles',source:'Nikomachische Ethik',kat:'Antike'},
-  {text:'Der Mensch soll so frei werden von sich selbst, dass Gott in ihm wirken kann.',author:'Meister Eckhart',source:'Predigten und Traktate',kat:'Mystik'},
-  {text:'Der Mensch ist nur ein Schilfrohr, das schwächste in der Natur; aber er ist ein denkendes Schilfrohr.',author:'Blaise Pascal',source:'Pensées',kat:'Rationalismus'},
-  {text:'Der Mensch ist in der Mitte zwischen dem Nichts und dem Unendlichen.',author:'Blaise Pascal',source:'Pensées',kat:'Rationalismus'},
-  {text:'Zwei Dinge erfüllen das Gemüt mit immer neuer Bewunderung und Ehrfurcht: der bestirnte Himmel über mir und das moralische Gesetz in mir.',author:'Immanuel Kant',source:'Kritik der praktischen Vernunft',kat:'Kant'},
-  {text:'Was kann ich wissen? Was soll ich tun? Was darf ich hoffen? Was ist der Mensch?',author:'Immanuel Kant',source:'Logik (nach Jäsche)',kat:'Kant'},
-  {text:'Der Begriff der Freiheit ist der eigentliche Mittelpunkt der Philosophie.',author:'F. W. J. Schelling',source:'Philosophische Untersuchungen über das Wesen der menschlichen Freiheit (1809)',kat:'Schelling'},
-  {text:'Wer nicht versucht hat, die Freiheit über das ganze Universum auszudehnen, hat sie nicht verstanden.',author:'F. W. J. Schelling',source:'Freiheitsschrift',kat:'Schelling'},
-  {text:'Der Mensch kommt am Ausgangspunkt von Zeitlichkeit und Endlichkeit nicht vorbei; sie sind allen Versuchen, über das Endliche hinaus zum Unendlichen zu gelangen, immer schon eingeschrieben und gehen ihnen voraus.',author:'Friedrich Heinrich Jacobi (interpretiert von Birgit Sandkaulen)',source:'Grund und Ursache. Die Vernunftkritik Jacobis',kat:'Endlichkeit'},
-  {text:'Die philosophische Perspektive sub specie aeternitatis verkennt, dass jede Idee des Unendlichen bereits aus der Erfahrung endlicher Existenz hervorgeht.',author:'Birgit Sandkaulen',source:'Grund und Ursache. Die Vernunftkritik Jacobis',kat:'Endlichkeit'},
-  // Additional
-  {text:'Das Antlitz öffnet die ursprünglichste Sprache. Das Antlitz ist Bedeutung für sich allein.',author:'Emmanuel Levinas',source:'Totalität und Unendlichkeit',kat:'Phänomenologie'},
-  {text:'Seid still und erkennet, daß ich Gott bin.',author:'Meister Eckhart',source:'Predigt über Ps. 46,11',kat:'Mystik'},
-  {text:'Die Zeit ist kein äußerer Rahmen, in dem Dinge geschehen, sondern die innere Möglichkeit des Geschehens selbst.',author:'Alexander Schmidt',source:'Schellings Zeittheorie, 2024',kat:'Eigenes'},
-  {text:'Die Natur soll der sichtbare Geist, der Geist die unsichtbare Natur sein.',author:'F. W. J. Schelling',source:'Ideen zu einer Philosophie der Natur',kat:'Schelling'},
-  {text:'Das Dasein ist ein Seiendes, dem es in seinem Sein um dieses Sein selbst geht.',author:'Martin Heidegger',source:'Sein und Zeit, §4',kat:'Phänomenologie'},
-  {text:'Endlichkeit ist nicht das Gegenteil von Unendlichkeit, sondern ihre innere Bedingung.',author:'Alexander Schmidt',source:'Philosophie der radikalen Endlichkeit',kat:'Eigenes'},
-  {text:'Alles fließt — panta rhei. Man kann nicht zweimal in denselben Fluss steigen.',author:'Heraklit',source:'Fragment (bei Platon)',kat:'Antike'},
-  {text:'Die untersuchte Leben ist nicht wert, gelebt zu werden.',author:'Sokrates',source:'Platons Apologie',kat:'Antike'},
-  {text:'Gott ist tot. Gott bleibt tot. Und wir haben ihn getötet.',author:'Friedrich Nietzsche',source:'Die fröhliche Wissenschaft, §125',kat:'Nietzsche'},
-  {text:'Man muss sich Sisyphus als glücklich vorstellen.',author:'Albert Camus',source:'Der Mythos des Sisyphus',kat:'Existenz'},
-  {text:'Worüber man nicht sprechen kann, darüber muss man schweigen.',author:'Ludwig Wittgenstein',source:'Tractatus Logico-Philosophicus, 7',kat:'Analytisch'},
-  {text:'Es gibt kein richtiges Leben im falschen.',author:'Theodor W. Adorno',source:'Minima Moralia',kat:'Kritische Theorie'},
-  {text:'Daten sind endlich: Sie sind Schnitte durch eine Wirklichkeit, die sie nie vollständig erfassen können.',author:'Alexander Schmidt',source:'Persönliche Notiz',kat:'Eigenes'},
-  {text:'Das Schweigen ist nichts anderes als die Abwesenheit aller Bilder.',author:'Meister Eckhart',source:'Deutsche Predigten',kat:'Mystik'},
+
+  // ── Heinrich Heine (jetzt Teil der regulären Sammlung) ──────
+  {
+    text: '„Wenn aber Immanuel Kant, dieser große Zerstörer im Reiche der Gedanken, an Terrorismus den Maximilian Robespierre weit übertraf, so hat er doch mit diesem manche Ähnlichkeiten, die zu einer Vergleichung beider Männer auffordern. Zunächst finden wir in beiden dieselbe unerbittliche, schneidende, poesielose, nüchterne Ehrlichkeit. Dann finden wir in beiden dasselbe Talent des Mißtrauens, nur daß es der eine gegen Gedanken ausübt und Kritik nennt, während der andere es gegen Menschen anwendet und republikanische Tugend betitelt. Im höchsten Grade jedoch zeigt sich in beiden der Typus des Spießbürgertums — die Natur hatte sie bestimmt, Kaffee und Zucker zu wiegen, aber das Schicksal wollte, daß sie andere Dinge abwögen, und legte dem einen einen König und dem anderen einen Gott auf die Waagschale … Und sie gaben das richtige Gewicht!"',
+    pullquote: 'Und sie gaben das richtige Gewicht!',
+    author: 'Heinrich Heine',
+    source: 'Zur Geschichte der Religion und Philosophie in Deutschland (1834)',
+    url: 'https://www.projekt-gutenberg.org/heine/religphi/religphi.html',
+    kat: 'Literatur',
+    portrait: 'heine',
+    note: 'Das schwebte mir bei meiner Dissertation vor: mich von anderen Meinungen, Normen und Konventionen nicht beirren zu lassen und in Bezug auf Schelling einfach das richtige Gewicht anzugeben — dass er sich eher als Theologe denn als Philosoph verstand, auch wenn das im Fach nicht gern gehört wird.'
+  },
+
+  // ── Aristoteles ─────────────────────────────────────────────
+  {
+    text: 'In allen natürlichen Dingen ist etwas Erstaunliches.',
+    original: 'ἐν πᾶσι γὰρ τοῖς φυσιχοῖς ἔνεστί τι θαυμαστόν.',
+    author: 'Aristoteles',
+    source: 'De Partibus Animalium 645a16 — Übersetzung: A. Schmidt',
+    url: 'https://archive.org/details/bub_gb_ouQTAAAAYAAJ/page/226/mode/2up',
+    kat: 'Antike',
+    portrait: 'aristoteles'
+  },
+
+  // ── Platon ──────────────────────────────────────────────────
+  {
+    text: 'Die Idee des Guten steht jenseits des Seins. (ἐπέκεινα τῆς οὐσίας)',
+    author: 'Platon',
+    source: 'Politeia 509b',
+    kat: 'Antike',
+    portrait: 'platon'
+  },
+
+  // ── Plotin ──────────────────────────────────────────────────
+  {
+    text: 'Alles, was ist, ist durch das Eine.',
+    author: 'Plotin',
+    source: 'Enneaden VI,9 — Über das Gute oder das Eine',
+    kat: 'Antike',
+    portrait: 'plotin'
+  },
+
+  // ── Schelling ───────────────────────────────────────────────
+  {
+    text: 'Nur wer Freiheit gekostet hat, kann das Verlangen empfinden, ihr alles analog zu machen, sie über das ganze Universum zu verbreiten. Wer nicht auf diesem Weg zur Philosophie kommt, folgt und thut bloß andern nach, was sie thun; ohne Gefühl weßwegen sie es thun.',
+    pullquote: 'Nur wer Freiheit gekostet hat, kann das Verlangen empfinden, ihr alles analog zu machen.',
+    author: 'F. W. J. Schelling',
+    source: 'Vom Wesen der menschlichen Freiheit und den damit zusammenhängenden Gegenständen (SW VII, 351)',
+    kat: 'Freiheit',
+    portrait: 'schelling'
+  },
+
+  // ── Pascal kurz ─────────────────────────────────────────────
+  {
+    text: 'Ich weiß nicht, wer mich in die Welt gesetzt hat, und auch nicht, was die Welt und ich selbst sind. Ich weiß nicht, was mein Körper, meine Sinne, meine Seele und selbst jener Teil meines Ichs sind, der denkt. Ich sehe überall nur Unendlichkeiten, die mich wie ein Atom und wie einen Schatten einschließen. Alles, was ich erkenne, ist, daß ich bald sterben muß; doch was ich am wenigsten begreife, ist gerade dieser Tod, dem ich nicht entgehen kann.',
+    pullquote: 'Ich sehe überall nur Unendlichkeiten, die mich wie ein Atom und wie einen Schatten einschließen.',
+    author: 'Blaise Pascal',
+    source: 'Pensées',
+    kat: '(Un-)Endlichkeit',
+    portrait: 'pascal'
+  },
+
+  // ── Pascal — Gedanken Kap. 6 ────────────────────────────────
+  {
+    text: `Das erste, was sich dem Menschen bei einer Selbstbetrachtung darbietet, ist sein Körper, d. h. eine gewisse Masse Materie, die ihm eigen ist. Um aber zu begreifen, was sie sei, muß er sie vergleichen mit allem was über, und mit allem was unter ihm ist, damit er seine rechten Grenzen erkenne.
+
+Er bleibe doch nicht dabei stehen, einfach die Gegenstände zu betrachten, welche ihn umgeben; er betrachte die ganze Natur in ihrer ganzen erhabenen Majestät; er beschaue jenes glänzende Licht, welches gleich einer ewigen Fackel das Universum erleuchtet; die Erde erscheine ihm wie ein Punkt, gegenüber dem weiten Umkreis, den dieses Gestirn beschreibt; und er möge darüber erstaunen, daß dieser weite Umkreis selbst nur ein verschwindender Punkt ist gegenüber dem, den die Sterne, die im Firmamente dahinrollen, umfassen. Wenn aber hier unser Denken stillsteht, so möge die Phantasie weiter schweifen. Sie wird weit eher ermüden auszumalen, als die Natur Farben darzureichen. Alles was wir von der Welt sehen, ist nur eine unmerkliche Spur in dem weiten Busen der Natur. Keine Idee reicht an die Ausdehnung ihrer Räume. Wir haben unsere Begriffe gut aufblasen, wir schaffen doch nur Atome gegenüber den wirklichen Dingen. Es ist eine unendliche Sphäre, deren Centrum überall, deren Peripherie nirgends ist.
+
+Endlich ist es eins der größten deutlichen Kennzeichen der Allmacht Gottes, daß unsere Phantasie sich in diesem Gedanken verliert.
+
+In sich zurückgekehrt, betrachte der Mensch, was er ist im Verhältnis zu dem, was ist; er erkenne sich als verirrt in diesem abgelegenen Bezirk der Natur; und darnach wie ihm dieser kleine Kerker, in welchem er wohnt, d. h. diese sichtbare Welt erscheint, lerne er die Erde, die Königreiche, die Städte, sich selbst, seinen wahren Werth schätzen.
+
+Was ist der Mensch im Unendlichen? Wer kann es begreifen? Aber um ihm ein anderes ebenso erstaunliches Wunder zu zeigen, forsche er in den kleinsten Dingen, die er kennt. Ein Milbe z. B. biete ihm in der Winzigkeit ihres Körpers Theile unvergleichlich viel winziger, Beine mit Bändern, Adern in diesen Beinen, Blut in diesen Adern, Feuchtigkeit in diesem Blut, Tropfen in dieser Feuchtigkeit, Dämpfe in diesen Tropfen; er erschöpfe, indem er auch diese letzten Dinge noch theilt, all' seine Begriffskräfte, und der letzte Gegenstand, zu dem er gelangen kann, sei jetzt der unserer Betrachtung. Er denkt vielleicht, dies sei die äußerste Kleinheit der Natur. Ich will ihn darin einen neuen Abgrund sehen lassen. Ich will ihm nicht nur das sichtbare Universum, sondern auch alles, was er von der Unendlichkeit der Natur zu begreifen fähig ist, in dem Umkreis dieses unsichtbaren Atoms ausmalen. Er erblicke darin eine Unendlichkeit von Welten, deren jede ihr Firmament, ihre Planeten, ihre Erde hat in demselben Verhältnis, wie die sichtbare Welt; auf dieser Erde Thiere, schließlich auch wieder Milben, an denen er wieder findet, was er an den ersten gesehen, und noch an diesen anderen findet er wieder dasselbe, ohne Ende und Ruhe. Er verliere sich in diesen Wundern, die vermöge ihrer Kleinheit eben so erstaunlich, als die andern vermöge ihrer Größe. Denn wer wird nicht bewundern, daß unser Körper eben noch nicht wahrnehmbar im Universum, das seinerseits nicht wahrnehmbar im Busen des All, jetzt ein Koloß, eine Welt, ja vielmehr ein All ist gegenüber der äußersten Kleinheit, zu der man nicht gelangen kann?
+
+Wer sich so betrachtet, wird ohne Zweifel erschrecken, sich in der Masse, die ihm die Natur gegeben, gleichsam schweben zu sehen zwischen den beiden Abgründen der Unendlichkeit und des Nichts, von welchen beiden er gleichweit entfernt ist. Er wird erzittern in der Erkenntnis dieser Wunder; und ich glaube, seine Neugier wird sich in Bewunderung wandeln und er wird geneigter sein, sie mit Schweigen zu beschauen, als mit Anmaßung zu erforschen.
+
+Denn was ist schließlich der Mensch in der Natur? Ein Nichts gegenüber der Unendlichkeit, ein All gegenüber dem Nichts, ein Mittelding zwischen Nichts und Allem. Er ist von beiden Extremen unendlich entfernt, und sein Dasein ist nicht weniger weit vom Nichts, aus dem er hervorgegangen, als vom Unendlichen in das er verschlungen ist.
+
+Seine Urtheilskraft nimmt in der Reihe der intelligiblen Dinge denselben Platz ein, wie sein Körper in der Ausdehnung der Natur; und alles, was er vermag, ist, einen gewissen Schein von der Mitte der Dinge zu begreifen, während er auf ewig daran verzweifeln muß, ihren Anfang und ihr Ende zu erkennen. Alle Dinge kommen aus dem Nichts und gehen zur Unendlichkeit. Wer vermag solchen erstaunlichen Schritten zu folgen? Der Schöpfer dieser Wunder begreift sie; kein anderer ist dessen fähig.
+
+Dieser Zustand, der die Mitte hält zwischen den Extremen, kehrt in all' unsern Fähigkeiten wieder. Unsere Sinne empfinden kein Extrem. Zuviel Geräusch betäubt uns, zuviel Licht blendet uns, zu große Entfernung und zu große Nähe hindert das Sehen, zu große Länge und zu große Kürze verdunkeln eine Rede, zu viel Vergnügen belästigt, zu viel Gleichklang mißfällt. Wir spüren weder die äußerste Wärme noch die äußerste Kälte. Die extremen Eigenschaften sind unsere Feinde, und nicht empfindbar. Wir empfinden sie nicht mehr, wir erleiden sie. Zu große Jugend und zu großes Alter hindern den Geist; zu viel und zu wenig Nahrung bringt seine Thätigkeit in Unordnung; zu viel und zu wenig Unterricht verdummt ihn. Die extremen Dinge sind für uns als ob sie nicht wären, und wir sind nicht in ihrem Betracht. Sie entgehen uns oder wir ihnen.
+
+Das ist unser wahrer Zustand. Das engt unser Erkennen ein in bestimmte Grenzen, die wir nicht überschreiten, unfähig alles zu wissen und alles absolut zu ignoriren. Wir befinden uns auf einer weiten Mitte; stets unsicher schwankend zwischen Unwissenheit und Erkenntnis; und wenn wir denken weiter vorwärts zu schreiten, so schwankt und entschlüpft unser Gegenstand unseren Händen; er verbirgt sich und flieht ewigliche Flucht: nichts kann ihn aushalten. Das ist unsere natürliche Lage und doch ist sie die unserer Neigung am meisten widersprechende. Wir brennen vor Begier, alles zu ergründen und einen Thurm zu erbauen, der bis in die Unendlichkeit reicht. Aber unser ganzes Gebäude kracht und die Erde öffnet sich bis in die Tiefen.`,
+    pullquote: 'Ein Nichts gegenüber der Unendlichkeit, ein All gegenüber dem Nichts, ein Mittelding zwischen Nichts und Allem.',
+    author: 'Blaise Pascal',
+    source: 'Gedanken (Pensées), Kapitel 6',
+    url: 'https://projekt-gutenberg.org/authors/blaise-pascal/books/gedanken/chapter/6/',
+    kat: '(Un-)Endlichkeit',
+    portrait: 'pascal'
+  },
+
+  // ── Nietzsche ───────────────────────────────────────────────
+  {
+    text: `Habt ihr nicht von jenem tollen Menschen gehört, der am hellen Vormittage eine Laterne anzündete, auf den Markt lief und unaufhörlich schrie: „Ich suche Gott! Ich suche Gott!" — Da dort gerade viele von Denen zusammenstanden, welche nicht an Gott glaubten, so erregte er ein großes Gelächter. Ist er denn verloren gegangen? Sagte der Eine. Hat er sich verlaufen wie ein Kind? Sagte der Andere. Oder hält er sich versteckt? Fürchtet er sich vor uns? Ist er zu Schiff gegangen? Ausgewandert? — so schrien und lachten sie durcheinander. Der tolle Mensch sprang mitten unter sie und durchbohrte sie mit seinen Blicken. „Wohin ist Gott? Rief er, ich will es euch sagen! Wir haben ihn getötet, — ihr und ich! Wir alle sind seine Mörder! Aber wie haben wir dies gemacht? Wie vermochten wir das Meer auszutrinken? Wer gab uns den Schwamm, um den ganzen Horizont wegzuwischen? Was taten wir, als wir diese Erde von ihrer Sonne losketteten? Wohin bewegt sie sich nun? Wohin bewegen wir uns? Fort von allen Sonnen? Stürzen wir nicht fortwährend? Und rückwärts, vorwärts, nach allen Seiten? Gibt es noch ein Oben und ein Unten? Irren wir nicht wie durch ein unendliches Nichts? Haucht uns nicht der leere Raum an? Ist es nicht kälter geworden? Kommt nicht immerfort die Nacht und mehr Nacht? Müssen nicht Laternen am Vormittage angezündet werden? Hören wir noch Nichts von dem Lärm der Totengräber, welche Gott begraben? Riechen wir noch Nichts von der göttlichen Verwesung? — auch Götter verwesen! Gott ist tot! Gott bleibt tot! Und wir haben ihn getötet! Wie trösten wir uns, die Mörder aller Mörder? Das Heiligste und Mächtigste, was die Welt bisher besaß, es ist unter unseren Messern verblutet, — wer wischt dies Blut von uns ab? Mit welchem Wasser könnten wir uns reinigen? Welche Sühnfeiern, welche heiligen Spiele werden wir erfinden müssen? Ist nicht die Größe dieser Tat zu groß für uns? Müssen wir nicht selber zu Göttern werden, um nur ihrer würdig zu erscheinen? Es gab nie eine größere Tat, — und wer nur immer nach uns geboren wird, gehört um dieser Tat willen in eine höhere Geschichte, als alle Geschichte bisher war!" — Hier schwieg der tolle Mensch und sah wieder seine Zuhörer an: auch sie schwiegen und blickten befremdet auf ihn. Endlich warf er seine Laterne auf den Boden, dass sie in Stücke sprang und erlosch. „Ich komme zu früh, sagte er dann, ich bin noch nicht an der Zeit. Dies ungeheure Ereignis ist noch unterwegs und wandert, — es ist noch nicht bis zu den Ohren der Menschen gedrungen. Blitz und Donner brauchen Zeit, das Licht der Gestirne braucht Zeit, Taten brauchen Zeit, auch nachdem sie getan sind, um gesehen und gehört zu werden. Die Tat ist ihnen immer noch ferner, als die fernsten Gestirne, — und doch haben sie dieselbe getan!" — Man erzählt noch, dass der tolle Mensch des selbigen Tages in verschiedene Kirchen eingedrungen sei und darin sein Requiem aeternam deo angestimmt habe. Hinausgeführt und zur Rede gesetzt, habe er immer nur dies entgegnet: „Was sind denn diese Kirchen noch, wenn sie nicht die Grüfte und Grabmäler Gottes sind?"`,
+    pullquote: 'Gott ist tot! Gott bleibt tot! Und wir haben ihn getötet!',
+    author: 'Friedrich Nietzsche',
+    source: 'Die fröhliche Wissenschaft (1882), KSA Band 3, S. 480–482',
+    url: 'https://www.projekt-gutenberg.org/nietzsch/froehl/froehl.html',
+    kat: 'Metaphysik',
+    portrait: 'nietzsche'
+  },
+
+  // ── Kierkegaard ─────────────────────────────────────────────
+  {
+    text: `Man steckt den Finger in die Erde, um zu riechen, in welchem Land man ist, ich stecke den Finger ins Dasein – es riecht nach nichts. Wo bin ich? Was heißt das: die Welt? Was bedeutet dieses Wort? Wer hat mich durch seine Tricks in die ganze Sache hereingezogen und lässt mich nun damit allein? Wer bin ich? Wie bin ich in die Welt hineingekommen; warum wurde ich nicht gefragt, warum nicht mit Sitten und Gebräuchen bekanntgemacht, sondern in Reih und Glied gesteckt, als wäre ich von einem Seelenverkäufer gekauft? Wie wurde ich Teilhaber an dem großen Unternehmen, das man die Wirklichkeit nennt? Warum soll ich Teilhaber sein? Ist einem das nicht freigestellt? Und wenn ich dazu gezwungen werden soll, wo ist dann der Diskussionsleiter, ich habe einen Einwand zu machen? Gibt es keinen Diskussionsleiter? Wohin soll ich mich mit meiner Klage wenden? Das Dasein ist ja eine Debatte, darf ich bitten, dass meine Überlegungen mit in Erwägung gezogen werden? Soll man das Dasein nehmen, wie es ist, wäre es dann nicht das beste, dass man erführe, wie es ist?`,
+    pullquote: 'Ich stecke den Finger ins Dasein – es riecht nach nichts.',
+    author: 'Søren Kierkegaard',
+    source: 'Die Wiederholung',
+    kat: 'Existenz',
+    portrait: 'kierkegaard'
+  },
+
+  // ── Michael Ende — Momo ─────────────────────────────────────
+  {
+    text: `Was die kleine Momo konnte wie kein anderer, das war: zuhören. Das ist nichts Besonderes, wird nun vielleicht mancher Leser sagen, zuhören kann doch jeder. Aber das ist ein Irrtum. Wirklich zuhören können nur ganz wenige Menschen. Und so wie Momo sich aufs Zuhören verstand, war es ganz und gar einmalig.
+
+Momo konnte so zuhören, dass dummen Leuten plötzlich sehr gescheite Gedanken kamen. Nicht etwa, weil sie etwas sagte oder fragte, was den anderen auf solche Gedanken brachte, nein, sie saß nur da und hörte einfach zu, mit aller Aufmerksamkeit und Anteilnahme. Dabei schaute sie den anderen mit ihren großen, dunklen Augen an und der Betreffende fühlte, wie in ihm auf einmal Gedanken auftauchten, von denen er nie geahnt hatte, dass sie in ihm steckten.
+
+Sie konnte so zuhören, dass rastlose oder unentschlossene Leute auf einmal ganz genau wussten, was sie wollten. Oder dass Schüchterne sich plötzlich frei und mutig fühlten. Oder dass Unglückliche und Bedrückte zuversichtlich und froh wurden. Und wenn jemand meinte, sein Leben sei ganz verfehlt und bedeutungslos und er selbst nur irgendeiner unter Millionen, einer, auf den es überhaupt nicht ankommt und der ebenso schnell ersetzt werden kann wie ein kaputter Topf – und er ging hin und erzählte alles das der kleinen Momo, dann wurde ihm, noch während er redete, auf geheimnisvolle Weise klar, dass er sich gründlich irrte, dass es ihn, genauso wie er war, unter allen Menschen nur ein einziges Mal gab und dass er deshalb auf seine besondere Weise für die Welt wichtig war. So konnte Momo zuhören!`,
+    pullquote: 'Wirklich zuhören können nur ganz wenige Menschen.',
+    author: 'Michael Ende',
+    source: 'Momo',
+    kat: 'Literatur',
+    portrait: 'momo'
+  },
+
 ];
 
+const KAT_ORDER = ['Antike','Metaphysik','Freiheit','(Un-)Endlichkeit','Existenz','Literatur'];
+const LONG_THRESHOLD = 280;
 let activeKat = 'Alle';
 
-function buildFilter() {
-  const div = document.getElementById('zitat-filter');
-  if (!div) return;
-  const kats = ['Alle', ...new Set(ZITATE.map(z => z.kat))];
-  kats.forEach(k => {
-    const b = document.createElement('button');
-    b.className = 'zf-btn' + (k === 'Alle' ? ' active' : '');
-    b.textContent = k;
-    b.onclick = () => {
-      activeKat = k;
-      document.querySelectorAll('.zf-btn').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
-      renderGrid();
+// ────────────────────────────────────────────────────────────
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
+
+function monogram(name){
+  // Take first letter of last word ("F. W. J. Schelling" → "S")
+  const parts = name.replace(/[.,]/g,'').split(/\s+/).filter(Boolean);
+  return parts[parts.length-1].charAt(0).toUpperCase();
+}
+
+function portraitTag(z, mono='') {
+  const m = mono || monogram(z.author);
+  if(z.portrait){
+    const base = 'assets/images/philosophen/'+esc(resolveZSlug(z.portrait));
+    /* <picture> with avif → webp → jpg fallback chain (browser picks best available) */
+    return '<picture>'
+      +'<source srcset="'+base+'.avif" type="image/avif">'
+      +'<source srcset="'+base+'.webp" type="image/webp">'
+      +'<img src="'+base+'.jpg" alt="'+escAttr(z.author)+'" loading="lazy" '
+      +'onerror="this.closest(\'picture\').style.display=\'none\';this.closest(\'picture\').nextElementSibling.style.display=\'flex\';">'
+      +'</picture>'
+      +'<span class="zc-portrait-mono" style="display:none">'+esc(m)+'</span>';
+  }
+  return '<span class="zc-portrait-mono">'+esc(m)+'</span>';
+}
+
+function shortenText(t){
+  if(t.length <= LONG_THRESHOLD) return t;
+  let cut = t.indexOf(' ', LONG_THRESHOLD);
+  if(cut === -1 || cut > LONG_THRESHOLD + 60) cut = LONG_THRESHOLD;
+  const slice = t.substring(0, cut);
+  const lastPunct = Math.max(slice.lastIndexOf('. '), slice.lastIndexOf('! '), slice.lastIndexOf('? '));
+  if(lastPunct > LONG_THRESHOLD - 80) cut = lastPunct + 1;
+  return t.substring(0, cut).trim() + ' …';
+}
+
+function paragraphsHTML(t){
+  return t.split(/\n\n+/).map(p => '<p>'+esc(p).replace(/\n/g,'<br>')+'</p>').join('');
+}
+
+// ────────────────────────────────────────────────────────────
+// Karten
+// ────────────────────────────────────────────────────────────
+function buildCard(z, idx){
+  const isLong = z.text.length > LONG_THRESHOLD;
+  const card = document.createElement('div');
+  card.className = 'zitat-card' + (isLong ? ' is-long is-collapsed' : '');
+  card.id = 'zitat-' + idx;
+  card.setAttribute('data-idx', idx);
+
+  const head = '<div class="zc-head">'
+    +'<div class="zc-portrait">'+portraitTag(z)+'</div>'
+    +'<div class="zc-author-block">'
+      +'<div class="zc-author">'+esc(z.author)+'</div>'
+      +'<div class="zc-source">'+esc(z.source.split('—')[0].trim())+'</div>'
+    +'</div>'
+    +'<span class="zc-kat-tag">'+esc(z.kat)+'</span>'
+    +'</div>';
+
+  let body = '<div class="zc-body">';
+  if(z.original){
+    body += '<div class="zc-original">'+esc(z.original)+'</div>';
+    body += '<div class="zc-text">'+esc(z.text)+'</div>';
+  } else if(isLong){
+    body += '<div class="zc-text zc-text-short">'+esc(shortenText(z.text))+'</div>';
+    body += '<div class="zc-text zc-text-full">'+paragraphsHTML(z.text)+'</div>';
+    if(z.pullquote){
+      body += '<div class="zc-pullquote zc-text-full">„'+esc(z.pullquote)+'"</div>';
+    }
+    body += '<button class="zc-toggle">Kontext anzeigen ▾</button>';
+  } else {
+    body += '<div class="zc-text">'+esc(z.text)+'</div>';
+    if(z.pullquote){
+      body += '<div class="zc-pullquote">„'+esc(z.pullquote)+'"</div>';
+    }
+  }
+  body += '</div>';
+
+  let foot = '';
+  if(z.note){
+    foot += '<div class="zc-note">'+esc(z.note)+'</div>';
+  }
+
+  const sourceFooter = '<div class="zc-foot">'
+    + (z.url
+        ? '<a class="zc-source-link" href="'+escAttr(z.url)+'" target="_blank" rel="noopener">'+esc(z.source)+' ↗</a>'
+        : '<span class="zc-source-full">'+esc(z.source)+'</span>')
+    + '</div>';
+
+  card.innerHTML = head + body + foot + sourceFooter;
+
+  if(isLong){
+    const btn = card.querySelector('.zc-toggle');
+    btn.onclick = function(){
+      const exp = card.classList.toggle('is-expanded');
+      card.classList.toggle('is-collapsed', !exp);
+      btn.textContent = exp ? 'Kontext ausblenden ▴' : 'Kontext anzeigen ▾';
     };
-    div.appendChild(b);
-  });
+  }
+  return card;
 }
 
-function renderGrid() {
+// ────────────────────────────────────────────────────────────
+function buildFilters(){
+  const bar = document.getElementById('zitat-filter');
+  const counts = {Alle: ZITATE.length};
+  ZITATE.forEach(z => { counts[z.kat] = (counts[z.kat]||0)+1; });
+  const seen = new Set(['Alle']);
+  const ordered = ['Alle'];
+  KAT_ORDER.forEach(k => { if(counts[k]) { ordered.push(k); seen.add(k); } });
+  Object.keys(counts).sort().forEach(k => { if(!seen.has(k) && k !== 'Alle') ordered.push(k); });
+
+  bar.innerHTML = '';
+  const l = document.createElement('span'); l.className='zitat-filter-label'; l.textContent='Filter:';
+  bar.appendChild(l);
+
+  ordered.forEach(k => {
+    const b = document.createElement('button');
+    b.className = 'zitat-filter-btn' + (k===activeKat ? ' active' : '');
+    b.innerHTML = k + '<span class="ct">' + counts[k] + '</span>';
+    b.onclick = () => { activeKat = k; buildFilters(); renderGrid(); };
+    bar.appendChild(b);
+  });
+
+  const cnt = document.createElement('span');
+  cnt.className = 'zitat-count';
+  const showing = activeKat === 'Alle' ? ZITATE.length : counts[activeKat] || 0;
+  cnt.textContent = showing + (showing===1 ? ' Zitat' : ' Zitate');
+  bar.appendChild(cnt);
+}
+
+function renderGrid(){
   const grid = document.getElementById('zitat-grid');
-  if (!grid) return;
   grid.innerHTML = '';
-  const filtered = activeKat === 'Alle' ? ZITATE : ZITATE.filter(z => z.kat === activeKat);
-  filtered.forEach(z => {
-    const card = document.createElement('div');
-    card.className = 'zitat-card';
-    card.innerHTML =
-      '<div class="zitat-text' + (z.text.length > 200 ? ' large' : '') + '">' + z.text + '</div>' +
-      '<div class="zitat-author">' + z.author + '</div>' +
-      (z.source ? '<div class="zitat-source">' + z.source + '</div>' : '') +
-      '<span class="zitat-kat">' + z.kat + '</span>';
-    grid.appendChild(card);
-  });
+  const items = activeKat==='Alle' ? ZITATE : ZITATE.filter(z => z.kat===activeKat);
+  items.forEach(z => grid.appendChild(buildCard(z, ZITATE.indexOf(z))));
 }
 
-buildFilter();
+// ────────────────────────────────────────────────────────────
+// Zufalls-Showcase
+// ────────────────────────────────────────────────────────────
+let lastRandomIdx = -1;
+function pickRandom(){
+  if(ZITATE.length < 2) return 0;
+  let i;
+  do { i = Math.floor(Math.random() * ZITATE.length); } while(i === lastRandomIdx);
+  lastRandomIdx = i;
+  return i;
+}
+
+function renderRandom(){
+  const box = document.getElementById('zr-showcase');
+  if(!box) return;
+  const idx = pickRandom();
+  const z = ZITATE[idx];
+  box.setAttribute('data-current-idx', idx);
+  const display = z.pullquote || (z.text.length > 240 ? shortenText(z.text).slice(0,240) + '…' : z.text);
+
+  box.classList.add('swap');
+  setTimeout(() => {
+    const portraitEl = document.getElementById('zr-portrait');
+    portraitEl.innerHTML = '';
+    if(z.portrait){
+      const base = 'assets/images/philosophen/'+resolveZSlug(z.portrait);
+      const pic = document.createElement('picture');
+      const s1 = document.createElement('source'); s1.srcset = base+'.avif'; s1.type = 'image/avif';
+      const s2 = document.createElement('source'); s2.srcset = base+'.webp'; s2.type = 'image/webp';
+      const img = document.createElement('img');
+      img.src = base+'.jpg'; img.alt = z.author;
+      img.onerror = function(){
+        portraitEl.innerHTML = '<span class="zr-portrait-mono">'+esc(monogram(z.author))+'</span>';
+      };
+      pic.appendChild(s1); pic.appendChild(s2); pic.appendChild(img);
+      portraitEl.appendChild(pic);
+    } else {
+      portraitEl.innerHTML = '<span class="zr-portrait-mono">'+esc(monogram(z.author))+'</span>';
+    }
+    document.getElementById('zr-quote').textContent = '„'+display+'"';
+    document.getElementById('zr-meta').innerHTML =
+      '<span class="zr-author">'+esc(z.author)+'</span> · '+esc(z.source);
+    box.classList.remove('swap');
+  }, 220);
+}
+
+
+window.focusZitatFromRandom = function(){
+  const box = document.getElementById('zr-showcase');
+  if(!box) return;
+  const idx = box.getAttribute('data-current-idx');
+  if(idx === null) return;
+  if(activeKat !== 'Alle'){
+    activeKat = 'Alle';
+    buildFilters();
+    renderGrid();
+  }
+  setTimeout(function(){
+    const card = document.getElementById('zitat-' + idx);
+    if(!card) return;
+    card.scrollIntoView({behavior:'smooth', block:'center'});
+    card.classList.add('zitat-card-highlight');
+    if(card.classList.contains('is-long')){
+      card.classList.remove('is-collapsed');
+      card.classList.add('is-expanded');
+      const btn = card.querySelector('.zc-toggle');
+      if(btn) btn.textContent = 'Kontext ausblenden ▴';
+    }
+    setTimeout(function(){ card.classList.remove('zitat-card-highlight'); }, 2500);
+  }, 50);
+};
+window.rerollRandom = renderRandom;
+window.renderZitate = function(){ buildFilters(); renderGrid(); renderRandom(); };
+
+buildFilters();
 renderGrid();
+renderRandom();
+
 })();
 </script>

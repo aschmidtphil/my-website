@@ -1,0 +1,268 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     IMPRESSUM & RECHT
+═══════════════════════════════════════════════════════════════════ -->
+<style>
+.legal-wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+.legal-hero{margin-bottom:2.5rem;}
+.legal-hero .hero-tag{font-family:var(--fm);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;}
+.legal-hero h1{font-family:var(--fh);font-size:clamp(1.9rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.05;}
+.legal-hero p{color:var(--text2);margin-top:.7rem;line-height:1.7;font-size:.92rem;}
+
+.legal-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:1rem;}
+.legal-tab{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.8rem;transition:all .15s;}
+.legal-tab:hover{border-color:var(--accent);}
+.legal-tab.active{background:var(--accent);color:#fff;border-color:transparent;}
+
+.legal-section{display:none;animation:legalFade .3s ease;}
+.legal-section.active{display:block;}
+@keyframes legalFade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+.legal-section h2{font-family:var(--fh);font-size:1.4rem;font-weight:700;color:var(--text);margin:1.8rem 0 .8rem;letter-spacing:-.02em;}
+.legal-section h2:first-child{margin-top:0;}
+.legal-section h3{font-family:var(--fh);font-size:1.05rem;font-weight:700;color:var(--text);margin:1.4rem 0 .5rem;}
+.legal-section p{color:var(--text2);line-height:1.75;margin-bottom:.9rem;font-size:.9rem;}
+.legal-section a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s;}
+.legal-section a:hover{border-color:var(--accent);}
+.legal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:1.2rem;}
+.legal-card .label{font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem;}
+.legal-card .val{color:var(--text);font-size:.95rem;font-weight:500;}
+.legal-muted{font-size:.82rem;color:var(--text3);line-height:1.65;}
+
+/* Bild-Lizenzen */
+.lic-controls{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:1.2rem;}
+.lic-search{background:var(--card);border:1px solid var(--border2);color:var(--text);padding:.5rem .9rem;border-radius:8px;font-family:var(--fb);font-size:.85rem;outline:none;flex:1;min-width:180px;}
+.lic-search:focus{border-color:var(--accent);}
+.lic-count{font-family:var(--fm);font-size:.74rem;color:var(--text3);}
+.lic-pdtoggle{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.74rem;color:var(--text2);cursor:pointer;white-space:nowrap;}
+.lic-pdtoggle input{cursor:pointer;accent-color:var(--accent);}
+.lic-pdnote{font-size:.78rem;color:var(--text3);margin:-.4rem 0 1.1rem;line-height:1.4;font-style:italic;}
+.lic-author-short .lic-more{color:var(--accent);text-decoration:none;font-size:.95em;opacity:.85;}
+.lic-author-short .lic-more:hover{text-decoration:underline;}
+.lic-list{display:flex;flex-direction:column;gap:.5rem;}
+.lic-item{display:flex;gap:.9rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;}
+.lic-thumb{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--card);border:1px solid var(--border2);}
+.lic-info{flex:1;min-width:0;}
+.lic-name{font-family:var(--fh);font-weight:700;font-size:.92rem;color:var(--text);}
+.lic-meta{font-family:var(--fm);font-size:.72rem;color:var(--text3);margin-top:.15rem;line-height:1.5;}
+.lic-meta a{color:var(--accent);text-decoration:none;}
+.lic-badge{display:inline-block;font-family:var(--fm);font-size:.62rem;padding:.12rem .45rem;border-radius:4px;margin-right:.3rem;white-space:nowrap;}
+.lic-badge.pd{background:#22c55e22;color:#22c55e;}
+.lic-badge.cc{background:#5b80e822;color:#5b80e8;}
+.lic-badge.unknown{background:var(--border);color:var(--text3);}
+.lic-empty{text-align:center;color:var(--text3);padding:2rem;font-size:.88rem;line-height:1.7;}
+.lic-loading{text-align:center;color:var(--text3);padding:2rem;font-family:var(--fm);font-size:.85rem;}
+</style>
+
+<div class="legal-wrap">
+  <div class="legal-hero">
+    <p class="hero-tag">Rechtliches</p>
+    <h1>Impressum &amp; Recht</h1>
+    <p>Anbieterkennzeichnung, Datenschutz und Bildnachweise dieser Seite.</p>
+  </div>
+
+  <div class="legal-tabs">
+    <button class="legal-tab active" data-sec="impressum" onclick="legalShow('impressum',this)">Impressum</button>
+    <button class="legal-tab" data-sec="datenschutz" onclick="legalShow('datenschutz',this)">Datenschutz</button>
+    <button class="legal-tab" data-sec="bilder" onclick="legalShow('bilder',this)">Bildnachweise</button>
+  </div>
+
+  <!-- ═══ IMPRESSUM ═══ -->
+  <section class="legal-section active" id="legal-impressum">
+    <h2>Impressum</h2>
+    <p class="legal-muted">Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG) und § 18 Medienstaatsvertrag (MStV).</p>
+
+    <div class="legal-card">
+      <div class="label">Verantwortlich für den Inhalt</div>
+      <div class="val">Alexander Schmidt</div>
+    </div>
+
+    <!-- ANSCHRIFT — bei Bedarf aktivieren (DDG verlangt ladungsfähige Anschrift):
+    <div class="legal-card">
+      <div class="label">Anschrift</div>
+      <div class="val">Musterstraße 12<br>32756 Detmold</div>
+    </div>
+    -->
+
+    <div class="legal-card">
+      <div class="label">Kontakt</div>
+      <div class="val"><a href="mailto:aschmidtphil@gmail.com">aschmidtphil@gmail.com</a></div>
+    </div>
+
+    <h3>Haftung für Inhalte</h3>
+    <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.</p>
+
+    <h3>Haftung für Links</h3>
+    <p>Diese Seite enthält Links zu externen Webseiten Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.</p>
+
+    <h3>Urheberrecht</h3>
+    <p>Die durch mich erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Beiträge Dritter sind als solche gekennzeichnet. Soweit die Inhalte auf dieser Seite nicht von mir erstellt wurden, werden die Urheberrechte Dritter beachtet — siehe hierzu die <a href="#" onclick="legalShow('bilder',document.querySelector('[data-sec=bilder]'));return false;">Bildnachweise</a>.</p>
+  </section>
+
+  <!-- ═══ DATENSCHUTZ ═══ -->
+  <section class="legal-section" id="legal-datenschutz">
+    <h2>Datenschutzerklärung</h2>
+
+    <h3>Überblick</h3>
+    <p>Diese Webseite ist ein privates, nicht-kommerzielles Projekt. Sie verzichtet bewusst auf Tracking, Werbung und Analyse-Dienste. Es werden <strong>keine Cookies gesetzt</strong> und keine personenbezogenen Daten zu Marketingzwecken erhoben.</p>
+
+    <h3>Hosting &amp; Server-Logs</h3>
+    <p>Diese Seite wird über GitHub Pages (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite werden durch den Hoster technisch notwendige Zugriffsdaten in Server-Logfiles verarbeitet (z.&thinsp;B. IP-Adresse, Datum und Uhrzeit des Zugriffs, abgerufene Datei, Browsertyp). Diese Verarbeitung erfolgt zur Gewährleistung eines störungsfreien Betriebs auf Grundlage des berechtigten Interesses gemäß Art. 6 Abs. 1 lit. f DSGVO. Auf diese serverseitige Verarbeitung habe ich als Seitenbetreiber keinen direkten Einfluss; es gelten die Datenschutzbestimmungen von GitHub.</p>
+
+    <h3>Keine Cookies, kein Tracking</h3>
+    <p>Diese Seite verwendet keine Cookies, kein Web-Analyse-Werkzeug (wie Google Analytics) und keine eingebetteten Drittinhalte, die Daten an externe Server übertragen. Alle Schriftarten, Bilder und Skripte werden lokal von dieser Seite geladen. Eine Einwilligung (Cookie-Banner) ist daher nicht erforderlich.</p>
+
+    <h3>Lokale Speicherung im Browser</h3>
+    <p>Einstellungen wie das gewählte Design (hell/dunkel) und der Stil werden ausschließlich lokal in deinem Browser gespeichert (Local Storage) und nicht an einen Server übertragen. Sie verbleiben auf deinem Gerät und können jederzeit über die Browser-Einstellungen gelöscht werden.</p>
+
+    <h3>Kontaktaufnahme</h3>
+    <p>Wenn du mich per E-Mail kontaktierst, werden deine Angaben zur Bearbeitung der Anfrage gespeichert. Diese Daten gebe ich nicht ohne deine Einwilligung weiter.</p>
+
+    <h3>Deine Rechte</h3>
+    <p>Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung deiner gespeicherten personenbezogenen Daten sowie ein Beschwerderecht bei einer Aufsichtsbehörde.</p>
+  </section>
+
+  <!-- ═══ BILDNACHWEISE ═══ -->
+  <section class="legal-section" id="legal-bilder">
+    <h2>Bildnachweise</h2>
+    <p>Die Porträts der Philosophen stammen überwiegend von Wikimedia&nbsp;Commons. Viele ältere Werke (Gemälde, Stiche, Büsten) sind gemeinfrei (Public&nbsp;Domain). Wo Bilder unter einer Creative-Commons-Lizenz stehen, sind Urheber, Lizenz und Quelle nachstehend genannt; der Link führt jeweils zur Originalseite mit den vollständigen Lizenzangaben. Die Bilder wurden für die Darstellung zugeschnitten und in der Größe angepasst.</p>
+
+    <div class="lic-controls">
+      <input class="lic-search" id="lic-search" type="text" placeholder="Philosoph oder Lizenz suchen…" oninput="legalFilterLic(this.value)">
+      <label class="lic-pdtoggle"><input type="checkbox" id="lic-show-pd" onchange="legalTogglePD(this.checked)"> Auch Public Domain anzeigen</label>
+      <span class="lic-count" id="lic-count"></span>
+    </div>
+    <p class="lic-pdnote" id="lic-pdnote">Gemeinfreie Bilder (Public&nbsp;Domain) sind ausgeblendet, da sie keinen Nachweis erfordern. Nur Bilder mit Lizenzpflicht (z.&nbsp;B. Creative&nbsp;Commons) werden angezeigt.</p>
+
+    <div class="lic-list" id="lic-list">
+      <div class="lic-loading" id="lic-loading">Lade Bildnachweise…</div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+window.legalShow = function(sec, btn){
+  document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('legal-' + sec)?.classList.add('active');
+  document.querySelectorAll('.legal-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  if (sec === 'bilder') loadLicenses();
+};
+
+/* ── Bild-Lizenzen laden ──
+   Erwartet eine Datei  assets/bildnachweise.json  mit Einträgen:
+   { "slug": {"name","author","license","license_url","source_url"} }
+   Wird vom Fetch-Skript automatisch erzeugt. Fehlt sie, zeigt die Seite
+   einen allgemeinen Hinweis. */
+let _licData = null;
+let _licLoaded = false;
+
+function licenseBadge(lic){
+  if (!lic || lic === 'unbekannt') return '<span class="lic-badge unknown">Lizenz unbekannt</span>';
+  const l = lic.toLowerCase();
+  if (l.includes('public') || l.includes('gemeinfrei') || l.includes('pd'))
+    return '<span class="lic-badge pd">Public Domain</span>';
+  return '<span class="lic-badge cc">' + lic + '</span>';
+}
+
+/* Public Domain erkennen (braucht keinen Nachweis) */
+function isPD(lic){
+  if (!lic) return false;
+  const l = lic.toLowerCase();
+  return l.includes('public') || l.includes('gemeinfrei') || l === 'pd';
+}
+/* lange Urheber-/Lizenztexte kürzen, mit Aufklapp-Möglichkeit */
+function authorHtml(author){
+  if (!author || author === 'unbekannt') return '<span style="opacity:.6">Urheber unbekannt</span>';
+  const LIMIT = 120;
+  if (author.length <= LIMIT) return author;
+  const short = author.slice(0, LIMIT).replace(/\s+\S*$/, '') + '…';
+  const esc = author.replace(/"/g, '&quot;');
+  return '<span class="lic-author-short">' + short
+    + ' <a href="#" class="lic-more" onclick="this.parentNode.outerHTML=decodeURIComponent(this.dataset.full);return false;" '
+    + 'data-full="' + encodeURIComponent(author) + '">mehr</a></span>';
+}
+let _showPD = false;
+window.legalTogglePD = function(on){
+  _showPD = on;
+  const note = document.getElementById('lic-pdnote');
+  if (note) note.style.display = on ? 'none' : '';
+  renderLic(document.getElementById('lic-search')?.value || '');
+};
+
+function renderLic(filter){
+  const list = document.getElementById('lic-list');
+  const count = document.getElementById('lic-count');
+  if (!list) return;
+  if (!_licData){
+    list.innerHTML = '<div class="lic-empty">Es ist noch keine Bildnachweis-Datei vorhanden '
+      + '(<code>assets/bildnachweise.json</code> bzw. <code>js/bildnachweise.js</code>).<br>Sie wird beim Bilder-Download automatisch erzeugt. '
+      + 'Bis dahin gilt: Alle Porträts stammen von Wikimedia&nbsp;Commons und sind dort mit '
+      + 'Urheber und Lizenz dokumentiert.</div>';
+    if (count) count.textContent = '';
+    return;
+  }
+  const entries = Object.entries(_licData);
+  const f = (filter || '').toLowerCase().trim();
+  const ccEntries = entries.filter(([slug, d]) => !isPD(d.license));
+  const pool = _showPD ? entries : ccEntries;
+  const shown = pool.filter(([slug, d]) =>
+    !f || (d.name||'').toLowerCase().includes(f) || (d.license||'').toLowerCase().includes(f));
+
+  if (count) {
+    const pdCount = entries.length - ccEntries.length;
+    count.textContent = _showPD
+      ? (shown.length + ' / ' + entries.length + ' Bilder')
+      : (shown.length + ' nachweispflichtig · ' + pdCount + ' gemeinfrei ausgeblendet');
+  }
+
+  if (!shown.length){
+    list.innerHTML = '<div class="lic-empty">Keine Treffer.</div>';
+    return;
+  }
+
+  list.innerHTML = shown.sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))
+    .map(([slug, d]) => {
+      const thumb = 'assets/images/philosophen/' + slug + '.jpg';
+      const author = authorHtml(d.author);
+      const src = d.source_url
+        ? '<a href="'+d.source_url+'" target="_blank" rel="noopener">Quelle (Wikimedia)</a>'
+        : '';
+      const licLink = d.license_url
+        ? '<a href="'+d.license_url+'" target="_blank" rel="noopener">'+(d.license||'Lizenz')+'</a>'
+        : licenseBadge(d.license);
+      return '<div class="lic-item">'
+        + '<img class="lic-thumb" src="'+thumb+'" alt="'+(d.name||'')+'" loading="lazy" '
+        +   'onerror="this.style.visibility=\'hidden\'">'
+        + '<div class="lic-info">'
+        +   '<div class="lic-name">'+(d.name||slug)+'</div>'
+        +   '<div class="lic-meta">'+licenseBadge(d.license)+author
+        +     (src ? ' · '+src : '')
+        +   '</div>'
+        + '</div></div>';
+    }).join('');
+}
+
+function loadLicenses(){
+  if (_licLoaded) { renderLic(document.getElementById('lic-search')?.value || ''); return; }
+  _licLoaded = true;
+  /* 1) Bevorzugt: eingebettete Variable (funktioniert auch über file://) */
+  if (typeof window.BILDNACHWEISE !== 'undefined' && window.BILDNACHWEISE) {
+    _licData = window.BILDNACHWEISE;
+    renderLic('');
+    return;
+  }
+  /* 2) Fallback: per fetch laden (funktioniert auf https / GitHub Pages) */
+  fetch('assets/bildnachweise.json')
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => { _licData = data; renderLic(''); })
+    .catch(() => { _licData = null; renderLic(''); });
+}
+
+window.legalFilterLic = function(val){ renderLic(val); };
+
+/* Falls direkt auf #impressum geladen, nichts weiter nötig */
+})();
+</script>

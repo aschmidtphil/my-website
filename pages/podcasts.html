@@ -73,6 +73,11 @@
       </tr></thead>
       <tbody id="hb-tbody"></tbody>
     </table>
+    <p style="font-family:var(--fm);font-size:.66rem;color:var(--text3);margin-top:.75rem;line-height:1.6;opacity:.8;">
+      Cover: eigene Aufnahmen bzw. — wo nicht vorhanden — live abgerufen über
+      <a href="https://openlibrary.org" target="_blank" rel="noopener" style="color:var(--text3);text-decoration:underline;">Open&nbsp;Library</a>.
+      Die Rechte an den Coverabbildungen liegen bei den jeweiligen Verlagen.
+    </p>
   </div>
 </div>
 <script>
@@ -207,8 +212,15 @@ window.filterHB=function(){
   tb.innerHTML='';
   arr.forEach(h=>{
     const tr=document.createElement('tr');
-    const cover = h.img ? '<img class="hb-cover" src="'+h.img+'" alt="" loading="lazy">'
-                        : '<div class="hb-cover hb-cover-none">📖</div>';
+    let cover;
+    if (h.img) {
+      cover = '<img class="hb-cover" src="'+h.img+'" alt="" loading="lazy">';
+    } else {
+      /* Kein lokales Cover → Platzhalter, der per Open Library nachgeladen wird */
+      const q = encodeURIComponent(h.title + ' ' + h.author);
+      cover = '<div class="hb-cover hb-cover-none" data-ol-title="'+
+              (h.title+' '+h.author).replace(/"/g,'&quot;')+'">📖</div>';
+    }
     const cls = {'Philosophie':'hb-philo','Psychologie':'hb-psych','Gaming':'hb-gaming','Literatur':'hb-lit','Selbstentwicklung':'hb-selbst','Geschichte':'hb-gesch','Wissenschaft':'hb-wiss','Musik / Biografie':'hb-musik'}[h.cat]||'';
     tr.innerHTML='<td class="hb-title-cell"><div class="hb-row-inner">'+cover+'<span>'+h.title+'</span></div></td>'
                 +'<td>'+h.author+'</td>'
@@ -217,7 +229,51 @@ window.filterHB=function(){
     tb.appendChild(tr);
   });
   const cnt=document.getElementById('hb-count'); if(cnt) cnt.textContent=arr.length+' Titel';
+  loadOpenLibraryCovers();
 };
+
+/* ── Open Library Cover-Fallback ──
+   Für Hörbücher ohne lokales Cover holen wir das Cover live von Open Library.
+   Wir SPEICHERN nichts — das Bild wird direkt von covers.openlibrary.org im
+   Browser des Besuchers geladen (covers.openlibrary.org ist ausdrücklich für
+   die Anzeige auf öffentlichen Websites gedacht). Quelle wird angezeigt. */
+const _olCache = {};
+function loadOpenLibraryCovers(){
+  document.querySelectorAll('.hb-cover-none[data-ol-title]').forEach(el => {
+    const title = el.getAttribute('data-ol-title');
+    if (!title || el.dataset.olDone) return;
+    el.dataset.olDone = '1';
+    if (_olCache[title] === 'none') return;
+    if (_olCache[title]) { applyOlCover(el, _olCache[title], title); return; }
+    const url = 'https://openlibrary.org/search.json?q=' +
+                encodeURIComponent(title) + '&limit=1&fields=cover_i';
+    fetch(url)
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        const doc = d.docs && d.docs[0];
+        if (doc && doc.cover_i) {
+          /* Zugriff über Cover-ID → kein Rate-Limit */
+          const cov = 'https://covers.openlibrary.org/b/id/' + doc.cover_i + '-M.jpg';
+          _olCache[title] = cov;
+          applyOlCover(el, cov, title);
+        } else {
+          _olCache[title] = 'none';
+        }
+      })
+      .catch(() => { _olCache[title] = 'none'; });
+  });
+}
+function applyOlCover(el, coverUrl, title){
+  const img = new Image();
+  img.className = 'hb-cover';
+  img.alt = '';
+  img.loading = 'lazy';
+  img.title = 'Cover: Open Library';
+  img.src = coverUrl;
+  img.onload = () => { el.replaceWith(img); };
+  /* bei Fehler bleibt das 📖-Emoji stehen */
+}
+
 filterHB();
 // Expose as global so pages.js renderPodcasts() call works too
 window.renderPodcasts = function(){};
