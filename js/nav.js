@@ -31,8 +31,8 @@ function toggleTheme() {
 // ── Language ─────────────────────────────────────
 let _lang = 'de';
 const TR = {
-  de: {'t-hero-tag':'Data Scientist & Philosopher','t-s1':'Jahre Erfahrung','t-s2':'Semester','t-s3':'Zertifiziert','t-s4':'Neugier','t-sk-title':'Skills & Technologien','t-pr-title':'GitHub-Projekte','t-ab-title':'Über mich'},
-  en: {'t-hero-tag':'Data Scientist & Philosopher','t-s1':'Years Experience','t-s2':'Semesters','t-s3':'Certified','t-s4':'Curiosity','t-sk-title':'Skills & Technologies','t-pr-title':'GitHub Projects','t-ab-title':'About Me'},
+  de: {'t-hero-tag':'Data Scientist & Philosopher'},
+  en: {'t-hero-tag':'Data Scientist & Philosopher'},
 };
 function toggleLang() {
   _lang = _lang === 'de' ? 'en' : 'de';
@@ -191,11 +191,13 @@ const NAV = [
   {type:'group',  label:'Philosophie', items:[
     {id:'favphil',    icon:'★', label:'Lieblingsphilosophen'},
     {id:'zitate',     icon:'❝', label:'Lieblingszitate'},
-    {id:'tshirts',    icon:'👕', label:'Philosophie-Shirts'},
+    {id:'unendlichkeit', icon:'∞', label:'Unendlichkeit'},
     {divider:true},
     {id:'philosophy', icon:'⊕', label:'Philosophen-Timeline'},
+    {id:'goetter',    icon:'☉', label:'Götterkosmos'},
     {id:'diss',       icon:'📖', label:'Dissertation'},
     {id:'phil-eigene',icon:'◈', label:'Meine Philosophie'},
+    {id:'arbeiten',   icon:'📄', label:'Eigene Arbeiten'},
   ]},
   {type:'group', label:'Akademisches', items:[
     {id:'studium',  icon:'📋', label:'Studium'},
@@ -204,8 +206,9 @@ const NAV = [
   ]},
   {type:'group', label:'Interessen', items:[
     {id:'gaming', icon:'🎮', label:'Gaming'},
+    {id:'chor',   icon:'♪',  label:'Chor im Loch'},
+    {id:'shirts', icon:'👕', label:'Philosophen-Shirts'},
     {id:'nature', icon:'🌿', label:'Natur'},
-    {id:'math',   icon:'∑',  label:'Mathematik'},
   ]},
   {type:'group', label:'Kontakt', items:[
     {id:'kontakt',   icon:'✉', label:'Kontakt'},
@@ -215,6 +218,7 @@ const NAV = [
 
 // ── Page inits (called every visit) ──────────────
 const _pageInits = {};
+window._pageInits = _pageInits;   /* global spiegeln: Seiten-Scripts erkennen den zentralen Dispatcher */
 function registerPageInit(id, fn) { _pageInits[id] = fn; }
 
 // ── HTML cache (content only — not init state) ───
@@ -243,14 +247,36 @@ async function getPageHTML(id) {
 
 // ── Router ────────────────────────────────────────
 let _busy = false;
+let _currentPage = null;
 
-async function showPage(id) {
+/* Hash-Pfade: '#goetter/griechisch/eros' → { page:'goetter', sub:['griechisch','eros'] }.
+   Erste Komponente = Seiten-ID, Rest = Sub-Route für die Seite (Deep-Links /
+   Permalinks). Seiten ohne Sub-Route verhalten sich exakt wie bisher. */
+function parseHash(h) {
+  const raw = (h !== undefined ? h : (location.hash || '#home')).replace(/^#/, '');
+  const seg = raw.split('/').map(s => { try { return decodeURIComponent(s); } catch(e) { return s; } })
+                 .filter(Boolean);
+  return { page: seg[0] || 'home', sub: seg.slice(1) };
+}
+
+async function showPage(id, sub) {
   if (_busy) return;
+  /* Falls versehentlich ein voller Pfad übergeben wird ('goetter/griechisch') */
+  if (id && id.indexOf('/') >= 0) { const p = parseHash('#' + id); id = p.page; sub = sub || p.sub; }
+  /* GitHub-Veröffentlichung: Dissertation/Eigene Arbeiten nicht erreichbar → auf Home umleiten */
+  if ((id === 'diss' || id === 'arbeiten') && document.documentElement.getAttribute('data-publish') === 'github') {
+    id = 'home'; sub = null;
+  }
   _busy = true;
 
+  // Sub-Route für die Seite hinterlegen; Seiten-Handler der vorigen Seite löschen
+  window._routeSub = (sub && sub.length) ? sub.slice() : [];
+  window._pageSubApply = null;
+
   // Update hash URL for direct links
-  const newHash = '#' + id;
+  const newHash = '#' + id + (window._routeSub.length ? '/' + window._routeSub.map(encodeURIComponent).join('/') : '');
   if (location.hash !== newHash) history.pushState({page:id}, '', newHash);
+  _currentPage = id;
 
   const root = document.getElementById('page-root');
   if (!root) { _busy = false; return; }
@@ -341,8 +367,10 @@ function buildNav() {
 
       const dd = document.createElement('div');
       dd.className = 'nav-dropdown';
+      const _ghPublish = document.documentElement.getAttribute('data-publish') === 'github';
       (item.items||[]).forEach(it => {
         if (it.divider) { dd.appendChild(Object.assign(document.createElement('div'), {className:'nav-dropdown-divider'})); return; }
+        if (it.pubGithubHide && _ghPublish) return;   /* in der GitHub-Version verbergen */
         const di = document.createElement('div');
         di.className = 'nav-dropdown-item';
         di.innerHTML = `<span class="icon">${it.icon}</span>${it.label}`;
@@ -373,15 +401,22 @@ document.addEventListener('DOMContentLoaded', () => {
   buildNav();
   buildFooter();
 
-  // Read hash for direct links / page reload
-  const startPage = (location.hash || '#home').slice(1) || 'home';
+  // Read hash for direct links / page reload (inkl. Sub-Routen wie #goetter/griechisch/eros)
+  const start = parseHash();
   applyStyle(_style);
-    showPage(startPage);
+    showPage(start.page, start.sub);
 
   // Browser back/forward
-  window.addEventListener('popstate', e => {
-    const id = (e.state && e.state.page) || (location.hash||'#home').slice(1) || 'home';
-    showPage(id);
+  window.addEventListener('popstate', () => {
+    const r = parseHash();
+    /* Gleiche Seite, nur Sub-Route geändert (z. B. Figur-Permalink im Götterkosmos):
+       die Seite selbst übernimmt — ohne vollständigen Re-Render. */
+    if (r.page === _currentPage && typeof window._pageSubApply === 'function') {
+      window._routeSub = r.sub;
+      try { window._pageSubApply(r.sub); } catch(e) { console.warn('sub-route error', e); }
+      return;
+    }
+    showPage(r.page, r.sub);
   });
 
   // Close dropdowns outside click or Escape
@@ -392,3 +427,253 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
   });
 });
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   Sofortsuche über die ganze Seite (Strg+K bzw. ⌘K, oder „/")
+
+   Durchsucht in einem Feld: Seiten, die Kosmen und alle Figuren des
+   Götterkosmos, die Philosophen der Timeline, Zitate, Shirts und die
+   hinterlegten Dokumente. Der Index wird erst beim ersten Öffnen
+   gebaut — bis dahin kostet die Suche nichts.
+
+   Bewusst eigenständig: eigenes CSS wird zur Laufzeit eingefügt, damit
+   das Modul in index.html und in den Einzelseiten unter pages/ gleich
+   funktioniert, ohne dass ein Stylesheet angefasst werden muss.
+   ═══════════════════════════════════════════════════════════════════ */
+(function(){
+  var offen=false, index=null, treffer=[], wahl=0;
+
+  function css(){
+    if(document.getElementById('sk-css')) return;
+    var s=document.createElement('style'); s.id='sk-css';
+    s.textContent=[
+'.sk-huelle{position:fixed;inset:0;z-index:9999;display:none;background:rgba(6,7,14,.62);backdrop-filter:blur(3px)}',
+'.sk-huelle.auf{display:block}',
+'.sk-box{position:absolute;left:50%;top:12vh;transform:translateX(-50%);width:min(680px,92vw);',
+'  background:var(--bg2,#15161d);border:1px solid var(--border,#333);border-radius:14px;',
+'  box-shadow:0 24px 70px rgba(0,0,0,.55);overflow:hidden}',
+'.sk-kopf{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.1rem;border-bottom:1px solid var(--border,#333)}',
+'.sk-lupe{opacity:.5;font-size:1rem}',
+'.sk-feld{flex:1;background:transparent;border:0;outline:0;color:var(--text,#eee);font-size:1.02rem;font-family:inherit}',
+'.sk-feld::placeholder{color:var(--text3,#888)}',
+'.sk-esc{font-family:var(--fm,monospace);font-size:.6rem;letter-spacing:.1em;color:var(--text3,#888);',
+'  border:1px solid var(--border,#333);border-radius:5px;padding:.2rem .45rem}',
+'.sk-liste{max-height:56vh;overflow-y:auto;padding:.4rem 0}',
+'.sk-gruppe{font-family:var(--fm,monospace);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;',
+'  color:var(--text3,#888);padding:.7rem 1.1rem .3rem}',
+'.sk-eintrag{display:flex;align-items:center;gap:.75rem;padding:.5rem 1.1rem;cursor:pointer;border-left:2px solid transparent}',
+'.sk-eintrag.aktiv{background:rgba(255,255,255,.06);border-left-color:var(--accent,#c9a227)}',
+'.sk-sym{width:1.5rem;text-align:center;opacity:.75;font-size:.95rem;flex-shrink:0}',
+'.sk-txt{min-width:0;flex:1}',
+'.sk-t{font-size:.9rem;color:var(--text,#eee);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+'.sk-u{font-size:.72rem;color:var(--text3,#888);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.1rem}',
+'.sk-t b{color:var(--accent,#c9a227);font-weight:700}',
+'.sk-leer{padding:1.6rem 1.1rem;text-align:center;color:var(--text3,#888);font-size:.86rem}',
+'.sk-fuss{display:flex;gap:1.1rem;padding:.55rem 1.1rem;border-top:1px solid var(--border,#333);',
+'  font-family:var(--fm,monospace);font-size:.6rem;color:var(--text3,#888)}',
+'.sk-knopf{background:transparent;border:1px solid var(--border,#333);color:var(--text2,#bbb);',
+'  border-radius:8px;padding:.3rem .6rem;cursor:pointer;font-family:var(--fm,monospace);font-size:.62rem;letter-spacing:.06em}',
+'.sk-knopf:hover{border-color:var(--accent,#c9a227);color:var(--accent,#c9a227)}'
+    ].join('\n');
+    document.head.appendChild(s);
+  }
+
+  /* ── Index aufbauen ─────────────────────────────────────────── */
+  function bauen(){
+    var e=[];
+    function add(o){ o.such=(o.t+' '+(o.u||'')).toLowerCase(); e.push(o); }
+
+    try{                                            // Seiten
+      (window.NAV_GROUPS||[]).forEach(function(gr){
+        (gr.items||[]).forEach(function(it){
+          add({grp:'Seiten',sym:it.icon||'▸',t:it.label,u:'Seite',geh:function(){nav(it.id);}});
+        });
+      });
+    }catch(x){}
+    if(!e.length){                                  // Rückfall: Navigation aus dem DOM
+      try{
+        document.querySelectorAll('#nav-groups a[data-page]').forEach(function(a){
+          var id=a.getAttribute('data-page');
+          add({grp:'Seiten',sym:'▸',t:(a.textContent||'').trim(),u:'Seite',geh:function(){nav(id);}});
+        });
+      }catch(x){}
+    }
+
+    try{                                            // Götterkosmos
+      var D=window.GODS_DATA;
+      if(D&&D.panthea){
+        Object.keys(D.panthea).forEach(function(pk){
+          var P=D.panthea[pk];
+          add({grp:'Kosmen',sym:'✦',t:P.label,u:(P.gods?P.gods.length+' Figuren':'Kosmos'),
+               geh:function(){nav('goetter');}});
+          (P.gods||[]).forEach(function(g){
+            add({grp:'Figuren',sym:'◆',t:g.name,u:P.label+(g.domain?' · '+g.domain.slice(0,70):''),
+                 geh:function(){ nav('goetter'); spaeter(function(){
+                   if(window.gxJumpTo) window.gxJumpTo(pk,g.id); }); }});
+          });
+        });
+      }
+    }catch(x){}
+
+    try{                                            // Philosophen
+      var L=(typeof PHILS_V2!=='undefined')?PHILS_V2:(window.PHILS_V2||[]);
+      L.filter(Boolean).forEach(function(p){
+        var lz=(p.birth<0? Math.abs(p.birth)+' v. Chr.' : p.birth)+(p.death? '–'+p.death : '');
+        add({grp:'Philosophen',sym:'✎',t:p.display||p.name,u:lz+(p.epoch? ' · '+p.epoch:''),
+             geh:function(){nav('philosophy');}});
+      });
+    }catch(x){}
+
+    try{                                            // Zitate
+      (window.ZITATE||[]).forEach(function(z){
+        add({grp:'Zitate',sym:'❝',t:z.text.slice(0,90),u:z.author+(z.kat? ' · '+z.kat:''),
+             geh:function(){nav('zitate');}});
+      });
+    }catch(x){}
+
+    try{                                            // Shirts
+      (window.SHIRTS||[]).forEach(function(s){
+        add({grp:'Shirts',sym:'👕',t:s.t,u:s.denker+' · '+s.kat,geh:function(){nav('shirts');}});
+      });
+    }catch(x){}
+
+    try{                                            // Dokumente
+      (window.DOCUMENTS_DATA||[]).forEach(function(d){
+        add({grp:'Dokumente',sym:'📄',t:d.title||d.filename,
+             u:(d.pages? d.pages+' Seiten':'')+(d.sizeMB? ' · '+d.sizeMB+' MB':''),
+             geh:function(){nav('arbeiten');}});
+      });
+    }catch(x){}
+
+    return e;
+  }
+
+  function nav(id){ zu(); if(typeof showPage==='function') showPage(id);
+    else if(window.showPage) window.showPage(id); }
+  function spaeter(fn){                              // wartet, bis die Seite bereit ist
+    var n=0; (function tick(){ n++;
+      try{ if(fn()!==false) return; }catch(x){}
+      if(n<40) setTimeout(tick,60);
+    })();
+  }
+
+  /* ── Suchen und Bewerten ────────────────────────────────────── */
+  function suchen(q){
+    q=(q||'').trim().toLowerCase();
+    if(!q) return index.filter(function(o){return o.grp==='Seiten';}).slice(0,8);
+    var out=[];
+    for(var i=0;i<index.length;i++){
+      var o=index[i], p=o.such.indexOf(q);
+      if(p<0) continue;
+      var punkte=p===0?0:(o.such[p-1]===' '?1:2);        // Wortanfang schlägt Mitte
+      if(o.t.toLowerCase()===q) punkte=-1;               // exakter Titel zuerst
+      out.push({o:o,s:punkte*1000+p});
+    }
+    out.sort(function(a,b){return a.s-b.s;});
+    return out.slice(0,60).map(function(x){return x.o;});
+  }
+
+  function hervor(text,q){
+    var t=String(text).replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});
+    if(!q) return t;
+    var i=t.toLowerCase().indexOf(q.toLowerCase());
+    if(i<0) return t;
+    return t.slice(0,i)+'<b>'+t.slice(i,i+q.length)+'</b>'+t.slice(i+q.length);
+  }
+
+  /* ── Oberfläche ─────────────────────────────────────────────── */
+  function zeichnen(q){
+    var liste=document.getElementById('sk-liste'); if(!liste) return;
+    treffer=suchen(q); wahl=0;
+    if(!treffer.length){ liste.innerHTML='<div class="sk-leer">Nichts gefunden.</div>'; return; }
+    var h='', letzte='';
+    treffer.forEach(function(o,i){
+      if(o.grp!==letzte){ letzte=o.grp; h+='<div class="sk-gruppe">'+o.grp+'</div>'; }
+      h+='<div class="sk-eintrag'+(i===0?' aktiv':'')+'" data-i="'+i+'">'
+        +'<span class="sk-sym">'+o.sym+'</span><span class="sk-txt">'
+        +'<div class="sk-t">'+hervor(o.t,q)+'</div>'
+        +(o.u?'<div class="sk-u">'+hervor(o.u,q)+'</div>':'')+'</span></div>';
+    });
+    liste.innerHTML=h;
+    liste.querySelectorAll('.sk-eintrag').forEach(function(el){
+      el.addEventListener('mouseenter',function(){ setzen(+el.getAttribute('data-i')); });
+      el.addEventListener('click',function(){ treffer[+el.getAttribute('data-i')].geh(); });
+    });
+  }
+  function setzen(i){
+    var liste=document.getElementById('sk-liste'); if(!liste||!treffer.length) return;
+    wahl=Math.max(0,Math.min(treffer.length-1,i));
+    var els=liste.querySelectorAll('.sk-eintrag');
+    els.forEach(function(el,j){ el.classList.toggle('aktiv',j===wahl); });
+    if(els[wahl]) els[wahl].scrollIntoView({block:'nearest'});
+  }
+
+  function auf(){
+    css(); bau();
+    if(!index) index=bauen();
+    var h=document.getElementById('sk-huelle'); if(!h) return;
+    h.classList.add('auf'); offen=true;
+    var f=document.getElementById('sk-feld'); f.value=''; zeichnen('');
+    setTimeout(function(){ f.focus(); },30);
+  }
+  function zu(){
+    var h=document.getElementById('sk-huelle');
+    if(h) h.classList.remove('auf');
+    offen=false;
+  }
+
+  function bau(){
+    if(document.getElementById('sk-huelle')) return;
+    var h=document.createElement('div'); h.className='sk-huelle'; h.id='sk-huelle';
+    h.setAttribute('role','dialog'); h.setAttribute('aria-modal','true');
+    h.setAttribute('aria-label','Sofortsuche über die ganze Seite');
+    h.innerHTML=
+      '<div class="sk-box">'
+     +'<div class="sk-kopf"><span class="sk-lupe">⌕</span>'
+     +'<input class="sk-feld" id="sk-feld" type="text" autocomplete="off" spellcheck="false"'
+     +' placeholder="Figuren, Philosophen, Zitate, Shirts, Seiten …" aria-label="Suchbegriff">'
+     +'<span class="sk-esc">ESC</span></div>'
+     +'<div class="sk-liste" id="sk-liste"></div>'
+     +'<div class="sk-fuss"><span>↑↓ wählen</span><span>⏎ öffnen</span><span>ESC schließen</span></div>'
+     +'</div>';
+    document.body.appendChild(h);
+    h.addEventListener('click',function(e){ if(e.target===h) zu(); });
+    var f=h.querySelector('#sk-feld');
+    f.addEventListener('input',function(){ zeichnen(f.value); });
+    f.addEventListener('keydown',function(e){
+      if(e.key==='ArrowDown'){ e.preventDefault(); setzen(wahl+1); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); setzen(wahl-1); }
+      else if(e.key==='Enter'){ e.preventDefault(); if(treffer[wahl]) treffer[wahl].geh(); }
+      else if(e.key==='Escape'){ e.preventDefault(); zu(); }
+    });
+  }
+
+  /* ── Auslöser: Tastatur und ein Knopf in der Navigation ─────── */
+  document.addEventListener('keydown',function(e){
+    var k=(e.key||'').toLowerCase();
+    if((e.ctrlKey||e.metaKey) && k==='k'){ e.preventDefault(); offen?zu():auf(); return; }
+    if(k==='escape' && offen){ zu(); return; }
+    if(k==='/' && !offen){
+      var t=(e.target&&e.target.tagName||'').toLowerCase();
+      if(t==='input'||t==='textarea'||t==='select'||(e.target&&e.target.isContentEditable)) return;
+      e.preventDefault(); auf();
+    }
+  });
+  window.skOeffnen=auf;
+
+  function knopf(){
+    var ziel=document.querySelector('.nav-right');
+    if(!ziel || document.getElementById('sk-knopf')) return;
+    var b=document.createElement('button');
+    b.id='sk-knopf'; b.className='sk-knopf'; b.type='button';
+    b.title='Suche über die ganze Seite (Strg+K)';
+    b.setAttribute('aria-label','Suche über die ganze Seite öffnen');
+    b.textContent='⌕ Suche';
+    b.addEventListener('click',auf);
+    ziel.insertBefore(b, ziel.firstChild);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){css();knopf();});
+  else { css(); knopf(); }
+})();
+

@@ -1,0 +1,1912 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     GÖTTERKOSMOS — Pantheen & religiöse Kosmen als Hierarchie + Abstammung
+═══════════════════════════════════════════════════════════════════ -->
+<style>
+.gods-root{
+  --gx-bg:#0c0d18; --gx-ink:#ece6d6; --gx-ink2:#a59f93;
+  --gx-line:#2a2c46; --gx-star:#c9b876;
+  position:relative; background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, #1a1c3266 0%, transparent 60%),
+    radial-gradient(circle at 80% 90%, #15182e88 0%, transparent 50%),
+    var(--gx-bg);
+  min-height:100%; overflow:hidden;
+}
+.gods-stars{ position:absolute; inset:0; pointer-events:none; opacity:.5; z-index:0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 28% 62%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 47% 31%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 63% 78%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 81% 24%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 91% 56%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 38% 88%, #fff 50%, transparent),
+    radial-gradient(2px 2px at 71% 42%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 6% 73%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 55% 12%, #fff 50%, transparent);
+  background-repeat:no-repeat;
+}
+.gods-stars{ animation:gxTwinkle 7s ease-in-out infinite; }
+@keyframes gxTwinkle{ 0%,100%{opacity:.42;} 50%{opacity:.6;} }
+.gods-root::after{ content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse 55% 42% at 50% 40%, var(--pan-glow,rgba(201,184,118,.28)) 0%, transparent 62%);
+  opacity:.55; transition:background .45s ease; animation:gxAura 16s ease-in-out infinite; }
+@keyframes gxAura{ 0%,100%{opacity:.45;} 50%{opacity:.72;} }
+.gods-hero{ position:relative; z-index:2; padding:3rem 3rem 1.2rem; text-align:center; }
+.gods-eyebrow{ font-family:var(--fm); font-size:.72rem; letter-spacing:.32em; text-transform:uppercase;
+  color:var(--gx-star); margin-bottom:1rem; }
+.gods-title{ font-family:'Cinzel',serif; font-weight:900; font-size:clamp(2.2rem,5vw,3.6rem);
+  letter-spacing:.04em; color:var(--gx-ink); line-height:1.05;
+  text-shadow:0 0 30px rgba(201,184,118,.25); }
+.gods-title .accent{ color:var(--gx-star); }
+.gods-sub{ font-family:var(--fb); color:var(--gx-ink2); max-width:600px; margin:.9rem auto 0;
+  line-height:1.7; font-size:.92rem; }
+
+/* Kategorie-Trenner über den Tabs */
+.gods-cat-label{ font-family:var(--fm); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--gx-ink2); opacity:.6; width:100%; text-align:center; margin:.6rem 0 .1rem; }
+.gods-tabs{ position:relative; z-index:2; display:flex; gap:.45rem; justify-content:center;
+  flex-wrap:wrap; padding:1.2rem 1rem .3rem; }
+.gods-tab{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem; letter-spacing:.04em;
+  background:transparent; color:var(--gx-ink2); border:1px solid var(--gx-line);
+  padding:.45rem 1.1rem; border-radius:2px; cursor:pointer; transition:all .25s; }
+.gods-tab:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); }
+.gods-tab.active{ color:#0c0d18; background:var(--pan-color,#c9b876);
+  border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
+
+.gods-controls{ position:relative; z-index:2; display:flex; gap:1.4rem; justify-content:center;
+  flex-wrap:wrap; align-items:center; padding:.8rem 1rem 1.2rem; }
+.gods-ctrl{ display:inline-flex; align-items:center; gap:.45rem; font-family:var(--fm);
+  font-size:.74rem; color:var(--gx-ink2); cursor:pointer; user-select:none; }
+.gods-ctrl input{ cursor:pointer; accent-color:var(--gx-star); }
+.gods-ctrl-btn{ font-family:var(--fm); font-size:.74rem; letter-spacing:.04em;
+  background:transparent; color:var(--gx-star); border:1px solid var(--gx-star);
+  padding:.42rem 1rem; border-radius:2px; cursor:pointer; transition:all .2s; }
+.gods-ctrl-btn:hover{ background:var(--gx-star); color:#0c0d18; }
+.gods-ctrl-btn.on{ background:var(--gx-star); color:#0c0d18; box-shadow:0 0 16px rgba(201,184,118,.4); }
+
+.gods-stage-wrap{ position:relative; z-index:1; overflow-x:auto; overflow-y:hidden; padding:0 1.5rem 2rem; }
+.gods-stage{ position:relative; margin:0 auto; }
+#gods-svg{ display:block; }
+
+.gx-tier-label{ font-family:'Cinzel',serif; font-size:13px; font-weight:600;
+  fill:var(--gx-star); letter-spacing:.06em; opacity:.85; }
+.gx-tier-rule{ stroke:var(--gx-line); stroke-width:1; stroke-dasharray:2 6; opacity:.6; }
+
+.gx-edge{ fill:none; stroke:#3a3d63; stroke-width:1.4; opacity:.5; transition:stroke .2s, opacity .2s, stroke-width .2s; }
+.gx-edge.lit{ stroke:var(--pan-color,#c9b876); stroke-width:2.4; opacity:1; }
+
+/* Emanation: sanfter Lichtpuls die Abstammungslinie hinab (Eltern -> Kind) */
+.gx-flow{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1.7; stroke-linecap:round;
+  stroke-dasharray:7 60; opacity:.42; pointer-events:none;
+  animation:gxFlow 9s linear infinite; }
+@keyframes gxFlow{ from{ stroke-dashoffset:67; } to{ stroke-dashoffset:0; } }
+/* Medaillon am Knoten: entsaettigt (Duotone-Vereinheitlichung), Ring in Pantheon-Farbe */
+.gx-medal{ filter:saturate(.35) contrast(1.06); }
+.gx-medal-ring{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1.5; opacity:.9; }
+.gx-mono-ini{ font-family:var(--fh,serif); font-weight:600; fill:#101322; pointer-events:none; }
+/* ── Karten IM Kosmos-Layout (Porträts-Tab) & in der Vergleichsansicht ── */
+.gx-hyfo{ overflow:visible; }
+.gx-hy-card{ position:relative; box-sizing:border-box; height:100%; display:flex; flex-direction:column;
+  align-items:center; gap:.3rem; padding:.55rem .45rem; text-align:center; cursor:pointer;
+  background:rgba(10,12,26,.62); border:1px solid rgba(122,126,178,.28); border-radius:12px;
+  transition:border-color .15s, transform .15s, box-shadow .15s; }
+.gx-node:hover .gx-hy-card, .gx-cmp-node:hover .gx-hy-card{ border-color:var(--pan-color,#c9b876);
+  transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,0,0,.4); }
+.gx-hy-card.major{ border-color:var(--pan-color,#c9b876); }
+.gx-hy-img{ width:58px; height:58px; border-radius:50%; background-size:cover;
+  background-position:center 22%; border:2px solid var(--pan-color,#c9b876);
+  filter:saturate(.78); flex:0 0 auto; }
+.gx-hy-mono{ display:flex; align-items:center; justify-content:center; font-family:var(--fh,serif);
+  font-size:1.5rem; color:var(--pan-color,#c9b876);
+  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), rgba(6,8,18,.55)); }
+.gx-hy-name{ font-family:'Cinzel',serif; font-size:.8rem; color:#e8eaf6; line-height:1.15;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.gx-hy-card.major .gx-hy-name{ color:var(--pan-color,#c9b876); }
+.gx-hy-dom{ font-family:var(--fb); font-size:.62rem; color:#9aa0c7; line-height:1.3;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.gx-hy-eq{ position:absolute; top:3px; right:7px; color:var(--gx-star); font-size:.72rem; line-height:1; }
+/* ── Sternbild-Ansicht ── */
+.gx-sf-dot{ fill:#aeb6e8; }
+.gx-stars .gx-edge{ stroke:rgba(150,165,225,.30)!important; stroke-width:1!important; opacity:.55!important; }
+.gx-star-glow{ fill:var(--pan-color,#c9b876); opacity:.4; filter:blur(2px);
+  animation:gxTwinkle 3.2s ease-in-out infinite; }
+.gx-star-core{ fill:#fdfefe; }
+.gx-star-ray{ stroke:#fdfefe; stroke-width:.7; opacity:.55; }
+.gx-star-name{ text-anchor:middle; font-family:'Cinzel',serif; fill:#c3c9ee; }
+.gx-star-name.major{ font-size:9.5px; fill:#eef0ff; letter-spacing:.02em; }
+.gx-star-name.minor{ font-size:7.5px; opacity:.72; }
+@keyframes gxTwinkle{ 0%,100%{opacity:.32} 50%{opacity:.72} }
+@media (prefers-reduced-motion: reduce){ .gx-star-glow{ animation:none; } }
+
+/* ── Card-Ansicht: Kosmos <-> Karten ── */
+.gx-viewbar{ display:flex; gap:.4rem; margin:.4rem 0 .6rem; }
+.gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
+  font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
+  border-radius:999px; cursor:pointer; transition:all .15s; }
+.gx-viewbtn:hover{ color:#e8eaf6; }
+.gx-viewbtn.on{ color:var(--pan-color,#c9b876); border-color:var(--pan-color,#c9b876); }
+.gx-cards{ position:relative; z-index:1; }
+.gx-cards-tier{ font-family:var(--fm); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--pan-color,#c9b876); opacity:.85; margin:1.1rem 0 .5rem; }
+.gx-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.6rem; }
+.gx-card{ display:flex; flex-direction:column; align-items:center; gap:.35rem; padding:.7rem .5rem .6rem;
+  background:rgba(10,12,26,.55); border:1px solid rgba(122,126,178,.25); border-radius:12px;
+  cursor:pointer; text-align:center; transition:transform .15s, border-color .15s, box-shadow .15s; }
+.gx-card:hover{ transform:translateY(-2px); border-color:var(--pan-color,#c9b876);
+  box-shadow:0 4px 18px rgba(0,0,0,.35); }
+.gx-card.major .gx-card-name{ color:var(--pan-color,#c9b876); }
+.gx-card-img{ width:84px; height:84px; border-radius:50%; background-size:cover;
+  background-position:center 22%; border:2px solid var(--pan-color,#c9b876); filter:saturate(.75); }
+.gx-card-mono{ display:flex; align-items:center; justify-content:center; font-family:var(--fh,serif);
+  font-size:1.7rem; color:var(--pan-color,#c9b876);
+  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), rgba(6,8,18,.55)); }
+.gx-card-name{ font-size:.86rem; color:#e8eaf6; line-height:1.25; }
+.gx-card-dom{ font-size:.66rem; color:#9aa0c7; line-height:1.35; display:-webkit-box;
+  -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+/* Stimmungs-Vignette: EIN Werk je Pantheon, stark abgedunkelt liegend unter
+   Aura (z-index 0 < .gods-stage-wrap z-index 1); Toenung liefert die Aura. */
+.gx-vignette{ position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-size:cover; background-position:center 30%;
+  filter:saturate(.55) brightness(.9); opacity:0; transition:opacity .9s ease; }
+.gx-vignette.on{ opacity:.16; }
+@media (prefers-reduced-motion: reduce){ .gx-flow{ animation:none; opacity:.2; } }
+.gx-equiv-line{ fill:none; stroke:var(--gx-star); stroke-width:1.6; stroke-dasharray:5 4; opacity:.8;
+  transition:opacity .25s; }
+
+.gx-node{ cursor:pointer; transition:opacity .2s; }
+.gx-node .gx-orb{ transition:filter .2s; }
+.gx-node:hover .gx-orb{ filter:brightness(1.35); }
+.gx-node.dim{ opacity:.18; }
+.gx-node.sel .gx-name{ fill:var(--gx-star); }
+.gx-name{ font-family:'Cinzel',serif; fill:var(--gx-ink); text-anchor:middle; pointer-events:none; }
+.gx-name.major{ font-weight:700; font-size:13px; }
+.gx-name.minor{ font-weight:400; font-size:10.5px; fill:var(--gx-ink2); }
+.gx-domain{ font-family:var(--fb); font-size:9px; fill:var(--gx-ink2); text-anchor:middle; pointer-events:none; opacity:.7; }
+.gx-equiv-badge{ font-size:11px; fill:var(--gx-star); pointer-events:none; }
+.gx-monism-frame{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1.3; stroke-dasharray:8 6; opacity:.45; pointer-events:none; }
+.gx-monism-label{ font-family:var(--fm); font-size:10px; letter-spacing:.13em; text-transform:uppercase; fill:var(--pan-color,#c9b876); opacity:.8; pointer-events:none; }
+.gx-monad-aura{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:2; opacity:.55; pointer-events:none; }
+.gx-monad-aura2{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1; opacity:.25; pointer-events:none; }
+.gx-orb-halo{ fill:var(--pan-color,#c9b876); opacity:.12; pointer-events:none; animation:gxPulse 4.5s ease-in-out infinite; }
+@keyframes gxPulse{ 0%,100%{opacity:.10;} 50%{opacity:.26;} }
+.gx-node{ animation:gxNodeIn .55s ease backwards; }
+@keyframes gxNodeIn{ from{opacity:0;} to{opacity:1;} }
+#gx-edges{ animation:gxEdgeIn 1.1s ease both; }
+@keyframes gxEdgeIn{ from{opacity:0;} to{opacity:1;} }
+
+.gx-panel{ position:fixed; right:1.5rem; bottom:1.5rem; width:340px; max-width:calc(100vw - 3rem);
+  background:linear-gradient(160deg,#14152a,#0e0f1d); border:1px solid var(--gx-line);
+  border-radius:4px; padding:1.5rem; z-index:60; box-shadow:0 20px 60px rgba(0,0,0,.6);
+  transform:translateY(20px); opacity:0; pointer-events:none; transition:all .3s; }
+.gx-panel.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
+.gx-panel-close{ position:absolute; top:.8rem; right:.8rem; background:none; border:none;
+  color:var(--gx-ink2); font-size:1.1rem; cursor:pointer; }
+.gx-panel-close:hover{ color:var(--gx-ink); }
+.gx-panel-portrait{ width:100%; height:170px; border-radius:4px; overflow:hidden; margin-bottom:1rem;
+  background:#0c0d18; border:1px solid var(--gx-line); display:none; }
+.gx-panel-portrait.show{ display:block; }
+.gx-panel-portrait img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; }
+.gx-panel-tier{ font-family:var(--fm); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--pan-color,#c9b876); margin-bottom:.5rem; }
+.gx-panel-name{ font-family:'Cinzel',serif; font-weight:700; font-size:1.55rem; color:var(--gx-ink);
+  line-height:1.1; margin-bottom:.5rem; }
+.gx-panel-domain{ font-family:var(--fb); color:var(--gx-ink2); font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+.gx-panel-myth{ margin-bottom:1rem; padding:.75rem .85rem; border-left:2px solid var(--pan-color,#c9b876);
+  background:#1a1c3255; border-radius:0 3px 3px 0; }
+.gx-panel-myth-label{ font-family:var(--fm); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--pan-color,#c9b876); margin-bottom:.4rem; opacity:.9; }
+.gx-panel-myth-text{ font-family:var(--fb); font-style:italic; font-size:.9rem; line-height:1.65; color:var(--gx-ink); }
+.gx-panel-myth-src{ font-family:var(--fm); font-size:.66rem; color:var(--gx-ink2); opacity:.75; margin-top:.5rem; }
+.gx-panel-rel{ font-family:var(--fb); font-size:.82rem; color:var(--gx-ink2); line-height:1.7;
+  border-top:1px solid var(--gx-line); padding-top:.9rem; }
+.gx-panel-rel b{ color:var(--gx-ink); font-weight:600; }
+.gx-equiv-chip{ display:inline-block; font-family:var(--fm); font-size:.7rem;
+  background:#1a1c3260; border:1px solid var(--gx-line); border-radius:2px;
+  padding:.15rem .55rem; margin:.2rem .25rem 0 0; color:var(--gx-star); cursor:pointer; transition:all .15s; }
+.gx-equiv-chip:hover{ border-color:var(--gx-star); background:#1a1c32; }
+
+/* ── Bild-Lightbox: Porträt in großer Ansicht ── */
+.gx-panel-portrait.zoomable{ cursor:zoom-in; position:relative; }
+.gx-panel-portrait.zoomable::after{ content:'⤢'; position:absolute; right:.45rem; bottom:.35rem;
+  font-size:.85rem; color:#ece6d6; background:rgba(10,12,26,.66); border:1px solid var(--gx-line);
+  border-radius:3px; padding:.05rem .35rem; opacity:0; transition:opacity .2s; pointer-events:none; }
+.gx-panel-portrait.zoomable:hover::after{ opacity:.95; }
+.gx-lightbox{ position:fixed; inset:0; z-index:900; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; padding:2.2rem 1.4rem 1.6rem;
+  background:rgba(4,5,12,.92); backdrop-filter:blur(8px);
+  opacity:0; pointer-events:none; transition:opacity .28s ease; }
+.gx-lightbox.open{ opacity:1; pointer-events:auto; }
+.gx-lightbox img{ max-width:min(92vw,980px); max-height:76vh; object-fit:contain;
+  border:1px solid var(--gx-line); border-radius:4px; box-shadow:0 30px 90px rgba(0,0,0,.75);
+  background:#0c0d18; transform:scale(.965); transition:transform .28s ease; }
+.gx-lightbox.open img{ transform:scale(1); }
+.gx-lb-name{ font-family:'Cinzel',serif; font-weight:700; font-size:1.35rem; color:var(--gx-ink);
+  margin-top:1rem; text-align:center; }
+.gx-lb-meta{ font-family:var(--fm); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--pan-color,#c9b876); margin-top:.3rem; text-align:center; }
+.gx-lb-credit{ font-family:var(--fb); font-size:.7rem; color:var(--gx-ink2); margin-top:.55rem;
+  text-align:center; max-width:620px; line-height:1.6; opacity:.85; }
+.gx-lb-credit a{ color:var(--gx-star); text-decoration:none; border-bottom:1px dotted var(--gx-star); }
+.gx-lb-close{ position:absolute; top:1rem; right:1.2rem; background:none; border:1px solid var(--gx-line);
+  color:var(--gx-ink2); font-size:1.05rem; line-height:1; padding:.4rem .6rem; border-radius:3px;
+  cursor:pointer; transition:all .2s; }
+.gx-lb-close:hover{ color:var(--gx-ink); border-color:var(--gx-star); }
+@media (prefers-reduced-motion: reduce){ .gx-lightbox, .gx-lightbox img{ transition:none; } }
+
+/* ── Permalink im Detail-Panel ── */
+.gx-panel-permalink{ position:absolute; top:.8rem; right:2.6rem; background:none; border:none;
+  font-family:var(--fm); font-size:.68rem; letter-spacing:.05em; color:var(--gx-ink2);
+  cursor:pointer; padding:.1rem .3rem; transition:color .15s; }
+.gx-panel-permalink:hover{ color:var(--gx-star); }
+.gx-panel-permalink.done{ color:var(--gx-star); }
+
+/* ── Entsprechungs-Atlas: alle 67 Entsprechungen als ein Netz ── */
+.gxa-arc{ fill:none; stroke-width:5; opacity:.85; }
+.gxa-pan-label{ font-family:var(--fm); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
+  fill:var(--gx-ink2); }
+.gxa-edge{ fill:none; stroke:var(--gx-star); stroke-width:1; opacity:.16;
+  transition:opacity .18s, stroke-width .18s; }
+.gxa-edge.lit{ opacity:.95; stroke-width:2.2; filter:drop-shadow(0 0 4px rgba(201,184,118,.7)); }
+.gxa-edge.dim{ opacity:.045; }
+.gxa-node{ cursor:pointer; }
+.gxa-node circle{ transition:r .15s; }
+.gxa-node:hover circle{ r:5.5; }
+.gxa-node.dim{ opacity:.22; }
+.gxa-node.gxa-off{ opacity:.10; }
+.gxa-edge.gxa-off{ opacity:.03; }
+.gx-zeitfilter{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
+  padding:.5rem .8rem; margin:.2rem 0 .6rem; border:1px solid var(--gx-line);
+  border-radius:10px; background:#12142a; }
+.gx-zeitfilter.gods-hidden{ display:none; }
+.gx-zeit-alle{ font-family:var(--fm,monospace); font-size:.68rem; letter-spacing:.05em;
+  padding:.32rem .7rem; border-radius:8px; cursor:pointer;
+  background:#161832; border:1px solid var(--gx-line); color:var(--gx-ink); transition:all .15s; }
+.gx-zeit-alle.on{ border-color:var(--gx-star); color:var(--gx-star); }
+.gx-zeit-alle:hover{ border-color:var(--gx-star); }
+#gx-zeit-slider{ flex:1; min-width:180px; accent-color:var(--gx-star); cursor:pointer; }
+.gx-zeit-lab{ font-family:var(--fm,monospace); font-size:.74rem; color:var(--gx-star);
+  min-width:9.5rem; text-align:right; font-weight:700; }
+.gx-zeit-zahl{ font-family:var(--fm,monospace); font-size:.64rem; color:var(--gx-ink2); }
+.gxa-name{ font-family:'Cinzel',serif; font-size:8.6px; fill:var(--gx-ink2); pointer-events:none;
+  transition:fill .15s; }
+.gxa-node.lit .gxa-name{ fill:var(--gx-ink); font-weight:700; }
+.gxa-center{ font-family:'Cinzel',serif; fill:var(--gx-ink); text-anchor:middle; }
+.gxa-center-sub{ font-family:var(--fm); font-size:9.5px; letter-spacing:.1em; fill:var(--gx-ink2);
+  text-anchor:middle; }
+.gxa-center-names{ font-family:'Cinzel',serif; font-size:13px; fill:var(--gx-star); text-anchor:middle; }
+
+.gods-legend{ position:relative; z-index:2; text-align:center; font-family:var(--fm);
+  font-size:.72rem; color:var(--gx-ink2); padding:0 1rem 1.2rem; line-height:1.8; }
+.gods-legend .swatch{ display:inline-block; width:9px; height:9px; border-radius:50%;
+  vertical-align:middle; margin:0 .25rem 0 .8rem; }
+.gods-hidden{ display:none !important; }
+.gods-sources{ position:relative; z-index:2; text-align:center; font-family:var(--fb);
+  font-size:.7rem; color:var(--gx-ink2); opacity:.65; padding:0 2rem 1.5rem; line-height:1.6; max-width:680px; margin:0 auto; }
+.gods-sources b{ color:var(--gx-ink); opacity:1; }
+.gods-note{ position:relative; z-index:2; text-align:center; font-family:var(--fb);
+  font-size:.76rem; color:var(--gx-ink2); padding:0 2rem 1.2rem; line-height:1.7; max-width:720px; margin:0 auto;
+  font-style:italic; }
+
+/* ── Vergleichsansicht: zwei Pantheen als kompakte Reihen, Linien dazwischen ── */
+.gods-compare-picker{ position:relative; z-index:2; display:flex; align-items:center; justify-content:center;
+  gap:.8rem; flex-wrap:wrap; padding:.4rem 1rem 1.4rem; font-family:var(--fm); font-size:.78rem; color:var(--gx-ink2); }
+.gods-compare-picker select{ background:#14152a; color:var(--gx-ink); border:1px solid var(--gx-line);
+  border-radius:3px; padding:.4rem .7rem; font-family:var(--fm); font-size:.78rem; cursor:pointer; }
+.gods-compare-picker select:focus{ outline:1px solid var(--gx-star); }
+.gx-cmp-arrow{ color:var(--gx-star); font-size:1rem; }
+.gx-cmp-empty{ text-align:center; font-family:var(--fb); color:var(--gx-ink2); padding:3rem 2rem; font-size:.9rem; line-height:1.8; }
+.gx-cmp-empty b{ color:var(--gx-star); }
+.gx-cmp-row-label{ font-family:'Cinzel',serif; font-size:13px; font-weight:600; fill:var(--gx-ink); letter-spacing:.04em; }
+.gx-cmp-node{ cursor:pointer; }
+.gx-cmp-node .gx-orb{ transition:filter .2s; }
+.gx-cmp-node:hover .gx-orb{ filter:brightness(1.35); }
+.gx-cmp-node.dim{ opacity:.15; }
+.gx-cmp-name{ font-family:'Cinzel',serif; font-size:11.5px; font-weight:600; fill:var(--gx-ink); text-anchor:middle; pointer-events:none; }
+.gx-cmp-pan{ font-family:var(--fm); font-size:8px; fill:var(--gx-ink2); text-anchor:middle; pointer-events:none; letter-spacing:.05em; text-transform:uppercase; }
+.gx-cmp-line{ fill:none; stroke-width:2; opacity:.5; transition:opacity .2s, stroke-width .2s; }
+.gx-cmp-line.lit{ opacity:1; stroke-width:3.5; }
+.gx-cmp-line.dim{ opacity:.06; }
+/* Kurzes Verbindungs-Label mittig auf der Linie */
+.gx-cmp-line-label{ font-family:var(--fm); font-size:9px; fill:var(--gx-star); text-anchor:middle;
+  pointer-events:none; letter-spacing:.04em; opacity:0; transition:opacity .2s; }
+.gx-cmp-line.lit + .gx-cmp-line-label{ opacity:1; }
+
+@media (max-width:780px){
+  .gods-hero{ padding:2rem 1.2rem 1rem; }
+  .gx-panel{ right:.75rem; left:.75rem; bottom:.75rem; width:auto; }
+}
+
+/* ── Suche, Motive, Zeitleiste, Tabelle (v29) ── */
+.gx-findbar{display:flex;gap:.6rem;margin:.2rem 1.5rem .8rem;flex-wrap:wrap}
+.gx-findbar input{flex:1;min-width:220px;padding:.5rem .8rem;border-radius:10px;
+  border:1px solid var(--gx-line,#3a3f46);background:#12142a;
+  color:var(--gx-ink);font:inherit}
+.gx-findbar input::placeholder{color:var(--gx-ink2)}
+.gx-findbar select{padding:.5rem .6rem;border-radius:10px;border:1px solid var(--gx-line,#3a3f46);
+  background:#161832;color:var(--gx-ink);font:inherit;max-width:46%}
+.gx-results{margin:0 1.5rem 1rem;border:1px solid var(--gx-line,#3a3f46);border-radius:12px;
+  background:var(--gx-bg2,rgba(128,128,128,.06));max-height:340px;overflow:auto}
+.gx-results .r-head{padding:.5rem .8rem;font-size:.78rem;color:var(--gx-ink2,#9aa)}
+.gx-results button{display:block;width:100%;text-align:left;padding:.5rem .8rem;background:none;
+  border:0;border-top:1px solid var(--gx-line,#3a3f46);color:var(--gx-ink,inherit);cursor:pointer;font:inherit}
+.gx-results button:hover{background:rgba(128,128,128,.12)}
+.gx-results .r-pan{color:var(--gx-ink2,#9aa);font-size:.78em;margin-left:.45em}
+.gx-results .r-snip{display:block;font-size:.78em;color:var(--gx-ink2,#9aa);margin-top:2px}
+.gx-table{margin:0 1.5rem 2rem;overflow-x:auto}
+.gx-table table{border-collapse:collapse;width:100%;font-size:.85rem;margin-bottom:1.6rem}
+.gx-table caption{text-align:left;font-weight:700;padding:.4rem 0;font-size:1rem;color:var(--gx-ink)}
+.gx-table th,.gx-table td{border:1px solid var(--gx-line,#3a3f46);padding:.45rem .6rem;
+  vertical-align:top;text-align:left;color:var(--gx-ink)}
+.gx-table th{background:rgba(255,255,255,.06);color:var(--gx-ink);font-weight:700}
+.gx-table tbody tr:nth-child(even){background:rgba(255,255,255,.028)}
+.gx-table tbody tr:hover{background:rgba(201,184,118,.10)}
+.gx-table td.gxt-my{max-width:420px}
+.gx-table .gxt-name{background:none;border:0;padding:0;color:inherit;font:inherit;
+  font-weight:700;cursor:pointer;text-decoration:underline dotted}
+.gxz-row{cursor:pointer}
+.gxz-row:hover .gxz-bar{filter:brightness(1.3)}
+/* Native Dropdown-Listen (Motiv, Kosmos-Filter, Vergleich) auf dem dunklen Kosmos-Hintergrund lesbar */
+.gods-root select option{ background:#161832; color:#ece6d6; }
+/* Tabellen-Toolbar: Kosmos-Filter + CSV-Export */
+.gxt-toolbar{ display:flex; gap:.7rem; align-items:center; flex-wrap:wrap; margin:.1rem 0 1.1rem; }
+.gxt-toolbar-lab{ display:flex; align-items:center; gap:.45rem; font-size:.85rem; color:var(--gx-ink); }
+.gxt-panfilter{ padding:.45rem .6rem; border-radius:10px; border:1px solid var(--gx-line);
+  background:#161832; color:var(--gx-ink); font:inherit; }
+.gxt-export{ padding:.45rem .85rem; border-radius:10px; border:1px solid var(--gx-line);
+  background:#161832; color:var(--gx-ink); font:inherit; cursor:pointer; }
+.gxt-export:hover{ border-color:var(--gx-star); color:#fff; }
+.gxt-kosmos{ font-weight:700; }
+/* Sichtbarer Tastatur-Fokus im ganzen Kosmos (vorher nur am Vergleichs-Select) */
+.gods-root :is(button,select,input,a,[tabindex]):focus-visible{
+  outline:2px solid var(--gx-star); outline-offset:2px; border-radius:6px; }
+/* Filter-Statusleiste (Porträts/Sternbild): aktive Einschränkung + „Alles anzeigen" */
+.gx-filterbar{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
+  margin:.1rem 0 .8rem; padding:.4rem .7rem; border:1px solid var(--gx-line);
+  border-radius:10px; background:#12142a; font-size:.82rem; color:var(--gx-ink2); }
+.gx-filterbar b{ color:var(--gx-ink); font-weight:600; }
+.gx-fb-reset{ margin-left:auto; padding:.3rem .7rem; border-radius:8px;
+  border:1px solid var(--gx-line); background:#161832; color:var(--gx-ink); font:inherit; cursor:pointer; }
+.gx-fb-reset:hover{ border-color:var(--gx-star); color:#fff; }
+</style>
+
+<div class="gods-root" id="gods-root">
+  <div class="gods-stars"></div>
+
+  <div class="gods-hero">
+    <p class="gods-eyebrow">Pantheen & Kosmen der Welt</p>
+    <h1 class="gods-title">Götter<span class="accent">kosmos</span></h1>
+    <p class="gods-sub">Wer zeugte wen, wer steht über wem — und welche Gottheiten einander entsprechen.
+      Von den olympischen Göttern bis zu den abrahamitischen Religionen.</p>
+  </div>
+
+  <div class="gods-tabs" id="gods-tabs"></div>
+
+  <div class="gods-controls">
+    <button class="gods-ctrl-btn" id="gx-compare-btn" onclick="gxToggleCompare()" title="Zwei Pantheen direkt gegenüberstellen — zeigt echte Verbindungslinien zwischen entsprechenden Figuren">⇄ Pantheen vergleichen</button>
+    <label class="gods-ctrl"><input type="checkbox" id="gx-minor" checked onchange="gxRender()"> Nebenfiguren</label>
+    <label class="gods-ctrl"><input type="checkbox" id="gx-domains" checked onchange="gxRender()"> Wirkungsbereiche</label>
+  </div>
+
+  <!-- Zeitregler: blendet aus, was zu einem gewaehlten Zeitpunkt nicht lebendig war.
+       Grundlage sind die belegten Datierungen (zeit.von / zeit.bis) aller Kosmen. -->
+  <div class="gx-zeitfilter gods-hidden" id="gx-zeitfilter" role="group" aria-label="Zeitpunkt wählen">
+    <button type="button" class="gx-zeit-alle on" id="gx-zeit-alle" onclick="gxJahrSetzen(null)">Alle Zeiten</button>
+    <input type="range" id="gx-zeit-slider" min="-2600" max="2026" step="25" value="0"
+      aria-label="Jahr" oninput="gxJahrSetzen(+this.value)">
+    <span class="gx-zeit-lab" id="gx-zeit-lab">alle Zeiten</span>
+    <span class="gx-zeit-zahl" id="gx-zeit-zahl"></span>
+  </div>
+
+  <!-- Vergleichsansicht: zwei Pantheen wählen, beide als kompakte Reihen mit
+       echten Verbindungslinien zwischen den Entsprechungen — nur die Figuren,
+       die tatsächlich eine Entsprechung haben, nicht der ganze (oft sehr breite)
+       Baum. So bleibt es auch bei großen Pantheen übersichtlich. -->
+  <div class="gods-compare-picker gods-hidden" id="gods-compare-picker">
+    <span style="color:var(--gx-star);margin-right:.4rem">⇄</span>
+    <span>Zeige Entsprechungen zwischen</span>
+    <select id="gx-cmp-a" onchange="gxLeaveCards();gxRenderCompare()"></select>
+    <span class="gx-cmp-arrow">und</span>
+    <select id="gx-cmp-b" onchange="gxLeaveCards();gxRenderCompare()"></select>
+    <span style="color:var(--gx-ink2);font-size:.75rem;margin-left:.6rem">· Hover hebt die Verbindung hervor</span>
+  </div>
+
+  <div class="gx-viewbar">
+    <button type="button" class="gx-viewbtn on" data-view="hybrid" onclick="gxSetView('hybrid')"
+      title="Stammbaum eines Kosmos — wer zeugte wen, wer steht über wem (Bildkarten an ihrer Position)">Porträts</button>
+    <button type="button" class="gx-viewbtn" data-view="stars" onclick="gxSetView('stars')"
+      title="Derselbe Kosmos als Sternkarte — Figuren als leuchtende Gestirne statt Karten">Sternbild</button>
+    <button type="button" class="gx-viewbtn" data-view="zeit" onclick="gxSetView('zeit')"
+      title="Alle 24 Kosmen auf einer logarithmischen Zeitachse — datiert nach Kernquellen">Zeitleiste</button>
+    <button type="button" class="gx-viewbtn" data-view="tabelle" onclick="gxSetView('tabelle')"
+      title="Dieselben Daten als zugängliche Tabelle (Screenreader, Suchmaschinen)">Tabelle</button>
+    <button type="button" class="gx-viewbtn" data-view="atlas" onclick="gxSetView('atlas')"
+      title="Alle Entsprechungen quer durch die Traditionen als ein Netz">⟷ Entsprechungs-Atlas</button>
+  </div>
+  <div class="gx-findbar">
+    <input id="gx-q" type="search" placeholder="Figur suchen — Name, Domäne, Mythos …"
+      autocomplete="off" aria-label="Suche über alle Figuren">
+    <select id="gx-motiv" aria-label="Motiv-Filter">
+      <option value="">Motiv wählen …</option>
+    </select>
+  </div>
+  <div class="gx-results" id="gx-results" hidden></div>
+  <div class="gx-filterbar" id="gx-filterbar" hidden></div>
+  <div class="gods-stage-wrap" id="gods-stage-wrap">
+    <div class="gods-stage" id="gods-stage"><svg id="gods-svg"></svg></div>
+  </div>
+
+  <div class="gx-cards" id="gx-cards" hidden></div>
+
+  <div class="gx-table" id="gx-table" hidden></div>
+
+  <div class="gods-note" id="gods-note"></div>
+  <div class="gods-legend" id="gods-legend"></div>
+  <div class="gods-sources" id="gods-sources"></div>
+
+  <div class="gx-panel" id="gx-panel" role="dialog" aria-modal="false" aria-labelledby="gx-panel-name" tabindex="-1">
+    <button class="gx-panel-close" onclick="gxClosePanel()" aria-label="Detailkarte schließen">✕</button>
+    <button class="gx-panel-permalink" id="gx-panel-permalink" onclick="gxCopyPermalink(this)"
+      title="Permalink zu dieser Figur kopieren (zitierbar & teilbar)">🔗 Link</button>
+    <div class="gx-panel-portrait" id="gx-panel-portrait"></div>
+    <div class="gx-panel-tier" id="gx-panel-tier"></div>
+    <div class="gx-panel-name" id="gx-panel-name"></div>
+    <div class="gx-panel-domain" id="gx-panel-domain"></div>
+    <div class="gx-panel-myth" id="gx-panel-myth" style="display:none">
+      <div class="gx-panel-myth-label">Schlüsselmythos</div>
+      <div class="gx-panel-myth-text" id="gx-panel-myth-text"></div>
+      <div class="gx-panel-myth-src" id="gx-panel-myth-src"></div>
+    </div>
+    <div class="gx-panel-rel" id="gx-panel-rel"></div>
+  </div>
+
+  <!-- Lightbox: Porträt in großer Ansicht (Klick auf das Bild im Panel) -->
+  <div class="gx-lightbox" id="gx-lightbox" role="dialog" aria-label="Bild in großer Ansicht">
+    <button class="gx-lb-close" onclick="gxCloseLightbox()" title="Schließen (Esc)">✕</button>
+    <img id="gx-lb-img" src="" alt="">
+    <div class="gx-lb-name" id="gx-lb-name"></div>
+    <div class="gx-lb-meta" id="gx-lb-meta"></div>
+    <div class="gx-lb-credit" id="gx-lb-credit"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const SVGNS='http://www.w3.org/2000/svg';
+  let DATA=null, activePan='griechisch', equivMode=true;
+  let selId=null;            // angeklickte Figur (Panel offen)
+  let selPan=null;           // Pantheon der angeklickten Figur (für Permalink & Lightbox)
+  let _pos={}, _godsShown=[]; // aktuelles Layout (für Hover ohne Re-Render)
+  let compareMode=false, cmpA='griechisch', cmpB='roemisch';
+  let gxJahr=null;   // null = keine Zeitbegrenzung; sonst Jahreszahl (negativ = v. Chr.)
+  // War dieser Kosmos zum Zeitpunkt 'j' lebendig? Grundlage: belegte Datierung.
+  function gxLebt(panKey,j){
+    if(j===null||j===undefined) return true;
+    const z=DATA.panthea[panKey] && DATA.panthea[panKey].zeit;
+    if(!z) return true;
+    const bis=(z.bis==='heute')? 2026 : z.bis;
+    return j>=z.von && j<=bis;
+  }
+  window.gxJahrSetzen=function(j){
+    gxJahr=j;
+    const lab=document.getElementById('gx-zeit-lab'),
+          zahl=document.getElementById('gx-zeit-zahl'),
+          btn=document.getElementById('gx-zeit-alle'),
+          sl=document.getElementById('gx-zeit-slider');
+    if(btn) btn.classList.toggle('on', j===null);
+    if(sl && j!==null) sl.value=j;
+    if(lab) lab.textContent=(j===null)? 'alle Zeiten' : gxFmtYear(j);
+    if(zahl){
+      if(j===null) zahl.textContent='';
+      else{
+        const n=Object.keys(DATA.panthea).filter(k=>gxLebt(k,j)).length;
+        zahl.textContent=n+' von '+Object.keys(DATA.panthea).length+' Kosmen lebendig';
+      }
+    }
+    gxRender();
+  };
+  let gxTblPan='__all', gxTblRows=[];   // Tabellenansicht: Kosmos-Filter + aktuelle (gefilterte) Zeilen für CSV
+  let gxPanelReturnEl=null;             // Fokus-Rückgabeziel beim Schließen des Detail-Panels
+
+  // Kategorie-Gruppierung der Tabs
+  const CATS=[
+    ["Klassische Antike",["griechisch","roemisch"]],
+    ["Weitere Mythologien",["nordisch","mesopotamisch","aegyptisch","keltisch","hinduismus","kanaanaeisch"]],
+    ["Abrahamitische Religionen",["judentum","christentum","islam"]],
+    ["Iranische Religionen",["zoroastrismus","manichaeismus"]],
+    ["Indische Religionen",["buddhismus"]],
+    ["Ostasien",["shinto","chinesisch"]],
+    ["Mesoamerika",["aztekisch"]],
+    ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","heidegger","levinas","derrida"]],
+    ["Mystische Traditionen",["gnosis","kabbala"]],
+    ["Moderne Kosmen",["kapitalismus"]],
+    ["Literarische Kosmen",["lovecraft"]],
+  ];
+
+  const NODE_W_BASE=120, TIER_GAP_BASE=150, TOP_PAD=70, LEFT_PAD=185, COL_GAP=32;
+
+  /* Adaptives Layout: bei vielen Ebenen (z.B. Gnosis mit 10) wird TIER_GAP
+     kleiner, damit die Gesamthöhe nicht 1500px übersteigt. Bei sehr breiten
+     Ebenen (viele Figuren in einer Reihe) wird NODE_W reduziert. */
+  function adaptiveParams(gods){
+    const tiers={};
+    gods.forEach(g=>(tiers[g.tier]=tiers[g.tier]||[]).push(g));
+    const nTiers=Object.keys(tiers).length;
+    const maxRow=Math.max(...Object.values(tiers).map(r=>r.length));
+    // TIER_GAP: zwischen 90 (viele Ebenen) und 150 (wenige)
+    const tierGap=Math.round(Math.max(100, Math.min(TIER_GAP_BASE, 640/Math.max(nTiers,4))));
+    // NODE_W: zwischen 78 (sehr breite Zeile) und 120 (normal)
+    const nodeW=Math.round(Math.max(78, Math.min(NODE_W_BASE, 1000/Math.max(maxRow,8))));
+    return {tierGap, nodeW};
+  }
+
+  function el(t,a,txt){const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);if(txt!=null)e.textContent=txt;return e;}
+  function pan(){return DATA.panthea[activePan];}
+  function hexA(hex,a){const m=hex.replace('#','');return `rgba(${parseInt(m.substr(0,2),16)},${parseInt(m.substr(2,2),16)},${parseInt(m.substr(4,2),16)},${a})`;}
+  function shade(hex,f){const m=hex.replace('#','');const c=i=>Math.round(parseInt(m.substr(i,2),16)*f);return `rgb(${c(0)},${c(2)},${c(4)})`;}
+  var _measCtx=null;
+  function _mc(){if(!_measCtx)_measCtx=document.createElement('canvas').getContext('2d');return _measCtx;}
+  function labelWidth(t,mj){const c=_mc();c.font=(mj?'700 13px ':'400 10.5px ')+'"Cinzel",serif';return c.measureText(t).width;}
+  function wrapLabel(name,mj){
+    const maxW=mj?128:112;
+    if(name.indexOf(' ')<0||labelWidth(name,mj)<=maxW)return [name];
+    const w=name.split(' ');let best=[name],bd=1e9;
+    for(let i=1;i<w.length;i++){const a=w.slice(0,i).join(' '),b=w.slice(i).join(' ');
+      const d=Math.abs(labelWidth(a,mj)-labelWidth(b,mj));if(d<bd){bd=d;best=[a,b];}}
+    return best;
+  }
+
+  function buildTabs(){
+    const wrap=document.getElementById('gods-tabs'); wrap.innerHTML='';
+    CATS.forEach(([catLabel,keys])=>{
+      const present=keys.filter(k=>DATA.panthea[k]);
+      if(!present.length)return;
+      const lbl=document.createElement('div'); lbl.className='gods-cat-label'; lbl.textContent=catLabel;
+      wrap.appendChild(lbl);
+      present.forEach(key=>{
+        const p=DATA.panthea[key];
+        const b=document.createElement('button');
+        b.className='gods-tab'+(key===activePan?' active':'');
+        b.textContent=p.label;
+        b.style.setProperty('--pan-color',p.color);
+        b.style.setProperty('--pan-glow',hexA(p.color,.4));
+        b.onclick=()=>{activePan=key; equivMode=true; selId=null; syncEquivBtn(); buildTabs(); applyPanColor(); gxClosePanel(); gxRender(); gxSyncHash();};
+        wrap.appendChild(b);
+      });
+    });
+  }
+  function applyPanColor(){
+    const r=document.getElementById('gods-root');
+    r.style.setProperty('--pan-color',pan().color);
+    r.style.setProperty('--pan-glow',hexA(pan().color,.4));
+    loadVignette(r);
+  }
+  // Stimmungs-Vignette: laedt assets/images/goetter/vignetten/<key>.(avif|webp|jpg),
+  // falls vorhanden — sonst bleibt die Seite exakt wie bisher (progressive enhancement).
+  function loadVignette(root){
+    let v=root.querySelector('.gx-vignette');
+    if(!v){ v=document.createElement('div'); v.className='gx-vignette'; root.prepend(v); }
+    const key=activePan, exts=['avif','webp','jpg'];
+    v.classList.remove('on'); v.dataset.key=key;
+    (function tryExt(i){
+      if(i>=exts.length){ v.style.backgroundImage='none'; return; }
+      const url='assets/images/goetter/vignetten/'+key+'.'+exts[i];
+      const im=new Image();
+      im.onload=function(){ if(v.dataset.key!==key) return;
+        v.style.backgroundImage='url("'+url+'")'; v.classList.add('on'); };
+      im.onerror=function(){ tryExt(i+1); };
+      im.src=url;
+    })(0);
+  }
+
+  function layout(gods){
+    const _ap=adaptiveParams(gods);
+    const HYl=(gxView==='hybrid');
+    if(HYl){ _ap.tierGap=_hyCardH+60; }
+    const {tierGap, nodeW}=_ap;
+    const tiers={}; gods.forEach(g=>(tiers[g.tier]=tiers[g.tier]||[]).push(g));
+    const GAP=HYl?20:Math.max(22, Math.round(COL_GAP*(nodeW/NODE_W_BASE)));  // horiz. Mindestabstand der Label-Kästen
+    const minHalf=15;                                                  // Orbs dürfen nicht kollidieren
+    const pos={}, meta={}; let maxRowW=0;
+    Object.keys(tiers).forEach(t=>{
+      const row=tiers[t];
+      row.sort((a,b)=>(a.rank==='major'?0:1)-(b.rank==='major'?0:1));
+      row.forEach(g=>{ const mj=g.rank==='major'; const lines=wrapLabel(g.name,mj);
+        const w=Math.max.apply(null,lines.map(l=>labelWidth(l,mj)));
+        g.__lines=lines; g.__half=HYl?_hyCardW/2:Math.max(minHalf,w/2); });
+      // variabler Abstand: jeder Knoten bekommt genau so viel Platz, wie sein Label braucht
+      const xs=[]; let x=row.length?row[0].__half:0;
+      row.forEach((g,i)=>{ if(i>0) x+=row[i-1].__half+GAP+g.__half; xs.push(x); });
+      const rowW=row.length? xs[xs.length-1]+row[row.length-1].__half : 0;
+      meta[t]={xs,rowW,row}; maxRowW=Math.max(maxRowW,rowW);
+    });
+    Object.keys(meta).forEach(t=>{
+      const {xs,rowW,row}=meta[t]; const startX=LEFT_PAD+(maxRowW-rowW)/2;
+      row.forEach((g,i)=>{ pos[g.id]={x:startX+xs[i], y:TOP_PAD+(+t)*tierGap, tier:+t, lines:g.__lines}; });
+    });
+    return {pos, stageW:maxRowW+LEFT_PAD+70, stageH:HYl?(TOP_PAD+(Object.keys(tiers).length-1)*tierGap+12+_hyCardH+50):(TOP_PAD+Object.keys(tiers).length*tierGap+42), tierGap};
+  }
+
+  let gxView='hybrid';
+  let _hyCardW=132, _hyCardH=152;
+  function gxSyncViewBtns(){
+    document.querySelectorAll('.gx-viewbtn').forEach(b=>
+      b.classList.toggle('on', b.dataset.view===gxView));
+  }
+  // Atlas blendet Pantheon-Tabs & Filter aus (die Ansicht ist pantheonübergreifend)
+  function gxSyncAtlasChrome(){
+    const crossView=((gxView==='atlas'||gxView==='zeit') && !compareMode);  // pantheonübergreifend
+    const tblView=(gxView==='tabelle' && !compareMode);
+    const tabs=document.getElementById('gods-tabs');
+    // Tabs wählen ein einzelnes Pantheon — in Atlas/Zeit sinnlos, in der Tabelle
+    // übernimmt der eigene Kosmos-Filter, also dort ebenfalls ausblenden.
+    if(tabs) tabs.classList.toggle('gods-hidden', crossView||tblView||compareMode);
+    // Nebenfiguren/Wirkungsbereiche: in Atlas/Zeit ohne Wirkung → ausblenden;
+    // in der Tabelle wirken sie jetzt → sichtbar lassen.
+    ['gx-minor','gx-domains'].forEach(id=>{
+      const el2=document.getElementById(id);
+      if(el2&&el2.closest('label')) el2.closest('label').classList.toggle('gods-hidden', crossView||compareMode);
+    });
+    // „Pantheen vergleichen" ergibt nur in Porträts/Sternbild Sinn.
+    const cbtn=document.getElementById('gx-compare-btn');
+    if(cbtn) cbtn.classList.toggle('gods-hidden', crossView||tblView||compareMode);
+    // Der Zeitregler ergibt nur dort Sinn, wo mehrere Kosmen zugleich zu sehen sind.
+    const zf=document.getElementById('gx-zeitfilter');
+    if(zf) zf.classList.toggle('gods-hidden', !crossView);
+  }
+  window.gxSetView=function(v){ gxView=v; gxSyncViewBtns();
+    if(compareMode) exitCompareModeUI();
+    gxSyncAtlasChrome();
+    gxRender(); gxSyncHash(); };
+  // Statusleiste für die Figur-Ansichten: macht sichtbar, wenn „Nebenfiguren" oder
+  // „Wirkungsbereiche" etwas ausblenden — samt Zähler und „Alles anzeigen".
+  function gxSyncFilterBar(){
+    const bar=document.getElementById('gx-filterbar'); if(!bar) return;
+    const figView=((gxView==='hybrid'||gxView==='stars') && !compareMode);
+    const dM=document.getElementById('gx-minor'), dD=document.getElementById('gx-domains');
+    const minorOff=dM&&!dM.checked, domOff=dD&&!dD.checked;
+    if(!figView || (!minorOff && !domOff)){ bar.hidden=true; bar.innerHTML=''; return; }
+    const parts=[];
+    if(minorOff){
+      const total=pan().gods.length, shown=pan().gods.filter(g=>g.rank==='major').length;
+      parts.push('Nur Hauptfiguren — <b>'+shown+'</b> von '+total+' sichtbar');
+    }
+    if(domOff) parts.push('Wirkungsbereiche ausgeblendet');
+    bar.innerHTML='<span>'+parts.join(' · ')+'</span>'
+      +'<button type="button" class="gx-fb-reset" onclick="gxResetFilters()">Alles anzeigen</button>';
+    bar.hidden=false;
+  }
+  window.gxResetFilters=function(){
+    const dM=document.getElementById('gx-minor'); if(dM) dM.checked=true;
+    const dD=document.getElementById('gx-domains'); if(dD) dD.checked=true;
+    const q=document.getElementById('gx-q'); if(q) q.value='';
+    const mv=document.getElementById('gx-motiv'); if(mv) mv.value='';
+    const rz=document.getElementById('gx-results'); if(rz){ rz.hidden=true; rz.innerHTML=''; }
+    gxRender();
+  };
+  window.gxLeaveCards=function(){            // Compare: Karten-Grid schliessen, SVG-Buehne zeigen (View bleibt)
+    const w=document.getElementById('gods-stage-wrap'), c=document.getElementById('gx-cards');
+    if(w) w.hidden=false; if(c) c.hidden=true;
+  };
+  // Eine Figur als Karte IM Kosmos-Layout (foreignObject): gleiche Optik wie das
+  // Karten-Raster, aber an der Hierarchie-Position, mit Linien & Puls ringsum.
+  function gxHybridCard(g,p,isMajor,showDom,isEquiv){
+    const cw=_hyCardW, ch=_hyCardH, x=p.x-cw/2, y=p.y+12;
+    const fo=el('foreignObject',{x:x,y:y,width:cw,height:ch,class:'gx-hyfo'});
+    const mk=activePan+'/'+g.id, ext=(window.GX_MEDALS||{})[mk];
+    const portrait= ext
+      ? '<span class="gx-hy-img" style="background-image:url(assets/images/goetter/'+mk+'.'+ext+')"></span>'
+      : '<span class="gx-hy-img gx-hy-mono">'+(g.name||'?').charAt(0)+'</span>';
+    const dom=(showDom&&g.domain)?'<span class="gx-hy-dom">'+g.domain+'</span>':'';
+    const eq=isEquiv?'<span class="gx-hy-eq">\u27f7</span>':'';
+    const div=document.createElementNS('http://www.w3.org/1999/xhtml','div');
+    div.setAttribute('class','gx-hy-card'+(isMajor?' major':''));
+    div.innerHTML=eq+portrait+'<span class="gx-hy-name">'+g.name+'</span>'+dom;
+    fo.appendChild(div); return fo;
+  }
+  function gxRenderCards(gods){
+    const wrap=document.getElementById('gods-stage-wrap');
+    const cards=document.getElementById('gx-cards');
+    if(wrap) wrap.hidden=true;
+    cards.hidden=false;
+    const tiersArr=pan().tiers||[];
+    const byTier={};
+    gods.forEach(g=>(byTier[g.tier]=byTier[g.tier]||[]).push(g));
+    let h='';
+    Object.keys(byTier).sort((a,b)=>a-b).forEach(t=>{
+      h+='<h3 class="gx-cards-tier">'+(tiersArr[t]||('Ebene '+t))+'</h3><div class="gx-cards-grid">';
+      byTier[t].forEach(g=>{
+        const mk=activePan+'/'+g.id, ext=(window.GX_MEDALS||{})[mk];
+        const img= ext
+          ? '<span class="gx-card-img" style="background-image:url(assets/images/goetter/'+mk+'.'+ext+')"></span>'
+          : '<span class="gx-card-img gx-card-mono">'+(g.name||'?').charAt(0)+'</span>';
+        h+='<button type="button" class="gx-card'+(g.rank==='major'?' major':'')+'" data-gid="'+g.id+'">'
+          + img + '<span class="gx-card-name">'+g.name+'</span>'
+          + '<span class="gx-card-dom">'+(g.domain||'')+'</span></button>';
+      });
+      h+='</div>';
+    });
+    cards.innerHTML=h;
+    cards.querySelectorAll('.gx-card').forEach(b=>{
+      b.addEventListener('click',()=>{ const g=gods.find(x=>x.id===b.dataset.gid); if(g) gxOpenPanel(g); });
+    });
+  }
+  window.gxRender=function(){
+    if(!DATA)return;
+    gxSyncFilterBar();
+    const tEl0=document.getElementById('gx-table'); if(tEl0) tEl0.hidden=true;
+    if(gxView==='atlas'){ gxRenderAtlas(); return; }
+    if(gxView==='zeit'){ gxRenderZeit(); return; }
+    if(gxView==='tabelle'){ gxRenderTabelle(); return; }
+    if(gxView==='cards'){
+      let gcs=pan().gods.slice();
+      const mEl=document.getElementById('gx-minor');
+      if(mEl&&!mEl.checked) gcs=gcs.filter(g=>g.rank==='major');
+      gxRenderCards(gcs);
+      return;
+    }
+    const cEl=document.getElementById('gx-cards'); if(cEl) cEl.hidden=true;
+    const wEl=document.getElementById('gods-stage-wrap'); if(wEl) wEl.hidden=false;
+    const svg=document.getElementById('gods-svg'), stage=document.getElementById('gods-stage');
+    svg.innerHTML='';
+    svg.classList.toggle('gx-stars', gxView==='stars');
+    const showMinor=document.getElementById('gx-minor').checked;
+    const showDom=document.getElementById('gx-domains').checked;
+    const HY=(gxView==='hybrid');
+    if(HY){ _hyCardW=132; _hyCardH=showDom?152:116; }
+
+    let gods=pan().gods.slice();
+    if(!showMinor) gods=gods.filter(g=>g.rank==='major');
+    const ids=new Set(gods.map(g=>g.id));
+    if(HY){
+      const _tc={}; gods.forEach(g=>{_tc[g.tier]=(_tc[g.tier]||0)+1;});
+      const _widest=Math.max.apply(null,Object.values(_tc));
+      _hyCardW = _widest>7 ? Math.max(104, Math.round(132-(_widest-7)*7)) : 132;
+    }
+    const {pos,stageW,stageH,tierGap}=layout(gods);
+    if(gxView==='stars'){
+      let _sd=987654321; const _rnd=()=>((_sd=(_sd*1103515245+12345)&0x7fffffff)/0x7fffffff);
+      const _sf=el('g',{class:'gx-starfield'});
+      const _N=Math.min(120, Math.round(stageW*stageH/8000));
+      for(let i=0;i<_N;i++) _sf.appendChild(el('circle',{cx:(_rnd()*stageW).toFixed(0),cy:(_rnd()*stageH).toFixed(0),r:(_rnd()*1.1+0.3).toFixed(2),class:'gx-sf-dot',opacity:(_rnd()*0.5+0.12).toFixed(2)}));
+      svg.appendChild(_sf);
+    }
+    _pos=pos; _godsShown=gods;
+    const W=Math.max(stageW,900);
+    svg.setAttribute('width',W); svg.setAttribute('height',stageH); stage.style.width=W+'px';
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label',(gxView==='stars'?'Sternbild':'Stammbaum')+' des Kosmos „'+pan().label+'" — '+gods.length+' Figuren. Barrierefreie Textfassung über die Ansicht „Tabelle".');
+
+    // Luminöse Kugeln: radialer Verlauf (Highlight → Pantheon-Farbe → dunkler Rand)
+    const defs=el('defs',{});
+    const og=el('radialGradient',{id:'gxOrbGrad',cx:'36%',cy:'30%',r:'72%'});
+    og.appendChild(el('stop',{offset:'0%','stop-color':'#ffffff','stop-opacity':'0.92'}));
+    og.appendChild(el('stop',{offset:'45%','stop-color':pan().color}));
+    og.appendChild(el('stop',{offset:'100%','stop-color':shade(pan().color,0.5)}));
+    defs.appendChild(og); svg.appendChild(defs);
+
+    // Monistische Systeme: dezente Umfassung — die Figuren sind Weisen/Momente IN der einen Substanz
+    const mono=pan().monism;
+    if(mono){
+      svg.appendChild(el('rect',{x:10,y:6,width:W-20,height:stageH-12,rx:20,class:'gx-monism-frame'}));
+      if(mono.note) svg.appendChild(el('text',{x:W-26,y:26,'text-anchor':'end',class:'gx-monism-label'},mono.note));
+    }
+
+    // Ebenen
+    pan().tiers.forEach((label,t)=>{
+      const y=TOP_PAD+t*tierGap;
+      svg.appendChild(el('line',{x1:LEFT_PAD-30,y1:y,x2:W-30,y2:y,class:'gx-tier-rule'}));
+      svg.appendChild(el('text',{x:16,y:y+4,class:'gx-tier-label'},label));
+    });
+
+    // welche haben Entsprechungen?
+    const equivActive=new Set();
+    DATA.equiv.forEach(grp=>grp.forEach(ref=>{const[pn,gid]=ref.split(':');if(pn===activePan)equivActive.add(gid);}));
+
+    // Abstammungslinien (eigene <g> für leichte Hover-Updates)
+    const edgeG=el('g',{id:'gx-edges'});
+    gods.forEach(g=>(g.parents||[]).forEach(par=>{
+      if(!ids.has(par)||!pos[par]||!pos[g.id])return;
+      const a=pos[par],b=pos[g.id],midY=(a.y+b.y)/2;
+      let dE;
+      if(HY){
+        const ay=a.y+12+_hyCardH, by=b.y+12, mY=(ay+by)/2;
+        dE=`M ${a.x} ${ay} C ${a.x} ${mY}, ${b.x} ${mY}, ${b.x} ${by}`;
+      } else {
+        dE=`M ${a.x} ${a.y+16} C ${a.x} ${midY}, ${b.x} ${midY}, ${b.x} ${b.y-16}`;
+      }
+      edgeG.appendChild(el('path',{ d:dE,
+        class:'gx-edge','data-from':par,'data-to':g.id}));
+      // Emanation sichtbar gemacht: der Hervorgang laeuft als Licht die Linie hinab.
+      let hF=0; const sF=par+'>'+g.id;
+      for(let ci=0;ci<sF.length;ci++) hF=(Math.imul(hF,31)+sF.charCodeAt(ci))>>>0;
+      if(gxView!=='stars') edgeG.appendChild(el('path',{ d:dE, class:'gx-flow',
+        style:'animation-duration:'+(7.5+(hF%40)/10).toFixed(1)+'s;animation-delay:-'+(((hF>>>4)%90)/10).toFixed(1)+'s'}));
+    }));
+    svg.appendChild(edgeG);
+
+    // Knoten
+    let _nodeSeq=0;
+    gods.forEach(g=>{
+      const p=pos[g.id]; if(!p)return;
+      const isMajor=g.rank==='major';
+      const node=el('g',{class:'gx-node'+(g.id===selId?' sel':''),'data-id':g.id});
+      node.style.animationDelay=(_nodeSeq++*0.012).toFixed(3)+'s';
+      if(gxView==='hybrid'){
+        node.appendChild(gxHybridCard(g,p,isMajor,showDom,equivMode&&equivActive.has(g.id)));
+      } else if(gxView==='stars'){
+        const isM=isMajor, sr=isM?3.6:2.1;
+        node.appendChild(el('circle',{cx:p.x,cy:p.y,r:(sr*3.4).toFixed(1),class:'gx-star-glow',style:'animation-delay:-'+((_nodeSeq*0.17)%3).toFixed(2)+'s'}));
+        node.appendChild(el('circle',{cx:p.x,cy:p.y,r:sr,class:'gx-star-core'}));
+        if(isM) node.appendChild(el('path',{class:'gx-star-ray',d:`M ${p.x-sr*3.2} ${p.y} L ${p.x+sr*3.2} ${p.y} M ${p.x} ${p.y-sr*3.2} L ${p.x} ${p.y+sr*3.2}`}));
+        node.appendChild(el('text',{x:p.x,y:p.y+(isM?15:11),class:'gx-star-name '+(isM?'major':'minor')},g.name));
+      } else {
+      const orbR=isMajor?9:6, cy=p.y-(isMajor?14:11);
+      if(isMajor) node.appendChild(el('circle',{cx:p.x,cy,r:orbR+7,class:'gx-orb-halo'}));
+      node.appendChild(el('circle',{cx:p.x,cy,r:orbR,class:'gx-orb',
+        fill:'url(#gxOrbGrad)',opacity:isMajor?1:.78,
+        style:`filter:drop-shadow(0 0 ${isMajor?9:4}px ${hexA(pan().color,.75)})`}));
+      const medKey=activePan+'/'+g.id, medExt=(window.GX_MEDALS||{})[medKey];
+      if(medExt){
+        const mr=isMajor?14:9.5, cid='gxc-'+g.id;
+        const cp=el('clipPath',{id:cid}); cp.appendChild(el('circle',{cx:p.x,cy:cy,r:mr}));
+        node.appendChild(cp);
+        node.appendChild(el('image',{href:'assets/images/goetter/'+medKey+'.'+medExt,
+          x:p.x-mr, y:cy-mr, width:2*mr, height:2*mr, class:'gx-medal',
+          preserveAspectRatio:'xMidYMid slice', 'clip-path':'url(#'+cid+')'}));
+        node.appendChild(el('circle',{cx:p.x,cy:cy,r:mr,class:'gx-medal-ring'}));
+      }
+      if(pan().monism&&pan().monism.root===g.id){
+        node.appendChild(el('circle',{cx:p.x,cy,r:orbR+6,class:'gx-monad-aura'}));
+        node.appendChild(el('circle',{cx:p.x,cy,r:orbR+11,class:'gx-monad-aura2'}));
+      }
+      if(equivMode&&equivActive.has(g.id)){
+        node.appendChild(el('text',{x:p.x+orbR+3,y:cy-orbR+1,class:'gx-equiv-badge'},'\u27f7'));
+      }
+      const lines=p.lines||[g.name], baseY=p.y+(isMajor?6:5), lineH=isMajor?12.5:10.5;
+      lines.forEach((ln,li)=>node.appendChild(el('text',{x:p.x,y:baseY+li*lineH,class:'gx-name '+(isMajor?'major':'minor')},ln)));
+      if(showDom&&isMajor){
+        const d=g.domain.length>30?g.domain.slice(0,29)+'…':g.domain;
+        node.appendChild(el('text',{x:p.x,y:baseY+lines.length*lineH+7,class:'gx-domain'},d));
+      }
+      }
+      // WICHTIG: Klick öffnet Panel; Hover hebt nur Linien hervor (KEIN Re-Render!)
+      node.addEventListener('click',function(ev){ev.stopPropagation();gxOpenPanel(g);});
+      node.addEventListener('mouseenter',function(){highlightChain(g.id);});
+      node.addEventListener('mouseleave',function(){if(!selId)clearChain();else highlightChain(selId);});
+      svg.appendChild(node);
+    });
+
+    // Entsprechungslinien zeichnen (nur Modus + Panel offen → zur gewählten Figur)
+    drawEquivLines();
+    renderLegend();
+  };
+
+  // Hover: nur Klassen umschalten, NICHT neu zeichnen → Klicks bleiben erhalten
+  function highlightChain(id){
+    const svg=document.getElementById('gods-svg'); if(!svg)return;
+    const g=_godsShown.find(x=>x.id===id);
+    const related=new Set([id]);
+    if(g)(g.parents||[]).forEach(p=>related.add(p));
+    _godsShown.forEach(x=>{if((x.parents||[]).includes(id))related.add(x.id);});
+    svg.querySelectorAll('.gx-node').forEach(n=>{
+      n.classList.toggle('dim', !related.has(n.getAttribute('data-id')));
+    });
+    svg.querySelectorAll('.gx-edge').forEach(e=>{
+      const lit=(e.getAttribute('data-from')===id||e.getAttribute('data-to')===id);
+      e.classList.toggle('lit',lit);
+    });
+  }
+  function clearChain(){
+    const svg=document.getElementById('gods-svg'); if(!svg)return;
+    svg.querySelectorAll('.gx-node').forEach(n=>n.classList.remove('dim'));
+    svg.querySelectorAll('.gx-edge').forEach(e=>e.classList.remove('lit'));
+  }
+
+  function drawEquivLines(){
+    const svg=document.getElementById('gods-svg'); if(!svg)return;
+    const old=svg.querySelector('#gx-equiv-layer'); if(old)old.remove();
+    // Entsprechungslinien innerhalb DIESER Ansicht ergeben keinen Sinn (andere Pantheen sind nicht sichtbar).
+    // Stattdessen: wenn eine Figur gewählt ist UND sie Entsprechungen hat, ziehen wir eine kleine
+    // "Strahlen"-Andeutung am Knoten (Markierung), die echte Navigation läuft über die Chips im Panel.
+  }
+
+  window.gxOpenPanel=function(g,panKeyOverride){
+    // Fokus-Rückgabeziel merken (das gerade fokussierte Element, z.B. die geklickte Karte)
+    const _ae=document.activeElement;
+    if(_ae && _ae!==document.body && !(_ae.closest && _ae.closest('#gx-panel'))) gxPanelReturnEl=_ae;
+    const panKey = panKeyOverride || activePan;
+    selId=g.id; selPan=panKey;
+    highlightChain(g.id);
+    // sel-Klasse setzen ohne Re-Render (no-op, falls gerade kein .gx-node existiert, z.B. in der Vergleichsansicht)
+    const svg=document.getElementById('gods-svg');
+    svg.querySelectorAll('.gx-node').forEach(n=>n.classList.toggle('sel',n.getAttribute('data-id')===g.id));
+    const p=DATA.panthea[panKey];
+    // Bild (falls vorhanden) — Klick öffnet die große Ansicht (Lightbox)
+    const port=document.getElementById('gx-panel-portrait');
+    const medKeyP=panKey+'/'+g.id;
+    const extP=(window.GX_MEDALS||{})[medKeyP]||'jpg';
+    const imgPath='assets/images/goetter/'+medKeyP+'.'+extP;
+    port.innerHTML='<img src="'+imgPath+'" alt="'+g.name+'" onerror="this.parentNode.classList.remove(\'show\');this.parentNode.classList.remove(\'zoomable\')">';
+    port.classList.add('show');
+    port.classList.add('zoomable');
+    port.onclick=function(){ gxOpenLightbox(panKey,g,imgPath); };
+    port.title='Bild in großer Ansicht öffnen';
+    document.getElementById('gx-panel-tier').textContent=p.tiers[g.tier]||'';
+    document.getElementById('gx-panel-name').textContent=g.name;
+    document.getElementById('gx-panel-domain').textContent=g.domain;
+    // Schlüsselmythos: Format "Narrativer Text. [Quelle]" — Quelle aus [...] am Ende ablösen
+    const mythBox=document.getElementById('gx-panel-myth');
+    const rawMyth=(g.myth||'').trim();
+    if(rawMyth){
+      let mText=rawMyth, mSrc='';
+      const mm=rawMyth.match(/^([\s\S]*?)\s*\[([^\]]+)\]\s*$/);
+      if(mm){ mText=mm[1].trim(); mSrc=mm[2].trim(); }
+      document.getElementById('gx-panel-myth-text').textContent=mText;
+      const srcEl=document.getElementById('gx-panel-myth-src');
+      if(mSrc){ srcEl.textContent='Quelle: '+mSrc; srcEl.style.display=''; }
+      else { srcEl.textContent=''; srcEl.style.display='none'; }
+      mythBox.style.display='';
+    } else {
+      mythBox.style.display='none';
+    }
+    let rel='';
+    if(g.parents&&g.parents.length){
+      const names=g.parents.map(pid=>{const x=p.gods.find(y=>y.id===pid);return x?x.name:pid;});
+      const REL_LBL={judentum:'Hervorgegangen aus',christentum:'Hervorgegangen aus',islam:'Hervorgegangen aus',platon:'Teilhabe an / hervorgegangen aus',neuplatonismus:'Emanation aus',gnosis:'Hervorgegangen aus (Emanation)',aristoteles:'Hingeordnet auf / bewegt von',thomas:'Hervorgang / Schöpfung aus',spinoza:'Folgt aus (sequitur ex)',kant:'Entspringt aus',hegel:'Geht dialektisch hervor aus',schelling:'Hervorgang aus',kabbala:'Emanation aus (Azilut)'};
+      rel+='<div><b>'+(REL_LBL[panKey]||'Abstammung')+':</b> '+names.join(' & ')+'</div>';
+    }
+    const kids=p.gods.filter(x=>(x.parents||[]).includes(g.id)).map(x=>x.name);
+    if(kids.length) rel+='<div style="margin-top:.5rem"><b>Nachkommen / Hervorgegangen:</b> '+kids.join(', ')+'</div>';
+    const eq=findEquiv(panKey,g.id);
+    if(eq.length){
+      const nachTyp={};
+      eq.forEach(e=>{ (nachTyp[e.typ||'analogie']=nachTyp[e.typ||'analogie']||[]).push(e); });
+      ['identitaet','uebernahme','analogie','gegenstellung'].forEach(tk=>{
+        if(!nachTyp[tk]) return;
+        const ti=gxTypInfo(tk);
+        rel+='<div style="margin-top:.7rem"><b style="color:'+ti.farbe+'">'+ti.zeichen+' '+ti.kurz+':</b><br>';
+        rel+=nachTyp[tk].map(e=>{const op=DATA.panthea[e.pan];const og=op.gods.find(x=>x.id===e.id);
+          return '<span class="gx-equiv-chip" style="border-color:'+ti.farbe+'44" onclick="gxJumpTo(\''+e.pan+'\',\''+e.id+'\')">'+op.label+': '+(og?og.name:e.id)+'</span>';}).join('');
+        rel+='</div>';
+      });
+    }
+    const mots=gxMotifsOf(panKey,g.id);
+    if(mots.length){
+      rel+='<div style="margin-top:.7rem"><b>Motive:</b><br>';
+      rel+=mots.map(mk=>'<span class="gx-equiv-chip" onclick="gxMotivFilter(\''+mk+'\')">'
+        +DATA.motive.gruppen[mk].label+'</span>').join('');
+      rel+='</div>';
+    }
+    document.getElementById('gx-panel-rel').innerHTML=rel||'<span style="opacity:.6">Keine weiteren Angaben.</span>';
+    const permBtn=document.getElementById('gx-panel-permalink');
+    if(permBtn){ permBtn.classList.remove('done'); permBtn.textContent='🔗 Link'; }
+    const _pnl=document.getElementById('gx-panel');
+    _pnl.classList.add('open');
+    _pnl.focus();                        // Fokus ins Panel: Screenreader kündigt Dialog + Figurnamen an
+    gxSyncHash();
+  };
+  window.gxClosePanel=function(){
+    document.getElementById('gx-panel').classList.remove('open');
+    selId=null; selPan=null; clearChain();
+    if(gxPanelReturnEl && document.contains(gxPanelReturnEl)){ try{ gxPanelReturnEl.focus(); }catch(e){} }
+    gxPanelReturnEl=null;
+    const svg=document.getElementById('gods-svg');
+    if(svg)svg.querySelectorAll('.gx-node').forEach(n=>n.classList.remove('sel'));
+    gxSyncHash();
+  };
+  window.gxJumpTo=function(panKey,gid){
+    if(compareMode) exitCompareModeUI();
+    if(gxView==='atlas'||gxView==='zeit'||gxView==='tabelle'){
+      gxView='hybrid'; gxSyncViewBtns(); gxSyncAtlasChrome(); }
+    const rEl=document.getElementById('gx-results'); if(rEl) rEl.hidden=true;
+    activePan=panKey; equivMode=true; selId=null; syncEquivBtn(); buildTabs(); applyPanColor();
+    gxRender();
+    const g=DATA.panthea[panKey].gods.find(x=>x.id===gid);
+    if(g)gxOpenPanel(g);
+    document.getElementById('gods-stage-wrap').scrollLeft=0;
+  };
+  // Vier Arten von Entsprechung — der Unterschied zwischen „dieselbe Gestalt"
+  // und „vergleichbare Rolle" ist der wichtigste Unterschied im ganzen Atlas.
+  const GX_TYP={
+    identitaet:   {kurz:'ist dieselbe Gestalt wie', lang:'Identität',    zeichen:'=',  farbe:'#e8c46a'},
+    uebernahme:   {kurz:'wurde übernommen als',     lang:'Übernahme',    zeichen:'→',  farbe:'#7fb3d5'},
+    analogie:     {kurz:'entspricht funktional',    lang:'Analogie',     zeichen:'≈',  farbe:'#9a8fb8'},
+    gegenstellung:{kurz:'setzt sich ab gegen',      lang:'Gegenstellung',zeichen:'⇹',  farbe:'#c97a7a'}
+  };
+  function gxTypInfo(t){ return GX_TYP[t]||GX_TYP.analogie; }
+  // Der Typ haengt primaer an der EINZELNEN Beziehung, nicht an der Gruppe:
+  // In „Zeus ⟷ Jupiter ⟷ Thor" ist Zeus–Jupiter eine Uebernahme, Zeus–Thor
+  // eine Analogie. 'typ' der Gruppe ist nur die Vorgabe, 'kanten' setzt Paare ab.
+  function gxKantenTyp(grp,a,b){
+    if(grp && grp.kanten){
+      const k=(a<b? a+'|'+b : b+'|'+a);
+      if(grp.kanten[k]) return grp.kanten[k];
+    }
+    return (grp&&grp.typ)||'analogie';
+  }
+  function findEquiv(panKey,gid){
+    const ref=panKey+':'+gid,out=[];
+    DATA.equiv.forEach(grp=>{if(grp.includes(ref))grp.forEach(r=>{if(r!==ref){const[pn,id]=r.split(':');out.push({pan:pn,id,typ:gxKantenTyp(grp,ref,r)});}});});
+    return out;
+  }
+  window.gxToggleEquiv=function(){equivMode=!equivMode;syncEquivBtn();gxRender();if(selId){const g=pan().gods.find(x=>x.id===selId);if(g)highlightChain(selId);}};
+  function syncEquivBtn(){
+    const b=document.getElementById('gx-equiv-btn'); if(!b) return;
+    b.classList.toggle('on',equivMode);
+    b.textContent=equivMode?'⟷ Entsprechungen markiert':'⟷ Entsprechungen zeigen';
+  }
+  function renderLegend(){
+    const c=pan().color;
+    document.getElementById('gods-legend').innerHTML=
+      'Größere Leuchtpunkte = Hauptfiguren <span class="swatch" style="background:'+c+'"></span>'+
+      '· kleinere = Nebenfiguren · Linien = Abstammung / Hervorgang'+
+      (equivMode?' · <span style="color:var(--gx-star)">gestrichelte Ringe = hat Entsprechungen</span>':'')+
+      '<br><b style="color:var(--gx-ink)">Klick</b> auf eine Figur öffnet Details, Schlüsselmythos & Entsprechungen · <b style="color:var(--gx-ink)">Hover</b> hebt die Linie hervor';
+    const noteEl=document.getElementById('gods-note');
+    noteEl.innerHTML = pan().note ? '⚠ '+pan().note : '';
+    const srcEl=document.getElementById('gods-sources');
+    // Datierung direkt in der Kosmos-Ansicht (die eine Info, die sonst nur die
+    // separate Zeitleiste trug): Zeitraum der Kernquelle + Beleg.
+    const _z=pan().zeit;
+    const _zl=_z ? '<b>Datierung:</b> '+gxFmtZeitRange(_z)
+        +(_z.beleg?' <span style="opacity:.85">— '+_esc(_z.beleg)+'</span>':'') : '';
+    const _ql=(pan().sources && pan().sources.length)
+      ? '<b>Quellen:</b> '+pan().sources.join(' · ') : '';
+    srcEl.innerHTML = [_zl,_ql].filter(Boolean).join('<br>');
+  }
+  // Zeitraum „von – bis" für die Datierungszeile (bis:'heute' bleibt „heute")
+  function gxFmtZeitRange(z){
+    if(!z) return '';
+    const a=gxFmtYear(z.von), b=(z.bis==='heute')?'heute':gxFmtYear(z.bis);
+    return a+' – '+b;
+  }
+
+  // ════════ Entsprechungs-Atlas ════════
+  // ALLE Entsprechungsgruppen als EIN Netz: die Traditionen liegen als farbige
+  // Bögen auf einem Kreis, jede Figur mit mindestens einer Entsprechung wird
+  // zum Knoten, jede Entsprechung zur Sehne quer durch den Kreis. Hover hebt
+  // die ganze Gruppe hervor, Klick öffnet das Detail-Panel der Figur.
+  function _esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function gxRenderAtlas(){
+    const cEl=document.getElementById('gx-cards'); if(cEl) cEl.hidden=true;
+    const wEl=document.getElementById('gods-stage-wrap'); if(wEl) wEl.hidden=false;
+    const svg=document.getElementById('gods-svg'), stage=document.getElementById('gods-stage');
+    svg.innerHTML=''; svg.classList.remove('gx-stars');
+
+    // 1) Beteiligte Figuren je Pantheon einsammeln (Reihenfolge = CATS)
+    const perPan=new Map();                       // panKey -> Map(id -> god)
+    const refGroups=new Map();                    // 'pan:id' -> Set(groupIdx)
+    DATA.equiv.forEach((grp,gi)=>grp.forEach(ref=>{
+      const [pn,id]=ref.split(':');
+      const P=DATA.panthea[pn]; if(!P) return;
+      const g=P.gods.find(x=>x.id===id); if(!g) return;
+      if(!perPan.has(pn)) perPan.set(pn,new Map());
+      perPan.get(pn).set(id,g);
+      if(!refGroups.has(ref)) refGroups.set(ref,new Set());
+      refGroups.get(ref).add(gi);
+    }));
+    const panOrder=[];
+    CATS.forEach(([,keys])=>keys.forEach(k=>{ if(perPan.has(k)) panOrder.push(k); }));
+    perPan.forEach((_,k)=>{ if(panOrder.indexOf(k)<0) panOrder.push(k); });
+    const nFig=[...perPan.values()].reduce((a,m)=>a+m.size,0);
+
+    // 2) Kreis-Layout
+    const W=1010, HH=1010, C=505, R=352, GAPU=2.2;
+    svg.setAttribute('width',W); svg.setAttribute('height',HH); stage.style.width=W+'px';
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label','Entsprechungs-Atlas: alle Entsprechungen quer durch die Traditionen als Sehnendiagramm. Barrierefreie Textfassung über die Ansicht „Tabelle".');
+    const step=(Math.PI*2)/(nFig + panOrder.length*GAPU);
+    const nodePos={};                              // 'pan:id' -> {x,y,ang,pan,g}
+    let a=-Math.PI/2;
+    const arcsG=el('g',{}), edgesG=el('g',{id:'gxa-edges'}), nodesG=el('g',{});
+    panOrder.forEach(pn=>{
+      const P=DATA.panthea[pn], figs=[...perPan.get(pn).values()];
+      const a0=a, a1=a+figs.length*step;
+      // Bogenband in Pantheon-Farbe
+      const RA=R+13, large=(a1-a0)>Math.PI?1:0;
+      arcsG.appendChild(el('path',{class:'gxa-arc',stroke:P.color,
+        d:'M '+(C+RA*Math.cos(a0)).toFixed(1)+' '+(C+RA*Math.sin(a0)).toFixed(1)
+          +' A '+RA+' '+RA+' 0 '+large+' 1 '+(C+RA*Math.cos(a1)).toFixed(1)+' '+(C+RA*Math.sin(a1)).toFixed(1)}));
+      // Pantheon-Beschriftung tangential außen
+      const am=(a0+a1)/2, RL=R+112, deg=am*180/Math.PI;
+      const flip=(Math.sin(am)>0);
+      const lt=el('text',{class:'gxa-pan-label',fill:P.color,'text-anchor':'middle',
+        x:(C+RL*Math.cos(am)).toFixed(1), y:(C+RL*Math.sin(am)).toFixed(1),
+        transform:'rotate('+(deg+(flip?-90:90)).toFixed(1)+' '+(C+RL*Math.cos(am)).toFixed(1)+' '+(C+RL*Math.sin(am)).toFixed(1)+')'},P.label);
+      arcsG.appendChild(lt);
+      figs.forEach((g,i)=>{
+        const ang=a0+(i+.5)*step, ref=pn+':'+g.id;
+        const x=C+R*Math.cos(ang), y=C+R*Math.sin(ang);
+        nodePos[ref]={x,y,ang,pan:pn,g};
+      });
+      a=a1+GAPU*step;
+    });
+
+    // 3) Sehnen: paarweise innerhalb jeder Gruppe; Kontrollpunkt Richtung Mitte,
+    //    je weiter die Knoten auseinander, desto tiefer der Bogen.
+    DATA.equiv.forEach((grp,gi)=>{
+      const refs=grp.filter(r=>nodePos[r]);
+      for(let i2=0;i2<refs.length;i2++)for(let j2=i2+1;j2<refs.length;j2++){
+        const A=nodePos[refs[i2]], B=nodePos[refs[j2]];
+        let dth=Math.abs(A.ang-B.ang); if(dth>Math.PI) dth=2*Math.PI-dth;
+        const k=Math.max(.08, Math.min(.92, 1-(dth/Math.PI)*.92));
+        const mx=(A.x+B.x)/2, my=(A.y+B.y)/2;
+        const cx2=C+(mx-C)*k, cy2=C+(my-C)*k;
+        const _ti=gxTypInfo(gxKantenTyp(grp,refs[i2],refs[j2]));
+        // Inline-Stil statt Attribut: die CSS-Regel .gxa-edge setzt stroke und
+        // wuerde ein Praesentationsattribut sonst ueberstimmen.
+        const _kt=gxKantenTyp(grp,refs[i2],refs[j2]);
+        let _st='stroke:'+_ti.farbe;
+        if(_kt==='analogie')      _st+=';stroke-dasharray:5 4';
+        if(_kt==='gegenstellung') _st+=';stroke-dasharray:1.5 3.5';
+        const _lebt=gxLebt(nodePos[refs[i2]].pan,gxJahr) && gxLebt(nodePos[refs[j2]].pan,gxJahr);
+        const _at={class:'gxa-edge'+(_lebt?'':' gxa-off'),'data-grp':gi,'data-typ':_kt,style:_st,
+          d:'M '+A.x.toFixed(1)+' '+A.y.toFixed(1)+' Q '+cx2.toFixed(1)+' '+cy2.toFixed(1)+' '+B.x.toFixed(1)+' '+B.y.toFixed(1)};
+        edgesG.appendChild(el('path',_at));
+      }
+    });
+
+    // 4) Knoten + radiale Namen
+    Object.keys(nodePos).forEach(ref=>{
+      const nd=nodePos[ref], P=DATA.panthea[nd.pan];
+      const grpEl=el('g',{class:'gxa-node'+(gxLebt(nd.pan,gxJahr)?'':' gxa-off'),'data-ref':ref});
+      grpEl.appendChild(el('circle',{cx:nd.x.toFixed(1),cy:nd.y.toFixed(1),r:3.6,fill:P.color,stroke:'#0c0d18','stroke-width':1}));
+      const deg=nd.ang*180/Math.PI, left=(Math.cos(nd.ang)<0);
+      const lx=C+(R+10)*Math.cos(nd.ang), ly=C+(R+10)*Math.sin(nd.ang);
+      grpEl.appendChild(el('text',{class:'gxa-name',x:lx.toFixed(1),y:(ly+2.8).toFixed(1),
+        'text-anchor':left?'end':'start',
+        transform:'rotate('+(left?deg+180:deg).toFixed(1)+' '+lx.toFixed(1)+' '+ly.toFixed(1)+')'},nd.g.name));
+      grpEl.addEventListener('mouseenter',()=>atlasHighlight(ref));
+      grpEl.addEventListener('mouseleave',atlasClear);
+      grpEl.addEventListener('click',ev=>{ev.stopPropagation();gxOpenPanel(nd.g,nd.pan);});
+      nodesG.appendChild(grpEl);
+    });
+
+    // 5) Mitte: Zähler / Hover-Info
+    const nGrp=DATA.equiv.length, nPan=panOrder.length;
+    const centerG=el('g',{id:'gxa-center'});
+    centerG.appendChild(el('text',{class:'gxa-center',x:C,y:C-16,'font-size':'40','font-weight':'700',
+      fill:'var(--gx-star)',style:'paint-order:stroke;stroke:#0c0d18;stroke-width:6'},String(nGrp)));
+    centerG.appendChild(el('text',{class:'gxa-center-sub',x:C,y:C+8,
+      style:'paint-order:stroke;stroke:#0c0d18;stroke-width:5'},'ENTSPRECHUNGEN · '+nPan+' TRADITIONEN'));
+    const hovA=el('text',{class:'gxa-center-names',x:C,y:C+38,style:'paint-order:stroke;stroke:#0c0d18;stroke-width:5'});
+    const hovB=el('text',{class:'gxa-center-names',x:C,y:C+56,style:'paint-order:stroke;stroke:#0c0d18;stroke-width:5'});
+    centerG.appendChild(hovA); centerG.appendChild(hovB);
+    svg.appendChild(edgesG); svg.appendChild(arcsG); svg.appendChild(nodesG); svg.appendChild(centerG);
+
+    function atlasHighlight(ref){
+      const grps=refGroups.get(ref)||new Set();
+      const related=new Set([ref]);
+      grps.forEach(gi=>DATA.equiv[gi].forEach(r=>related.add(r)));
+      svg.querySelectorAll('.gxa-edge').forEach(e2=>{
+        const lit=grps.has(+e2.getAttribute('data-grp'));
+        e2.classList.toggle('lit',lit); e2.classList.toggle('dim',!lit);
+      });
+      svg.querySelectorAll('.gxa-node').forEach(n2=>{
+        const r2=n2.getAttribute('data-ref');
+        n2.classList.toggle('lit',related.has(r2));
+        n2.classList.toggle('dim',!related.has(r2));
+      });
+      // Namen der Gruppe(n) in der Mitte anzeigen
+      const names=[]; related.forEach(r2=>{ if(nodePos[r2]) names.push(nodePos[r2].g.name); });
+      const joined=names.join(' ⟷ ');
+      if(joined.length>40){
+        const half=Math.ceil(names.length/2);
+        hovA.textContent=names.slice(0,half).join(' ⟷ ')+' ⟷';
+        hovB.textContent=names.slice(half).join(' ⟷ ');
+      } else { hovA.textContent=joined; hovB.textContent=''; }
+    }
+    function atlasClear(){
+      svg.querySelectorAll('.gxa-edge').forEach(e2=>e2.classList.remove('lit','dim'));
+      svg.querySelectorAll('.gxa-node').forEach(n2=>n2.classList.remove('lit','dim'));
+      hovA.textContent=''; hovB.textContent='';
+    }
+
+    let nEdge=0; DATA.equiv.forEach(g2=>{const m=g2.filter(r=>nodePos[r]).length; nEdge+=m*(m-1)/2;});
+    document.getElementById('gods-legend').innerHTML=
+      nGrp+' Entsprechungsgruppen · '+nEdge+' Verbindungen · '+nFig+' Figuren aus '+nPan+' Traditionen'
+      +'<br><b style="color:var(--gx-ink)">Hover</b> über eine Figur hebt ihre Entsprechungen hervor · '
+      +'<b style="color:var(--gx-ink)">Klick</b> öffnet Details & Schlüsselmythos';
+    document.getElementById('gods-note').innerHTML=
+      'Entsprechungen im Sinne vergleichender Mythologie (Interpretatio Graeca/Romana, strukturelle und funktionale Parallelen) — Verwandtschaft der Gestalt, keine Identitätsbehauptung.'
+      +'<br><span style="font-size:.86em;opacity:.85">Art der Beziehung: <b style="color:#e8c46a">= Identität</b> (dieselbe Gestalt) · <b style="color:#7fb3d5">→ Übernahme</b> · <b style="color:#9a8fb8">≈ Analogie</b> (gestrichelt) · <b style="color:#c97a7a">⇹ Gegenstellung</b> (gepunktet). Einzelne Verbindungen können von der Vorgabe ihrer Gruppe abweichen — Zeus und Jupiter etwa sind eine Übernahme innerhalb einer sonst analogen Gruppe.</span>';
+    document.getElementById('gods-sources').innerHTML='';
+  }
+
+
+  // ════════ Zeitleiste: alle 24 Kosmen auf logarithmischer Achse ════════
+  // Achse = Jahre vor heute, logarithmisch: die Antike bekommt Raum, ohne
+  // die Moderne zu zerquetschen. Datiert sind KERNQUELLEN/Erstbezeugungen.
+  function gxFmtYear(y){
+    if(y<0) return (-y)+' v. Chr.';
+    if(y>=2020) return 'heute';
+    return String(y)+' n. Chr.';
+  }
+  function gxRenderZeit(){
+    const cEl=document.getElementById('gx-cards'); if(cEl) cEl.hidden=true;
+    const tEl=document.getElementById('gx-table'); if(tEl) tEl.hidden=true;
+    const wEl=document.getElementById('gods-stage-wrap'); if(wEl) wEl.hidden=false;
+    const svg=document.getElementById('gods-svg'), stage=document.getElementById('gods-stage');
+    svg.innerHTML=''; svg.classList.remove('gx-stars');
+    const pans=Object.entries(DATA.panthea).filter(x=>x[1].zeit)
+      .sort((a,b)=>a[1].zeit.von-b[1].zeit.von);
+    const NOW=2026, W=1180, ROWH=33, PADT=70, PADB=30;
+    const H=PADT+pans.length*ROWH+PADB;
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.setAttribute('width',W); svg.setAttribute('height',H);
+    svg.setAttribute('role','img');
+    svg.setAttribute('aria-label','Zeitleiste: alle 24 Kosmen auf einer logarithmischen Zeitachse, datiert nach Kernquellen. Barrierefreie Textfassung über die Ansicht „Tabelle".');
+    stage.style.width=W+'px'; stage.style.height=H+'px';
+    const X0=214, X1=W-36;
+    // Boden bei 60 Jahren: die jüngsten ~60 Jahre stauchen nach ganz rechts,
+    // sodass die Achse sichtbar in der Gegenwart endet und nicht ins Leere
+    // (scheinbar Jahr 4000) nach rechts ausläuft.
+    const YBP_MIN=60;
+    const LMIN=Math.log10(YBP_MIN), LMAX=Math.log10(NOW+2700);
+    const xOf=yr=>{
+      const ybp=Math.max(YBP_MIN, NOW-yr);
+      return X0+(X1-X0)*(1-(Math.log10(ybp)-LMIN)/(LMAX-LMIN));
+    };
+    // Achse
+    svg.appendChild(el('line',{x1:X0,y1:PADT-22,x2:X1,y2:PADT-22,
+      stroke:'var(--gx-line,#555)','stroke-width':1}));
+    [-2500,-2000,-1500,-1000,-500,-200,1,500,1000,1500,1800,1900].forEach(t=>{
+      const x=xOf(t);
+      svg.appendChild(el('line',{x1:x,y1:PADT-26,x2:x,y2:PADT-18,
+        stroke:'var(--gx-line,#555)','stroke-width':1}));
+      svg.appendChild(el('text',{x:x,y:PADT-32,'text-anchor':'middle',
+        'font-size':10,fill:'var(--gx-ink2,#9aa)'}, gxFmtYear(t)));
+    });
+    // Marke des Zeitreglers
+    if(gxJahr!==null && gxJahr<=NOW){
+      const mx=xOf(gxJahr);
+      svg.appendChild(el('line',{x1:mx,y1:PADT-14,x2:mx,y2:H-PADB+6,
+        stroke:'var(--gx-star,#c9b876)','stroke-width':1.5,'stroke-dasharray':'4 3','opacity':.85}));
+      svg.appendChild(el('text',{x:mx+4,y:H-PADB+16,'font-size':10,'font-weight':700,
+        fill:'var(--gx-star,#c9b876)'},gxFmtYear(gxJahr)));
+    }
+    // „heute"-Tick am rechten Rand — die Achse endet sichtbar in der Gegenwart
+    svg.appendChild(el('line',{x1:X1,y1:PADT-28,x2:X1,y2:PADT-16,
+      stroke:'var(--gx-star,#c9b876)','stroke-width':1.5}));
+    svg.appendChild(el('text',{x:X1,y:PADT-32,'text-anchor':'end','font-size':10,
+      'font-weight':700,fill:'var(--gx-star,#c9b876)'},'heute'));
+    svg.appendChild(el('text',{x:X0,y:PADT-46,'text-anchor':'start','font-size':10,
+      fill:'var(--gx-ink2,#9aa)'},'logarithmische Achse — Jahre vor heute (jüngste Zeit gestaucht)'));
+    // Balken je Kosmos
+    pans.forEach((pr,i)=>{
+      const k=pr[0], p=pr[1], z=p.zeit, y=PADT+i*ROWH;
+      const offen=(z.bis==='heute');
+      const bis=offen?NOW:z.bis;
+      const x1=xOf(z.von), x2=Math.max(xOf(bis), x1+7);
+      const g=el('g',{class:'gxz-row',role:'link',tabindex:0});
+      const tt=el('title',{}); tt.textContent=p.label+' — '+z.beleg;
+      g.appendChild(tt);
+      g.appendChild(el('text',{x:X0-12,y:y+11,'text-anchor':'end','font-size':12.5,
+        'font-weight':700,fill:p.color},p.label));
+      g.appendChild(el('rect',{class:'gxz-bar',x:x1,y:y,width:x2-x1,height:14,rx:7,
+        fill:p.color,'fill-opacity':.78,stroke:p.accent,'stroke-width':1}));
+      if(gxJahr!==null && !gxLebt(k,gxJahr)) g.setAttribute('opacity','.18');
+      if(offen)                                   // lebendige Tradition: kleiner Zapfen „bis heute" (kein Zukunftspfeil)
+        g.appendChild(el('path',{d:'M'+x2+' '+(y+1)+' L'+(x2+6)+' '+(y+7)+' L'+x2+' '+(y+13)+' Z',
+          fill:p.color,'fill-opacity':.78}));
+      g.appendChild(el('text',{x:x1+6,y:y+11,'font-size':9.5,
+        fill:'rgba(255,255,255,.92)'}, gxFmtYear(z.von)));
+      const go=()=>{ activePan=k; gxSetView('hybrid');
+        equivMode=true; syncEquivBtn(); buildTabs(); applyPanColor(); gxRender(); gxSyncHash(); };
+      g.addEventListener('click',go);
+      g.addEventListener('keydown',ev=>{ if(ev.key==='Enter'||ev.key===' ') { ev.preventDefault(); go(); } });
+      svg.appendChild(g);
+    });
+    document.getElementById('gods-note').innerHTML=
+      'Datiert sind <b>Kernquellen bzw. Erstbezeugungen</b> (nicht die gelebte Praxis) — '
+      +'der Beleg erscheint beim Überfahren eines Balkens. Klick wechselt zum Kosmos.';
+    document.getElementById('gods-legend').innerHTML='';
+    document.getElementById('gods-sources').innerHTML='';
+  }
+
+  // ════════ Tabellenansicht: ALLE Kosmen, filter- und durchsuchbar ════════
+  // Zeigt standardmäßig die Figuren aller Kosmen in einer Tabelle. Ein eigener
+  // Kosmos-Filter grenzt auf einen Kosmos ein; die Schalter „Nebenfiguren" und
+  // „Wirkungsbereiche" sowie Suchfeld und Motivfilter wirken hier mit. CSV-Export
+  // wie in der Philosophen-Timeline (BOM + Semikolon → deutsches Excel/LibreOffice).
+  function _mtLabel(k){ return (DATA.motive&&DATA.motive.gruppen[k])?DATA.motive.gruppen[k].label:k; }
+  function gxRenderTabelle(){
+    const cEl=document.getElementById('gx-cards'); if(cEl) cEl.hidden=true;
+    const wEl=document.getElementById('gods-stage-wrap'); if(wEl) wEl.hidden=true;
+    const rEl=document.getElementById('gx-results'); if(rEl){ rEl.hidden=true; rEl.innerHTML=''; }
+    const tEl=document.getElementById('gx-table'); if(!tEl) return;
+    tEl.hidden=false; tEl.innerHTML='';
+    const mk=(t,txt)=>{const e=document.createElement(t); if(txt!==undefined) e.textContent=txt; return e;};
+
+    // Wirksame Filter aus den (in dieser Ansicht sichtbaren) Bedienelementen lesen
+    const dM=document.getElementById('gx-minor'),   showMinor=!dM||dM.checked;
+    const dD=document.getElementById('gx-domains'), showDom  =!dD||dD.checked;
+    const q=(((document.getElementById('gx-q')||{}).value)||'').trim().toLowerCase();
+    const motiv=(((document.getElementById('gx-motiv')||{}).value)||'');
+    const filtered=((q&&q.length>=2)||motiv||!showMinor);
+
+    // Kosmos-Reihenfolge = CATS, Rest angehängt (Vollständigkeit garantiert)
+    const order=[]; CATS.forEach(([,keys])=>keys.forEach(k=>{ if(DATA.panthea[k]) order.push(k); }));
+    Object.keys(DATA.panthea).forEach(k=>{ if(order.indexOf(k)<0) order.push(k); });
+    if(gxTblPan!=='__all' && !DATA.panthea[gxTblPan]) gxTblPan='__all';
+
+    // Toolbar: Kosmos-Filter + CSV-Export
+    const bar=mk('div'); bar.className='gxt-toolbar';
+    const lab=mk('label'); lab.className='gxt-toolbar-lab'; lab.textContent='Kosmos:';
+    const sel=mk('select'); sel.id='gx-tbl-pan'; sel.className='gxt-panfilter';
+    const oAll=mk('option','Alle Kosmen'); oAll.value='__all'; sel.appendChild(oAll);
+    order.forEach(k=>{ const o=mk('option', DATA.panthea[k].label); o.value=k; sel.appendChild(o); });
+    sel.value=gxTblPan;
+    sel.addEventListener('change',()=>{ gxTblPan=sel.value; gxRenderTabelle(); });
+    lab.appendChild(sel);
+    const exp=mk('button','⬇ Als CSV exportieren'); exp.type='button'; exp.className='gxt-export';
+    exp.addEventListener('click',()=>window.gxTblExport());
+    bar.appendChild(lab); bar.appendChild(exp);
+    tEl.appendChild(bar);
+
+    // Zeilen zusammenstellen (Kosmos → Figuren), Filter anwenden
+    const panKeys=(gxTblPan==='__all')?order:[gxTblPan];
+    gxTblRows=[];
+    panKeys.forEach(pk=>{
+      const P=DATA.panthea[pk]; if(!P) return;
+      P.gods.forEach(g=>{
+        if(!showMinor && g.rank!=='major') return;
+        if(motiv && gxMotifsOf(pk,g.id).indexOf(motiv)<0) return;
+        if(q && q.length>=2){
+          const hay=(g.name+' '+(g.domain||'')+' '+(g.myth||'')).toLowerCase();
+          if(hay.indexOf(q)<0) return;
+        }
+        const eq=findEquiv(pk,g.id).map(e=>{const op=DATA.panthea[e.pan],og=op.gods.find(x=>x.id===e.id);
+          return (og?og.name:e.id)+' ('+op.label+')';}).join(', ');
+        const mo=gxMotifsOf(pk,g.id).map(_mtLabel).join(', ');
+        gxTblRows.push({ pk, gid:g.id, kosmos:P.label, color:P.color,
+          name:g.name, rang:(g.rank==='major'?'Haupt':'Neben'),
+          ebene:((P.tiers&&P.tiers[g.tier])||String(g.tier)),
+          domain:(g.domain||''), myth:(g.myth||'—'), equiv:(eq||'—'), motive:(mo||'—') });
+      });
+    });
+
+    // — Tabelle 1: Figuren —
+    const t1=mk('table'); t1.className='gxt-main';
+    const capBase=(gxTblPan==='__all')?'Alle Kosmen':DATA.panthea[gxTblPan].label;
+    t1.appendChild(mk('caption', capBase+' — '+gxTblRows.length+' Figuren'+(filtered?' (gefiltert)':'')));
+    const cols=['Kosmos','Name','Rang','Ebene']; if(showDom) cols.push('Domäne');
+    cols.push('Schlüsselmythos','Entsprechungen','Motive');
+    const h1=mk('thead'), hr=mk('tr'); cols.forEach(h=>hr.appendChild(mk('th',h)));
+    h1.appendChild(hr); t1.appendChild(h1);
+    const b1=mk('tbody');
+    if(!gxTblRows.length){
+      const tr=mk('tr'), td=mk('td','Keine Figur entspricht dem Filter.');
+      td.colSpan=cols.length; td.style.textAlign='center'; td.style.opacity='.7';
+      tr.appendChild(td); b1.appendChild(tr);
+    }
+    gxTblRows.forEach(r=>{
+      const tr=mk('tr');
+      const tdK=mk('td'); const kb=mk('span', r.kosmos); kb.className='gxt-kosmos';
+      if(r.color) kb.style.color=r.color; tdK.appendChild(kb); tr.appendChild(tdK);
+      const tdN=mk('td'); const btn=mk('button', r.name); btn.className='gxt-name'; btn.type='button';
+      btn.addEventListener('click',()=>gxJumpTo(r.pk,r.gid)); tdN.appendChild(btn); tr.appendChild(tdN);
+      tr.appendChild(mk('td', r.rang));
+      tr.appendChild(mk('td', r.ebene));
+      if(showDom) tr.appendChild(mk('td', r.domain));
+      const tdM=mk('td', r.myth); tdM.className='gxt-my'; tr.appendChild(tdM);
+      tr.appendChild(mk('td', r.equiv));
+      tr.appendChild(mk('td', r.motive));
+      b1.appendChild(tr);
+    });
+    t1.appendChild(b1); tEl.appendChild(t1);
+
+    // — Tabelle 2: Entsprechungs-Gruppen (der Atlas als Tabelle) —
+    const t2=mk('table'); t2.className='gxt-main';
+    t2.appendChild(mk('caption','Entsprechungs-Gruppen (der Atlas als Tabelle) — '+DATA.equiv.length+' Gruppen'));
+    const h2=mk('thead'), hr2=mk('tr');
+    ['#','Art','Gestalten der Gruppe'].forEach(h=>hr2.appendChild(mk('th',h)));
+    h2.appendChild(hr2); t2.appendChild(h2);
+    const b2=mk('tbody');
+    DATA.equiv.forEach((gr,i)=>{
+      const tr=mk('tr'); tr.appendChild(mk('td', String(i+1)));
+      const _ti=gxTypInfo(gr.typ); const tdT=mk('td');
+      const _sp=mk('span', _ti.zeichen+' '+_ti.lang); _sp.style.color=_ti.farbe; tdT.appendChild(_sp);
+      if(gr.kanten){                       // einzelne Paare weichen ab
+        Object.keys(gr.kanten).forEach(k=>{
+          const [ra,rb]=k.split('|'); const ti2=gxTypInfo(gr.kanten[k]);
+          const nm2=r=>{const[pk2,id2]=r.split(':');const p2=DATA.panthea[pk2];
+            const g2=p2&&p2.gods.find(x=>x.id===id2); return g2?g2.name:id2;};
+          const d2=mk('div', ti2.zeichen+' '+nm2(ra)+'–'+nm2(rb));
+          d2.style.color=ti2.farbe; d2.style.fontSize='.82em'; d2.style.marginTop='.25rem';
+          tdT.appendChild(d2);
+        });
+      }
+      tdT.style.whiteSpace='nowrap'; tr.appendChild(tdT);
+      const names=gr.map(r=>{const [pk,id]=r.split(':'); const op=DATA.panthea[pk]; if(!op) return r;
+        const og=op.gods.find(x=>x.id===id); return (og?og.name:id)+' ('+op.label+')';}).join(' ⟷ ');
+      tr.appendChild(mk('td', names)); b2.appendChild(tr);
+    });
+    t2.appendChild(b2); tEl.appendChild(t2);
+
+    document.getElementById('gods-note').innerHTML=
+      'Alle Figuren aller Kosmen als durchsuch- und filterbare Tabelle — Kosmos-Filter oben; '
+      +'die Schalter <b>Nebenfiguren</b> und <b>Wirkungsbereiche</b> sowie das Suchfeld und der Motivfilter wirken hier mit. '
+      +'Per Knopf als CSV (öffnet in Excel/LibreOffice) exportierbar; zugleich Textfassung für Screenreader und Strg+F.';
+    document.getElementById('gods-legend').innerHTML='';
+    document.getElementById('gods-sources').innerHTML='';
+  }
+  // CSV-Export der aktuell gefilterten Tabelle (BOM + Semikolon für deutsches Excel)
+  window.gxTblExport=function(){
+    if(!gxTblRows.length) return;
+    const dD=document.getElementById('gx-domains'), showDom=!dD||dD.checked;
+    const esc=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+    const head=['Kosmos','Name','Rang','Ebene']; if(showDom) head.push('Domäne');
+    head.push('Schlüsselmythos','Entsprechungen','Motive');
+    const lines=[head.map(esc).join(';')];
+    gxTblRows.forEach(r=>{
+      const row=[r.kosmos,r.name,r.rang,r.ebene]; if(showDom) row.push(r.domain);
+      row.push(r.myth,r.equiv,r.motive);
+      lines.push(row.map(esc).join(';'));
+    });
+    const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a');
+    const suffix=(gxTblPan&&gxTblPan!=='__all')?('-'+gxTblPan):'-alle';
+    a.href=URL.createObjectURL(blob); a.download='goetterkosmos'+suffix+'.csv';
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },100);
+  };
+
+  // ════════ Motive: invertierter Index + Filter ════════
+  let _motIdx=null;
+  function gxMotifsOf(pk,id){
+    if(!DATA||!DATA.motive) return [];
+    if(!_motIdx){ _motIdx={};
+      Object.entries(DATA.motive.gruppen).forEach(([k,g])=>g.refs.forEach(r=>{
+        (_motIdx[r]=_motIdx[r]||[]).push(k); })); }
+    return _motIdx[pk+':'+id]||[];
+  }
+  window.gxMotivFilter=function(key){
+    const sel=document.getElementById('gx-motiv'); if(sel) sel.value=key;
+    const box=document.getElementById('gx-results'); if(!box) return;
+    box.innerHTML=''; box.hidden=false;
+    const g=DATA.motive.gruppen[key]; if(!g){ box.hidden=true; return; }
+    const head=document.createElement('div'); head.className='r-head';
+    head.textContent=g.label+' — '+g.refs.length+' Gestalten quer durch die Traditionen. '
+      +(DATA.motive.hinweis||'');
+    box.appendChild(head);
+    g.refs.forEach(r=>{
+      const [pk,id]=r.split(':');
+      const op=DATA.panthea[pk]; if(!op) return;
+      const og=op.gods.find(x=>x.id===id); if(!og) return;
+      box.appendChild(gxResultBtn(og,pk,op,(og.myth||og.domain||'')));
+    });
+  };
+
+  // ════════ Volltextsuche über alle Figuren ════════
+  function gxResultBtn(g,pk,p,snip){
+    const b=document.createElement('button'); b.type='button';
+    const nm=document.createElement('b'); nm.textContent=g.name; b.appendChild(nm);
+    const pa=document.createElement('span'); pa.className='r-pan';
+    pa.textContent=p.label; b.appendChild(pa);
+    if(snip){ const s=document.createElement('span'); s.className='r-snip';
+      s.textContent=snip.length>110? snip.slice(0,110)+'…' : snip; b.appendChild(s); }
+    b.addEventListener('click',()=>gxJumpTo(pk,g.id));
+    return b;
+  }
+  function gxDoSearch(q){
+    const box=document.getElementById('gx-results'); if(!box) return;
+    q=(q||'').trim().toLowerCase();
+    if(gxView==='tabelle'){ box.hidden=true; box.innerHTML=''; gxRenderTabelle(); return; }
+    if(q.length<2){ box.hidden=true; box.innerHTML=''; return; }
+    const hits=[];
+    Object.entries(DATA.panthea).forEach(([pk,p])=>p.gods.forEach(g=>{
+      const n=g.name.toLowerCase();
+      let score=-1, field='';
+      if(n===q) score=0;
+      else if(n.startsWith(q)) score=1;
+      else if(n.includes(q)) score=2;
+      else if((g.domain||'').toLowerCase().includes(q)){ score=3; field='domain'; }
+      else if((g.myth||'').toLowerCase().includes(q)){ score=4; field='myth'; }
+      if(score>=0) hits.push({g,pk,p,score,field});
+    }));
+    hits.sort((a,b)=>a.score-b.score||a.g.name.localeCompare(b.g.name));
+    box.innerHTML='';
+    if(!hits.length){ const d=document.createElement('div'); d.className='r-head';
+      d.textContent='Keine Treffer in 496 Figuren.'; box.appendChild(d); box.hidden=false; return; }
+    const d=document.createElement('div'); d.className='r-head';
+    d.textContent=hits.length+' Treffer'+(hits.length>30?' — die ersten 30':'');
+    box.appendChild(d);
+    hits.slice(0,30).forEach(h=>{
+      let snip='';
+      const srcTxt = h.field==='myth' ? (h.g.myth||'') : (h.g.domain||h.g.myth||'');
+      const at=srcTxt.toLowerCase().indexOf(q);
+      snip = at>=0 ? (at>34?'…':'')+srcTxt.slice(Math.max(0,at-34), at+76) : srcTxt.slice(0,90);
+      box.appendChild(gxResultBtn(h.g,h.pk,h.p,snip));
+    });
+    box.hidden=false;
+  }
+  function gxFindInit(){
+    const q=document.getElementById('gx-q'), sel=document.getElementById('gx-motiv');
+    if(!q||!sel||sel.dataset.filled) return;
+    sel.dataset.filled='1';
+    if(DATA&&DATA.motive) Object.entries(DATA.motive.gruppen).forEach(([k,g])=>{
+      const o=document.createElement('option'); o.value=k;
+      o.textContent=g.label+' ('+g.refs.length+')'; sel.appendChild(o); });
+    let _t=null;
+    q.addEventListener('input',()=>{ sel.value='';
+      clearTimeout(_t); _t=setTimeout(()=>gxDoSearch(q.value),120); });
+    q.addEventListener('keydown',ev=>{ if(ev.key==='Escape'){ q.value='';
+      const b=document.getElementById('gx-results'); if(b){b.hidden=true;} } });
+    sel.addEventListener('change',()=>{ q.value='';
+      if(gxView==='tabelle'){ gxRenderTabelle(); return; }
+      if(sel.value) gxMotivFilter(sel.value);
+      else { const b=document.getElementById('gx-results'); if(b) b.hidden=true; } });
+  }
+
+  // ════════ Lightbox: Porträt in großer Ansicht ════════
+  window.gxOpenLightbox=function(panKey,g,imgPath){
+    const lb=document.getElementById('gx-lightbox'); if(!lb||!DATA) return;
+    const p=DATA.panthea[panKey];
+    const im=document.getElementById('gx-lb-img');
+    im.src=imgPath; im.alt=g.name;
+    document.getElementById('gx-lb-name').textContent=g.name;
+    document.getElementById('gx-lb-meta').textContent=p.label+(p.tiers&&p.tiers[g.tier]?' · '+p.tiers[g.tier]:'');
+    // Bildnachweis aus dem Medaillon-Manifest (assets/bildnachweise-goetter.js), falls vorhanden
+    const cr=(window.GX_CREDITS||{})[panKey+'/'+g.id];
+    const cEl=document.getElementById('gx-lb-credit');
+    if(cr){
+      const author=cr.author||cr.urheber||'', lic=cr.license||cr.lizenz||'';
+      const licUrl=cr.license_url||cr.lizenz_url||'', srcU=cr.source_url||cr.quelle_artikel||cr.datei_seite||'';
+      let hc='';
+      if(author) hc+='Bild: '+_esc(author);
+      if(lic) hc+=(hc?' · ':'')+(licUrl?'<a href="'+_esc(licUrl)+'" target="_blank" rel="noopener">'+_esc(lic)+'</a>':_esc(lic));
+      if(srcU) hc+=(hc?' · ':'')+'<a href="'+_esc(srcU)+'" target="_blank" rel="noopener">Quelle</a>';
+      cEl.innerHTML=hc;
+    } else cEl.innerHTML='';
+    lb.style.setProperty('--pan-color',p.color);
+    lb.classList.add('open');
+    lb.addEventListener('click',function(e2){ if(e2.target===lb) gxCloseLightbox(); });
+  };
+  window.gxCloseLightbox=function(){
+    const lb=document.getElementById('gx-lightbox'); if(lb) lb.classList.remove('open');
+  };
+  if(!window.__gxEscBound){ window.__gxEscBound=true;
+    document.addEventListener('keydown',function(e2){
+      if(e2.key!=='Escape') return;
+      const lb=document.getElementById('gx-lightbox');
+      if(lb&&lb.classList.contains('open')){ lb.classList.remove('open'); return; }
+      const pn2=document.getElementById('gx-panel');
+      if(pn2&&pn2.classList.contains('open')&&typeof window.gxClosePanel==='function') window.gxClosePanel();
+    });
+  }
+
+  // ════════ Permalinks (#goetter/<pantheon>/<figur>) ════════
+  // Hält die URL synchron zur Ansicht: zitierbar, teilbar, Browser-Back-fähig.
+  function gxSyncHash(){
+    try{
+      if(!/^#goetter(\/|$)/.test(location.hash||'')) return;   // nur solange diese Seite aktiv ist
+      let h='#goetter';
+      if(selId&&selPan) h+='/'+encodeURIComponent(selPan)+'/'+encodeURIComponent(selId);
+      else if(compareMode){ /* Vergleich: neutraler Hash */ }
+      else if(gxView==='atlas') h+='/atlas';
+      else if(gxView==='zeit') h+='/zeit';
+      else h+='/'+encodeURIComponent(activePan);
+      if(location.hash!==h) history.replaceState(history.state,'',h);
+    }catch(e){}
+  }
+  window.gxCopyPermalink=function(btn){
+    if(!selId||!selPan) return;
+    const base=(location.origin&&location.origin!=='null')?location.origin+location.pathname:location.href.split('#')[0];
+    const link=base+'#goetter/'+encodeURIComponent(selPan)+'/'+encodeURIComponent(selId);
+    function done(){ if(!btn) return; btn.classList.add('done'); btn.textContent='✓ kopiert';
+      setTimeout(function(){ btn.classList.remove('done'); btn.textContent='🔗 Link'; },1600); }
+    function fallback(){ const ta=document.createElement('textarea'); ta.value=link;
+      ta.style.cssText='position:fixed;opacity:0;pointer-events:none';
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); done(); }catch(e){}
+      ta.remove(); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(link).then(done).catch(fallback);
+    } else fallback();
+  };
+  function gxScrollToNode(id){
+    const wrapEl=document.getElementById('gods-stage-wrap'); if(!wrapEl) return;
+    const p2=_pos[id]; if(!p2) return;
+    wrapEl.scrollLeft=Math.max(0, p2.x - wrapEl.clientWidth/2);
+  }
+  // Deep-Link anwenden — beim Laden UND bei Browser-Back/-Forward (nav.js ruft _pageSubApply)
+  function applyRoute(sub){
+    sub=sub||[];
+    if(!DATA) return;
+    if(compareMode) exitCompareModeUI();
+    if(sub[0]==='atlas'){
+      gxView='atlas'; gxSyncViewBtns(); gxSyncAtlasChrome();
+      document.getElementById('gx-panel').classList.remove('open'); selId=null; selPan=null;
+      buildTabs(); applyPanColor(); gxRender(); gxSyncHash(); return;
+    }
+    if(sub[0]==='zeit'){
+      gxView='zeit'; gxSyncViewBtns(); gxSyncAtlasChrome();
+      document.getElementById('gx-panel').classList.remove('open'); selId=null; selPan=null;
+      buildTabs(); applyPanColor(); gxRender(); gxSyncHash(); return;
+    }
+    if(sub[0]&&DATA.panthea[sub[0]]){
+      activePan=sub[0];
+      if(gxView==='atlas'){ gxView='hybrid'; gxSyncViewBtns(); }
+      gxSyncAtlasChrome();
+      equivMode=true; syncEquivBtn(); buildTabs(); applyPanColor();
+      selId=null; selPan=null;
+      gxRender();
+      const g2=sub[1]?DATA.panthea[activePan].gods.find(x=>x.id===sub[1]):null;
+      if(g2){ gxOpenPanel(g2); gxScrollToNode(g2.id); }
+      else { document.getElementById('gx-panel').classList.remove('open'); gxSyncHash(); }
+      return;
+    }
+    if(selId) gxClosePanel(); else gxSyncHash();
+  }
+
+  // ════════ Vergleichsansicht ════════
+  // Zeigt zwei Pantheen als kompakte Reihen — NUR die Figuren mit tatsächlicher
+  // Entsprechung zwischen den beiden gewählten Pantheen, nicht den ganzen
+  // (oft sehr breiten) Baum — mit echten, sichtbaren Verbindungslinien dazwischen.
+  function populateCompareSelects(){
+    const selA=document.getElementById('gx-cmp-a'), selB=document.getElementById('gx-cmp-b');
+    if(selA.children.length) return; // schon befüllt
+    const opts=Object.keys(DATA.panthea).map(k=>({key:k,label:DATA.panthea[k].label}));
+    [selA,selB].forEach(sel=>{
+      opts.forEach(o=>{
+        const op=document.createElement('option'); op.value=o.key; op.textContent=o.label; sel.appendChild(op);
+      });
+    });
+    selA.value=cmpA; selB.value=cmpB;
+  }
+
+  function exitCompareModeUI(){
+    compareMode=false;
+    const btn=document.getElementById('gx-compare-btn');
+    btn.classList.remove('on'); btn.textContent='⇄ Pantheen vergleichen';
+    document.getElementById('gods-tabs').classList.remove('gods-hidden');
+    document.getElementById('gods-compare-picker').classList.add('gods-hidden');
+    document.getElementById('gx-minor').closest('label').classList.remove('gods-hidden');
+    document.getElementById('gx-domains').closest('label').classList.remove('gods-hidden');
+  }
+
+  window.gxToggleCompare=function(){
+    compareMode=!compareMode;
+    const btn=document.getElementById('gx-compare-btn');
+    btn.classList.toggle('on',compareMode);
+    btn.textContent=compareMode?'⇄ Einzelansicht':'⇄ Pantheen vergleichen';
+    document.getElementById('gods-tabs').classList.toggle('gods-hidden',compareMode);
+    document.getElementById('gods-compare-picker').classList.toggle('gods-hidden',!compareMode);
+    document.getElementById('gx-minor').closest('label').classList.toggle('gods-hidden',compareMode);
+    document.getElementById('gx-domains').closest('label').classList.toggle('gods-hidden',compareMode);
+    gxClosePanel();
+    if(compareMode){ gxLeaveCards(); populateCompareSelects(); gxRenderCompare(); }
+    else { gxSyncAtlasChrome(); gxRender(); }
+    gxSyncHash();
+  };
+
+  // Alle Entsprechungs-Gruppen, die mind. eine Figur aus panA UND eine aus panB enthalten.
+  function compareGroups(panA,panB){
+    const out=[];
+    if(panA===panB) return out;
+    DATA.equiv.forEach(grp=>{
+      const aRefs=grp.filter(r=>r.startsWith(panA+':'));
+      const bRefs=grp.filter(r=>r.startsWith(panB+':'));
+      if(aRefs.length&&bRefs.length) out.push({aRefs,bRefs});
+    });
+    return out;
+  }
+
+  window.gxRenderCompare=function(){
+    if(!DATA)return;
+    cmpA=document.getElementById('gx-cmp-a').value;
+    cmpB=document.getElementById('gx-cmp-b').value;
+    const svg=document.getElementById('gods-svg'), stage=document.getElementById('gods-stage');
+    svg.innerHTML='';
+    document.getElementById('gods-note').innerHTML='';
+    document.getElementById('gods-sources').innerHTML='';
+
+    if(cmpA===cmpB){
+      stage.style.width='900px'; svg.setAttribute('width',900); svg.setAttribute('height',40);
+      document.getElementById('gods-note').innerHTML='Bitte zwei <b>verschiedene</b> Kosmen w\u00e4hlen \u2014 der Vergleich eines Pantheons mit sich selbst erzeugt nur Selbstverbindungen.';
+      return;
+    }
+    const panAObj=DATA.panthea[cmpA], panBObj=DATA.panthea[cmpB];
+    const groups=compareGroups(cmpA,cmpB);
+
+    if(!groups.length){
+      stage.style.width='900px'; svg.setAttribute('width',900); svg.setAttribute('height',10);
+      let suggestion=null;
+      for(const key of Object.keys(DATA.panthea)){
+        if(key===cmpA) continue;
+        if(compareGroups(cmpA,key).length){ suggestion=DATA.panthea[key].label; break; }
+      }
+      document.getElementById('gods-legend').innerHTML =
+        '<div class="gx-cmp-empty">Keine bekannten Entsprechungen zwischen <b>'+panAObj.label+'</b> und <b>'+panBObj.label+'</b>.'+
+        (suggestion?'<br>Versuch es z.\u2009B. mit <b>'+suggestion+'</b>.':'')+'</div>';
+      return;
+    }
+
+    // Eindeutige Figuren je Seite sammeln (eine Figur kann in mehreren Gruppen auftauchen)
+    const figA=new Map(), figB=new Map();
+    groups.forEach(({aRefs,bRefs})=>{
+      aRefs.forEach(r=>{const id=r.split(':')[1]; if(!figA.has(id)) figA.set(id,panAObj.gods.find(g=>g.id===id));});
+      bRefs.forEach(r=>{const id=r.split(':')[1]; if(!figB.has(id)) figB.set(id,panBObj.gods.find(g=>g.id===id));});
+    });
+    let listA=[...figA.values()].filter(Boolean).sort((a,b)=>a.tier-b.tier);
+    let listB=[...figB.values()].filter(Boolean);
+
+    // Baryzentrum-Heuristik: Reihe B nach der mittleren Position ihrer Partner in
+    // Reihe A sortieren, damit die Verbindungslinien möglichst wenig kreuzen.
+    function partnerIndexInA(idB){
+      let total=0,count=0;
+      groups.forEach(({aRefs,bRefs})=>{
+        if(bRefs.some(r=>r.endsWith(':'+idB))){
+          aRefs.forEach(r=>{const ia=listA.findIndex(g=>g.id===r.split(':')[1]); if(ia>=0){total+=ia;count++;}});
+        }
+      });
+      return count?total/count:999;
+    }
+    listB.sort((a,b)=>partnerIndexInA(a.id)-partnerIndexInA(b.id));
+
+    const cmpCards=(gxView!=='graph');
+    const CMP_CH=cmpCards?152:0;
+    const NODE_GAP=cmpCards?150:130, ROW_A_Y=cmpCards?140:110, ROW_B_Y=cmpCards?400:320;
+    const W=Math.max(900, 180+Math.max(listA.length,listB.length)*NODE_GAP);
+    const H=cmpCards?540:400;
+    svg.setAttribute('width',W); svg.setAttribute('height',H); stage.style.width=W+'px';
+
+    function xFor(list,i){ const rowW=(list.length-1)*NODE_GAP; return (W-rowW)/2+i*NODE_GAP; }
+    const posA={}, posB={};
+    listA.forEach((g,i)=>posA[g.id]=xFor(listA,i));
+    listB.forEach((g,i)=>posB[g.id]=xFor(listB,i));
+
+    svg.appendChild(el('text',{x:W/2,y:ROW_A_Y-(cmpCards?CMP_CH/2+18:55),class:'gx-cmp-row-label','text-anchor':'middle'},panAObj.label));
+    svg.appendChild(el('text',{x:W/2,y:ROW_B_Y+(cmpCards?CMP_CH/2+18:55),class:'gx-cmp-row-label','text-anchor':'middle'},panBObj.label));
+
+    const lineG=el('g',{id:'gx-cmp-lines'});
+    /* <defs>-Element für Pfeil-Marker an den Verbindungslinien */
+    const defs=el('defs',{});
+    const marker=el('marker',{id:'cmp-arr',markerWidth:'8',markerHeight:'6',
+      refX:'7',refY:'3',orient:'auto'});
+    marker.appendChild(el('polygon',{points:'0 0, 8 3, 0 6',fill:panAObj.color,opacity:'.7'}));
+    defs.appendChild(marker);
+    svg.appendChild(defs);
+
+    groups.forEach(({aRefs,bRefs})=>{
+      aRefs.forEach(ra=>{
+        const idA=ra.split(':')[1]; const xA=posA[idA]; if(xA===undefined)return;
+        bRefs.forEach(rb=>{
+          const idB=rb.split(':')[1]; const xB=posB[idB]; if(xB===undefined)return;
+          const midY=(ROW_A_Y+ROW_B_Y)/2;
+          const path=el('path',{
+            d:`M ${xA} ${ROW_A_Y+(cmpCards?CMP_CH/2:21)} C ${xA} ${midY}, ${xB} ${midY}, ${xB} ${ROW_B_Y-(cmpCards?CMP_CH/2:21)}`,
+            class:'gx-cmp-line', stroke:panAObj.color,
+            'marker-end':'url(#cmp-arr)',
+            'data-a':idA, 'data-b':idB });
+          lineG.appendChild(path);
+          /* Label mittig auf der Linie — Namenskonflikt vermieden: godB statt figB */
+          const godB=figB.get(idB);
+          const godA=figA.get(idA);
+          const labelText=godA&&godB ? godA.name+' = '+godB.name : '';
+          if(labelText){
+            const lbl=el('text',{x:(xA+xB)/2,y:midY-7,class:'gx-cmp-line-label',
+              'data-la':idA,'data-lb':idB},labelText);
+            lineG.appendChild(lbl);
+          }
+        });
+      });
+    });
+    svg.appendChild(lineG);
+
+    function drawRow(list,posMap,y,panObj,panKey){
+      list.forEach(g=>{
+        const x=posMap[g.id]; if(x===undefined)return;
+        const node=el('g',{class:'gx-cmp-node','data-id':g.id,'data-pan':panKey});
+        if(cmpCards){
+          const cw=132, ch=CMP_CH, fo=el('foreignObject',{x:x-cw/2,y:y-ch/2,width:cw,height:ch,class:'gx-hyfo'});
+          const mk=panKey+'/'+g.id, ext=(window.GX_MEDALS||{})[mk];
+          const portrait= ext
+            ? '<span class="gx-hy-img" style="background-image:url(assets/images/goetter/'+mk+'.'+ext+')"></span>'
+            : '<span class="gx-hy-img gx-hy-mono">'+(g.name||'?').charAt(0)+'</span>';
+          const div=document.createElementNS('http://www.w3.org/1999/xhtml','div');
+          div.setAttribute('class','gx-hy-card major');
+          div.style.setProperty('--pan-color',panObj.color);
+          div.innerHTML=portrait+'<span class="gx-hy-name">'+g.name+'</span>'+(g.domain?'<span class="gx-hy-dom">'+g.domain+'</span>':'');
+          fo.appendChild(div); node.appendChild(fo);
+          node.addEventListener('click',ev=>{ev.stopPropagation();gxOpenPanel(g,panKey);});
+          node.addEventListener('mouseenter',()=>highlightCompare(g.id));
+          node.addEventListener('mouseleave',clearCompareHighlight);
+          svg.appendChild(node); return;
+        }
+        const mkC=panKey+'/'+g.id, exC=(window.GX_MEDALS||{})[mkC], mrC=16;
+        node.appendChild(el('circle',{cx:x,cy:y,r:exC?mrC:9,class:'gx-orb',fill:panObj.color,
+          style:`filter:drop-shadow(0 0 7px ${hexA(panObj.color,.7)})`}));
+        if(exC){
+          const cidC='gxcc-'+panKey+'-'+g.id;
+          const cpC=el('clipPath',{id:cidC}); cpC.appendChild(el('circle',{cx:x,cy:y,r:mrC}));
+          node.appendChild(cpC);
+          node.appendChild(el('image',{href:'assets/images/goetter/'+mkC+'.'+exC,
+            x:x-mrC,y:y-mrC,width:2*mrC,height:2*mrC,class:'gx-medal',
+            preserveAspectRatio:'xMidYMid slice','clip-path':'url(#'+cidC+')'}));
+          node.appendChild(el('circle',{cx:x,cy:y,r:mrC,class:'gx-medal-ring',
+            style:'stroke:'+panObj.color}));
+        }
+        node.appendChild(el('text',{x,y:y+24,class:'gx-cmp-name',dy:(((window.GX_MEDALS||{})[panKey+'/'+g.id])?10:0)},g.name));
+        node.addEventListener('click',ev=>{ev.stopPropagation();gxOpenPanel(g,panKey);});
+        node.addEventListener('mouseenter',()=>highlightCompare(g.id));
+        node.addEventListener('mouseleave',clearCompareHighlight);
+        svg.appendChild(node);
+      });
+    }
+    drawRow(listA,posA,ROW_A_Y,panAObj,cmpA);
+    drawRow(listB,posB,ROW_B_Y,panBObj,cmpB);
+
+    document.getElementById('gods-legend').innerHTML =
+      listA.length+' \u2194 '+listB.length+' Figuren mit Entsprechungen zwischen '+panAObj.label+' und '+panBObj.label+
+      '<br><b style="color:var(--gx-ink)">Hover</b> hebt die Verbindung hervor · <b style="color:var(--gx-ink)">Klick</b> öffnet Details';
+  };
+
+  function highlightCompare(id){
+    const svg=document.getElementById('gods-svg'); if(!svg)return;
+    const related=new Set([id]);
+    svg.querySelectorAll('.gx-cmp-line').forEach(l=>{
+      const lit=l.getAttribute('data-a')===id||l.getAttribute('data-b')===id;
+      l.classList.toggle('lit',lit); l.classList.toggle('dim',!lit);
+      if(lit){ related.add(l.getAttribute('data-a')); related.add(l.getAttribute('data-b')); }
+    });
+    /* Labels synchron mit den Linien ein-/ausblenden */
+    svg.querySelectorAll('.gx-cmp-line-label').forEach(lbl=>{
+      const lit=lbl.getAttribute('data-la')===id||lbl.getAttribute('data-lb')===id;
+      lbl.style.opacity=lit?'1':'0';
+    });
+    svg.querySelectorAll('.gx-cmp-node').forEach(n=>{
+      n.classList.toggle('dim', !related.has(n.getAttribute('data-id')));
+    });
+  }
+  function clearCompareHighlight(){
+    const svg=document.getElementById('gods-svg'); if(!svg)return;
+    svg.querySelectorAll('.gx-cmp-line').forEach(l=>l.classList.remove('lit','dim'));
+    svg.querySelectorAll('.gx-cmp-line-label').forEach(lbl=>lbl.style.opacity='0');
+    svg.querySelectorAll('.gx-cmp-node').forEach(n=>n.classList.remove('dim'));
+  }
+
+  // Klick ins Leere schließt Panel
+  function bgClick(e){
+    if(e.target.closest('.gx-node')||e.target.closest('.gx-cmp-node')||e.target.closest('.gx-panel'))return;
+    if(selId)gxClosePanel();
+  }
+
+  function boot(){
+    DATA=window.GODS_DATA;
+    // Entsprechungen normalisieren: Eine Gruppe darf {typ,refs} ODER ein reines
+    // Ref-Array sein. Danach ist jede Gruppe ein Array MIT der Eigenschaft .typ —
+    // alle vorhandenen Schleifen ueber DATA.equiv arbeiten unveraendert weiter.
+    if(DATA.equiv && !DATA.equiv.__typisiert){
+      DATA.equiv=DATA.equiv.map(g=>{
+        const a=Array.isArray(g)? g.slice() : (g.refs||[]).slice();
+        a.typ=Array.isArray(g)? 'analogie' : (g.typ||'analogie');
+        a.kanten=(!Array.isArray(g) && g.kanten) ? g.kanten : null;   // Einzelpaare
+        return a; });
+      DATA.equiv.__typisiert=true;
+    }
+    gxFindInit();
+    // Deep-Link anwenden (#goetter/atlas oder #goetter/<pantheon>[/<figur>])
+    const sub=Array.isArray(window._routeSub)?window._routeSub:[];
+    if(sub[0]==='atlas') gxView='atlas';
+    else if(sub[0]&&DATA.panthea[sub[0]]) activePan=sub[0];
+    gxSyncViewBtns();
+    buildTabs(); applyPanColor(); syncEquivBtn(); gxSyncAtlasChrome(); gxRender();
+    if(sub[0]&&sub[0]!=='atlas'&&DATA.panthea[sub[0]]&&sub[1]){
+      const g3=DATA.panthea[activePan].gods.find(x=>x.id===sub[1]);
+      if(g3){ gxOpenPanel(g3); gxScrollToNode(g3.id); }
+    }
+    gxSyncHash();
+    window._pageSubApply=applyRoute;   // Browser-Back/-Forward innerhalb der Seite
+    const stage=document.getElementById('gods-stage-wrap');
+    if(stage)stage.addEventListener('click',bgClick);
+  }
+  function init(){
+    if(typeof window.GODS_DATA==='undefined'){
+      let n=0;const iv=setInterval(()=>{if(typeof window.GODS_DATA!=='undefined'){clearInterval(iv);boot();}else if(++n>60)clearInterval(iv);},80);
+    } else boot();
+  }
+  init();
+})();
+</script>

@@ -1,0 +1,364 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     EIGENE ARBEITEN — eigenständige Seite (vormals Sektion auf "Meine Philosophie")
+     Lädt assets/documents.json (Datei-Metadaten) + assets/documents-meta.json
+     (redaktionelle Einordnung: Typ/Reihenfolge/Kurs) und führt beides zusammen.
+     Trägt komplett "pub-hide-github": die ganze Seite (inkl. Nav-Eintrag und
+     direkter Hash-Navigation, siehe showPage()-Guard in index.html) verschwindet
+     aus der öffentlichen GitHub-Pages-Version, solange das nicht gewünscht ist.
+═══════════════════════════════════════════════════════════════════ -->
+<style>
+.pdoc-section{ max-width:880px;margin:0 auto;padding:0 3rem 5rem; }
+.pdoc-head{ margin-bottom:1.5rem; }
+.pdoc-intro{ color:var(--text2);font-size:.92rem;line-height:1.65;max-width:680px; }
+
+/* Symbol-/Text-Link, sichtbar nur für Screenreader — Beschriftungen ohne visuelle Unruhe */
+.pdoc-visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.pdoc-status{ font-family:var(--fm);font-size:.72rem;color:var(--text3); }
+.pdoc-hidden{ display:none !important; }
+
+/* Gruppen (Abschlussarbeiten, Forschungsprojekt, Vortrag, Hausarbeiten…) */
+.pdoc-group{ margin-bottom:1.5rem; }
+.pdoc-group:last-child{ margin-bottom:0; }
+.pdoc-group-title{
+  font-family:var(--fm);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--text3);margin:0 0 .45rem;font-weight:700;
+}
+/* Abschlussarbeiten bewusst hervorgehoben — über Farbe, nicht über zusätzliche Größe,
+   damit die kompakte Zeilenhöhe für ALLE Gruppen gleich bleibt. */
+.pdoc-group-featured .pdoc-group-title{ color:var(--accent); }
+.pdoc-group-featured .pdoc-list{ border-color:var(--accent); }
+.pdoc-group-featured .pdoc-row-title{ color:var(--accent); }
+
+/* ── Kompakte Liste: EINE Zeile Titel + EINE Zeile Meta, knappe Polsterung ── */
+.pdoc-list{
+  list-style:none;margin:0;padding:0;
+  border:1px solid var(--border);border-radius:var(--r);overflow:hidden;
+  background:var(--card);box-shadow:var(--shadow);
+}
+.pdoc-row{
+  display:flex;align-items:center;gap:.6rem;
+  padding:.42rem .8rem;
+  border-bottom:1px solid var(--border);
+  transition:background .15s;
+}
+.pdoc-row:last-child{ border-bottom:none; }
+.pdoc-row:hover{ background:var(--surface); }
+
+.pdoc-row-main{ flex:1 1 auto;min-width:0; }
+.pdoc-row-title-line{ display:flex;align-items:baseline;gap:.4rem;min-width:0; }
+
+/* Titel IST der Link — öffnet die PDF im neuen Tab (nativer Browser-Viewer) */
+.pdoc-row-title{
+  flex:1 1 auto;min-width:0;display:inline-flex;align-items:center;gap:.38rem;
+  font-family:var(--fh);font-weight:700;font-size:.86rem;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-decoration:none;
+}
+.pdoc-row-title:hover{ text-decoration:underline; }
+.pdoc-row-title svg{ flex:0 0 auto;width:13px;height:13px;opacity:.55; }
+
+/* kleines Typ-/Ordnungs-Badge neben dem Titel (z.B. "1. Hausarbeit", "Masterarbeit") */
+.pdoc-row-badge{
+  flex:0 0 auto;padding:.04rem .4rem;border-radius:4px;
+  background:var(--surface);color:var(--text3);
+  font-family:var(--fm);font-size:.58rem;letter-spacing:.02em;white-space:nowrap;
+}
+.pdoc-group-featured .pdoc-row-badge{ background:var(--accent);color:#fff; }
+
+.pdoc-row-meta{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem;
+  font-family:var(--fm);font-size:.66rem;color:var(--text3);
+  margin-top:.05rem;
+}
+.pdoc-row-meta-text{ white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+
+/* Verweis auf den Kurs, für den eine Hausarbeit geschrieben wurde — springt zur
+   passenden Stelle auf der Studium-Seite (window.jumpToKurs, dort definiert). */
+.pdoc-course-link{
+  background:none;border:none;padding:0;cursor:pointer;
+  font-family:var(--fm);font-size:.66rem;color:var(--accent2);text-decoration:none;
+  white-space:nowrap;
+}
+.pdoc-course-link:hover{ text-decoration:underline; }
+
+/* Download: dezentes Icon statt großem Button */
+.pdoc-dl-icon{
+  flex:0 0 auto;width:26px;height:26px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text3);transition:all .15s;
+}
+.pdoc-dl-icon:hover{ background:var(--surface);color:var(--accent2); }
+.pdoc-dl-icon svg{ width:14px;height:14px; }
+
+/* Status-/Leer-/Fehlerzustände */
+.pdoc-empty, .pdoc-error{
+  padding:1.5rem 1.8rem;border:1px dashed var(--border);border-radius:10px;
+  background:var(--bg);font-size:.85rem;color:var(--text3);line-height:1.7;
+}
+.pdoc-error code{
+  font-family:var(--fm);background:var(--surface);padding:.15rem .45rem;
+  border-radius:5px;color:var(--accent2);font-size:.82em;
+}
+
+/* Kurzes Aufleuchten, wenn man von der Studium-Seite hierher springt */
+@keyframes pdocRowFlash{ 0%,100%{background:transparent;} 25%{background:rgba(91,128,232,.16);} }
+.pdoc-row-flash{ animation:pdocRowFlash 2.2s ease; }
+
+@media(max-width:700px){
+  .pdoc-section{ padding-left:1.2rem;padding-right:1.2rem; }
+}
+</style>
+
+<div class="page-hero">
+  <div class="page-hero-glow"></div>
+  <p class="hero-tag">Eigene Texte</p>
+  <h1 class="page-title">Eigene Arbeiten<span>.</span></h1>
+  <p class="page-desc">Abschlussarbeiten, ein Forschungsprojekt, ein Vortrag und Hausarbeiten aus dem Studium.</p>
+</div>
+
+<section class="pdoc-section" id="pdoc-root" aria-labelledby="pdoc-heading">
+  <div class="pdoc-head">
+    <h2 class="pdoc-visually-hidden" id="pdoc-heading">Aufsätze &amp; Arbeiten</h2>
+    <p class="pdoc-intro">Zum freien Lesen und Herunterladen. Wird automatisch aus
+      <code>assets/documents.json</code> geladen.</p>
+  </div>
+
+  <!-- aria-live: nur für Screenreader (Lade-/Fehlerstatus) -->
+  <p class="pdoc-status pdoc-visually-hidden" id="pdoc-status" aria-live="polite">Lade Dokumente…</p>
+
+  <!-- Wird per JS mit Gruppen befüllt -->
+  <div id="pdoc-groups" class="pdoc-hidden"></div>
+
+  <p class="pdoc-empty pdoc-hidden" id="pdoc-empty">Aktuell sind hier keine Dokumente hinterlegt.</p>
+
+  <div class="pdoc-error pdoc-hidden" id="pdoc-error">
+    Die Übersicht konnte nicht geladen werden — weder über <code>assets/documents.json</code> /
+    <code>assets/documents-meta.json</code> noch über die lokalen Ausweich-Dateien. Prüfe, ob alle
+    vier Dateien vorhanden und syntaktisch korrekt sind.
+  </div>
+</section>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   EIGENE ARBEITEN — dynamische PDF-Übersicht
+   ────────────────────────────────────────────────────────────────
+   Zwei Datenquellen, bewusst getrennt:
+   - assets/documents.json       → Datei-Metadaten (Titel, Seiten, Größe…),
+                                    automatisch von Alexanders eigenem Skript
+                                    erzeugt, wird bei neuen Dokumenten überschrieben.
+   - assets/documents-meta.json  → redaktionelle Einordnung (Typ, Reihenfolge,
+                                    zugehöriger Kurs), von Hand gepflegt, bleibt
+                                    beim Neuerzeugen der ersten Datei unangetastet.
+   Beide werden client-seitig über "filename" zusammengeführt.
+
+   Titel = Link (öffnet PDF im neuen Tab, nativer Browser-Viewer). Download
+   ist ein kleines, dezentes Icon statt eines zweiten großen Buttons.
+
+   Ankunft von der Studium-Seite (window.jumpToDoc, dort definiert): hebt die
+   passende Zeile per window.__pendingHighlightCourse kurz hervor. ════════ */
+(function(){
+  const root = document.getElementById('pdoc-root');
+  if (!root) return;
+
+  const groupsEl = document.getElementById('pdoc-groups');
+  const statusEl = document.getElementById('pdoc-status');
+  const emptyEl  = document.getElementById('pdoc-empty');
+  const errorEl  = document.getElementById('pdoc-error');
+
+  let ALL_DOCS = null;
+  let META = null;
+
+  const TYPE_ORDER = ['thesis', 'forschungsprojekt', 'vortrag', 'hausarbeit-bachelor', 'hausarbeit-master', 'sonstige'];
+  const TYPE_GROUP_LABEL = {
+    'thesis':               'Abschlussarbeiten',
+    'forschungsprojekt':    'Forschungsprojekt',
+    'vortrag':               'Vortrag',
+    'hausarbeit-bachelor':  'Hausarbeiten — Bachelor',
+    'hausarbeit-master':    'Hausarbeiten — Master',
+    'sonstige':              'Weitere Texte',
+  };
+  function groupKeyFor(type) {
+    if (type === 'bachelorarbeit' || type === 'masterarbeit') return 'thesis';
+    if (type === 'forschungsprojekt' || type === 'vortrag') return type;
+    if (type === 'hausarbeit-bachelor' || type === 'hausarbeit-master') return type;
+    return 'sonstige';
+  }
+  function badgeFor(meta) {
+    if (meta.type === 'bachelorarbeit') return 'Bachelorarbeit';
+    if (meta.type === 'masterarbeit') return 'Masterarbeit';
+    if (meta.type === 'hausarbeit-bachelor' || meta.type === 'hausarbeit-master') {
+      return meta.order ? meta.order + '. Hausarbeit' : 'Hausarbeit';
+    }
+    return null;
+  }
+
+  function formatSize(doc) {
+    const mb = typeof doc.sizeMB === 'number' ? doc.sizeMB : (doc.sizeBytes || 0) / (1024 * 1024);
+    return mb.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' MB';
+  }
+  function formatPages(doc) {
+    const n = doc.pages || 0;
+    return n === 1 ? '1 Seite' : n + ' Seiten';
+  }
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  const ICON_PDF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+  const ICON_DOWNLOAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+
+  /* ── Eine Dokument-ZEILE als <li> bauen. Titel/Dateiname werden NICHT per
+     innerHTML interpoliert, sondern per textContent gesetzt. ── */
+  function buildRow(doc, opts) {
+    opts = opts || {};
+    const li = document.createElement('li');
+    li.className = 'pdoc-row';
+    const href = encodeURI(doc.relativePath);
+
+    li.innerHTML =
+      '<div class="pdoc-row-main">' +
+        '<div class="pdoc-row-title-line">' +
+          '<a class="pdoc-row-title" target="_blank" rel="noopener">' + ICON_PDF + '<span></span></a>' +
+          (opts.badge ? '<span class="pdoc-row-badge"></span>' : '') +
+        '</div>' +
+        '<div class="pdoc-row-meta">' +
+          '<span class="pdoc-row-meta-text"></span>' +
+          (opts.course ? '<button type="button" class="pdoc-course-link"></button>' : '') +
+        '</div>' +
+      '</div>' +
+      '<a class="pdoc-dl-icon" aria-label="' + 'Herunterladen: ' + doc.title.replace(/"/g, '&quot;') + '" title="Herunterladen">' + ICON_DOWNLOAD + '</a>';
+
+    const titleLink = li.querySelector('.pdoc-row-title');
+    titleLink.href = href;
+    titleLink.querySelector('span').textContent = doc.title;
+    titleLink.title = doc.title;
+
+    if (opts.badge) li.querySelector('.pdoc-row-badge').textContent = opts.badge;
+
+    const metaParts = [formatPages(doc), formatSize(doc)];
+    if (doc.modified) metaParts.push(formatDate(doc.modified));
+    li.querySelector('.pdoc-row-meta-text').textContent = metaParts.join(' · ');
+
+    if (opts.course) {
+      const courseBtn = li.querySelector('.pdoc-course-link');
+      courseBtn.textContent = '· → ' + opts.course;
+      courseBtn.dataset.course = opts.course;
+      courseBtn.addEventListener('click', function () {
+        if (typeof window.jumpToKurs === 'function') window.jumpToKurs(opts.course);
+      });
+    }
+
+    const dlLink = li.querySelector('.pdoc-dl-icon');
+    dlLink.href = href;
+    dlLink.setAttribute('download', doc.filename);
+
+    return li;
+  }
+
+  function renderGroups() {
+    if (!ALL_DOCS) return;
+    groupsEl.innerHTML = '';
+
+    const buckets = {};
+    ALL_DOCS.forEach(function (doc) {
+      const meta = (META && META[doc.filename]) || {};
+      const key = groupKeyFor(meta.type);
+      (buckets[key] = buckets[key] || []).push({ doc: doc, meta: meta });
+    });
+
+    if (buckets.thesis) {
+      buckets.thesis.sort(function (a, b) {
+        return (a.meta.type === 'bachelorarbeit' ? 0 : 1) - (b.meta.type === 'bachelorarbeit' ? 0 : 1);
+      });
+    }
+    ['hausarbeit-bachelor', 'hausarbeit-master'].forEach(function (k) {
+      if (buckets[k]) buckets[k].sort(function (a, b) { return (a.meta.order || 99) - (b.meta.order || 99); });
+    });
+
+    let total = 0;
+    TYPE_ORDER.forEach(function (key) {
+      const items = buckets[key];
+      if (!items || !items.length) return;
+      total += items.length;
+
+      const group = document.createElement('div');
+      group.className = 'pdoc-group' + (key === 'thesis' ? ' pdoc-group-featured' : '');
+      const h = document.createElement('h3');
+      h.className = 'pdoc-group-title';
+      h.textContent = TYPE_GROUP_LABEL[key];
+      const ul = document.createElement('ul');
+      ul.className = 'pdoc-list';
+
+      items.forEach(function (item) {
+        ul.appendChild(buildRow(item.doc, { badge: badgeFor(item.meta), course: item.meta.course || null }));
+      });
+
+      group.appendChild(h);
+      group.appendChild(ul);
+      groupsEl.appendChild(group);
+    });
+
+    if (!total) {
+      groupsEl.classList.add('pdoc-hidden');
+      emptyEl.classList.remove('pdoc-hidden');
+      statusEl.textContent = '';
+    } else {
+      groupsEl.classList.remove('pdoc-hidden');
+      emptyEl.classList.add('pdoc-hidden');
+      statusEl.textContent = total + (total === 1 ? ' Dokument' : ' Dokumente');
+    }
+
+    /* Ankunft von der Studium-Seite: passende Zeile hervorheben + hinscrollen.
+       window.__pendingHighlightCourse wird von window.jumpToDoc (in index.html)
+       gesetzt, BEVOR auf diese Seite navigiert wird. Einmalig konsumiert. */
+    if (window.__pendingHighlightCourse) {
+      const target = window.__pendingHighlightCourse;
+      window.__pendingHighlightCourse = null;
+      requestAnimationFrame(function () {
+        const esc = (window.CSS && CSS.escape) ? CSS.escape(target) : target;
+        const btn = groupsEl.querySelector('.pdoc-course-link[data-course="' + esc + '"]');
+        const row = btn ? btn.closest('.pdoc-row') : null;
+        if (row) {
+          row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          row.classList.add('pdoc-row-flash');
+          setTimeout(function () { row.classList.remove('pdoc-row-flash'); }, 2200);
+        }
+      });
+    }
+  }
+
+  function showError() {
+    statusEl.textContent = '';
+    groupsEl.classList.add('pdoc-hidden');
+    emptyEl.classList.add('pdoc-hidden');
+    errorEl.classList.remove('pdoc-hidden');
+  }
+
+  function loadJsonOrFallback(url, fallbackGlobalName) {
+    return fetch(url)
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+      .catch(function () {
+        const fb = window[fallbackGlobalName];
+        if (fb !== undefined) return fb;
+        throw new Error('Weder ' + url + ' noch window.' + fallbackGlobalName + ' verfügbar');
+      });
+  }
+
+  Promise.all([
+    loadJsonOrFallback('assets/documents.json', 'DOCUMENTS_DATA'),
+    loadJsonOrFallback('assets/documents-meta.json', 'DOCUMENTS_META'),
+  ]).then(function (results) {
+    const docs = results[0], meta = results[1];
+    if (!Array.isArray(docs)) throw new Error('documents.json: unerwartetes Format');
+    ALL_DOCS = docs;
+    META = (meta && typeof meta === 'object') ? meta : {};
+    renderGroups();
+  }).catch(showError);
+})();
+</script>

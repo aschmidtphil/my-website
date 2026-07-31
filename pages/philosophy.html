@@ -7,6 +7,14 @@
 ═══════════════════════════════════════════════════════════════════ -->
 
 <style>
+.tl-kreise{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.55rem 0 .1rem}
+.tl-kreis-lab{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-right:.35rem}
+.tl-kreis{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border-radius:14px;
+  cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--text3);transition:all .15s}
+.tl-kreis:hover{border-color:var(--accent);color:var(--accent)}
+.tl-kreis.an{background:var(--accent);border-color:var(--accent);color:#fff}
+.tl-kreis i{font-style:normal;opacity:.65;font-size:.58rem;margin-left:.25rem}
+
 .phil-header   { padding:2.5rem 3rem 1.75rem; background:linear-gradient(180deg,var(--bg2),var(--bg)); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
 .phil-glow     { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); pointer-events:none; }
 .phil-hero .page-hero-glow { left:50%; right:auto; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); }
@@ -25,6 +33,40 @@
 .phil-search:focus { border-color:var(--accent); }
 .phil-search-icon { position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.78rem; pointer-events:none; }
 /* ── Ansicht-Umschalter (Timeline / Tabelle) ── */
+.netz-wrap{ display:none; margin-top:1rem; border:1px solid var(--border); border-radius:12px;
+  background:var(--surface); overflow:auto; max-height:78vh; }
+.netz-wrap.active{ display:block; }
+.netz-kopf{ display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; padding:.85rem 1.1rem;
+  border-bottom:1px solid var(--border); position:sticky; left:0; top:0; background:var(--surface); z-index:3; }
+.netz-lg{ display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.66rem;
+  letter-spacing:.04em; color:var(--text2); cursor:pointer; user-select:none; padding:.28rem .6rem;
+  border:1px solid var(--border); border-radius:14px; transition:all .15s; }
+.netz-lg:hover{ border-color:var(--accent) }
+.netz-lg.aus{ opacity:.35 }
+.netz-lg i{ width:1.4rem; height:0; border-top-width:2px; border-top-style:solid; display:inline-block }
+.netz-info{ margin-left:auto; font-family:var(--fm); font-size:.66rem; color:var(--text3) }
+.netz-weg{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; padding:.7rem 1.1rem;
+  border-bottom:1px solid var(--border); background:var(--bg2) }
+.netz-weg-lab{ font-family:var(--fm); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text3) }
+.netz-weg-pf{ color:var(--text3); font-size:.8rem }
+.netz-weg-in{ font-family:var(--fm); font-size:.72rem; padding:.35rem .6rem; border-radius:8px;
+  border:1px solid var(--border); background:var(--bg); color:var(--text); min-width:11rem }
+.netz-weg-in:focus{ outline:2px solid var(--accent); outline-offset:1px }
+.netz-weg-btn{ font-family:var(--fm); font-size:.66rem; letter-spacing:.05em; padding:.38rem .8rem;
+  border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text2); cursor:pointer }
+.netz-weg-btn:hover{ border-color:var(--accent); color:var(--accent) }
+.netz-weg-erg{ font-size:.76rem; color:var(--text2); line-height:1.5 }
+.nz-kante.weg{ stroke-width:3.4 !important; opacity:1 !important }
+#netz-svg{ display:block }
+.nz-kante{ fill:none; transition:opacity .15s }
+.nz-knoten circle{ cursor:pointer; transition:r .12s }
+.nz-knoten text{ font-family:var(--fm); font-size:8.5px; fill:var(--text3); pointer-events:none }
+.nz-knoten.lit circle{ stroke:#fff; stroke-width:1.6 }
+.nz-knoten.lit text{ fill:var(--text); font-weight:700; font-size:10px }
+.nz-knoten.dim{ opacity:.13 }
+.nz-kante.dim{ opacity:.04 }
+.nz-jahr{ font-family:var(--fm); font-size:9px; fill:var(--text3); opacity:.7 }
+.nz-gitter{ stroke:var(--border); stroke-width:1; opacity:.5 }
 .view-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .vs-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .8rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 .vs-btn:hover { color:var(--text); }
@@ -200,10 +242,12 @@
     <span class="zoom-label" id="zoom-lbl">×1.0</span>
     <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen">−</button>
     <button class="pzb" onclick="tlReset()" style="font-size:.62rem;width:42px" title="Zurücksetzen">Reset</button>
+    <button class="pzb" id="card-size-btn" onclick="tlToggleCardSize()" style="font-size:.62rem;width:auto;padding:0 .55rem" title="Kartengröße umschalten">◰ Mini</button>
   </div>
   <div class="view-switch" id="view-switch">
     <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')">Timeline</button>
     <button class="vs-btn" id="vs-table" onclick="tlSetView('table')">Tabelle</button>
+    <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')">Einflussnetz</button>
   </div>
   <div class="phil-search-wrap">
     <span class="phil-search-icon">⌕</span>
@@ -227,6 +271,8 @@
   <div class="epoch-dd-wrap">
     <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"></select>
   </div>
+  <div class="tl-kreise" id="tl-kreise">
+  </div></div>
 </div>
 
 <!-- SVG CANVAS + Hover Card -->
@@ -236,6 +282,30 @@
   </div>
   <div class="tl-hover-card" id="tl-hover"></div>
 </div>
+<!-- Einflussnetz: wer hat wen beeinflusst. Waagerecht chronologisch,
+     senkrecht durch Kraefte geloest, damit verbundene Denker beieinanderliegen. -->
+<div class="netz-wrap" id="netz-wrap">
+  <div class="netz-kopf" id="netz-kopf">
+    <span class="netz-lg" data-typ="student"><i style="border-color:#e8c46a"></i>Schüler</span>
+    <span class="netz-lg" data-typ="inspires"><i style="border-color:#7fb3d5"></i>inspiriert</span>
+    <span class="netz-lg" data-typ="develops"><i style="border-color:#82c99a"></i>entwickelt weiter</span>
+    <span class="netz-lg" data-typ="critic"><i style="border-color:#c97a7a;border-top-style:dashed"></i>kritisiert</span>
+    <span class="netz-info" id="netz-info"></span>
+  </div>
+  <!-- Verbindungssuche: kuerzester Weg zwischen zwei Denkern im Einflussnetz. -->
+  <div class="netz-weg" id="netz-weg">
+    <span class="netz-weg-lab">Verbindung</span>
+    <input class="netz-weg-in" id="nz-von" list="nz-namen" placeholder="von …" aria-label="Denker (Ausgangspunkt)">
+    <span class="netz-weg-pf">→</span>
+    <input class="netz-weg-in" id="nz-nach" list="nz-namen" placeholder="… nach" aria-label="Denker (Ziel)">
+    <datalist id="nz-namen"></datalist>
+    <button type="button" class="netz-weg-btn" onclick="nzWegSuchen()">Weg zeigen</button>
+    <button type="button" class="netz-weg-btn" onclick="nzWegLoeschen()">zurück</button>
+    <span class="netz-weg-erg" id="nz-weg-erg"></span>
+  </div>
+  <svg id="netz-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
 <div class="tl-table-wrap" id="tl-table-wrap">
   <div class="tl-table-meta-row">
     <div class="tl-table-meta" id="tl-table-meta"></div>
@@ -287,12 +357,16 @@ const YEAR_MIN = -700, YEAR_MAX = 2030, YEAR_RANGE = YEAR_MAX - YEAR_MIN;
 const BASE_W   = 4400;
 let SVG_H      = 760;   /* = feste Viewport-Höhe, wird in setH() gesetzt */
 let AXIS_Y     = 380;   /* = SVG_H/2, immer vertikal zentriert */
-const CARD_W   = 134;
-const CARD_H   = 96;  /* increased to fit portrait */
+/* Kartengröße umschaltbar: 'mini' (nur Porträt+Name) oder 'full' (mit Daten+Epoche).
+   Die Maße + das Detail-Level der Karte hängen davon ab. */
+let cardSize = 'mini';
+const CARD_DIMS = { mini: { w:74, h:56 }, full: { w:134, h:96 } };
+let CARD_W = CARD_DIMS[cardSize].w;
+let CARD_H = CARD_DIMS[cardSize].h;
 let PAD        = 85;   // axis-to-card gap (dynamisch: schrumpft bei wenig Höhe)
 
 const INFL_COL = { student:'#5b80e8', inspires:'#22c55e', critic:'#e8527a', develops:'#a78bfa' };
-const TIER_VIS = { 1:0.55, 2:0.85, 3:1.5, 4:2.4 };
+const TIER_VIS = { 1:0.45, 2:0.62, 3:0.95, 4:1.5 };  /* an die kleineren Karten angepasst: mehr früher sichtbar */
 /* Mega-Giganten: sichtbar auch bei extremem Herauszoomen (≤0.55).
    Bewusst sehr klein gehalten — die "Säulen" der abendländischen Philosophie. */
 const MEGA = new Set(['Platon','Aristoteles','Kant','Sokrates','Nietzsche','Descartes','Hegel','Augustinus','Thomas v. Aquin']);
@@ -355,7 +429,37 @@ function svgW() { return BASE_W * zoom; }
 function xOf(yr) { return ((yr - YEAR_MIN) / YEAR_RANGE) * svgW(); }
 function dark() { return document.documentElement.dataset.theme === 'dark'; }
 function cv(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-function phils() { return typeof PHILS_V2 !== 'undefined' ? PHILS_V2 : []; }
+/* Kulturkreise nach dem Vorbild der History of Philosophy without any gaps.
+   Voreingestellt sind Europa und die islamische Welt — also der Strang, in dem
+   der Begriff „Philosophie" selbst entstanden und weitergegeben worden ist.
+   Die übrigen sind zuschaltbar. Die Grenze ist teils künstlich; sie wird hier
+   gezogen, um sie sichtbar und aufhebbar zu machen, nicht um sie zu behaupten. */
+var TL_KREISE = ['European','Islamic','India','China','Africana'];
+var TL_KREIS_LABEL = { European:'Europa', Islamic:'Islamische Welt', India:'Indien', China:'China', Africana:'Africana' };
+var tlKreisAktiv = { European:true, Islamic:true, India:false, China:false, Africana:false };
+function phils() {
+  var L = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2 : [];
+  return L.filter(function(p){ return p && tlKreisAktiv[p.kreis || 'European']; });
+}
+window.tlKreisUm = function(k){
+  tlKreisAktiv[k] = !tlKreisAktiv[k];
+  if (!TL_KREISE.some(function(x){ return tlKreisAktiv[x]; })) tlKreisAktiv[k] = true;  // nie alles aus
+  tlKreisLeiste();
+  if (window.tlNeuzeichnen) window.tlNeuzeichnen();
+  else { if (window.renderTimeline) renderTimeline();
+         if (window.renderNetz) renderNetz();
+         if (window.renderTabelle) renderTabelle(); }
+};
+function tlKreisLeiste(){
+  var box = document.getElementById('tl-kreise'); if (!box) return;
+  var alleP = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2.filter(Boolean) : [];
+  box.innerHTML = '<span class="tl-kreis-lab">Kulturkreis</span>' + TL_KREISE.map(function(k){
+    var n = alleP.filter(function(p){ return (p.kreis||'European') === k; }).length;
+    return '<button type="button" class="tl-kreis' + (tlKreisAktiv[k] ? ' an' : '') +
+           '" onclick="tlKreisUm(\'' + k + '\')" aria-pressed="' + (tlKreisAktiv[k]?'true':'false') + '">' +
+           TL_KREIS_LABEL[k] + ' <i>' + n + '</i></button>';
+  }).join('');
+}
 function byName(n) { return phils().find(p => p.name === n); }
 /* Anzeigename: display-Feld bevorzugt, sonst name (Schlüssel bleibt name) */
 function dispName(p) { return p.display || p.name; }
@@ -515,12 +619,17 @@ function render() {
 
   svg.appendChild(defs);
 
+  /* Deckkraft-Suffix nur an eine gueltige 6-stellige Hex-Farbe haengen. Sonst
+     entsteht etwas wie '#8880a' — ungueltig, und der Browser zeichnet SCHWARZ.
+     Im dunklen Thema faellt das nicht auf, im hellen sofort. */
+  function hexA(c, a){ return (/^#[0-9a-fA-F]{6}$/.test(c||'')) ? c + a : '#888888' + a; }
+
   /* 1. EPOCH BANDS */
   const epochColors = {};
   (typeof EPOCHS_META_V2 !== 'undefined' ? EPOCHS_META_V2 : []).forEach(e => epochColors[e.name] = e.color);
   const epochRanges = {};
   phils().forEach(p => {
-    if (!epochRanges[p.epoch]) epochRanges[p.epoch] = { min:Infinity, max:-Infinity, c: epochColors[p.epoch]||'#888' };
+    if (!epochRanges[p.epoch]) epochRanges[p.epoch] = { min:Infinity, max:-Infinity, c: epochColors[p.epoch]||'#888888' };
     const d = deathYearForPos(p);
     epochRanges[p.epoch].min = Math.min(epochRanges[p.epoch].min, p.birth);
     epochRanges[p.epoch].max = Math.max(epochRanges[p.epoch].max, d);
@@ -536,7 +645,7 @@ function render() {
     ERA_BANDS.forEach(b => {
       const x1 = xOf(b.from), x2 = xOf(b.to);
       bandG.appendChild(el('rect', { x:x1, y:0, width:Math.max(1, x2-x1), height:SVG_H,
-        fill: b.c + (dk ? '14' : '12') }));
+        fill: hexA(b.c, dk ? '14' : '12') }));
       const lx = (x1+x2)/2;
       bandG.appendChild(el('text', { x:lx, y:AXIS_Y+48, 'text-anchor':'middle',
         fill:b.c, 'font-size':22, 'font-family':"'Syne',sans-serif",
@@ -548,7 +657,7 @@ function render() {
       const x1 = xOf(r.min - 20), x2 = xOf(r.max + 20);
       const isActive = epoch === eName;
       bandG.appendChild(el('rect', { x:x1, y:0, width:Math.max(1, x2-x1), height:SVG_H,
-        fill: r.c + (isActive ? '24' : dk ? '10' : '0a') }));
+        fill: hexA(r.c, isActive ? '24' : dk ? '10' : '0a') }));
       if (x2 - x1 > 50) {
         const lx = (x1+x2)/2;
         const sz = Math.min(13, Math.max(8, (x2-x1)*0.06));
@@ -637,7 +746,7 @@ function render() {
      (Hover verschiebt nichts → kein Flackern). Es wird aus den bei DIESEM Zoom
      sichtbaren Karten berechnet (kompakt), aber NICHT vom Hover beeinflusst.
      Cache-Key = Zoomstufe; ein Hover ändert den Key nicht. */
-  const _layoutKey = 'z' + zoom.toFixed(3) + (femaleOnly ? 'F' : '');
+  const _layoutKey = 'z' + zoom.toFixed(3) + (femaleOnly ? 'F' : '') + '_' + cardSize;
   if (!window._layoutCache || window._layoutCache.key !== _layoutKey) {
     const sideMap = {}, rowMap = {};
     const rowEnds = { above: [], below: [] };
@@ -754,16 +863,20 @@ function render() {
     }
     const dm = dimmed(p) || focusDim;
     const fav   = isFav(p);
-    const fsize = p.tier === 1 ? 11.5 : p.tier === 2 ? 10 : 9;
-    const showDates = zoom >= 0.85;
-    const showEpoch = zoom >= 1.25;
+    const isFull = cardSize === 'full';
+    /* Schriftgröße: im Mini-Modus kompakter, im Voll-Modus etwas größer */
+    const fsize = isFull
+      ? (p.tier === 1 ? 11.5 : p.tier === 2 ? 10 : 9)
+      : (p.tier === 1 ? 9.5 : p.tier === 2 ? 8.5 : 8);
     const pPortrait = portraitUrl(p);
-    const showPortrait = !!pPortrait;  /* Porträts immer sichtbar, jede Zoomstufe */
+    const showPortrait = !!pPortrait;
+    const showDates = isFull && zoom >= 0.85;   /* Daten nur im Voll-Modus */
+    const showEpoch = isFull && zoom >= 1.25;   /* Epoche nur im Voll-Modus */
     const cH    = CARD_H + (showEpoch ? 13 : 0);
     const cardY = (above ? AXIS_Y - PAD - cH : AXIS_Y + PAD) + rowOffset;
     const ly1   = above ? cardY + cH + 2 : AXIS_Y + 6;
     const ly2   = above ? AXIS_Y - 6 : cardY - 2;
-    const dotR  = fav ? 8 : p.tier === 1 ? 7 : p.tier === 2 ? 5 : 4;
+    const dotR  = fav ? 7 : p.tier === 1 ? 6 : p.tier === 2 ? 5 : 4;
 
     const g = el('g', { class:'phil-node-group', opacity: dm ? '0.08' : '1', transform:`translate(${cx},0)` });
     g.setAttribute('data-name', p.name);
@@ -780,41 +893,146 @@ function render() {
         stroke:p.color, 'stroke-width':1.2, opacity:'0.55' }));
     }
 
-    /* Card shadow for Tier 1 + Favs */
+    /* ══ KARTE — zwei Modi ══
+       'full': klassische Karte mit Rahmen, Name oben, Daten, Porträt, Epoche.
+       'mini': nur Mini-Porträt + Name, kein Rahmen (viele passen nebeneinander).
+       Details gibt es in beiden Fällen beim Klick (Modal) und Hover (Linien). */
+
+    if (isFull) {
+      /* ----- VOLLE KARTE ----- */
+      /* Schatten/Ring für Tier 1 + Favs */
+      if ((p.tier === 1 || fav) && !dm) {
+        g.appendChild(el('rect', { x:-CARD_W/2-4, y:cardY-4, width:CARD_W+8, height:cH+8,
+          fill:'none', stroke:p.color, 'stroke-width':0.8, rx:11, ry:11, opacity: fav ? '0.5' : '0.32' }));
+      }
+      /* Karten-Hintergrund */
+      const cardBg = bgCard + (p.tier===1?'':'ee');
+      g.appendChild(el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH,
+        fill:cardBg, stroke:p.color, 'stroke-width': fav ? 2.2 : p.tier===1 ? 2 : 0.9, rx:8, ry:8 }));
+      if (fav) {
+        g.appendChild(el('text', { x:CARD_W/2-9, y:cardY+11, 'text-anchor':'end',
+          fill:p.color, 'font-size':10, 'font-weight':'700' }, '★'));
+      }
+      /* Tier-Marker oben links */
+      const tierCol = TIER_RING[p.tier] || '#9b7cff';
+      g.appendChild(el('text', { x:-CARD_W/2+8, y:cardY+12, 'text-anchor':'start',
+        fill:tierCol, 'font-size':8.5, 'font-weight':'800',
+        'font-family':"'JetBrains Mono',monospace" }, 'T'+p.tier));
+      /* Name oben */
+      const _dnF = dispName(p);
+      const nameWeightF = p.tier<=2 ? '700' : '600';
+      if (_dnF.length <= 17) {
+        g.appendChild(el('text', { x:0, y:cardY+15, 'text-anchor':'middle',
+          fill:textCol, 'font-size':fsize, 'font-weight':nameWeightF,
+          'font-family':"'Syne',sans-serif" }, _dnF));
+      } else {
+        const parts = _dnF.split(' ');
+        let l1 = '', l2 = '';
+        if (parts.length === 1) { l1 = _dnF.substring(0,16)+'…'; }
+        else {
+          const half = _dnF.length/2; let acc=0, ix=0;
+          for (; ix<parts.length-1; ix++){ acc+=parts[ix].length+1; if(acc>=half){ix++;break;} }
+          l1 = parts.slice(0,ix).join(' '); l2 = parts.slice(ix).join(' ');
+          if (l1.length>19) l1=l1.substring(0,18)+'…';
+          if (l2.length>19) l2=l2.substring(0,18)+'…';
+        }
+        const fs2 = Math.max(7.5, fsize-1.5);
+        g.appendChild(el('text', { x:0, y:cardY+11, 'text-anchor':'middle',
+          fill:textCol, 'font-size':fs2, 'font-weight':nameWeightF, 'font-family':"'Syne',sans-serif" }, l1));
+        if (l2) g.appendChild(el('text', { x:0, y:cardY+11+fs2+1, 'text-anchor':'middle',
+          fill:textCol, 'font-size':fs2, 'font-weight':nameWeightF, 'font-family':"'Syne',sans-serif" }, l2));
+      }
+      /* Daten */
+      if (showDates) {
+        const alive = p.death === null || p.death === undefined;
+        g.appendChild(el('text', { x:0, y:cardY+28, 'text-anchor':'middle',
+          fill:mutedCol, 'font-size':7.5, 'font-family':"'JetBrains Mono',monospace" },
+          formatYearShort(p.birth,false)+'–'+formatYearShort(p.death,alive)));
+      }
+      /* Porträt mittig */
+      if (showPortrait) {
+        const portraitY = cardY + 32;
+        g.appendChild(el('circle', { cx:0, cy:portraitY+19, r:19, fill:bgCard, stroke:p.color, 'stroke-width':2 }));
+        g.appendChild(el('text', { x:0, y:portraitY+24, 'text-anchor':'middle',
+          fill:p.color, 'font-size':15, 'font-weight':'800',
+          'font-family':"'Syne',sans-serif", opacity:'0.5' }, dispName(p).replace(/^(Ps\.-|al-)/i,'').charAt(0)));
+        const pBaseF = portraitBase(p);
+        const imgF = el('image', { x:-17, y:portraitY+2, width:34, height:34, href:pPortrait,
+          preserveAspectRatio:'xMidYMid slice', 'clip-path':'circle(17px at 17px 17px)' });
+        imgF.setAttribute('data-fallback', _imgExt === 'avif' ? 'webp' : _imgExt === 'webp' ? 'jpg' : '');
+        imgF.addEventListener('error', function(){
+          const fb = imgF.getAttribute('data-fallback');
+          if (fb === 'webp') { imgF.setAttribute('data-fallback','jpg'); imgF.setAttributeNS('http://www.w3.org/1999/xlink','href', pBaseF+'.webp'); imgF.setAttribute('href', pBaseF+'.webp'); }
+          else if (fb === 'jpg') { imgF.setAttribute('data-fallback',''); imgF.setAttributeNS('http://www.w3.org/1999/xlink','href', pBaseF+'.jpg'); imgF.setAttribute('href', pBaseF+'.jpg'); }
+          else { imgF.style.display='none'; }
+        });
+        g.appendChild(imgF);
+      }
+      /* Epoche unten */
+      if (showEpoch) {
+        const eShort = p.epoch.length>15 ? p.epoch.substring(0,14)+'…' : p.epoch;
+        g.appendChild(el('text', { x:0, y:cardY+cH-7, 'text-anchor':'middle',
+          fill:p.color, 'font-size':7, 'font-family':"'JetBrains Mono',monospace", opacity:'0.85' }, eShort));
+      }
+    } else {
+    /* ----- MINIMALE KARTE: nur Mini-Porträt + Name ----- */
+    const PORTRAIT_R = 15;
+    const portraitCY = cardY + PORTRAIT_R + 2;
+
+    /* dezenter Außenring für Tier 1 + Favoriten */
     if ((p.tier === 1 || fav) && !dm) {
-      g.appendChild(el('rect', { x:-CARD_W/2-4, y:cardY-4, width:CARD_W+8, height:cH+8,
-        fill:'none', stroke:p.color, 'stroke-width':0.8, rx:11, ry:11, opacity: fav ? '0.5' : '0.32' }));
+      g.appendChild(el('circle', { cx:0, cy:portraitCY, r:PORTRAIT_R+3, fill:'none',
+        stroke:p.color, 'stroke-width': fav ? 1.6 : 1.2, opacity: fav ? '0.6' : '0.4' }));
     }
+    /* Hintergrund-Kreis + Ring in Epochenfarbe */
+    g.appendChild(el('circle', { cx:0, cy:portraitCY, r:PORTRAIT_R, fill:bgCard,
+      stroke:p.color, 'stroke-width': (p.tier===1 || fav) ? 2 : 1.4 }));
 
-    /* card */
-    const cardBg = bgCard + (p.tier===1?'':'ee');
-    g.appendChild(el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH,
-      fill:cardBg, stroke:p.color, 'stroke-width': fav ? 2.2 : p.tier===1 ? 2 : 0.9, rx:8, ry:8 }));
-
-    /* Fav-Star in corner */
+    if (showPortrait) {
+      /* Initial als Fallback hinter dem Bild */
+      g.appendChild(el('text', { x:0, y:portraitCY+5, 'text-anchor':'middle',
+        fill:p.color, 'font-size':13, 'font-weight':'800',
+        'font-family':"'Syne',sans-serif", opacity:'0.5' },
+        dispName(p).replace(/^(Ps\.-|al-)/i,'').charAt(0)));
+      const pBase = portraitBase(p);
+      const img = el('image', {
+        x:-PORTRAIT_R, y:portraitCY-PORTRAIT_R, width:PORTRAIT_R*2, height:PORTRAIT_R*2,
+        href: pPortrait, preserveAspectRatio:'xMidYMid slice',
+        'clip-path':`circle(${PORTRAIT_R}px at ${PORTRAIT_R}px ${PORTRAIT_R}px)`
+      });
+      img.setAttribute('data-fallback', _imgExt === 'avif' ? 'webp' : _imgExt === 'webp' ? 'jpg' : '');
+      img.addEventListener('error', function(){
+        const fb = img.getAttribute('data-fallback');
+        if (fb === 'webp') { img.setAttribute('data-fallback','jpg'); img.setAttributeNS('http://www.w3.org/1999/xlink','href', pBase+'.webp'); img.setAttribute('href', pBase+'.webp'); }
+        else if (fb === 'jpg') { img.setAttribute('data-fallback',''); img.setAttributeNS('http://www.w3.org/1999/xlink','href', pBase+'.jpg'); img.setAttribute('href', pBase+'.jpg'); }
+        else { img.style.display='none'; }
+      });
+      g.appendChild(img);
+    } else {
+      g.appendChild(el('text', { x:0, y:portraitCY+5, 'text-anchor':'middle',
+        fill:p.color, 'font-size':14, 'font-weight':'800',
+        'font-family':"'Syne',sans-serif" },
+        dispName(p).replace(/^(Ps\.-|al-)/i,'').charAt(0)));
+    }
     if (fav) {
-      g.appendChild(el('text', { x:CARD_W/2-9, y:cardY+11, 'text-anchor':'end',
-        fill:p.color, 'font-size':10, 'font-weight':'700' }, '★'));
+      g.appendChild(el('text', { x:PORTRAIT_R+3, y:portraitCY-PORTRAIT_R+6, 'text-anchor':'middle',
+        fill:p.color, 'font-size':9, 'font-weight':'700' }, '★'));
     }
 
-    /* Tier-Marker oben links — farbig nach Tier (auffällig, eigene Info) */
-    const tierCol = TIER_RING[p.tier] || '#9b7cff';
-    g.appendChild(el('text', { x:-CARD_W/2+8, y:cardY+12, 'text-anchor':'start',
-      fill:tierCol, 'font-size':8.5, 'font-weight':'800',
-      'font-family':"'JetBrains Mono',monospace" }, 'T'+p.tier));
-
-    /* name */
+    /* Name direkt unter dem Porträt */
     const _dn = dispName(p);
     const nameWeight = p.tier<=2 ? '700' : '600';
-    if (_dn.length <= 17) {
-      g.appendChild(el('text', { x:0, y:cardY+15, 'text-anchor':'middle',
+    const nameY = portraitCY + PORTRAIT_R + 9;
+    const maxChars = 13;
+    if (_dn.length <= maxChars) {
+      g.appendChild(el('text', { x:0, y:nameY, 'text-anchor':'middle',
         fill:textCol, 'font-size':fsize, 'font-weight':nameWeight,
         'font-family':"'Syne',sans-serif" }, _dn));
     } else {
       const parts = _dn.split(' ');
       let line1 = '', line2 = '';
       if (parts.length === 1) {
-        line1 = _dn.substring(0, 16) + '…';
+        line1 = _dn.substring(0, maxChars+1) + '…';
       } else {
         const half = _dn.length / 2;
         let acc = 0, idx = 0;
@@ -824,62 +1042,17 @@ function render() {
         }
         line1 = parts.slice(0, idx).join(' ');
         line2 = parts.slice(idx).join(' ');
-        if (line1.length > 19) line1 = line1.substring(0,18)+'…';
-        if (line2.length > 19) line2 = line2.substring(0,18)+'…';
+        if (line1.length > maxChars+2) line1 = line1.substring(0,maxChars+1)+'…';
+        if (line2.length > maxChars+2) line2 = line2.substring(0,maxChars+1)+'…';
       }
-      const fs2 = Math.max(7.5, fsize - 1.5);
-      g.appendChild(el('text', { x:0, y:cardY+11, 'text-anchor':'middle',
-        fill:textCol, 'font-size':fs2, 'font-weight':nameWeight,
+      g.appendChild(el('text', { x:0, y:nameY, 'text-anchor':'middle',
+        fill:textCol, 'font-size':fsize, 'font-weight':nameWeight,
         'font-family':"'Syne',sans-serif" }, line1));
-      if (line2) g.appendChild(el('text', { x:0, y:cardY+11+fs2+1, 'text-anchor':'middle',
-        fill:textCol, 'font-size':fs2, 'font-weight':nameWeight,
+      if (line2) g.appendChild(el('text', { x:0, y:nameY+fsize+1, 'text-anchor':'middle',
+        fill:textCol, 'font-size':fsize, 'font-weight':nameWeight,
         'font-family':"'Syne',sans-serif" }, line2));
     }
-
-    /* dates */
-    if (showDates) {
-      const alive = p.death === null || p.death === undefined;
-      const bs = formatYearShort(p.birth, false);
-      const ds = formatYearShort(p.death, alive);
-      g.appendChild(el('text', { x:0, y:cardY+28, 'text-anchor':'middle',
-        fill:mutedCol, 'font-size':7.5, 'font-family':"'JetBrains Mono',monospace" }, bs+'–'+ds));
-    }
-
-    /* Portrait IN MIDDLE of card (between dates and epoch) */
-    if (showPortrait) {
-      const portraitY = cardY + 32; /* below dates */
-      /* single circular background + Epochen-Ring (kein Tier-Doppelring) */
-      g.appendChild(el('circle', { cx:0, cy:portraitY+19, r:19, fill:bgCard,
-        stroke:p.color, 'stroke-width':2 }));
-      /* fallback initial behind the image */
-      g.appendChild(el('text', { x:0, y:portraitY+24, 'text-anchor':'middle',
-        fill:p.color, 'font-size':15, 'font-weight':'800',
-        'font-family':"'Syne',sans-serif", opacity:'0.5' }, dispName(p).replace(/^(Ps\.-|al-)/i,'').charAt(0)));
-      /* image (covers initial when it loads; falls back avif→webp→jpg→hide) */
-      const pBase = portraitBase(p);
-      const img = el('image', {
-        x:-17, y:portraitY+2, width:34, height:34,
-        href: pPortrait,
-        preserveAspectRatio:'xMidYMid slice',
-        'clip-path':'circle(17px at 17px 17px)'
-      });
-      /* Fallback chain via data attribute */
-      img.setAttribute('data-fallback', _imgExt === 'avif' ? 'webp' : _imgExt === 'webp' ? 'jpg' : '');
-      img.addEventListener('error', function(){
-        const fb = img.getAttribute('data-fallback');
-        if (fb === 'webp') { img.setAttribute('data-fallback','jpg'); img.setAttributeNS('http://www.w3.org/1999/xlink','href', pBase+'.webp'); img.setAttribute('href', pBase+'.webp'); }
-        else if (fb === 'jpg') { img.setAttribute('data-fallback',''); img.setAttributeNS('http://www.w3.org/1999/xlink','href', pBase+'.jpg'); img.setAttribute('href', pBase+'.jpg'); }
-        else { img.style.display='none'; }
-      });
-      g.appendChild(img);
-    }
-
-    /* epoch */
-    if (showEpoch) {
-      const eShort = p.epoch.length>15 ? p.epoch.substring(0,14)+'…' : p.epoch;
-      g.appendChild(el('text', { x:0, y:cardY+cH-7, 'text-anchor':'middle',
-        fill:p.color, 'font-size':7, 'font-family':"'JetBrains Mono',monospace", opacity:'0.85' }, eShort));
-    }
+    }  /* Ende mini-Modus */
 
     /* invisible hit rect — for hover + click */
     const hit = el('rect', { x:-CARD_W/2, y:cardY, width:CARD_W, height:cH, fill:'transparent', style:'cursor:pointer' });
@@ -1034,8 +1207,18 @@ window.tlZoom = function(f) {
   hideHoverCard();
 };
 
+/* Kartengröße umschalten: mini ↔ full. Layout-Cache leeren + neu rendern. */
+window.tlToggleCardSize = function() {
+  cardSize = (cardSize === 'mini') ? 'full' : 'mini';
+  CARD_W = CARD_DIMS[cardSize].w;
+  CARD_H = CARD_DIMS[cardSize].h;
+  window._layoutCache = null;   /* erzwingt Neuberechnung der Karten-Anordnung */
+  const btn = document.getElementById('card-size-btn');
+  if (btn) btn.textContent = cardSize === 'mini' ? '◰ Mini' : '◳ Groß';
+  render();
+};
+
 window.tlReset = function() {
-  zoom = 1.0;
   document.getElementById('zoom-lbl').textContent = '×1.0';
   epoch = ''; search = ''; window._currentEra = '';
   filterMode = 'epoch'; discFilter = ''; movFilter = ''; posFilter = ''; themaFilter = '';
@@ -1055,6 +1238,7 @@ window.tlReset = function() {
 
 /* ════════ Focus (hover highlight) ════════ */
 let _focusRaf = null;
+let _focusFallback = null;   /* Sicherheitsnetz: falls RAF durch schnelle Events gecancelt wird */
 function setFocus(name) {
   if (focusName === name) return;
   focusName = name;
@@ -1075,90 +1259,26 @@ function setFocus(name) {
   /* name === null (Karte verlassen): Kette bewusst NICHT löschen —
      sie bleibt hervorgehoben, bis die Maus die Timeline verlässt. */
 
-  /* Volles Re-Render nur, wenn dadurch WIRKLICH neue Knoten ins DOM müssen,
-     die aktuell weder im DOM sind noch es nach dem Wechsel wären.
-     Wenn die Maus zwischen zwei bereits sichtbaren (verbundenen) Karten wechselt,
-     reicht das leichte Update → kein DOM-Neuaufbau → kein Flackern. */
-  function domHas(nm){ return !!document.querySelector('.phil-node-group[data-name="'+(window.CSS&&CSS.escape?CSS.escape(nm):nm)+'"]'); }
-  let needsFullRender = false;
-  if (name) {
-    for (const cn of _connectedToFocus) {
-      const cp = byName(cn);
-      if (!cp) continue;
-      const baseShow = (zoom >= MEGA_ZOOM) ? (zoom >= (TIER_VIS[cp.tier] || 1)) : MEGA.has(cp.name);
-      /* Knoten fehlt im DOM UND wäre ohne Fokus nicht sichtbar → muss neu gezeichnet werden */
-      if (!baseShow && !domHas(cn)) { needsFullRender = true; break; }
-    }
-    /* der fokussierte Knoten selbst muss da sein */
-    const fp = byName(name);
-    if (fp) {
-      const baseShowSelf = (zoom >= MEGA_ZOOM) ? (zoom >= (TIER_VIS[fp.tier] || 1)) : MEGA.has(fp.name);
-      if (!baseShowSelf && !domHas(name)) needsFullRender = true;
-    }
-  }
+  /* Re-Render über requestAnimationFrame verzögern (NICHT synchron aufrufen):
+     ein synchroner Aufruf direkt im Event-Handler hatte sich als Regression
+     erwiesen — Layout-Werte (z.B. svgW()/clientWidth) können unmittelbar nach
+     einer DOM-Änderung noch nicht neu berechnet sein, bevor der Browser den
+     nächsten Frame vorbereitet hat. requestAnimationFrame garantiert, dass
+     bereits ein frischer Layout-Pass stattgefunden hat. Ein Fallback-Timer
+     sichert zusätzlich ab, falls der RAF durch sehr schnelle Hover-Wechsel
+     wiederholt gecancelt würde, bevor er feuern kann. */
   if (_focusRaf) cancelAnimationFrame(_focusRaf);
-  if (needsFullRender) {
-    _focusRaf = requestAnimationFrame(() => { render(); });
-  } else {
-    _focusRaf = requestAnimationFrame(() => { updateFocusVisuals(); });
-  }
-}
-
-/* Lightweight update: only redraw influence lines + adjust node opacity,
-   without rebuilding the entire SVG (prevents hover flicker). */
-function updateFocusVisuals() {
-  const svg = document.getElementById('tl-svg');
-  if (!svg) return;
-
-  /* 1. Update node opacity — Kette bleibt hervorgehoben, Rest gedimmt */
-  svg.querySelectorAll('.phil-node-group').forEach(g => {
-    const nm = g.getAttribute('data-name');
-    const p  = byName(nm);
-    let dim = p ? dimmed(p) : false;
-    if (_chainSet.size && nm !== focusName && !_chainSet.has(nm)) dim = true;
-    g.setAttribute('opacity', dim ? '0.08' : '1');
+  if (_focusFallback) clearTimeout(_focusFallback);
+  _focusRaf = requestAnimationFrame(() => {
+    _focusRaf = null;
+    if (_focusFallback) { clearTimeout(_focusFallback); _focusFallback = null; }
+    render();
   });
-
-  /* 2. Rebuild influence layer */
-  const old = document.getElementById('infl-g');
-  if (!old) return;
-  const W = svgW();
-  const posMap = {};
-  phils().forEach(p => { if (visible(p)) posMap[p.name] = xOf((p.birth + deathYearForPos(p)) / 2); });
-
-  const inflG = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-  inflG.setAttribute('id', 'infl-g');
-  const focusActive = inflMode === 'focus' && _chainSet.size > 0;
-
-  phils().forEach(p => {
-    if (!visible(p) || !p.influences) return;
-    p.influences.forEach(inf => {
-      if (!inflOn[inf.type]) return;
-      const tx = posMap[inf.to]; if (tx === undefined) return;
-      const fx = posMap[p.name];
-      const touchesFocus = focusName && (p.name === focusName || inf.to === focusName);
-      const inChain = _chainSet.size > 0 && _chainSet.has(p.name) && _chainSet.has(inf.to);
-      if (inflMode === 'focus') { if (!_chainSet.size) return; if (!inChain) return; }
-      const c = INFL_COL[inf.type];
-      const isSearchHl = search && (p.name.toLowerCase().includes(search) || inf.to.toLowerCase().includes(search));
-      const isDim = !focusActive && ((epoch && p.epoch !== epoch && (byName(inf.to)?.epoch) !== epoch) || (search && !isSearchHl));
-      const strong = touchesFocus || isSearchHl;
-      const curve = inf.type === 'student' ? -55 : inf.type === 'critic' ? 50 : -40;
-      const mx = (fx + tx) / 2;
-      const d = `M${fx},${AXIS_Y} C${mx},${AXIS_Y+curve} ${mx},${AXIS_Y+curve} ${tx},${AXIS_Y}`;
-      const dash = inf.type==='critic' ? '6,3' : inf.type==='develops' ? '3,3' : 'none';
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', d);
-      path.setAttribute('fill', 'none');
-      path.setAttribute('stroke', c);
-      path.setAttribute('stroke-width', strong ? 2.6 : 1.4);
-      path.setAttribute('stroke-dasharray', dash);
-      path.setAttribute('opacity', isDim ? '0.04' : strong ? '0.85' : '0.32');
-      path.setAttribute('marker-end', `url(#arr-${inf.type})`);
-      inflG.appendChild(path);
-    });
-  });
-  old.replaceWith(inflG);
+  _focusFallback = setTimeout(() => {
+    _focusFallback = null;
+    if (_focusRaf) { cancelAnimationFrame(_focusRaf); _focusRaf = null; }
+    render();
+  }, 80);
 }
 
 window.tlSearch = function(val) {
@@ -1261,6 +1381,8 @@ function buildEpochFilter() {
   /* Zeiträume + Großepochen-Zuordnung. Konsistent mit der App, nicht streng historisch.
      era: 'Antike' | 'Mittelalter' | 'Neuzeit'  */
   const EPOCH_META = {
+    'Chinesisch':         { era:'Antike',      from:-560, to:-230 },
+    'Indisch':            { era:'Antike',      from:-560, to:850  },
     'Vorsokratik':        { era:'Antike',      from:-600, to:-430 },
     'Sophistik':          { era:'Antike',      from:-485, to:-380 },
     'Klassisch':          { era:'Antike',      from:-450, to:-320 },
@@ -1561,22 +1683,247 @@ window.legendPickEpoch = function(name) {
   updateEpochLegendActive();
 };
 
+// ═══════════ Einflussnetz ═══════════
+// Waagerecht: chronologische Reihenfolge (Rang, nicht Massstab — sonst draengt
+// sich die Neuzeit auf wenigen Pixeln). Senkrecht: durch ein einfaches
+// Kraefteverfahren geloest, damit verbundene Denker nah beieinander liegen.
+const NZ_FARBE={student:'#e8c46a',inspires:'#7fb3d5',develops:'#82c99a',critic:'#c97a7a'};
+let nzAus={};          // ausgeblendete Beziehungstypen
+let nzFertig=null;     // einmal berechnetes Layout
+let nzFest=null;       // per Klick festgehaltener Denker
+
+function nzLayout(){
+  if(nzFertig) return nzFertig;
+  const alle=PHILS_V2.filter(Boolean);
+  const nach={}; alle.forEach(p=>nach[p.name]=p);
+  const kanten=[];
+  alle.forEach(p=>(p.influences||[]).forEach(i=>{
+    if(nach[i.to]) kanten.push({a:p.name,b:i.to,typ:i.type||'inspires'}); }));
+  const drin=new Set(); kanten.forEach(k=>{drin.add(k.a);drin.add(k.b);});
+  const knoten=alle.filter(p=>drin.has(p.name)).sort((a,b)=>a.birth-b.birth);
+  const grad={}; kanten.forEach(k=>{grad[k.a]=(grad[k.a]||0)+1;grad[k.b]=(grad[k.b]||0)+1;});
+
+  const W=Math.max(1600,knoten.length*15), H=780, PADX=70, PADY=42;
+  const idx={}; knoten.forEach((p,i)=>idx[p.name]=i);
+  const X=n=>PADX+(W-2*PADX)*(idx[n]/Math.max(1,knoten.length-1));
+
+  // Kraefteverfahren nur in der Senkrechten
+  const y=knoten.map((p,i)=>PADY+((i*97)%(H-2*PADY)));
+  const vy=knoten.map(()=>0);
+  for(let it=0; it<320; it++){
+    const kraft=knoten.map(()=>0);
+    kanten.forEach(k=>{                       // Federn: verbundene zusammenziehen
+      const i=idx[k.a], j=idx[k.b];
+      const d=y[j]-y[i];
+      kraft[i]+=d*0.010; kraft[j]-=d*0.010;
+    });
+    for(let i=0;i<knoten.length;i++){          // Abstossung unter Nachbarn in x
+      for(let j=i+1;j<Math.min(knoten.length,i+26);j++){
+        let d=y[j]-y[i]; const ad=Math.abs(d);
+        if(ad<34){ const f=(34-ad)*0.055*(d<0?-1:1); kraft[i]-=f; kraft[j]+=f; }
+      }
+      kraft[i]+=((H/2)-y[i])*0.0016;           // sanft zur Mitte
+    }
+    for(let i=0;i<knoten.length;i++){
+      vy[i]=(vy[i]+kraft[i])*0.72;
+      y[i]=Math.max(PADY,Math.min(H-PADY,y[i]+vy[i]));
+    }
+  }
+  // Danach auf die volle Hoehe strecken: Das Verfahren liefert enge, gut lesbare
+  // Gruppen, nutzt aber nur die Mitte. Lineares Strecken erhaelt die Gruppierung
+  // exakt und fuellt trotzdem die Flaeche.
+  const ymin=Math.min.apply(null,y), ymax=Math.max.apply(null,y);
+  if(ymax-ymin>1){
+    const f=(H-2*PADY)/(ymax-ymin);
+    for(let i=0;i<y.length;i++) y[i]=PADY+(y[i]-ymin)*f;
+  }
+  const pos={}; knoten.forEach((p,i)=>pos[p.name]={x:X(p.name),y:y[i],p,grad:grad[p.name]||1});
+  nzFertig={knoten,kanten,pos,W,H,PADY};
+  return nzFertig;
+}
+
+function renderNetz(){
+  const svg=document.getElementById('netz-svg'); if(!svg) return;
+  const L=nzLayout();
+  const dl=document.getElementById('nz-namen');          // Namen fuer die Verbindungssuche
+  if(dl && !dl.childElementCount){
+    L.knoten.forEach(p=>{ const o=document.createElement('option');
+      o.value=p.name; if(p.display&&p.display!==p.name) o.label=p.display; dl.appendChild(o); });
+  }
+  const ns='http://www.w3.org/2000/svg';
+  const el=(t,a,txt)=>{const e=document.createElementNS(ns,t);
+    for(const k in a) e.setAttribute(k,a[k]); if(txt!==undefined) e.textContent=txt; return e;};
+  svg.setAttribute('width',L.W); svg.setAttribute('height',L.H);
+  svg.setAttribute('viewBox','0 0 '+L.W+' '+L.H);
+  svg.innerHTML='';
+
+  // Jahrhundert-Gitter
+  let letzte=-9999;
+  L.knoten.forEach(p=>{
+    const jh=Math.floor(p.birth/100)*100;
+    if(jh!==letzte && L.pos[p.name].x>60){
+      letzte=jh; const x=L.pos[p.name].x;
+      svg.appendChild(el('line',{x1:x,y1:26,x2:x,y2:L.H-8,class:'nz-gitter'}));
+      svg.appendChild(el('text',{x:x+3,y:18,class:'nz-jahr'},
+        (jh<0? Math.abs(jh)+' v. Chr.' : jh+'')));
+    }
+  });
+
+  const gK=el('g',{}), gN=el('g',{});
+  svg.appendChild(gK); svg.appendChild(gN);
+  let sicht=0;
+  L.kanten.forEach((k,i)=>{
+    if(nzAus[k.typ]) return;
+    const A=L.pos[k.a], B=L.pos[k.b]; if(!A||!B) return;
+    sicht++;
+    const mx=(A.x+B.x)/2, my=(A.y+B.y)/2-Math.min(90,Math.abs(B.x-A.x)*0.16);
+    const st='stroke:'+NZ_FARBE[k.typ]+';stroke-width:'+(k.typ==='student'?1.5:1)
+      +';opacity:'+(k.typ==='inspires'?.22:.34)+(k.typ==='critic'?';stroke-dasharray:3 3':'');
+    gK.appendChild(el('path',{class:'nz-kante','data-a':k.a,'data-b':k.b,style:st,
+      d:'M'+A.x.toFixed(1)+' '+A.y.toFixed(1)+' Q'+mx.toFixed(1)+' '+my.toFixed(1)+' '+B.x.toFixed(1)+' '+B.y.toFixed(1)}));
+  });
+
+  L.knoten.forEach(p=>{
+    const P=L.pos[p.name], r=Math.min(7,2.4+Math.sqrt(P.grad)*1.05);
+    const g=el('g',{class:'nz-knoten','data-n':p.name});
+    g.appendChild(el('circle',{cx:P.x.toFixed(1),cy:P.y.toFixed(1),r:r.toFixed(1),
+      fill:p.color||'#888',stroke:'rgba(0,0,0,.45)','stroke-width':.8}));
+    if(P.grad>=4) g.appendChild(el('text',{x:(P.x+r+2.5).toFixed(1),y:(P.y+3).toFixed(1)},
+      (p.display||p.name).split(' ').pop()));
+    g.addEventListener('mouseenter',()=>{ if(!nzFest) nzHervor(p.name); });
+    g.addEventListener('mouseleave',()=>{ if(!nzFest) nzKlar(); });
+    // Klick haelt die Hervorhebung fest — damit die Ansicht auch ohne Mauszeiger
+    // (Touch, Tastatur) bedienbar bleibt. Erneuter Klick loest sie wieder.
+    g.addEventListener('click',()=>{
+      if(nzFest===p.name){ nzFest=null; nzKlar(); }
+      else { nzFest=p.name; nzHervor(p.name); }
+    });
+    gN.appendChild(g);
+  });
+
+  const info=document.getElementById('netz-info');
+  if(info) info.textContent=L.knoten.length+' Denker · '+sicht+' Beziehungen';
+
+  document.querySelectorAll('.netz-lg').forEach(lg=>{
+    const t=lg.getAttribute('data-typ');
+    lg.classList.toggle('aus',!!nzAus[t]);
+    lg.onclick=()=>{ nzAus[t]=!nzAus[t]; renderNetz(); };
+  });
+}
+
+function nzHervor(name){
+  const svg=document.getElementById('netz-svg'); if(!svg) return;
+  const nah=new Set([name]);
+  svg.querySelectorAll('.nz-kante').forEach(k=>{
+    const a=k.getAttribute('data-a'), b=k.getAttribute('data-b');
+    if(a===name||b===name){ nah.add(a); nah.add(b); k.classList.remove('dim'); k.style.opacity='.95'; }
+    else k.classList.add('dim');
+  });
+  svg.querySelectorAll('.nz-knoten').forEach(n=>{
+    const t=n.getAttribute('data-n');
+    n.classList.toggle('lit',nah.has(t));
+    n.classList.toggle('dim',!nah.has(t));
+  });
+}
+// ── Verbindungssuche: kuerzester Weg zwischen zwei Denkern ──────────────
+// Zuerst gerichtet (A hat B beeinflusst, ueber beliebig viele Zwischenschritte).
+// Findet sich so kein Weg, wird ungerichtet gesucht und das ausdruecklich gesagt —
+// „haengt zusammen mit" ist etwas anderes als „hat beeinflusst".
+function nzWeg(von,nach,gerichtet){
+  const L=nzLayout();
+  const nach_={};
+  L.kanten.forEach(k=>{
+    (nach_[k.a]=nach_[k.a]||[]).push({z:k.b,typ:k.typ});
+    if(!gerichtet) (nach_[k.b]=nach_[k.b]||[]).push({z:k.a,typ:k.typ});
+  });
+  if(von===nach) return [von];
+  const vorher={}, gesehen=new Set([von]); let rand=[von];
+  while(rand.length){
+    const naechste=[];
+    for(const n of rand){
+      for(const e of (nach_[n]||[])){
+        if(gesehen.has(e.z)) continue;
+        gesehen.add(e.z); vorher[e.z]=n;
+        if(e.z===nach){
+          const weg=[nach]; let c=nach;
+          while(c!==von){ c=vorher[c]; weg.unshift(c); }
+          return weg;
+        }
+        naechste.push(e.z);
+      }
+    }
+    rand=naechste;
+  }
+  return null;
+}
+window.nzWegSuchen=function(){
+  const svg=document.getElementById('netz-svg'), erg=document.getElementById('nz-weg-erg');
+  if(!svg||!erg) return;
+  const L=nzLayout();
+  const norm=t=>{ t=(t||'').trim().toLowerCase(); if(!t) return null;
+    let tr=L.knoten.find(p=>p.name.toLowerCase()===t) || L.knoten.find(p=>(p.display||'').toLowerCase()===t);
+    if(!tr) tr=L.knoten.find(p=>p.name.toLowerCase().indexOf(t)>=0);
+    return tr? tr.name : null; };
+  const a=norm(document.getElementById('nz-von').value),
+        b=norm(document.getElementById('nz-nach').value);
+  if(!a||!b){ erg.textContent='Bitte zwei Namen aus der Liste w\u00e4hlen.'; return; }
+  let weg=nzWeg(a,b,true), gerichtet=true;
+  if(!weg){ weg=nzWeg(a,b,false); gerichtet=false; }
+  if(!weg){ nzKlar(); erg.textContent='Zwischen diesen beiden gibt es im Netz keine Verbindung.'; return; }
+  // Hervorheben
+  const knotenAufWeg=new Set(weg), kantenAufWeg=new Set();
+  for(let i=0;i<weg.length-1;i++) kantenAufWeg.add(weg[i]+'\u0000'+weg[i+1]).add(weg[i+1]+'\u0000'+weg[i]);
+  svg.querySelectorAll('.nz-kante').forEach(k=>{
+    const s1=k.getAttribute('data-a'), s2=k.getAttribute('data-b');
+    const drauf=kantenAufWeg.has(s1+'\u0000'+s2);
+    k.classList.toggle('dim',!drauf); k.classList.toggle('weg',drauf);
+    k.style.opacity = drauf? '1' : '';
+  });
+  svg.querySelectorAll('.nz-knoten').forEach(n=>{
+    const t=n.getAttribute('data-n');
+    n.classList.toggle('lit',knotenAufWeg.has(t));
+    n.classList.toggle('dim',!knotenAufWeg.has(t));
+  });
+  erg.innerHTML=(gerichtet? '' : '<b>Nur ungerichtet:</b> ')
+    + weg.join(' \u2192 ')
+    + '  <span style="opacity:.7">(' + (weg.length-1) + ' Schritt'+(weg.length-1===1?'':'e')+')</span>';
+};
+window.nzWegLoeschen=function(){
+  const svg=document.getElementById('netz-svg');
+  if(svg) svg.querySelectorAll('.nz-kante').forEach(k=>k.classList.remove('weg'));
+  nzFest=null; nzKlar();
+  const e=document.getElementById('nz-weg-erg'); if(e) e.textContent='';
+};
+function nzKlar(){
+  const svg=document.getElementById('netz-svg'); if(!svg) return;
+  svg.querySelectorAll('.nz-kante').forEach(k=>{k.classList.remove('dim'); k.style.opacity='';});
+  svg.querySelectorAll('.nz-knoten').forEach(n=>n.classList.remove('lit','dim'));
+}
+
 window.tlSetView = function(mode) {
   viewMode = mode;
   const outer = document.getElementById('tl-outer');
   const twrap = document.getElementById('tl-table-wrap');
   const legend = document.querySelector('.tier-legend');
+  const nwrap = document.getElementById('netz-wrap');
   document.getElementById('vs-timeline')?.classList.toggle('active', mode === 'timeline');
   document.getElementById('vs-table')?.classList.toggle('active', mode === 'table');
+  document.getElementById('vs-netz')?.classList.toggle('active', mode === 'netz');
+  if (twrap) twrap.classList.remove('active');
+  if (nwrap) nwrap.classList.remove('active');
   if (mode === 'table') {
     if (outer) outer.style.display = 'none';
     if (legend) legend.style.display = 'none';
     if (twrap) twrap.classList.add('active');
     renderTable();
+  } else if (mode === 'netz') {
+    if (outer) outer.style.display = 'none';
+    if (legend) legend.style.display = 'none';
+    if (nwrap) nwrap.classList.add('active');
+    renderNetz();
   } else {
     if (outer) outer.style.display = '';
     if (legend) legend.style.display = '';
-    if (twrap) twrap.classList.remove('active');
   }
 };
 

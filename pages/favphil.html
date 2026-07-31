@@ -179,10 +179,27 @@ window.buildFavphilBanner = function(){
     {slug:'scholem',name:'Gershom Scholem',era:'Religionsphilosophie',dates:'1897-1982',color:'#a08060',quotes:['Mystik ist die Stimme dessen, was in der Religion verstummt ist.','Jeder bedeutende Gedanke birgt in sich einen Widerspruch.','Es gibt eine Wahrheit, aber sie ist nicht eine Aussage.']},
   ];
 
-  // Shuffle for random initial order
-  for(let i=tiles.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [tiles[i],tiles[j]]=[tiles[j],tiles[i]];
+  // Zitat pro Figur einmal wählen und merken (kein Wechsel bei Re-Render)
+  window._favphilQuotes = window._favphilQuotes || {};
+  function pickQuote(t){
+    if (!t.quotes) return t.quote || '';
+    if (window._favphilQuotes[t.slug] == null)
+      window._favphilQuotes[t.slug] = t.quotes[Math.floor(Math.random()*t.quotes.length)];
+    return window._favphilQuotes[t.slug];
+  }
+
+  // Reihenfolge nur EINMAL pro Sitzung festlegen und merken — verhindert,
+  // dass ein zweiter Aufbau eine andere Reihenfolge (und damit ein anderes
+  // erstes Bild) zeigt. Beim erneuten Seitenbesuch bleibt das Banner stabil.
+  if (window._favphilOrder) {
+    const order = window._favphilOrder;
+    tiles.sort(function(a,b){ return order.indexOf(a.slug) - order.indexOf(b.slug); });
+  } else {
+    for(let i=tiles.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [tiles[i],tiles[j]]=[tiles[j],tiles[i]];
+    }
+    window._favphilOrder = tiles.map(function(t){ return t.slug; });
   }
 
   const wrap = document.getElementById('favphil-banner');
@@ -218,7 +235,7 @@ window.buildFavphilBanner = function(){
         +'<span class="fpb-era-badge" style="background:'+t.color+';">'+t.era+'</span>'
         +'<div class="fpb-name">'+t.name+'</div>'
         +'<div class="fpb-dates">'+t.dates+'</div>'
-        +'<div class="fpb-quote" style="--fpb-color:'+t.color+';">\u201E'+(t.quotes?t.quotes[Math.floor(Math.random()*t.quotes.length)]:t.quote)+'\u201C</div>'
+        +'<div class="fpb-quote" style="--fpb-color:'+t.color+';">\u201E'+pickQuote(t)+'\u201C</div>'
       +'</div>';
     wrap.appendChild(s);
     return s;
@@ -271,28 +288,38 @@ window.buildFavphilBanner = function(){
 
   applyGlow(tiles[0].color);
   start();
-  /* Show wrap atomically */
-  wrap.style.visibility = 'visible';
-  /* nach dem ersten Frame Transitions wieder aktivieren (für sanfte Wechsel danach) */
-  requestAnimationFrame(function(){ requestAnimationFrame(function(){ wrap.classList.remove('no-anim'); }); });
+  /* Banner erst zeigen, wenn das erste (sichtbare) Bild fertig geladen ist —
+     verhindert das kurze Aufblitzen eines anderen/alten Bildes beim Seitenwechsel. */
+  const firstImg = slides[0] ? slides[0].querySelector('img') : null;
+  const reveal = function(){
+    wrap.style.visibility = 'visible';
+    /* nach zwei Frames Transitions wieder aktivieren (für sanfte Wechsel danach) */
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ wrap.classList.remove('no-anim'); }); });
+  };
+  if (firstImg && firstImg.decode){
+    firstImg.decode().then(reveal).catch(reveal);   /* decode() wartet bis dekodiert */
+  } else if (firstImg && !firstImg.complete){
+    firstImg.addEventListener('load', reveal, {once:true});
+    firstImg.addEventListener('error', reveal, {once:true});
+    setTimeout(reveal, 400);   /* Sicherheitsnetz */
+  } else {
+    reveal();
+  }
 };
-/* Defensive: if renderFavphil is registered, let it call us — else self-trigger */
-if (typeof window.renderFavphil === 'function') {
-  window.renderFavphil();
-} else {
-  /* Fallback: render banner only, render grid when renderFavphil becomes available */
-  window.buildFavphilBanner();
-  let attempts = 0;
-  const waitForRender = setInterval(function(){
-    attempts++;
-    if (typeof window.renderFavphil === 'function') {
-      clearInterval(waitForRender);
-      window.renderFavphil();
-    } else if (attempts > 30) {
-      clearInterval(waitForRender);
-    }
+/* Rendern wird ZENTRAL über _pageInits['favphil'] ausgelöst (siehe index.html).
+   Das Template-Script triggert NICHT mehr selbst — sonst liefe der Aufbau doppelt
+   (zwei Shuffles → zwei verschiedene erste Bilder → sichtbares Aufblitzen).
+   Nur als Fallback (falls der Dispatcher fehlt) rendern wir verzögert einmal. */
+(function(){
+  let tries = 0;
+  const fallback = setInterval(function(){
+    tries++;
+    // Wenn der zentrale Dispatcher existiert, überlassen wir ihm das Rendern.
+    if (window._pageInits && window._pageInits['favphil']) { clearInterval(fallback); return; }
+    if (typeof window.renderFavphil === 'function') { clearInterval(fallback); window.renderFavphil(); }
+    else if (tries > 30) { clearInterval(fallback); if(window.buildFavphilBanner) window.buildFavphilBanner(); }
   }, 50);
-}
+})();
 </script>
 
 <div class="page-hero">

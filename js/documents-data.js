@@ -1,0 +1,87 @@
+/**
+ * documents-data.js — automatisch erzeugte Kopie von assets/documents.json
+ * NICHT von Hand pflegen! Einzige zu pflegende Quelle bleibt assets/documents.json.
+ * Dient nur als Fallback für die lokale Vorschau per Doppelklick (file://).
+ */
+window.DOCUMENTS_DATA = [
+  {
+    "filename": "Das Tragische im Spannungsfeld von Ontologie und Ethik.pdf",
+    "title": "Das Tragische im Spannungsfeld von Ontologie und Ethik",
+    "relativePath": "assets/documents/Das Tragische im Spannungsfeld von Ontologie und Ethik.pdf",
+    "pages": 63,
+    "sizeBytes": 451379,
+    "sizeMB": 0.43,
+    "modified": "2026-06-19T18:38:52.902331",
+    "hash": "41f59e3e5403dba3df05fe3216e257b8"
+  },
+  {
+    "filename": "Die Zeitproblematik in Schellings Weltaltern und in Heidegger Sein und Zeit.pdf",
+    "title": "Die Zeitproblematik in Schellings Weltaltern und in Heidegger Sein und Zeit",
+    "relativePath": "assets/documents/Die Zeitproblematik in Schellings Weltaltern und in Heidegger Sein und Zeit.pdf",
+    "pages": 21,
+    "sizeBytes": 258228,
+    "sizeMB": 0.25,
+    "modified": "2024-02-02T20:26:17.969630",
+    "hash": "5b3f276e540296dcd690c3441274322f"
+  },
+  {
+    "filename": "Friedrich Hölderlins Begriff und Theorie des Tragischen im Grund zum Empedokles und in den Sophokles-Anmerkungen.pdf",
+    "title": "Friedrich Hölderlins Begriff und Theorie des Tragischen im Grund zum Empedokles und in den Sophokles-Anmerkungen",
+    "relativePath": "assets/documents/Friedrich Hölderlins Begriff und Theorie des Tragischen im Grund zum Empedokles und in den Sophokles-Anmerkungen.pdf",
+    "pages": 41,
+    "sizeBytes": 386297,
+    "sizeMB": 0.37,
+    "modified": "2026-06-19T18:38:52.988019",
+    "hash": "2d48fccc717c7322058bfb5a427afef2"
+  },
+  {
+    "filename": "Schellings Urteilsanalyse und Prinzipien- und Potenzentheorie in den Weltalterfragmenten 2.pdf",
+    "title": "Schellings Urteilsanalyse und Prinzipien- und Potenzentheorie in den Weltalterfragmenten 2",
+    "relativePath": "assets/documents/Schellings Urteilsanalyse und Prinzipien- und Potenzentheorie in den Weltalterfragmenten 2.pdf",
+    "pages": 22,
+    "sizeBytes": 245124,
+    "sizeMB": 0.23,
+    "modified": "2026-06-19T18:38:53.022757",
+    "hash": "b99238d419cbd9d23a70aa0d96966581"
+  },
+  {
+    "filename": "Vergleich der Langeweile bei Pascal und Cioran.pdf",
+    "title": "Vergleich der Langeweile bei Pascal und Cioran",
+    "relativePath": "assets/documents/Vergleich der Langeweile bei Pascal und Cioran.pdf",
+    "pages": 27,
+    "sizeBytes": 243737,
+    "sizeMB": 0.23,
+    "modified": "2026-06-19T18:38:53.066264",
+    "hash": "cc859be1e682dee61cdef2382280025c"
+  },
+  {
+    "filename": "Vergleich der Willensfreiheit bei Kant und Hartmann.pdf",
+    "title": "Vergleich der Willensfreiheit bei Kant und Hartmann",
+    "relativePath": "assets/documents/Vergleich der Willensfreiheit bei Kant und Hartmann.pdf",
+    "pages": 28,
+    "sizeBytes": 226181,
+    "sizeMB": 0.22,
+    "modified": "2026-06-19T18:38:53.096335",
+    "hash": "13170da8071db29d432b5f3675ce1d67"
+  },
+  {
+    "filename": "Vergleich des Freiheitsbegriffs bei Kant mit Heideggers Freiheitskonzeption der Jahre 1927-1930.pdf",
+    "title": "Vergleich des Freiheitsbegriffs bei Kant mit Heideggers Freiheitskonzeption der Jahre 1927-1930",
+    "relativePath": "assets/documents/Vergleich des Freiheitsbegriffs bei Kant mit Heideggers Freiheitskonzeption der Jahre 1927-1930.pdf",
+    "pages": 30,
+    "sizeBytes": 276175,
+    "sizeMB": 0.26,
+    "modified": "2026-06-19T18:38:53.144018",
+    "hash": "8d22aac0b5cba65c17aa006bb69626eb"
+  },
+  {
+    "filename": "Vergleichende Analyse des Möglichkeitsbegriffs bei Aristoteles und Diodoros Kronos.pdf",
+    "title": "Vergleichende Analyse des Möglichkeitsbegriffs bei Aristoteles und Diodoros Kronos",
+    "relativePath": "assets/documents/Vergleichende Analyse des Möglichkeitsbegriffs bei Aristoteles und Diodoros Kronos.pdf",
+    "pages": 80,
+    "sizeBytes": 574727,
+    "sizeMB": 0.55,
+    "modified": "2026-06-20T12:11:08.608232",
+    "hash": "5b4be5de6a785f2478ff19fe924cdc22"
+  }
+];

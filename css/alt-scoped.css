@@ -655,17 +655,6 @@ html { scroll-behavior: smooth; font-size: 16px; }
 .zitat-source { font-family: var(--fm); font-size: .67rem; color: var(--text3); margin-top: .12rem; }
 .zitat-kat { display: inline-block; background: rgba(255,255,255,.05); color: var(--text3); padding: .12rem .45rem; border-radius: 4px; font-size: .62rem; font-family: var(--fm); margin-top: .6rem; border: 1px solid var(--border); }
 
-/* ── T-SHIRTS ───────────────────────────── */
-.tshirt-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(268px,1fr)); gap: 1.5rem; }
-.tshirt-card { border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); border: 1px solid var(--card-border); transition: all .35s; backdrop-filter: blur(8px); }
-.tshirt-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover), 0 0 30px var(--glow-accent2); border-color: rgba(224,64,160,.3); }
-.tshirt-visual { width: 100%; height: 225px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-.tshirt-visual img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s; }
-.tshirt-card:hover .tshirt-visual img { transform: scale(1.05); }
-.tshirt-body { padding: 1.15rem 1.35rem; background: rgba(255,255,255,.03); }
-.tshirt-name { font-family: var(--fh); font-weight: 700; font-size: .92rem; color: var(--text); margin-bottom: .25rem; }
-.tshirt-sub  { font-family: var(--fm); font-size: .7rem; margin-bottom: .5rem; letter-spacing: .04em; }
-.tshirt-desc { font-size: .79rem; color: var(--text2); line-height: 1.6; }
 
 /* ── PHILOSOPHY TIMELINE ────────────────── */
 .phil-header { padding: 3rem 3.5rem 2rem; background: var(--bg2); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }

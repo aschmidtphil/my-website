@@ -1,0 +1,40 @@
+/**
+ * documents-meta-data.js — automatisch erzeugte Kopie von assets/documents-meta.json
+ * NICHT von Hand pflegen! Einzige zu pflegende Quelle bleibt assets/documents-meta.json
+ * (redaktionelle Kategorisierung: Typ, Reihenfolge, zugehöriger Kurs).
+ * Dient nur als Fallback für die lokale Vorschau per Doppelklick (file://).
+ */
+window.DOCUMENTS_META = {
+  "Vergleichende Analyse des Möglichkeitsbegriffs bei Aristoteles und Diodoros Kronos.pdf": {
+    "type": "bachelorarbeit"
+  },
+  "Das Tragische im Spannungsfeld von Ontologie und Ethik.pdf": {
+    "type": "masterarbeit"
+  },
+  "Friedrich Hölderlins Begriff und Theorie des Tragischen im Grund zum Empedokles und in den Sophokles-Anmerkungen.pdf": {
+    "type": "forschungsprojekt"
+  },
+  "Die Zeitproblematik in Schellings Weltaltern und in Heidegger Sein und Zeit.pdf": {
+    "type": "vortrag"
+  },
+  "Vergleich der Willensfreiheit bei Kant und Hartmann.pdf": {
+    "type": "hausarbeit-bachelor",
+    "order": 1,
+    "course": "Theorien des objektiven Geistes"
+  },
+  "Vergleich der Langeweile bei Pascal und Cioran.pdf": {
+    "type": "hausarbeit-bachelor",
+    "order": 2,
+    "course": "Philosophie der Langeweile"
+  },
+  "Schellings Urteilsanalyse und Prinzipien- und Potenzentheorie in den Weltalterfragmenten 2.pdf": {
+    "type": "hausarbeit-master",
+    "order": 1,
+    "course": "Der späte Schelling in seiner Zeit"
+  },
+  "Vergleich des Freiheitsbegriffs bei Kant mit Heideggers Freiheitskonzeption der Jahre 1927-1930.pdf": {
+    "type": "hausarbeit-master",
+    "order": 2,
+    "course": "Martin Heidegger, Sein und Zeit 2"
+  }
+};

@@ -423,133 +423,211 @@ var renderFavphil = window.renderFavphil;
 // ════════════════════════════════════════════════
 // ZITATE
 // ════════════════════════════════════════════════
-var ZITATE=[
-  {text:'Wenn aber Immanuel Kant, dieser große Zerstörer im Reiche der Gedanken, an Terrorismus den Maximilian Robespierre weit übertraf, so hat er doch mit diesem manche Ähnlichkeiten [...] Und sie gaben das richtige Gewicht!',
-   author:'Heinrich Heine',source:'Zur Geschichte der Religion und Philosophie in Deutschland, 1834',kat:'Motto',large:true},
-  {text:'Das Antlitz öffnet die ursprünglichste Sprache. Das Antlitz ist Bedeutung für sich allein.',
-   author:'Emmanuel Levinas',source:'Totalität und Unendlichkeit',kat:'Phänomenologie'},
-  {text:'Seid still und erkennet, daß ich Gott bin.',
-   author:'Meister Eckhart',source:'Predigt über Ps. 46,11',kat:'Mystik'},
-  {text:'Die Zeit ist kein äußerer Rahmen, in dem Dinge geschehen, sondern die innere Möglichkeit des Geschehens selbst.',
-   author:'Alexander Schmidt',source:'Schellings Zeittheorie, 2024',kat:'Eigenes'},
-  {text:'Alles fließt — panta rhei. Man kann nicht zweimal in denselben Fluss steigen.',
-   author:'Heraklit',source:'Fragment (bei Platon)',kat:'Antike'},
-  {text:'Die untersuchte Leben ist nicht wert, gelebt zu werden.',
-   author:'Sokrates',source:'Platons Apologie',kat:'Antike'},
-  {text:'Dieu pèse la pensée de Kant — et il donne le juste poids.',
-   author:'Heinrich Heine',source:'Umschreibung',kat:'Motto'},
-  {text:'Das Dasein ist ein Seiendes, dem es in seinem Sein um dieses Sein selbst geht.',
-   author:'Martin Heidegger',source:'Sein und Zeit, §4',kat:'Phänomenologie'},
-  {text:'Endlichkeit ist nicht das Gegenteil von Unendlichkeit, sondern ihre innere Bedingung.',
-   author:'Alexander Schmidt',source:'Philosophie der radikalen Endlichkeit',kat:'Eigenes'},
-  {text:'Das Böse ist nicht ein Prinzip für sich, sondern nur ein Mißverhältnis des Eigenlebens zur Identität des Lichts- und Dunkelprinzips.',
-   author:'F. W. J. Schelling',source:'Philosophische Untersuchungen über das Wesen der menschlichen Freiheit, 1809',kat:'Schelling'},
-  {text:'Handle nur nach derjenigen Maxime, durch die du zugleich wollen kannst, dass sie allgemeines Gesetz werde.',
-   author:'Immanuel Kant',source:'Grundlegung zur Metaphysik der Sitten',kat:'Kant'},
-  {text:'Gott ist tot. Gott bleibt tot. Und wir haben ihn getötet.',
-   author:'Friedrich Nietzsche',source:'Die fröhliche Wissenschaft, §125',kat:'Nietzsche'},
-  {text:'Die Natur soll der sichtbare Geist, der Geist die unsichtbare Natur sein.',
-   author:'F. W. J. Schelling',source:'Ideen zu einer Philosophie der Natur',kat:'Schelling'},
-  {text:'Man muss sich Sisyphus als glücklich vorstellen.',
-   author:'Albert Camus',source:'Der Mythos des Sisyphus',kat:'Existenz'},
-  {text:'Daten sind endlich: Sie sind Schnitte durch eine Wirklichkeit, die sie nie vollständig erfassen können.',
-   author:'Alexander Schmidt',source:'Persönliche Notiz',kat:'Eigenes'},
-  {text:'Das Schweigen ist nichts anderes als die Abwesenheit aller Bilder.',
-   author:'Meister Eckhart',source:'Deutsche Predigten',kat:'Mystik'},
-  {text:'Cogito ergo sum.',
-   author:'René Descartes',source:'Discours de la méthode, 1637',kat:'Rationalismus'},
-  {text:'Worüber man nicht sprechen kann, darüber muss man schweigen.',
-   author:'Ludwig Wittgenstein',source:'Tractatus Logico-Philosophicus, 7',kat:'Analytisch'},
-  {text:'Es gibt kein richtiges Leben im falschen.',
-   author:'Theodor W. Adorno',source:'Minima Moralia',kat:'Kritische Theorie'},
-  {text:'In data we trust — but only if we understand its limits.',
-   author:'Alexander Schmidt',source:'Data Science Notiz',kat:'Eigenes'},
+// ════════════════════════════════════════════════
+// ZITATE — EINZIGE QUELLE (global window.ZITATE, damit Startseiten-
+// Rotation UND Zitate-Seite dieselben Daten nutzen). Hier bearbeiten.
+// ════════════════════════════════════════════════
+window.ZITATE=[
+
+  // ── Heinrich Heine (jetzt Teil der regulären Sammlung) ──────
+  {
+    text: '„Wenn aber Immanuel Kant, dieser große Zerstörer im Reiche der Gedanken, an Terrorismus den Maximilian Robespierre weit übertraf, so hat er doch mit diesem manche Ähnlichkeiten, die zu einer Vergleichung beider Männer auffordern. Zunächst finden wir in beiden dieselbe unerbittliche, schneidende, poesielose, nüchterne Ehrlichkeit. Dann finden wir in beiden dasselbe Talent des Mißtrauens, nur daß es der eine gegen Gedanken ausübt und Kritik nennt, während der andere es gegen Menschen anwendet und republikanische Tugend betitelt. Im höchsten Grade jedoch zeigt sich in beiden der Typus des Spießbürgertums — die Natur hatte sie bestimmt, Kaffee und Zucker zu wiegen, aber das Schicksal wollte, daß sie andere Dinge abwögen, und legte dem einen einen König und dem anderen einen Gott auf die Waagschale … Und sie gaben das richtige Gewicht!"',
+    pullquote: 'Und sie gaben das richtige Gewicht!',
+    author: 'Heinrich Heine',
+    source: 'Zur Geschichte der Religion und Philosophie in Deutschland (1834)',
+    url: 'https://www.projekt-gutenberg.org/heine/religphi/religphi.html',
+    kat: 'Literatur',
+    portrait: 'heine',
+    note: 'Das schwebte mir bei meiner Dissertation vor: mich von anderen Meinungen, Normen und Konventionen nicht beirren zu lassen und in Bezug auf Schelling einfach das richtige Gewicht anzugeben — dass er sich eher als Theologe denn als Philosoph verstand, auch wenn das im Fach nicht gern gehört wird.'
+  },
+
+  // ── Aristoteles ─────────────────────────────────────────────
+  {
+    text: 'In allen natürlichen Dingen ist etwas Erstaunliches.',
+    original: 'ἐν πᾶσι γὰρ τοῖς φυσιχοῖς ἔνεστί τι θαυμαστόν.',
+    author: 'Aristoteles',
+    source: 'De Partibus Animalium 645a16 — Übersetzung: A. Schmidt',
+    url: 'https://archive.org/details/bub_gb_ouQTAAAAYAAJ/page/226/mode/2up',
+    kat: 'Antike',
+    portrait: 'aristoteles'
+  },
+
+  // ── Platon ──────────────────────────────────────────────────
+  {
+    text: 'Die Idee des Guten steht jenseits des Seins. (ἐπέκεινα τῆς οὐσίας)',
+    author: 'Platon',
+    source: 'Politeia 509b',
+    kat: 'Antike',
+    portrait: 'platon'
+  },
+
+  // ── Plotin ──────────────────────────────────────────────────
+  {
+    text: 'Alles, was ist, ist durch das Eine.',
+    author: 'Plotin',
+    source: 'Enneaden VI,9 — Über das Gute oder das Eine',
+    kat: 'Antike',
+    portrait: 'plotin'
+  },
+
+  // ── Schelling ───────────────────────────────────────────────
+  {
+    text: 'Nur wer Freiheit gekostet hat, kann das Verlangen empfinden, ihr alles analog zu machen, sie über das ganze Universum zu verbreiten. Wer nicht auf diesem Weg zur Philosophie kommt, folgt und thut bloß andern nach, was sie thun; ohne Gefühl weßwegen sie es thun.',
+    pullquote: 'Nur wer Freiheit gekostet hat, kann das Verlangen empfinden, ihr alles analog zu machen.',
+    author: 'F. W. J. Schelling',
+    source: 'Vom Wesen der menschlichen Freiheit und den damit zusammenhängenden Gegenständen (SW VII, 351)',
+    kat: 'Freiheit',
+    portrait: 'schelling'
+  },
+
+  // ── Pascal kurz ─────────────────────────────────────────────
+  {
+    text: 'Ich weiß nicht, wer mich in die Welt gesetzt hat, und auch nicht, was die Welt und ich selbst sind. Ich weiß nicht, was mein Körper, meine Sinne, meine Seele und selbst jener Teil meines Ichs sind, der denkt. Ich sehe überall nur Unendlichkeiten, die mich wie ein Atom und wie einen Schatten einschließen. Alles, was ich erkenne, ist, daß ich bald sterben muß; doch was ich am wenigsten begreife, ist gerade dieser Tod, dem ich nicht entgehen kann.',
+    pullquote: 'Ich sehe überall nur Unendlichkeiten, die mich wie ein Atom und wie einen Schatten einschließen.',
+    author: 'Blaise Pascal',
+    source: 'Pensées',
+    kat: '(Un-)Endlichkeit',
+    portrait: 'pascal'
+  },
+
+  // ── Pascal — Gedanken Kap. 6 ────────────────────────────────
+  {
+    text: `Das erste, was sich dem Menschen bei einer Selbstbetrachtung darbietet, ist sein Körper, d. h. eine gewisse Masse Materie, die ihm eigen ist. Um aber zu begreifen, was sie sei, muß er sie vergleichen mit allem was über, und mit allem was unter ihm ist, damit er seine rechten Grenzen erkenne.
+
+Er bleibe doch nicht dabei stehen, einfach die Gegenstände zu betrachten, welche ihn umgeben; er betrachte die ganze Natur in ihrer ganzen erhabenen Majestät; er beschaue jenes glänzende Licht, welches gleich einer ewigen Fackel das Universum erleuchtet; die Erde erscheine ihm wie ein Punkt, gegenüber dem weiten Umkreis, den dieses Gestirn beschreibt; und er möge darüber erstaunen, daß dieser weite Umkreis selbst nur ein verschwindender Punkt ist gegenüber dem, den die Sterne, die im Firmamente dahinrollen, umfassen. Wenn aber hier unser Denken stillsteht, so möge die Phantasie weiter schweifen. Sie wird weit eher ermüden auszumalen, als die Natur Farben darzureichen. Alles was wir von der Welt sehen, ist nur eine unmerkliche Spur in dem weiten Busen der Natur. Keine Idee reicht an die Ausdehnung ihrer Räume. Wir haben unsere Begriffe gut aufblasen, wir schaffen doch nur Atome gegenüber den wirklichen Dingen. Es ist eine unendliche Sphäre, deren Centrum überall, deren Peripherie nirgends ist.
+
+Endlich ist es eins der größten deutlichen Kennzeichen der Allmacht Gottes, daß unsere Phantasie sich in diesem Gedanken verliert.
+
+In sich zurückgekehrt, betrachte der Mensch, was er ist im Verhältnis zu dem, was ist; er erkenne sich als verirrt in diesem abgelegenen Bezirk der Natur; und darnach wie ihm dieser kleine Kerker, in welchem er wohnt, d. h. diese sichtbare Welt erscheint, lerne er die Erde, die Königreiche, die Städte, sich selbst, seinen wahren Werth schätzen.
+
+Was ist der Mensch im Unendlichen? Wer kann es begreifen? Aber um ihm ein anderes ebenso erstaunliches Wunder zu zeigen, forsche er in den kleinsten Dingen, die er kennt. Ein Milbe z. B. biete ihm in der Winzigkeit ihres Körpers Theile unvergleichlich viel winziger, Beine mit Bändern, Adern in diesen Beinen, Blut in diesen Adern, Feuchtigkeit in diesem Blut, Tropfen in dieser Feuchtigkeit, Dämpfe in diesen Tropfen; er erschöpfe, indem er auch diese letzten Dinge noch theilt, all' seine Begriffskräfte, und der letzte Gegenstand, zu dem er gelangen kann, sei jetzt der unserer Betrachtung. Er denkt vielleicht, dies sei die äußerste Kleinheit der Natur. Ich will ihn darin einen neuen Abgrund sehen lassen. Ich will ihm nicht nur das sichtbare Universum, sondern auch alles, was er von der Unendlichkeit der Natur zu begreifen fähig ist, in dem Umkreis dieses unsichtbaren Atoms ausmalen. Er erblicke darin eine Unendlichkeit von Welten, deren jede ihr Firmament, ihre Planeten, ihre Erde hat in demselben Verhältnis, wie die sichtbare Welt; auf dieser Erde Thiere, schließlich auch wieder Milben, an denen er wieder findet, was er an den ersten gesehen, und noch an diesen anderen findet er wieder dasselbe, ohne Ende und Ruhe. Er verliere sich in diesen Wundern, die vermöge ihrer Kleinheit eben so erstaunlich, als die andern vermöge ihrer Größe. Denn wer wird nicht bewundern, daß unser Körper eben noch nicht wahrnehmbar im Universum, das seinerseits nicht wahrnehmbar im Busen des All, jetzt ein Koloß, eine Welt, ja vielmehr ein All ist gegenüber der äußersten Kleinheit, zu der man nicht gelangen kann?
+
+Wer sich so betrachtet, wird ohne Zweifel erschrecken, sich in der Masse, die ihm die Natur gegeben, gleichsam schweben zu sehen zwischen den beiden Abgründen der Unendlichkeit und des Nichts, von welchen beiden er gleichweit entfernt ist. Er wird erzittern in der Erkenntnis dieser Wunder; und ich glaube, seine Neugier wird sich in Bewunderung wandeln und er wird geneigter sein, sie mit Schweigen zu beschauen, als mit Anmaßung zu erforschen.
+
+Denn was ist schließlich der Mensch in der Natur? Ein Nichts gegenüber der Unendlichkeit, ein All gegenüber dem Nichts, ein Mittelding zwischen Nichts und Allem. Er ist von beiden Extremen unendlich entfernt, und sein Dasein ist nicht weniger weit vom Nichts, aus dem er hervorgegangen, als vom Unendlichen in das er verschlungen ist.
+
+Seine Urtheilskraft nimmt in der Reihe der intelligiblen Dinge denselben Platz ein, wie sein Körper in der Ausdehnung der Natur; und alles, was er vermag, ist, einen gewissen Schein von der Mitte der Dinge zu begreifen, während er auf ewig daran verzweifeln muß, ihren Anfang und ihr Ende zu erkennen. Alle Dinge kommen aus dem Nichts und gehen zur Unendlichkeit. Wer vermag solchen erstaunlichen Schritten zu folgen? Der Schöpfer dieser Wunder begreift sie; kein anderer ist dessen fähig.
+
+Dieser Zustand, der die Mitte hält zwischen den Extremen, kehrt in all' unsern Fähigkeiten wieder. Unsere Sinne empfinden kein Extrem. Zuviel Geräusch betäubt uns, zuviel Licht blendet uns, zu große Entfernung und zu große Nähe hindert das Sehen, zu große Länge und zu große Kürze verdunkeln eine Rede, zu viel Vergnügen belästigt, zu viel Gleichklang mißfällt. Wir spüren weder die äußerste Wärme noch die äußerste Kälte. Die extremen Eigenschaften sind unsere Feinde, und nicht empfindbar. Wir empfinden sie nicht mehr, wir erleiden sie. Zu große Jugend und zu großes Alter hindern den Geist; zu viel und zu wenig Nahrung bringt seine Thätigkeit in Unordnung; zu viel und zu wenig Unterricht verdummt ihn. Die extremen Dinge sind für uns als ob sie nicht wären, und wir sind nicht in ihrem Betracht. Sie entgehen uns oder wir ihnen.
+
+Das ist unser wahrer Zustand. Das engt unser Erkennen ein in bestimmte Grenzen, die wir nicht überschreiten, unfähig alles zu wissen und alles absolut zu ignoriren. Wir befinden uns auf einer weiten Mitte; stets unsicher schwankend zwischen Unwissenheit und Erkenntnis; und wenn wir denken weiter vorwärts zu schreiten, so schwankt und entschlüpft unser Gegenstand unseren Händen; er verbirgt sich und flieht ewigliche Flucht: nichts kann ihn aushalten. Das ist unsere natürliche Lage und doch ist sie die unserer Neigung am meisten widersprechende. Wir brennen vor Begier, alles zu ergründen und einen Thurm zu erbauen, der bis in die Unendlichkeit reicht. Aber unser ganzes Gebäude kracht und die Erde öffnet sich bis in die Tiefen.`,
+    pullquote: 'Ein Nichts gegenüber der Unendlichkeit, ein All gegenüber dem Nichts, ein Mittelding zwischen Nichts und Allem.',
+    author: 'Blaise Pascal',
+    source: 'Gedanken (Pensées), Kapitel 6',
+    url: 'https://projekt-gutenberg.org/authors/blaise-pascal/books/gedanken/chapter/6/',
+    kat: '(Un-)Endlichkeit',
+    portrait: 'pascal'
+  },
+
+  // ── Nietzsche ───────────────────────────────────────────────
+  {
+    text: `Habt ihr nicht von jenem tollen Menschen gehört, der am hellen Vormittage eine Laterne anzündete, auf den Markt lief und unaufhörlich schrie: „Ich suche Gott! Ich suche Gott!" — Da dort gerade viele von Denen zusammenstanden, welche nicht an Gott glaubten, so erregte er ein großes Gelächter. Ist er denn verloren gegangen? Sagte der Eine. Hat er sich verlaufen wie ein Kind? Sagte der Andere. Oder hält er sich versteckt? Fürchtet er sich vor uns? Ist er zu Schiff gegangen? Ausgewandert? — so schrien und lachten sie durcheinander. Der tolle Mensch sprang mitten unter sie und durchbohrte sie mit seinen Blicken. „Wohin ist Gott? Rief er, ich will es euch sagen! Wir haben ihn getötet, — ihr und ich! Wir alle sind seine Mörder! Aber wie haben wir dies gemacht? Wie vermochten wir das Meer auszutrinken? Wer gab uns den Schwamm, um den ganzen Horizont wegzuwischen? Was taten wir, als wir diese Erde von ihrer Sonne losketteten? Wohin bewegt sie sich nun? Wohin bewegen wir uns? Fort von allen Sonnen? Stürzen wir nicht fortwährend? Und rückwärts, vorwärts, nach allen Seiten? Gibt es noch ein Oben und ein Unten? Irren wir nicht wie durch ein unendliches Nichts? Haucht uns nicht der leere Raum an? Ist es nicht kälter geworden? Kommt nicht immerfort die Nacht und mehr Nacht? Müssen nicht Laternen am Vormittage angezündet werden? Hören wir noch Nichts von dem Lärm der Totengräber, welche Gott begraben? Riechen wir noch Nichts von der göttlichen Verwesung? — auch Götter verwesen! Gott ist tot! Gott bleibt tot! Und wir haben ihn getötet! Wie trösten wir uns, die Mörder aller Mörder? Das Heiligste und Mächtigste, was die Welt bisher besaß, es ist unter unseren Messern verblutet, — wer wischt dies Blut von uns ab? Mit welchem Wasser könnten wir uns reinigen? Welche Sühnfeiern, welche heiligen Spiele werden wir erfinden müssen? Ist nicht die Größe dieser Tat zu groß für uns? Müssen wir nicht selber zu Göttern werden, um nur ihrer würdig zu erscheinen? Es gab nie eine größere Tat, — und wer nur immer nach uns geboren wird, gehört um dieser Tat willen in eine höhere Geschichte, als alle Geschichte bisher war!" — Hier schwieg der tolle Mensch und sah wieder seine Zuhörer an: auch sie schwiegen und blickten befremdet auf ihn. Endlich warf er seine Laterne auf den Boden, dass sie in Stücke sprang und erlosch. „Ich komme zu früh, sagte er dann, ich bin noch nicht an der Zeit. Dies ungeheure Ereignis ist noch unterwegs und wandert, — es ist noch nicht bis zu den Ohren der Menschen gedrungen. Blitz und Donner brauchen Zeit, das Licht der Gestirne braucht Zeit, Taten brauchen Zeit, auch nachdem sie getan sind, um gesehen und gehört zu werden. Die Tat ist ihnen immer noch ferner, als die fernsten Gestirne, — und doch haben sie dieselbe getan!" — Man erzählt noch, dass der tolle Mensch des selbigen Tages in verschiedene Kirchen eingedrungen sei und darin sein Requiem aeternam deo angestimmt habe. Hinausgeführt und zur Rede gesetzt, habe er immer nur dies entgegnet: „Was sind denn diese Kirchen noch, wenn sie nicht die Grüfte und Grabmäler Gottes sind?"`,
+    pullquote: 'Gott ist tot! Gott bleibt tot! Und wir haben ihn getötet!',
+    author: 'Friedrich Nietzsche',
+    source: 'Die fröhliche Wissenschaft (1882), KSA Band 3, S. 480–482',
+    url: 'https://www.projekt-gutenberg.org/nietzsch/froehl/froehl.html',
+    kat: 'Metaphysik',
+    portrait: 'nietzsche'
+  },
+
+  // ── Kierkegaard ─────────────────────────────────────────────
+  {
+    text: `Man steckt den Finger in die Erde, um zu riechen, in welchem Land man ist, ich stecke den Finger ins Dasein – es riecht nach nichts. Wo bin ich? Was heißt das: die Welt? Was bedeutet dieses Wort? Wer hat mich durch seine Tricks in die ganze Sache hereingezogen und lässt mich nun damit allein? Wer bin ich? Wie bin ich in die Welt hineingekommen; warum wurde ich nicht gefragt, warum nicht mit Sitten und Gebräuchen bekanntgemacht, sondern in Reih und Glied gesteckt, als wäre ich von einem Seelenverkäufer gekauft? Wie wurde ich Teilhaber an dem großen Unternehmen, das man die Wirklichkeit nennt? Warum soll ich Teilhaber sein? Ist einem das nicht freigestellt? Und wenn ich dazu gezwungen werden soll, wo ist dann der Diskussionsleiter, ich habe einen Einwand zu machen? Gibt es keinen Diskussionsleiter? Wohin soll ich mich mit meiner Klage wenden? Das Dasein ist ja eine Debatte, darf ich bitten, dass meine Überlegungen mit in Erwägung gezogen werden? Soll man das Dasein nehmen, wie es ist, wäre es dann nicht das beste, dass man erführe, wie es ist?`,
+    pullquote: 'Ich stecke den Finger ins Dasein – es riecht nach nichts.',
+    author: 'Søren Kierkegaard',
+    source: 'Die Wiederholung',
+    kat: 'Existenz',
+    portrait: 'kierkegaard'
+  },
+
+  // ── Michael Ende — Momo ─────────────────────────────────────
+  {
+    text: `Was die kleine Momo konnte wie kein anderer, das war: zuhören. Das ist nichts Besonderes, wird nun vielleicht mancher Leser sagen, zuhören kann doch jeder. Aber das ist ein Irrtum. Wirklich zuhören können nur ganz wenige Menschen. Und so wie Momo sich aufs Zuhören verstand, war es ganz und gar einmalig.
+
+Momo konnte so zuhören, dass dummen Leuten plötzlich sehr gescheite Gedanken kamen. Nicht etwa, weil sie etwas sagte oder fragte, was den anderen auf solche Gedanken brachte, nein, sie saß nur da und hörte einfach zu, mit aller Aufmerksamkeit und Anteilnahme. Dabei schaute sie den anderen mit ihren großen, dunklen Augen an und der Betreffende fühlte, wie in ihm auf einmal Gedanken auftauchten, von denen er nie geahnt hatte, dass sie in ihm steckten.
+
+Sie konnte so zuhören, dass rastlose oder unentschlossene Leute auf einmal ganz genau wussten, was sie wollten. Oder dass Schüchterne sich plötzlich frei und mutig fühlten. Oder dass Unglückliche und Bedrückte zuversichtlich und froh wurden. Und wenn jemand meinte, sein Leben sei ganz verfehlt und bedeutungslos und er selbst nur irgendeiner unter Millionen, einer, auf den es überhaupt nicht ankommt und der ebenso schnell ersetzt werden kann wie ein kaputter Topf – und er ging hin und erzählte alles das der kleinen Momo, dann wurde ihm, noch während er redete, auf geheimnisvolle Weise klar, dass er sich gründlich irrte, dass es ihn, genauso wie er war, unter allen Menschen nur ein einziges Mal gab und dass er deshalb auf seine besondere Weise für die Welt wichtig war. So konnte Momo zuhören!`,
+    pullquote: 'Wirklich zuhören können nur ganz wenige Menschen.',
+    author: 'Michael Ende',
+    source: 'Momo',
+    kat: 'Literatur',
+    portrait: 'momo'
+  },
+
+  // ── Immanuel Kant ───────────────────────────────────────────
+  {
+    text: 'Die menschliche Vernunft hat das besondere Schicksal in einer Gattung ihrer Erkenntnisse: daß sie durch Fragen belästigt wird, die sie nicht abweisen kann; denn sie sind ihr durch die Natur der Vernunft selbst aufgegeben, die sie aber auch nicht beantworten kann; denn sie übersteigen alles Vermögen der menschlichen Vernunft.',
+    author: 'Immanuel Kant',
+    source: 'Kritik der reinen Vernunft, Vorrede zur 1. Auflage (A VII)',
+    url: 'https://www.projekt-gutenberg.org/kant/krva/krva001.html',
+    kat: 'Metaphysik',
+    portrait: 'kant'
+  },
+  // ── Heraklit (mit griechischem Original) ────────────────────
+  {
+    text: 'Die Grenzen der Seele wirst du nicht finden, auch wenn du jeden Weg abschreitest; so tiefen Logos hat sie.',
+    original: 'ψυχῆς πείρατα ἰὼν οὐκ ἂν ἐξεύροιο, πᾶσαν ἐπιπορευόμενος ὁδόν· οὕτω βαθὺν λόγον ἔχει.',
+    author: 'Heraklit',
+    source: 'Fragment DK 22 B 45 (Diog. Laert. IX,7)',
+    url: 'https://de.wikipedia.org/wiki/Heraklit',
+    kat: 'Antike',
+    portrait: 'heraklit'
+  },
+  // ── Aristoteles über Thales ─────────────────────────────────
+  {
+    text: 'Die meisten, die zuerst philosophierten, meinten, die Prinzipien aller Dinge seien nur stofflicher Natur; denn woraus alles Seiende ist und woraus es zuerst entsteht und worin es zuletzt vergeht, während die Substanz bestehen bleibt, das nennen sie das Element und das Prinzip der Dinge … und Thales, der Begründer dieser Art von Philosophie, sagt, es sei das Wasser.',
+    author: 'Aristoteles',
+    source: 'Metaphysik I 3, 983b — über Thales (Übers. Bonitz)',
+    url: 'http://www.zeno.org/Philosophie/M/Aristoteles/Metaphysik/Erste+Abteilung.+Die+Hauptst%C3%BCcke/Einleitung/II.+Die+Lehre+von+den+Prinzipien+bei+den+Fr%C3%BCheren/A:+Die+%C3%A4lteren+Philosophen',
+    kat: 'Antike',
+    portrait: 'aristoteles'
+  },
+  // ── David Hume ──────────────────────────────────────────────
+  {
+    text: 'Let all the powers and elements of nature conspire to serve and obey one man: Let the sun rise and set at his command, the sea and rivers roll as he pleases, and the earth furnish spontaneously whatever may be useful or agreeable to him: He will still be miserable, till you give him some one person at least, with whom he may share his happiness, and whose esteem and friendship he may enjoy.',
+    author: 'David Hume',
+    source: 'A Treatise of Human Nature, II.2.5',
+    url: 'https://davidhume.org/texts/t/2/2/5',
+    kat: 'Freundschaft',
+    portrait: 'hume'
+  },
+  // ── Yann Martel (Signaturzeile; Volltext bewusst nicht eingebettet) ──
+  {
+    text: "I must say a word about fear. It is life's only true opponent. Only fear can defeat life. It is a clever, treacherous adversary, how well I know. It has no decency, respects no law or convention, shows no mercy. It goes for your weakest spot, which it finds with unnerving ease. It begins in your mind, always ... so you must fight hard to express it. You must fight hard to shine the light of words upon it. Because if you don't, if your fear becomes a wordless darkness that you avoid, perhaps even manage to forget, you open yourself to further attacks of fear because you never truly fought the opponent who defeated you.",
+    author: 'Yann Martel',
+    source: 'Schiffbruch mit Tiger (Life of Pi)',
+    url: 'https://www.goodreads.com/quotes/46179-i-must-say-a-word-about-fear-it-is-life-s',
+    kat: 'Literatur',
+    portrait: 'yann-martel'
+  },
+  // ── Erich Kästner ───────────────────────────────────────────
+  {
+    text: 'Es gibt nichts Gutes, außer: man tut es.',
+    author: 'Erich Kästner',
+    source: 'Kurz und bündig',
+    url: 'https://books.google.at/books?id=zRZcAAAAMAAJ&q=%22es+gibt+nichts+Gutes%22',
+    kat: 'Lebenskunst',
+    portrait: 'erich-kaestner'
+  },
+
+  // ── Charles Darwin ──────────────────────────────────────────
+  {
+    text: 'Abstammung des Menschen jetzt bewiesen … Wer den Pavian versteht, würde mehr zur Metaphysik beitragen als John Locke.',
+    pullquote: 'Wer den Pavian versteht, würde mehr zur Metaphysik beitragen als John Locke.',
+    author: 'Charles Darwin',
+    source: 'Zitiert nach Ian McEwan: Erkenntnis und Schönheit, Diogenes 2020, S. 81',
+    kat: 'Metaphysik'
+  },
 ];
-var activeZKat='Alle';
-function renderZitate(){
-  var filter=document.getElementById('zitat-filter');
-  if(filter&&!filter.children.length){
-    var kats=['Alle'].concat([...new Set(ZITATE.map(function(z){return z.kat;}))]);
-    kats.forEach(function(k){
-      var b=document.createElement('button');
-      b.className='zf-btn'+(k==='Alle'?' active':'');
-      b.textContent=k;
-      b.onclick=function(){
-        activeZKat=k;
-        document.querySelectorAll('.zf-btn').forEach(function(x){x.classList.remove('active');});
-        b.classList.add('active');
-        renderZitatGrid();
-      };
-      filter.appendChild(b);
-    });
-  }
-  renderZitatGrid();
-}
-function renderZitatGrid(){
-  var grid=document.getElementById('zitat-grid');if(!grid)return;
-  grid.innerHTML='';
-  var f=activeZKat==='Alle'?ZITATE:ZITATE.filter(function(z){return z.kat===activeZKat;});
-  f.forEach(function(z){
-    var card=document.createElement('div');card.className='zitat-card';
-    card.innerHTML='<div class="zitat-text'+(z.large?' large':'')+'">'+z.text+'</div>'
-      +'<div class="zitat-author">'+z.author+'</div>'
-      +(z.source?'<div class="zitat-source">'+z.source+'</div>':'')
-      +'<span class="zitat-kat">'+z.kat+'</span>';
-    grid.appendChild(card);
-  });
-}
+
 
 // ════════════════════════════════════════════════
-// T-SHIRTS
 // ════════════════════════════════════════════════
-var TSHIRTS=[
-  {name:'Kant — Der Zerstörer',sub:'Immanuel Kant',color:'#e8c040',emoji:'⚖️',
-   desc:'Das Heine-Motiv: Kant als Robespierre des Geistes. Das Shirt, das mein Dissertations-Motto trägt.'},
-  {name:'Sokrates — I Know Nothing',sub:'Sokrates / Platon',color:'#f7971e',emoji:'🏺',
-   desc:'Das bekannteste Philosophie-Zitat überhaupt — und das ehrlichste. Sokrates als Verkörperung intellektueller Demut.'},
-  {name:'Nietzsche — Gott ist tot',sub:'Friedrich Nietzsche',color:'#fb923c',emoji:'⚡',
-   desc:'Die provokanteste Diagnose der Moderne. Nietzsche als Kulturepidemiologe.'},
-  {name:'Heidegger — Sein und Zeit',sub:'Martin Heidegger',color:'#5b80e8',emoji:'⏳',
-   desc:'Die Seinsfrage als Grundfrage. Ein Shirt für alle, die sich im ontologischen Unterschied bewegen.'},
-  {name:'Schelling — Das Eine und das Andere',sub:'F. W. J. Schelling',color:'#c8a020',emoji:'∞',
-   desc:'Schellings Weltalter: Das Absolute als das, was sich selbst erzählt. Mein persönlichstes Philosophen-Shirt.'},
-  {name:'Platon — Das Höhlengleichnis',sub:'Platon',color:'#f7971e',emoji:'🔦',
-   desc:'Alle sitzen wir in der Höhle und halten Schatten für die Wirklichkeit. Das älteste Erkenntnistheorie-Motiv.'},
-  {name:'Aristoteles — Eudaimonia',sub:'Aristoteles',color:'#e87820',emoji:'🌿',
-   desc:'Das gute Leben als tätige Entfaltung der eigenen Anlagen. Aristoteles als Lebenshilfephilosoph avant la lettre.'},
-  {name:'Meister Eckhart — Abgeschiedenheit',sub:'Meister Eckhart',color:'#d090f0',emoji:'🕯️',
-   desc:'Die höchste Tugend ist Abgeschiedenheit — leerer Geist als Bedingung der Gottesgeburt.'},
-  {name:'Levinas — Das Antlitz',sub:'Emmanuel Levinas',color:'#4060c8',emoji:'👁️',
-   desc:'Das Antlitz des Anderen als ethisches Ur-Phänomen. Du-Ethik vor aller Ontologie.'},
-  {name:'Wittgenstein — Whereof one cannot speak',sub:'Ludwig Wittgenstein',color:'#67e8f9',emoji:'🔇',
-   desc:'Der letzte Satz des Tractatus als vollständige Philosophie in einem Satz.'},
-];
-function renderTshirts(){
-  var grid=document.getElementById('tshirt-grid');
-  if(!grid||grid.children.length)return;
-  TSHIRTS.forEach(function(t){
-    var card=document.createElement('div');card.className='tshirt-card';
-    var bg='linear-gradient(135deg,'+t.color+'22,'+t.color+'08)';
-    card.innerHTML='<div class="tshirt-visual" style="background:'+bg+'">'
-      +'<span style="font-size:4rem">'+t.emoji+'</span>'
-      +'<span style="position:absolute;bottom:10px;left:0;right:0;text-align:center;font-family:var(--fm);font-size:.68rem;color:'+t.color+';letter-spacing:.1em">thephilosophersshirt.com</span>'
-      +'</div>'
-      +'<div class="tshirt-body">'
-      +'<div class="tshirt-name">'+t.name+'</div>'
-      +'<div class="tshirt-sub" style="color:'+t.color+'">'+t.sub+'</div>'
-      +'<div class="tshirt-desc">'+t.desc+'</div>'
-      +'</div>';
-    grid.appendChild(card);
-  });
-}
 
 // ════════════════════════════════════════════════
 // MATHEMATIK
 // ════════════════════════════════════════════════
 var mathInited=false;
-function initMath(){
-  if(!mathInited){mathInited=true;setTimeout(function(){drawMB();initSort();drawFourier();},120);}
-}
 function showMTab(name,idx){
   document.querySelectorAll('.m-section').forEach(function(s){s.classList.remove('active');});
   document.querySelectorAll('.mtab').forEach(function(b){b.classList.remove('active');});
@@ -719,6 +797,60 @@ function buildFachFilter(){
     div.appendChild(b);
   });
 }
+/* Kurse, zu denen eine eigene Hausarbeit existiert. Klein und von Hand gepflegt
+   (nur 4 Einträge), unabhängig von kurseData/documents.json. Steuert, ob das
+   kleine Verweis-Badge in der Kursliste erscheint. Die Zuordnung selbst (welches
+   Dokument zu welchem Kurs gehört) lebt in assets/documents-meta.json — hier
+   wird nur gewusst, WELCHE Kursnamen einen Treffer haben. */
+const KURS_HAS_WORK = new Set([
+  'Theorien des objektiven Geistes',
+  'Philosophie der Langeweile',
+  'Der späte Schelling in seiner Zeit',
+  'Martin Heidegger, Sein und Zeit 2',
+]);
+
+/* Sprung von hier (Studium) zur Seite "Eigene Arbeiten": navigiert dorthin und
+   hebt dort die passende Zeile hervor (siehe pages/arbeiten.html, das dortige
+   Skript liest window.__pendingHighlightCourse beim Rendern aus). */
+window.jumpToDoc = function(courseName) {
+  window.__pendingHighlightCourse = courseName;
+  showPage('arbeiten');
+};
+
+/* Sprung von der Seite "Eigene Arbeiten" zum zugehörigen Kurs
+   hier auf der Studium-Seite: navigiert hin, klappt das richtige Semester auf
+   und scrollt zur Zeile. Pollt kurz, da showPage() den Seiten-Init asynchron
+   mit kleiner Verzögerung ausführt (kein zuverlässiges await möglich). */
+window.jumpToKurs = function(courseName) {
+  showPage('studium');
+  let tries = 0;
+  (function tryFind(){
+    tries++;
+    const k = (typeof kurseData !== 'undefined') ? kurseData.find(x => x.name === courseName) : null;
+    const list = document.getElementById('kurs-list');
+    if (k && list && list.children.length) {
+      const key = k.semNr + '|' + k.sem;
+      if (!openSems.has(key)) { openSems.add(key); renderKurse(); }
+      requestAnimationFrame(() => {
+        const cells = document.querySelectorAll('#kurs-list td');
+        for (const c of cells) {
+          if (c.textContent.indexOf(courseName) === 0) {
+            const row = c.closest('tr');
+            if (row) {
+              row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              row.classList.add('kurs-row-flash');
+              setTimeout(() => row.classList.remove('kurs-row-flash'), 2200);
+            }
+            break;
+          }
+        }
+      });
+      return;
+    }
+    if (tries < 25) setTimeout(tryFind, 50);   /* bis zu ~1,25s warten */
+  })();
+};
+
 function renderKurse(){
   var q=(document.getElementById('kurs-search')||{value:''}).value.toLowerCase();
   var dir=(document.getElementById('sort-sem')||{value:'asc'}).value==='asc'?1:-1;
@@ -756,7 +888,7 @@ function renderKurse(){
     g.kurse.forEach(function(k){
       var tr=document.createElement('tr');
       tr.innerHTML='<td><span class="fach-dot '+fachCls(k.fach)+'"></span>'+k.fach+'</td>'
-        +'<td>'+k.name+'</td>'
+        +'<td>'+k.name+(KURS_HAS_WORK.has(k.name)?' <button type="button" class="kurs-pdf-link pub-hide-github" onclick="jumpToDoc(\''+k.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" title="Eigene Hausarbeit zu diesem Kurs ansehen">📄 Hausarbeit</button>':'')+'</td>'
         +'<td>'+(k.art?'<span class="veranst-badge">'+k.art+'</span>':'')+'</td>'
         +'<td class="dozent-cell">'+(k.dozent||'')+'</td>';
       tbody.appendChild(tr);
@@ -788,23 +920,19 @@ function renderKurse(){
 if (typeof registerPageInit === 'function') {
   registerPageInit('favphil',    function() { renderFavphil(); });
   registerPageInit('zitate',     function() { renderZitate(); });
-  registerPageInit('tshirts',    function() { renderTshirts(); });
-  registerPageInit('philosophy', function() { buildPhil(); });
+  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); });
   registerPageInit('buecher',    function() { renderBuecher(); });
   registerPageInit('nature',     function() { renderNature(); });
   registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
-  registerPageInit('math',       function() { initMath(); });
   // podcasts and gaming are self-contained in their own page HTML
 } else {
   /* Fallback if registerPageInit isn't defined yet — defer to DOMContentLoaded */
   document.addEventListener('DOMContentLoaded', function() {
     registerPageInit('favphil',    function() { renderFavphil(); });
     registerPageInit('zitate',     function() { renderZitate(); });
-    registerPageInit('tshirts',    function() { renderTshirts(); });
     registerPageInit('philosophy', function() { buildPhil(); });
     registerPageInit('buecher',    function() { renderBuecher(); });
     registerPageInit('nature',     function() { renderNature(); });
     registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
-    registerPageInit('math',       function() { initMath(); });
   });
 }

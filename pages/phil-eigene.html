@@ -35,6 +35,12 @@
 .phe-chap-btn:hover{border-color:var(--accent);color:var(--accent);}
 .phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 .phe-chap-btn .num{font-size:.65rem;opacity:.7;}
+.phe-nav-group{
+  flex-shrink:0;display:flex;align-items:center;padding:0 .2rem 0 .7rem;
+  font-family:var(--fm);font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text3);white-space:nowrap;user-select:none;
+}
+.phe-nav-group:first-child{padding-left:0;}
 
 /* ── Layout: 3-Spalten Grid mit Margin-Spalten links/rechts für Glossen ── */
 .phe-essay{
@@ -171,7 +177,7 @@
   color:var(--text);font-style:italic;max-width:900px;
 }
 
-/* ── Downloads-Box ─────────────────────────────────────────────── */
+/* ── Downloads-Box (Platzhalter, falls JS/Daten nicht greifen) ──── */
 .phe-downloads{
   max-width:1400px;margin:0 auto;padding:0 3rem 4rem;
 }
@@ -186,6 +192,7 @@
 .phe-downloads-hint{
   font-size:.85rem;color:var(--text3);font-style:italic;line-height:1.6;
 }
+
 
 /* ── Mobile/Tablet: 3-Spalten → Single-Column ──────────────────── */
 @media(max-width:1200px){
@@ -227,27 +234,30 @@
   <div class="phe-hero-glow"></div>
   <p class="hero-tag">Eigenständiges Denken</p>
   <h1>Grundzüge meiner <span class="accent">Philosophie</span><span style="color:var(--text)">.</span></h1>
-  <p class="lead">Ein endliches, erzählendes, fragendes und handelndes Wesen in einer Welt, die es nicht vollständig verstehen oder beherrschen kann — und die es dennoch notwendig deutet.</p>
+  <p class="lead">Der Mensch versteht die Welt nie vollständig und beherrscht sie nie — und deutet sie dennoch, unausweichlich. Diese Philosophie fängt beim Leben an, nicht beim System: bei einem endlichen, erzählenden, fragenden und handelnden Wesen, dem gerade in seiner Endlichkeit Freiheit, Verantwortung und Bindung möglich sind.</p>
 </div>
-
 <!-- ─────────────── Kapitel-Navigation ─────────────── -->
 <nav class="phe-chapnav" id="phe-chapnav">
+  <span class="phe-nav-group">I · Grund</span>
   <button class="phe-chap-btn active" data-ch="1"><span class="num">01</span> Tragik</button>
-  <button class="phe-chap-btn" data-ch="2"><span class="num">02</span> Erzählen</button>
-  <button class="phe-chap-btn" data-ch="3"><span class="num">03</span> Endlichkeit</button>
+  <button class="phe-chap-btn" data-ch="2"><span class="num">02</span> Endlichkeit</button>
+  <button class="phe-chap-btn" data-ch="3"><span class="num">03</span> Erzählen</button>
+  <span class="phe-nav-group">II · Deutung</span>
   <button class="phe-chap-btn" data-ch="4"><span class="num">04</span> Metaphysik</button>
   <button class="phe-chap-btn" data-ch="5"><span class="num">05</span> Wissenschaft</button>
-  <button class="phe-chap-btn" data-ch="6"><span class="num">06</span> Freiheit &amp; Moral</button>
-  <button class="phe-chap-btn" data-ch="7"><span class="num">07</span> Individuum</button>
-  <button class="phe-chap-btn" data-ch="8"><span class="num">08</span> Biografie</button>
-  <button class="phe-chap-btn" data-ch="9"><span class="num">09</span> Wissen &amp; Meinung</button>
+  <button class="phe-chap-btn" data-ch="6"><span class="num">06</span> Wissen &amp; Meinung</button>
+  <span class="phe-nav-group">III · Bejahung</span>
+  <button class="phe-chap-btn" data-ch="7"><span class="num">07</span> Freiheit &amp; Moral</button>
+  <button class="phe-chap-btn" data-ch="8"><span class="num">08</span> Individuum</button>
+  <button class="phe-chap-btn" data-ch="9"><span class="num">09</span> Biografie</button>
+  <span class="phe-nav-group">Ende</span>
   <button class="phe-chap-btn" data-ch="coda"><span class="num">∞</span> Schluss</button>
 </nav>
 
 <!-- ─────────────── Kapitel ─────────────── -->
 <article class="phe-essay" id="phe-essay">
 
-  <!-- Ch 1 -->
+  <!-- 01 (vormals Kapitel 1) -->
   <section class="phe-chapter active" data-ch="1">
     <aside class="phe-margin-left">
       <div>
@@ -262,7 +272,7 @@
     <main class="phe-main">
       <div class="phe-ch-num">Kapitel 01</div>
       <h2 class="phe-ch-title">Endlichkeit und Tragik</h2>
-      <div class="phe-ch-subtitle">Tragik nicht als Leid, sondern als Strukturmerkmal menschlicher Existenz.</div>
+      <div class="phe-ch-subtitle">Tragik ist kein Unglück, sondern die Struktur des Handelns.</div>
 
       <p>Im Zentrum meines Denkens steht die Überzeugung, dass menschliches Leben grundlegend tragisch verfasst ist. Tragik bedeutet hier nicht bloß Leid oder Unglück, sondern eine strukturelle Eigenschaft menschlicher Existenz: Der Mensch handelt in einer Welt, deren Konsequenzen er niemals vollständig überblicken oder kontrollieren kann.</p>
 
@@ -271,6 +281,8 @@
       <div class="phe-pullquote">Der Mensch wird im Leben unausweichlich schuldlos schuldig.</div>
 
       <p>Diese Tragik ist untrennbar mit der Endlichkeit verbunden: Alles menschliche Leben ist zeitlich begrenzt, situiert und unverfügbar. Auch die Welt selbst erscheint nicht als vollständig geordnete oder auf den Menschen hin ausgerichtete Struktur, sondern als offenes Gefüge kontingenter Entwicklungen.</p>
+
+      <p>Diese Tragik ist kein Einwand gegen das Handeln, sondern seine Bedingung: Nur wer wirklich etwas bewirkt, kann schuldlos schuldig werden.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -291,7 +303,7 @@
     </aside>
   </section>
 
-  <!-- Ch 2 -->
+  <!-- 02 (vormals Kapitel 3) -->
   <section class="phe-chapter" data-ch="2">
     <aside class="phe-margin-left">
       <div>
@@ -299,58 +311,14 @@
         <div class="phe-margin-stat-label">Zweiter Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
-        <div class="phe-margin-key-label">These</div>
-        <div class="phe-margin-key-text">Identität ist <strong>keine Substanz</strong>, sondern eine fortlaufend erzählte Struktur.</div>
-      </div>
-    </aside>
-    <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 02</div>
-      <h2 class="phe-ch-title">Der Mensch als erzählendes Wesen</h2>
-      <div class="phe-ch-subtitle">Selbst und Geschichte fallen in eins — narrative Identität als Grundstruktur.</div>
-
-      <p>Der Mensch ist für mich wesentlich ein erzählendes Wesen. Er lebt nicht nur, sondern deutet sein Leben, ordnet Erfahrungen und bildet Zusammenhänge durch Geschichten. Identität entsteht nicht als feste Substanz, sondern als narrative Struktur — durch das Zusammenspiel von Selbstdeutungen, Erinnerungen und den Geschichten, die andere über uns erzählen.</p>
-
-      <p>Auch dort, wo Sprache oder Bewusstsein eingeschränkt sind, bleibt der Mensch Teil einer erzählten Lebensgeschichte. Das Selbst ist nicht unabhängig von diesen narrativen Prozessen, sondern wird durch sie hindurch gebildet.</p>
-
-      <div class="phe-pullquote">Der Mensch ist nicht jemand, der Geschichten hat — er ist eine Geschichte.</div>
-
-      <p>Diese Geschichten sind jedoch niemals vollständig abgeschlossen oder widerspruchsfrei. Sie bleiben offen, fragmentarisch und veränderlich, weil sie auf einem endlichen Leben beruhen. Möglicherweise geht dem erzählenden Selbst ein vorsprachliches, leibliches <em>Protoselbst</em> voraus — das eigentliche personale Selbst des erwachsenen Menschen bildet sich aber wesentlich durch narrative Prozesse aus.</p>
-    </main>
-    <aside class="phe-margin-right">
-      <div class="phe-glosse">
-        <span class="phe-glosse-tag">Randbemerkung</span>
-        Auch das Tinder-Profil ist Metaphysik. Vermutlich besonders das.
-      </div>
-      <div class="phe-refs">
-        <div class="phe-refs-label">Im Hintergrund</div>
-        <div class="phe-refs-list">
-          <span>Hannah Arendt</span>
-          <span>Wilhelm Schapp</span>
-          <span>Nietzsche</span>
-          <span>Husserl</span>
-          <span>Charles Taylor</span>
-          <span>László Tengelyi</span>
-        </div>
-      </div>
-    </aside>
-  </section>
-
-  <!-- Ch 3 -->
-  <section class="phe-chapter" data-ch="3">
-    <aside class="phe-margin-left">
-      <div>
-        <div class="phe-margin-stat">03</div>
-        <div class="phe-margin-stat-label">Der fundamentalste Gedanke</div>
-      </div>
-      <div class="phe-margin-key">
         <div class="phe-margin-key-label">Kerngedanke</div>
         <div class="phe-margin-key-text">Das Unendliche ist <strong>kein Gegenstand</strong>, sondern eine Negation. Endlichkeit ist primär.</div>
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 03</div>
+      <div class="phe-ch-num">Kapitel 02</div>
       <h2 class="phe-ch-title">Endlichkeit und das Denken des Unendlichen</h2>
-      <div class="phe-ch-subtitle">Radikale Endlichkeit — und das Unendliche als Grenzbegriff endlichen Denkens.</div>
+      <div class="phe-ch-subtitle">Das Unendliche als Grenzbegriff — gedacht von einem endlichen Wesen.</div>
 
       <p>Ein weiterer zentraler Gedanke meiner Philosophie ist die radikale Endlichkeit aller Existenz. Alles, was gedacht, erlebt oder erkannt wird, geschieht innerhalb zeitlicher, begrenzter Strukturen. Auch das Denken des Unendlichen bleibt selbst ein endlicher Akt.</p>
 
@@ -359,6 +327,8 @@
       <div class="phe-pullquote">Das Unendliche ist dem endlichen Leben inkommensurabel.</div>
 
       <p>Gleichzeitig gilt: Jede Vorstellung von Ewigkeit, Wahrheit oder Absolutheit setzt bereits ein endliches Bewusstsein voraus, das überhaupt erst fähig ist, solche Begriffe zu bilden. <strong>Die Sehnsucht nach dem Unendlichen ist selbst ein Ausdruck der Endlichkeit.</strong></p>
+
+      <p>Das entwertet diese Sehnsucht nicht — es zeichnet sie aus: Endlich zu sein und dennoch über die eigene Grenze hinauszudenken, ist die eigentümlichste Leistung des Menschen.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -379,7 +349,53 @@
     </aside>
   </section>
 
-  <!-- Ch 4 -->
+  <!-- 03 (vormals Kapitel 2) -->
+  <section class="phe-chapter" data-ch="3">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">03</div>
+        <div class="phe-margin-stat-label">Dritter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
+        <div class="phe-margin-key-label">These</div>
+        <div class="phe-margin-key-text">Identität ist <strong>keine Substanz</strong>, sondern eine fortlaufend erzählte Struktur.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 03</div>
+      <h2 class="phe-ch-title">Der Mensch als erzählendes Wesen</h2>
+      <div class="phe-ch-subtitle">Identität ist keine Substanz, sondern eine Geschichte, die weitergeht.</div>
+
+      <p>Der Mensch ist für mich wesentlich ein erzählendes Wesen. Er lebt nicht nur, sondern deutet sein Leben, ordnet Erfahrungen und bildet Zusammenhänge durch Geschichten. Identität entsteht nicht als feste Substanz, sondern als narrative Struktur — durch das Zusammenspiel von Selbstdeutungen, Erinnerungen und den Geschichten, die andere über uns erzählen.</p>
+
+      <p>Auch dort, wo Sprache oder Bewusstsein eingeschränkt sind, bleibt der Mensch Teil einer erzählten Lebensgeschichte. Das Selbst ist nicht unabhängig von diesen narrativen Prozessen, sondern wird durch sie hindurch gebildet.</p>
+
+      <div class="phe-pullquote">Der Mensch ist nicht jemand, der Geschichten hat — er ist eine Geschichte.</div>
+
+      <p>Diese Geschichten sind jedoch niemals vollständig abgeschlossen oder widerspruchsfrei. Sie bleiben offen, fragmentarisch und veränderlich, weil sie auf einem endlichen Leben beruhen. Möglicherweise geht dem erzählenden Selbst ein vorsprachliches, leibliches <em>Protoselbst</em> voraus — das eigentliche personale Selbst des erwachsenen Menschen bildet sich aber wesentlich durch narrative Prozesse aus.</p>
+
+      <p>Dass diese Geschichten offen bleiben, ist kein Mangel, sondern ihr Vorzug: Weil nichts abgeschlossen ist, lässt sich ein Leben immer noch einmal anders verstehen — und weitererzählen.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Auch das Tinder-Profil ist Metaphysik. Vermutlich besonders das.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Hannah Arendt</span>
+          <span>Wilhelm Schapp</span>
+          <span>Nietzsche</span>
+          <span>Husserl</span>
+          <span>Charles Taylor</span>
+          <span>László Tengelyi</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- 04 (vormals Kapitel 4) -->
   <section class="phe-chapter" data-ch="4">
     <aside class="phe-margin-left">
       <div>
@@ -394,7 +410,7 @@
     <main class="phe-main">
       <div class="phe-ch-num">Kapitel 04</div>
       <h2 class="phe-ch-title">Metaphysik als unvermeidliches Weltverhältnis</h2>
-      <div class="phe-ch-subtitle">Animal metaphysicum — auch wer Metaphysik ablehnt, betreibt sie.</div>
+      <div class="phe-ch-subtitle">Auch wer Metaphysik ablehnt, betreibt sie — animal metaphysicum.</div>
 
       <p>Trotz aller Kritik an metaphysischen Systemen halte ich Metaphysik für unvermeidlich. Der Mensch ist ein <em>animal metaphysicum</em>: ein Wesen, das sich notwendig zur Welt als Ganzer verhält.</p>
 
@@ -405,6 +421,8 @@
       <p>Diese Fragen lassen sich nicht abschließend beantworten, aber sie lassen sich auch nicht vollständig vermeiden. Auch der Versuch, Metaphysik zurückzuweisen, bleibt häufig selbst noch metaphysisch, weil er bereits bestimmte Annahmen über Wirklichkeit, Wahrheit und Sinn voraussetzt.</p>
 
       <p>Gleichzeitig muss jede Form von Metaphysik die Kritik von Kant, Nietzsche, Heidegger, Derrida und anderen ernst nehmen. Eine unreflektierte Metaphysik droht dogmatisch zu werden, wenn sie ihre eigenen Voraussetzungen vergisst.</p>
+
+      <p>Eine Metaphysik, die ihre eigene Endlichkeit mitdenkt, verliert dadurch nichts. Sie gewinnt Redlichkeit.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -425,7 +443,7 @@
     </aside>
   </section>
 
-  <!-- Ch 5 -->
+  <!-- 05 (vormals Kapitel 5) -->
   <section class="phe-chapter" data-ch="5">
     <aside class="phe-margin-left">
       <div>
@@ -440,7 +458,7 @@
     <main class="phe-main">
       <div class="phe-ch-num">Kapitel 05</div>
       <h2 class="phe-ch-title">Wissenschaft, Kontingenz und die Stellung des Menschen</h2>
-      <div class="phe-ch-subtitle">Der Mensch als kontingentes Resultat — und die Wissenschaft als menschliches Unternehmen.</div>
+      <div class="phe-ch-subtitle">Der Mensch als kontingentes Resultat, die Wissenschaft als menschliches Unternehmen.</div>
 
       <p>Ich halte viele wissenschaftliche Theorien für die bestmöglichen Erklärungen der Welt, die uns zur Verfügung stehen. Insbesondere die Evolutionstheorie und die moderne Kosmologie legen nahe, dass der Mensch kein notwendiger Endpunkt der Weltentwicklung ist, sondern ein kontingentes Ergebnis langer, zufälliger Prozesse.</p>
 
@@ -451,6 +469,8 @@
       <p>Mythen, Narrative und metaphysische Systeme können als Versuche verstanden werden, diese mögliche Bedeutungslosigkeit zu überformen. Gleichzeitig ist die wissenschaftliche Perspektive nicht selbst sinnstiftend. Sie beschreibt, aber sie beantwortet nicht die existenzielle Frage nach Bedeutung.</p>
 
       <p>Auch die Wissenschaft selbst stößt an eine Grenze, die sie schwer reflektiert: Hinter jeder Theorie steht ein endliches Leben. Wissenschaftler sind nicht bloße Träger abstrakter Rationalität, sondern Personen mit Biografien, Interessen, Vorprägungen, Erfolgen und Kränkungen. Wissenschaft wird damit nicht relativiert, aber sie wird in ihrem menschlichen Charakter sichtbar.</p>
+
+      <p>Gerade das macht sie stark: Eine Erkenntnis, die weiß, von wem sie stammt, täuscht sich schwerer als eine, die sich für standpunktlos hält.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -469,7 +489,7 @@
     </aside>
   </section>
 
-  <!-- Ch 6 -->
+  <!-- 06 (vormals Kapitel 9) -->
   <section class="phe-chapter" data-ch="6">
     <aside class="phe-margin-left">
       <div>
@@ -477,14 +497,57 @@
         <div class="phe-margin-stat-label">Sechster Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Doppelhorizont</div>
+        <div class="phe-margin-key-text">Metaphysisch <strong>graduell</strong>, pragmatisch <strong>stabil</strong>. Beides gilt zugleich.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 06</div>
+      <h2 class="phe-ch-title">Wissen, Meinung und pragmatische Unterscheidungen</h2>
+      <div class="phe-ch-subtitle">Keine harten Grenzen — und dennoch verlässliche Unterscheidungen.</div>
+
+      <p>Ich gehe davon aus, dass es auf einer strengsten metaphysischen Ebene keine absolut scharfen Grenzen zwischen Wissen und Meinung, Wahrheit und Interpretation gibt. Übergänge sind graduell, nie hart.</p>
+
+      <p>Dennoch sind solche Unterscheidungen im alltäglichen und wissenschaftlichen Kontext unverzichtbar und praktisch stabil. Sie besitzen keine absolute metaphysische Trennschärfe, aber eine <strong>funktionale Notwendigkeit</strong>. Wer Wissenschaft und Verschwörungsmythos für ununterscheidbar erklärt, weil sich keine absolute Grenze ziehen lässt, hat den Punkt der Argumentation verfehlt.</p>
+
+      <div class="phe-pullquote">Nicht absolut, aber auch nicht beliebig.</div>
+
+      <p>Erkenntnis bewegt sich zwischen graduellen Übergängen und pragmatischen Grenzziehungen. Das ist kein Widerspruch, sondern ein Doppelhorizont: Erkenntnis als graduell offen — Handlung als operativ stabil.</p>
+
+      <p>Wer diesen Doppelhorizont aushält, muss weder alles für gleich gültig erklären noch Gewissheiten behaupten, die es nicht gibt.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Dass sich Wissen und Meinung graduell verhalten, heißt nicht, dass Großonkel Klausʼ Telegram-Channel gleichberechtigt neben dem CERN steht. Sehr graduell verhält es sich da nicht.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Pragmatismus (James, Dewey)</span>
+          <span>Wissenschaftstheorie</span>
+          <span>Hermeneutik der Geltung</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- 07 (vormals Kapitel 6) -->
+  <section class="phe-chapter" data-ch="7">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">07</div>
+        <div class="phe-margin-stat-label">Siebter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
         <div class="phe-margin-key-label">These</div>
         <div class="phe-margin-key-text">Freiheit ist <strong>gelebte Erfahrung</strong>, nicht theoretische Schlussfolgerung.</div>
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 06</div>
+      <div class="phe-ch-num">Kapitel 07</div>
       <h2 class="phe-ch-title">Freiheit, Verantwortung und die Entstehung von Moral</h2>
-      <div class="phe-ch-subtitle">Moral entsteht im Leben — Theorien stabilisieren sie, erzeugen sie nicht.</div>
+      <div class="phe-ch-subtitle">Moral entsteht im Leben; Theorien klären sie, erzeugen sie nicht.</div>
 
       <p>Ich gehe davon aus, dass der Mensch frei ist — in einem grundlegenden, vor-theoretischen Sinn. Diese Freiheit ist nicht zuerst ein Problem der Kausalitätstheorie, sondern eine gelebte Erfahrung von Handlungsfähigkeit: Menschen erleben sich als Wesen, die handeln oder unterlassen können. Auf dieser Erfahrung basiert auch Verantwortung.</p>
 
@@ -495,6 +558,8 @@
       <p>Gleichzeitig bin ich überzeugt, dass moralische Überzeugungen nicht in erster Linie aus späteren theoretischen Reflexionen entstehen. Die Grundlage des Moralischen liegt tiefer: in frühkindlicher Entwicklung, in Beziehungserfahrungen, in psychologischen Grundstrukturen wie Vertrauen, Bindung und der Erfahrung von Verlässlichkeit oder deren Fehlen. Besonders prägend ist dabei das, was man als <strong>Urvertrauen</strong> bezeichnen kann.</p>
 
       <p>Moralische Orientierung entsteht primär im gelebten sozialen Umfeld: in Familie, Kindheit, Erziehung, Schule, Freundschaften und frühen Beziehungserfahrungen. Philosophische Theorien können vorhandene moralische Intuitionen klären, reflektieren oder stabilisieren — aber sie erzeugen sie nur selten grundlegend neu.</p>
+
+      <p>Das ist keine Abwertung der Theorie, sondern eine Entlastung: Moral steht nicht erst zur Verfügung, wenn sie begründet ist — sie ist immer schon im Gang.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -513,12 +578,12 @@
     </aside>
   </section>
 
-  <!-- Ch 7 -->
-  <section class="phe-chapter" data-ch="7">
+  <!-- 08 (vormals Kapitel 7) -->
+  <section class="phe-chapter" data-ch="8">
     <aside class="phe-margin-left">
       <div>
-        <div class="phe-margin-stat">07</div>
-        <div class="phe-margin-stat-label">Siebter Grundgedanke</div>
+        <div class="phe-margin-stat">08</div>
+        <div class="phe-margin-stat-label">Achter Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
         <div class="phe-margin-key-label">Paradox</div>
@@ -526,9 +591,9 @@
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 07</div>
+      <div class="phe-ch-num">Kapitel 08</div>
       <h2 class="phe-ch-title">Individuum, Sprache und das Unverfügbare</h2>
-      <div class="phe-ch-subtitle">Das Individuelle entzieht sich dem Begriff — und das ist kein Mangel.</div>
+      <div class="phe-ch-subtitle">Was sich nicht restlos begreifen lässt, ist gerade darum unersetzlich.</div>
 
       <p>Der Mensch ist zugleich ersetzbar und unersetzlich. In funktionalen Kontexten sind Menschen austauschbar — Rollen können neu besetzt, Aufgaben übernommen werden. Doch diese Ersetzbarkeit trifft nicht ohne Rest auf das zu, was wir Individualität nennen.</p>
 
@@ -539,6 +604,8 @@
       <p>Diese Spannung zeigt sich in zwischenmenschlichen Beziehungen, in denen Bedeutung entsteht, die sich nicht vollständig auf Funktion oder Begriff reduzieren lässt. Vielleicht ist das, was hier <em>Liebe</em> genannt werden kann, genau diese Erfahrung: dass endliche Wesen einander in einer Weise bedeuten, die nicht vollständig in Begriffe, Funktionen oder Rollen auflösbar ist, obwohl sie niemals außerhalb der Endlichkeit steht.</p>
 
       <p>So bleibt der Mensch zugleich ersetzbar und unersetzlich, allgemeines Wesen und unaufhebbares Individuum — ein Spannungsverhältnis, das sich nicht auflösen lässt, sondern gelebt werden muss.</p>
+
+      <p>Und es ist gut, dass es so ist: Was sich restlos begreifen ließe, wäre auch restlos ersetzbar.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -557,12 +624,12 @@
     </aside>
   </section>
 
-  <!-- Ch 8 -->
-  <section class="phe-chapter" data-ch="8">
+  <!-- 09 (vormals Kapitel 8) -->
+  <section class="phe-chapter" data-ch="9">
     <aside class="phe-margin-left">
       <div>
-        <div class="phe-margin-stat">08</div>
-        <div class="phe-margin-stat-label">Achter Grundgedanke</div>
+        <div class="phe-margin-stat">09</div>
+        <div class="phe-margin-stat-label">Neunter Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
         <div class="phe-margin-key-label">Doppelhorizont</div>
@@ -570,9 +637,9 @@
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 08</div>
+      <div class="phe-ch-num">Kapitel 09</div>
       <h2 class="phe-ch-title">Denken, Biografie und Wahrheit</h2>
-      <div class="phe-ch-subtitle">Kein Gedanke ist biografielos — und das macht das Denken nicht beliebig.</div>
+      <div class="phe-ch-subtitle">Kein Gedanke ist biografielos — und das macht ihn nicht beliebig.</div>
 
       <p>Philosophisches Denken ist nie rein abstrakt. Es entsteht aus einem konkreten Leben, aus Erfahrungen, Prägungen und individuellen Situationen. Auch wenn Philosophie auf Allgemeingültigkeit zielt, bleibt sie biografisch situiert.</p>
 
@@ -583,6 +650,8 @@
       <p>Das bedeutet nicht, dass Wahrheit relativ ist, sondern dass sie immer durch endliche Subjekte hindurch gedacht wird. Zwischen Lebensgeschichte und begrifflicher Geltung besteht eine unauflösbare Spannung, die das Denken zugleich begrenzt und lebendig hält.</p>
 
       <p>Der biografische Anteil des Denkens ist nicht bloß ein äußerlicher Faktor — er ist Teil seiner Lebendigkeit. Ohne ihn würde Philosophie leicht in Abstraktion erstarren und den Bezug zum menschlichen Leben verlieren, aus dem sie hervorgeht.</p>
+
+      <p>Die eigene Lebensgeschichte ist darum kein Makel des Denkens, den man wegkürzen müsste, sondern die Quelle, aus der es überhaupt etwas zu sagen hat.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -602,49 +671,7 @@
     </aside>
   </section>
 
-  <!-- Ch 9 -->
-  <section class="phe-chapter" data-ch="9">
-    <aside class="phe-margin-left">
-      <div>
-        <div class="phe-margin-stat">09</div>
-        <div class="phe-margin-stat-label">Neunter Grundgedanke</div>
-      </div>
-      <div class="phe-margin-key">
-        <div class="phe-margin-key-label">Doppelhorizont</div>
-        <div class="phe-margin-key-text">Metaphysisch <strong>graduell</strong>, pragmatisch <strong>stabil</strong>. Beides gilt zugleich.</div>
-      </div>
-    </aside>
-    <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 09</div>
-      <h2 class="phe-ch-title">Wissen, Meinung und pragmatische Unterscheidungen</h2>
-      <div class="phe-ch-subtitle">Keine harten metaphysischen Grenzen — und doch unverzichtbare Unterscheidungen.</div>
-
-      <p>Ich gehe davon aus, dass es auf einer strengsten metaphysischen Ebene keine absolut scharfen Grenzen zwischen Wissen und Meinung, Wahrheit und Interpretation gibt. Übergänge sind graduell, nie hart.</p>
-
-      <p>Dennoch sind solche Unterscheidungen im alltäglichen und wissenschaftlichen Kontext unverzichtbar und praktisch stabil. Sie besitzen keine absolute metaphysische Trennschärfe, aber eine <strong>funktionale Notwendigkeit</strong>. Wer Wissenschaft und Verschwörungsmythos für ununterscheidbar erklärt, weil sich keine absolute Grenze ziehen lässt, hat den Punkt der Argumentation verfehlt.</p>
-
-      <div class="phe-pullquote">Nicht absolut, aber auch nicht beliebig.</div>
-
-      <p>Erkenntnis bewegt sich zwischen graduellen Übergängen und pragmatischen Grenzziehungen. Das ist kein Widerspruch, sondern ein Doppelhorizont: Erkenntnis als graduell offen — Handlung als operativ stabil.</p>
-    </main>
-    <aside class="phe-margin-right">
-      <div class="phe-glosse">
-        <span class="phe-glosse-tag">Randbemerkung</span>
-        Dass sich Wissen und Meinung graduell verhalten, heißt nicht, dass Großonkel Klausʼ Telegram-Channel gleichberechtigt neben dem CERN steht. Sehr graduell verhält es sich da nicht.
-      </div>
-      <div class="phe-refs">
-        <div class="phe-refs-label">Im Hintergrund</div>
-        <div class="phe-refs-list">
-          <span>Pragmatismus (James, Dewey)</span>
-          <span>Wissenschaftstheorie</span>
-          <span>Hermeneutik der Geltung</span>
-        </div>
-      </div>
-    </aside>
-  </section>
-
-
-  <!-- Schluss -->
+  <!-- ∞ (vormals Kapitel coda) -->
   <section class="phe-chapter" data-ch="coda">
     <aside class="phe-margin-left">
       <div>
@@ -659,15 +686,15 @@
     <main class="phe-main">
       <div class="phe-ch-num">Schluss</div>
       <h2 class="phe-ch-title">Endliches, erzählendes, fragendes Wesen</h2>
-      <div class="phe-ch-subtitle">Eine Philosophie, die beim Leben anfängt — nicht beim System.</div>
+      <div class="phe-ch-subtitle">Eine Philosophie, die beim Leben anfängt — und beim Handeln ankommt.</div>
 
       <p>Meine Philosophie bewegt sich insgesamt in einem Spannungsfeld aus Endlichkeit und Sinn, Tragik und Freiheit, Wissenschaft und Metaphysik, Individualität und Allgemeinheit.</p>
 
-      <div class="phe-pullquote">Sie beginnt nicht bei einem abstrakten System, sondern beim menschlichen Leben selbst.</div>
+      <div class="phe-pullquote">Endlich zu denken heißt nicht, wenig zu behaupten — es heißt, für das Behauptete einzustehen.</div>
 
-      <p>Bei einem endlichen, erzählenden, fragenden und handelnden Wesen, das in einer Welt existiert, die es nicht vollständig verstehen oder beherrschen kann — und die es dennoch notwendig deutet.</p>
+      <p>Sie beginnt nicht bei einem System, sondern bei einem endlichen, erzählenden, fragenden und handelnden Wesen — in einer Welt, die es nie vollständig versteht und nie beherrscht, die es aber unausweichlich deutet. Und sie endet nicht in der Feststellung dieser Grenze, sondern bei dem, was innerhalb ihrer möglich ist: Freiheit, Verantwortung, Bindung.</p>
 
-      <p>Diese neun Kapitel bilden keinen abgeschlossenen Bau. Sie sind eher die Skizze eines Denkens, das aus einem bestimmten Leben hervorgegangen ist und in einem bestimmten Leben weitergeht. Was darin haltbar bleibt, was sich verändert, was sich noch zeigen wird — das gehört zur Bewegung selbst.</p>
+      <p>Diese neun Kapitel bilden keinen abgeschlossenen Bau — und sollen keiner sein. Sie sind die Skizze eines Denkens, das aus einem bestimmten Leben hervorgegangen ist und in ihm weitergeht. Was sich als haltbar erweist, bleibt; was sich ändert, wird geändert. Denn dass ein Denken endlich ist, heißt nicht, dass es unverbindlich bliebe: Es heißt, dass jemand für es einsteht.</p>
     </main>
     <aside class="phe-margin-right">
       <div class="phe-glosse">
@@ -690,13 +717,7 @@
 
 
 
-<!-- ─────────────── PDFs ─────────────── -->
-<div class="phe-downloads">
-  <div class="phe-downloads-inner">
-    <div class="phe-downloads-label">Eigene Arbeiten</div>
-    <div class="phe-downloads-hint">Hier werden in Zukunft PDFs eigener Aufsätze und längerer Texte zur freien Verfügung stehen.</div>
-  </div>
-</div>
+
 
 <script>
 (function(){
@@ -716,4 +737,5 @@
     };
   });
 })();
+
 </script>

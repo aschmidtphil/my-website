@@ -1,0 +1,20 @@
+# ── Arbeitsdateien, die nicht auf die Website gehören ──────────────
+_fotos_eingang/
+*_kontaktbogen.png
+fotos_vorschau.html
+fotos_texte.csv
+*.ipynb
+.ipynb_checkpoints/
+__pycache__/
+
+# ── System- und Editordateien ──────────────────────────────────────
+Thumbs.db
+.DS_Store
+desktop.ini
+*.bak
+*~
+
+# ── Persönliches Arbeitsmaterial ──
+*.docx
+ZUSAMMENFASSUNG-fuer-neuen-Chat.md
+verbesserungspotenzial.txt
