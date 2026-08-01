@@ -920,7 +920,7 @@ function renderKurse(){
 if (typeof registerPageInit === 'function') {
   registerPageInit('favphil',    function() { renderFavphil(); });
   registerPageInit('zitate',     function() { renderZitate(); });
-  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); });
+  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); try{tlkMarken();}catch(e){} });
   registerPageInit('buecher',    function() { renderBuecher(); });
   registerPageInit('nature',     function() { renderNature(); });
   registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
@@ -930,7 +930,7 @@ if (typeof registerPageInit === 'function') {
   document.addEventListener('DOMContentLoaded', function() {
     registerPageInit('favphil',    function() { renderFavphil(); });
     registerPageInit('zitate',     function() { renderZitate(); });
-    registerPageInit('philosophy', function() { buildPhil(); });
+    registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){} buildPhil(); try{tlkMarken();}catch(e){} });
     registerPageInit('buecher',    function() { renderBuecher(); });
     registerPageInit('nature',     function() { renderNature(); });
     registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });

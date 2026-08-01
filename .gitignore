@@ -3,6 +3,7 @@ _fotos_eingang/
 *_kontaktbogen.png
 fotos_vorschau.html
 fotos_texte.csv
+*.txt
 *.ipynb
 .ipynb_checkpoints/
 __pycache__/
@@ -13,8 +14,8 @@ Thumbs.db
 desktop.ini
 *.bak
 *~
+*.env
 
-# ── Persönliches Arbeitsmaterial ──
-*.docx
+Pragmatismus_Zitate.docx
 ZUSAMMENFASSUNG-fuer-neuen-Chat.md
 verbesserungspotenzial.txt

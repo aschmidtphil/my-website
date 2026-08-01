@@ -9049,6 +9049,33 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 ═══════════════════════════════════════════════════════════════════ -->
 
 <style>
+/* ── Bedienleiste in drei Ebenen ─────────────────────────────── */
+.tlk{margin:.2rem 0 1rem}
+.tlk-haupt{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;padding:.2rem 0 .7rem}
+.tlk-zahl{margin-left:auto;font-family:var(--fm);font-size:.66rem;letter-spacing:.06em;color:var(--text3);white-space:nowrap}
+.tlk-faecher{display:flex;gap:.3rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.tlk-tab{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.7rem;
+  letter-spacing:.04em;padding:.4rem .8rem;border-radius:8px;cursor:pointer;
+  background:transparent;border:1px solid var(--border);color:var(--text2);transition:all .15s}
+.tlk-tab:hover{border-color:var(--accent);color:var(--accent)}
+.tlk-tab.auf{background:var(--bg2);border-color:var(--accent);color:var(--accent)}
+.tlk-tab.auf .tlk-caret{transform:rotate(90deg)}
+.tlk-caret{display:inline-block;transition:transform .15s;font-size:.6rem;opacity:.7}
+.tlk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:1.05rem;height:1.05rem;
+  border-radius:999px;background:var(--accent);color:#fff;font-size:.58rem;font-weight:700;padding:0 .25rem}
+.tlk-tab-reset{margin-left:auto;font-style:italic;opacity:.8}
+.tlk-fach{padding:.9rem 0 .3rem;border-bottom:1px solid var(--border);animation:tlkAuf .16s ease}
+@keyframes tlkAuf{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.tlk-zeile{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem}
+.tlk-zeile:last-child{margin-bottom:0}
+.tlk-lab{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text3);min-width:5.5rem}
+.tlk-hilfe{margin:.7rem 0 0;font-size:.76rem;line-height:1.6;color:var(--text3);max-width:66ch}
+.pzb-w{font-size:.62rem;width:auto;padding:0 .55rem}
+@media(max-width:760px){
+  .tlk-lab{min-width:0}
+  .tlk-zahl{margin-left:0;width:100%}
+}
 .tl-kreise{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.55rem 0 .1rem}
 .tl-kreis-lab{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-right:.35rem}
 .tl-kreis{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border-radius:14px;
@@ -9056,6 +9083,25 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 .tl-kreis:hover{border-color:var(--accent);color:var(--accent)}
 .tl-kreis.an{background:var(--accent);border-color:var(--accent);color:#fff}
 .tl-kreis i{font-style:normal;opacity:.65;font-size:.58rem;margin-left:.25rem}
+.tl-kreis-haken{display:inline-block;width:.75rem;margin-right:.25rem;font-size:.62rem}
+.tl-kreis-alle{margin-left:.35rem;font-style:italic;opacity:.85}
+.tl-kreis-zahl{margin-left:auto;font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;color:var(--text3)}
+.tlk-zeile-leg{align-items:flex-start}
+.tlk-zeile-leg .epoch-legend-grid{display:flex;flex-wrap:wrap;gap:.3rem;max-width:100%}
+.tlk-zeile-leg .epoch-leg-item{display:flex;align-items:center;gap:.3rem;padding:.22rem .5rem;
+  border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.66rem;
+  font-family:var(--fm);color:var(--text2);transition:all .15s;white-space:nowrap}
+.tlk-zeile-leg .epoch-leg-item:hover{border-color:var(--accent);color:var(--accent)}
+.tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:#fff}
+.tlk-zeile-leg .epoch-leg-swatch{width:.6rem;height:.6rem;border-radius:50%;flex-shrink:0}
+#female-btn.active{background:var(--accent2,#c0559a);color:#fff;border-color:transparent}
+.tl-hilfe{display:flex;align-items:center;gap:.8rem;margin:.1rem 0 .5rem;padding:.5rem .85rem;
+  border:1px solid var(--border);border-radius:9px;background:var(--bg2)}
+.tl-hilfe-t{font-size:.76rem;color:var(--text3);line-height:1.5}
+.tl-hilfe-t b{color:var(--text2);font-weight:600}
+.tl-hilfe-zu{margin-left:auto;background:transparent;border:0;color:var(--text3);
+  font-size:1.05rem;line-height:1;cursor:pointer;padding:.1rem .3rem}
+.tl-hilfe-zu:hover{color:var(--accent)}
 
 .phil-header   { padding:2.5rem 3rem 1.75rem; background:linear-gradient(180deg,var(--bg2),var(--bg)); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
 .phil-glow     { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); pointer-events:none; }
@@ -9165,18 +9211,12 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 .tier-item     { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
 .tier-pip      { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
 /* ── Epochen-Farblegende (C13) ── */
-.epoch-legend { padding:0 3rem; background:var(--bg); border-bottom:1px solid var(--border); overflow:hidden; }
-.epoch-legend-head { display:flex; align-items:center; gap:.5rem; padding:.5rem 0; cursor:pointer; font-family:var(--fm); font-size:.68rem; color:var(--text3); user-select:none; }
-.epoch-legend-head:hover { color:var(--text2); }
-.epoch-legend-caret { display:inline-block; transition:transform .2s; font-size:.6rem; }
-.epoch-legend.collapsed .epoch-legend-caret { transform:rotate(-90deg); }
-.epoch-legend-grid { display:flex; flex-wrap:wrap; gap:.3rem .9rem; padding:0 0 .65rem; max-height:200px; transition:max-height .25s ease, opacity .2s, padding .2s; }
-.epoch-legend.collapsed .epoch-legend-grid { max-height:0; opacity:0; padding:0; }
+/* Die freistehende Epochen-Legende ist entfallen; die Farbtafel steht jetzt im
+   Fach Filter und wird ueber .tlk-zeile-leg gestaltet. */
 .epoch-leg-item { display:flex; align-items:center; gap:.35rem; font-family:var(--fm); font-size:.66rem; color:var(--text2); white-space:nowrap; cursor:pointer; padding:.1rem .2rem; border-radius:4px; transition:background .12s; }
 .epoch-leg-item:hover { background:var(--surface); color:var(--text); }
 .epoch-leg-item.active { background:var(--accent)22; color:var(--text); font-weight:600; }
 .epoch-leg-swatch { width:11px; height:11px; border-radius:3px; flex-shrink:0; }
-@media (max-width:900px){ .epoch-legend{ padding-left:1.2rem; padding-right:1.2rem; } }
 .tier-fav      { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
 .tier-fav-icon { width:14px; height:14px; border-radius:50%; background:var(--accent2); display:flex; align-items:center; justify-content:center; color:#fff; font-size:.6rem; flex-shrink:0; }
 .vis-count     { margin-left:auto; font-family:var(--fm); font-size:.68rem; color:var(--text3); }
@@ -9260,61 +9300,120 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   </p>
 </div>
 
-<!-- TIER LEGEND -->
-<div class="tier-legend">
-  <div class="tier-item"><div class="tier-pip" style="background:#f5b50a;box-shadow:0 0 0 2px #f5b50a44"></div>T1 — Giganten</div>
-  <div class="tier-item"><div class="tier-pip" style="background:#3b9eff"></div>T2 — Wichtige Denker</div>
-  <div class="tier-item"><div class="tier-pip" style="background:#23c552"></div>T3 — Bedeutend</div>
-  <div class="tier-item"><div class="tier-pip" style="background:#9b7cff"></div>T4 — Schüler &amp; Randfiguren</div>
-  <div class="vis-count" id="vis-count">—</div>
-</div>
-<div class="epoch-legend collapsed" id="epoch-legend">
-  <div class="epoch-legend-head" onclick="toggleEpochLegend()">
-    <span class="epoch-legend-caret">▼</span>
-    <span>Epochen-Farben</span>
-    <span style="opacity:.6" id="epoch-legend-hint">— anzeigen</span>
+<!-- ══ BEDIENUNG — drei Ebenen ══════════════════════════════════════
+     Zeile 1: Was sehe ich? (Ansicht) + Suche + Zoom  — immer sichtbar
+     Zeile 2: Aufklappbare Faecher fuer Filter und Darstellung
+     So steht oben nur, was man staendig braucht; alles Uebrige ist
+     einen Klick entfernt, aber nicht verschwunden. -->
+<div class="tlk">
+
+  <div class="tlk-haupt">
+    <div class="view-switch" id="view-switch">
+      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" title="Denker auf der Zeitachse">Zeitachse</button>
+      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" title="Sortierbare Tabelle mit CSV-Export">Tabelle</button>
+      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" title="Wer hat wen beeinflusst">Einflussnetz</button>
+    </div>
+
+    <div class="phil-search-wrap">
+      <span class="phil-search-icon">⌕</span>
+      <input class="phil-search" id="phil-search" type="text"
+        placeholder="Philosoph suchen…" oninput="tlSearch(this.value)">
+    </div>
+
+    <div class="phil-zoom-group" id="zoom-group">
+      <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen">−</button>
+      <span class="zoom-label" id="zoom-lbl">×1.0</span>
+      <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen">+</button>
+      <button class="pzb pzb-w" onclick="tlReset()" title="Zoom und Filter zuruecksetzen">Reset</button>
+    </div>
+
+    <span class="tlk-zahl" id="vis-count-2">—</span>
   </div>
-  <div class="epoch-legend-grid" id="epoch-legend-grid"></div>
+
+  <div class="tlk-faecher">
+    <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')" aria-expanded="false">
+      <span class="tlk-caret">▸</span> Filter <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
+    <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')" aria-expanded="false">
+      <span class="tlk-caret">▸</span> Kulturkreis <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
+    <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')" aria-expanded="false">
+      <span class="tlk-caret">▸</span> Darstellung</button>
+    <button class="tlk-tab" id="tlk-tab-linien" onclick="tlkFach('linien')" aria-expanded="false">
+      <span class="tlk-caret">▸</span> Einflusslinien</button>
+    <button class="tlk-tab tlk-tab-reset" onclick="tlkAllesZuruecksetzen()" title="Alle Filter aufheben">alles zeigen</button>
+  </div>
+
+  <!-- Fach: Filter -->
+  <div class="tlk-fach" id="tlk-fach-filter" hidden>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Filtern nach</span>
+      <div class="filter-mode-switch" id="filter-mode-switch">
+        <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)">Epoche</button>
+        <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)">Disziplin</button>
+        <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)">Strömung</button>
+        <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)">Grundposition</button>
+        <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)">Thema</button>
+      </div>
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Auswahl</span>
+      <div class="epoch-dd-wrap">
+        <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"></select>
+      </div>
+      <button class="itbtn" id="female-btn" onclick="tlToggleFemale()"
+        title="Zeigt nur die Philosophinnen des Datensatzes">♀ Nur Philosophinnen</button>
+    </div>
+    <!-- Die Farbtafel IST der Epochenfilter: ein Klick waehlt, ein zweiter hebt auf.
+         Sie stand vorher zusaetzlich ganz oben — dasselbe zweimal. -->
+    <div class="tlk-zeile tlk-zeile-leg">
+      <span class="tlk-lab">Epochen</span>
+      <div class="epoch-legend-grid" id="epoch-legend-grid"></div>
+    </div>
+    <p class="tlk-hilfe">Ein Klick auf eine Epochenfarbe filtert danach, ein zweiter hebt den Filter
+      wieder auf — dasselbe wie über die Auswahl darüber. Die Farben entsprechen denen der Zeitachse.</p>
+  </div>
+
+  <!-- Fach: Kulturkreis -->
+  <div class="tlk-fach" id="tlk-fach-kreis" hidden>
+    <div class="tl-kreise" id="tl-kreise"></div>
+    <p class="tlk-hilfe">Klick blendet einen Kreis ein oder aus, Doppelklick zeigt nur diesen.
+      Voreingestellt sind Europa und die islamische Welt — der Strang, in dem der Begriff
+      „Philosophie“ entstanden ist. Die Grenze ist teils künstlich; sie lässt sich jederzeit aufheben.</p>
+  </div>
+
+  <!-- Fach: Darstellung -->
+  <div class="tlk-fach" id="tlk-fach-ansicht" hidden>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Karten</span>
+      <button class="itbtn" id="card-size-btn" onclick="tlToggleCardSize()" title="Zwischen großen und kleinen Karten wechseln">◰ Mini</button>
+      <span class="tlk-lab" style="margin-left:1rem">Farben</span>
+      <button class="itbtn" onclick="toggleEpochLegend()" title="Die Epochenfarben stehen im Fach Filter">Epochen-Farbtafel →</button>
+    </div>
+    <div class="tier-legend">
+      <div class="tier-item"><div class="tier-pip" style="background:#f5b50a;box-shadow:0 0 0 2px #f5b50a44"></div>T1 — Giganten</div>
+      <div class="tier-item"><div class="tier-pip" style="background:#3b9eff"></div>T2 — Wichtige Denker</div>
+      <div class="tier-item"><div class="tier-pip" style="background:#23c552"></div>T3 — Bedeutend</div>
+      <div class="tier-item"><div class="tier-pip" style="background:#9b7cff"></div>T4 — Schüler &amp; Randfiguren</div>
+      <div class="vis-count" id="vis-count">—</div>
+    </div>
+    <p class="tlk-hilfe">Je weiter du hineinzoomst, desto mehr Ebenen erscheinen: bei geringem Zoom
+      nur die Giganten, danach kommen die übrigen hinzu.</p>
+  </div>
+
+  <!-- Fach: Einflusslinien -->
+  <div class="tlk-fach" id="tlk-fach-linien" hidden>
+    <div class="infl-toggles" id="infl-toggles"></div>
+    <p class="tlk-hilfe">Die Linien zeigen belegte Beziehungen zwischen Denkern. Einzelne Arten
+      lassen sich ausblenden. Wer wen über mehrere Schritte beeinflusst hat, zeigt die
+      Verbindungssuche in der Ansicht „Einflussnetz“.</p>
+  </div>
 </div>
 
-<!-- CONTROLS -->
-<div class="phil-controls">
-  <div class="phil-zoom-group">
-    <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen">+</button>
-    <span class="zoom-label" id="zoom-lbl">×1.0</span>
-    <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen">−</button>
-    <button class="pzb" onclick="tlReset()" style="font-size:.62rem;width:42px" title="Zurücksetzen">Reset</button>
-    <button class="pzb" id="card-size-btn" onclick="tlToggleCardSize()" style="font-size:.62rem;width:auto;padding:0 .55rem" title="Kartengröße umschalten">◰ Mini</button>
-  </div>
-  <div class="view-switch" id="view-switch">
-    <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')">Timeline</button>
-    <button class="vs-btn" id="vs-table" onclick="tlSetView('table')">Tabelle</button>
-    <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')">Einflussnetz</button>
-  </div>
-  <div class="phil-search-wrap">
-    <span class="phil-search-icon">⌕</span>
-    <input class="phil-search" id="phil-search" type="text"
-      placeholder="Philosoph suchen…" oninput="tlSearch(this.value)">
-  </div>
-  <div class="infl-toggles" id="infl-toggles"></div>
-  <button class="itbtn" id="female-btn" onclick="tlToggleFemale()" style="margin-left:auto"
-    title="Nur Philosophinnen anzeigen">♀ Philosophinnen</button>
-</div>
-
-<!-- FILTER: Modus-Umschalter (Epoche / Disziplin / Strömung) + Dropdown -->
-<div class="epoch-filter-row" id="epoch-filter-row">
-  <div class="filter-mode-switch" id="filter-mode-switch">
-    <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)">Epoche</button>
-    <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)">Disziplin</button>
-    <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)">Strömung</button>
-    <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)">Grundposition</button>
-    <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)">Thema</button>
-  </div>
-  <div class="epoch-dd-wrap">
-    <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"></select>
-  </div>
-  <div class="tl-kreise" id="tl-kreise">
-  </div></div>
+<!-- Kurzanleitung: die Bedienung der Buehne selbst ist sonst unsichtbar.
+     Einmal weggeklickt, bleibt sie fuer diesen Besuch weg. -->
+<div class="tl-hilfe" id="tl-hilfe">
+  <span class="tl-hilfe-t"><b>Ziehen</b> verschiebt · <b>Mausrad</b> zoomt · <b>Klick</b> auf eine Karte öffnet den Denker
+    · <b>Doppelklick</b> auf leere Fläche setzt zurück</span>
+  <button type="button" class="tl-hilfe-zu" onclick="tlHilfeZu()" aria-label="Hinweis schließen">×</button>
 </div>
 
 <!-- SVG CANVAS + Hover Card -->
@@ -9483,24 +9582,107 @@ function phils() {
   var L = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2 : [];
   return L.filter(function(p){ return p && tlKreisAktiv[p.kreis || 'European']; });
 }
+/* Alles neu zeichnen, was von der Philosophenauswahl abhaengt.
+   Die Funktionen heissen render(), renderTable() und renderNetz() — sie stehen
+   NICHT an window, deshalb hier direkt aufrufen und einzeln absichern. */
+/* Aufklappbare Faecher: immer nur eines offen, damit der Kopf ruhig bleibt. */
+var tlkOffen = null;
+window.tlHilfeZu = function(){
+  var h=document.getElementById('tl-hilfe'); if(h) h.style.display='none';
+};
+window.tlkFach = function(name){
+  ['filter','kreis','ansicht','linien'].forEach(function(n){
+    var fach = document.getElementById('tlk-fach-'+n);
+    var tab  = document.getElementById('tlk-tab-'+n);
+    var auf  = (n === name && tlkOffen !== name);
+    if (fach) fach.hidden = !auf;
+    if (tab){ tab.classList.toggle('auf', auf); tab.setAttribute('aria-expanded', auf?'true':'false'); }
+  });
+  tlkOffen = (tlkOffen === name) ? null : name;
+};
+/* Kleine Marke am Reiter, wenn dort ein Filter aktiv ist — so sieht man
+   auch bei zugeklapptem Fach, dass etwas eingeschraenkt ist. */
+window.tlkMarken = function(){
+  var bf = document.getElementById('tlk-badge-filter');
+  if (bf){
+    var an = [];
+    try{ if (epoch) an.push(epoch); }catch(e){}
+    try{ if (typeof discFilter!=='undefined' && discFilter) an.push(discFilter); }catch(e){}
+    try{ if (typeof movFilter!=='undefined'  && movFilter)  an.push(movFilter); }catch(e){}
+    try{ if (typeof femaleOnly!=='undefined' && femaleOnly) an.push('nur Philosophinnen'); }catch(e){}
+    bf.textContent = an.length ? an.length : '';
+    bf.hidden = !an.length;
+    bf.title = an.join(' \u00b7 ');
+  }
+  var bk = document.getElementById('tlk-badge-kreis');
+  if (bk){
+    try{
+      var aus = TL_KREISE.filter(function(k){ return !tlKreisAktiv[k]; }).length;
+      bk.textContent = aus ? TL_KREISE.length - aus : '';
+      bk.hidden = !aus;
+      bk.title = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; })
+                          .map(function(k){ return TL_KREIS_LABEL[k]; }).join(', ');
+    }catch(e){ bk.hidden = true; }
+  }
+};
+window.tlkAllesZuruecksetzen = function(){
+  try{ epoch=''; window._currentEra=''; }catch(e){}
+  try{ discFilter=''; }catch(e){}
+  try{ movFilter=''; }catch(e){}
+  try{ posFilter=''; }catch(e){}
+  try{ themaFilter=''; }catch(e){}
+  try{ femaleOnly=false; var fb=document.getElementById('female-btn'); if(fb) fb.classList.remove('active'); }catch(e){}
+  try{ TL_KREISE.forEach(function(k){ tlKreisAktiv[k] = (k==='European'||k==='Islamic'); }); tlKreisLeiste(); }catch(e){}
+  try{ var s2=document.getElementById('phil-search'); if(s2){ s2.value=''; tlSearch(''); } }catch(e){}
+  try{ var dd=document.getElementById('epoch-dd'); if(dd) dd.value=''; }catch(e){}
+  tlNeuzeichnen();
+};
+function tlNeuzeichnen(){
+  try{ buildEpochFilter(); }catch(e){}
+  try{ buildEpochLegend(); }catch(e){}
+  try{ render(); }catch(e){ console.warn('Timeline:', e); }
+  try{ renderTable(); }catch(e){}
+  try{ if(document.getElementById('netz-svg')) renderNetz(); }catch(e){}
+  try{ tlkMarken(); }catch(e){}
+  try{ var a=document.getElementById('vis-count'), b=document.getElementById('vis-count-2');
+       if(a&&b) b.textContent=a.textContent; }catch(e){}
+}
 window.tlKreisUm = function(k){
   tlKreisAktiv[k] = !tlKreisAktiv[k];
   if (!TL_KREISE.some(function(x){ return tlKreisAktiv[x]; })) tlKreisAktiv[k] = true;  // nie alles aus
   tlKreisLeiste();
-  if (window.tlNeuzeichnen) window.tlNeuzeichnen();
-  else { if (window.renderTimeline) renderTimeline();
-         if (window.renderNetz) renderNetz();
-         if (window.renderTabelle) renderTabelle(); }
+  tlNeuzeichnen();
+};
+window.tlKreisNur = function(k){          // Doppelklick: nur diesen einen zeigen
+  TL_KREISE.forEach(function(x){ tlKreisAktiv[x] = (x === k); });
+  tlKreisLeiste(); tlNeuzeichnen();
+};
+window.tlKreisAlle = function(){
+  var alleAn = TL_KREISE.every(function(x){ return tlKreisAktiv[x]; });
+  TL_KREISE.forEach(function(x){ tlKreisAktiv[x] = alleAn ? (x==='European'||x==='Islamic') : true; });
+  tlKreisLeiste(); tlNeuzeichnen();
 };
 function tlKreisLeiste(){
   var box = document.getElementById('tl-kreise'); if (!box) return;
   var alleP = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2.filter(Boolean) : [];
-  box.innerHTML = '<span class="tl-kreis-lab">Kulturkreis</span>' + TL_KREISE.map(function(k){
-    var n = alleP.filter(function(p){ return (p.kreis||'European') === k; }).length;
-    return '<button type="button" class="tl-kreis' + (tlKreisAktiv[k] ? ' an' : '') +
-           '" onclick="tlKreisUm(\'' + k + '\')" aria-pressed="' + (tlKreisAktiv[k]?'true':'false') + '">' +
-           TL_KREIS_LABEL[k] + ' <i>' + n + '</i></button>';
-  }).join('');
+  var sichtbar = alleP.filter(function(p){ return tlKreisAktiv[p.kreis || 'European']; }).length;
+  var alleAn = TL_KREISE.every(function(x){ return tlKreisAktiv[x]; });
+  box.innerHTML =
+    '<span class="tl-kreis-lab">Kulturkreis</span>'
+    + TL_KREISE.map(function(k){
+        var n = alleP.filter(function(p){ return (p.kreis||'European') === k; }).length;
+        var an = tlKreisAktiv[k];
+        return '<button type="button" class="tl-kreis' + (an ? ' an' : '') + '"'
+             + ' onclick="tlKreisUm(\'' + k + '\')" ondblclick="tlKreisNur(\'' + k + '\')"'
+             + ' aria-pressed="' + (an ? 'true' : 'false') + '"'
+             + ' title="' + (an ? 'ausblenden' : 'einblenden')
+             + ' — Doppelklick: nur diesen zeigen">'
+             + '<span class="tl-kreis-haken">' + (an ? '\u2713' : '\u00a0') + '</span>'
+             + TL_KREIS_LABEL[k] + ' <i>' + n + '</i></button>';
+      }).join('')
+    + '<button type="button" class="tl-kreis tl-kreis-alle" onclick="tlKreisAlle()">'
+    + (alleAn ? 'nur Europa + Islam' : 'alle') + '</button>'
+    + '<span class="tl-kreis-zahl">' + sichtbar + ' von ' + alleP.length + ' sichtbar</span>';
 }
 function byName(n) { return phils().find(p => p.name === n); }
 /* Anzeigename: display-Feld bevorzugt, sonst name (Schlüssel bleibt name) */
@@ -10423,8 +10605,8 @@ function buildEpochFilter() {
   /* Zeiträume + Großepochen-Zuordnung. Konsistent mit der App, nicht streng historisch.
      era: 'Antike' | 'Mittelalter' | 'Neuzeit'  */
   const EPOCH_META = {
-    'Chinesisch':         { era:'Antike',      from:-560, to:-230 },
-    'Indisch':            { era:'Antike',      from:-560, to:850  },
+    'Antike Weisheit':    { era:'Antike',      from:-570, to:-200 },
+    'Frühmittelalter':    { era:'Mittelalter', from: 700, to: 1000 },
     'Vorsokratik':        { era:'Antike',      from:-600, to:-430 },
     'Sophistik':          { era:'Antike',      from:-485, to:-380 },
     'Klassisch':          { era:'Antike',      from:-450, to:-320 },
@@ -10706,11 +10888,8 @@ function updateEpochLegendActive() {
   });
 }
 window.toggleEpochLegend = function() {
-  const el2 = document.getElementById('epoch-legend');
-  const hint = document.getElementById('epoch-legend-hint');
-  if (!el2) return;
-  el2.classList.toggle('collapsed');
-  if (hint) hint.textContent = el2.classList.contains('collapsed') ? '— anzeigen' : '— Klick filtert nach Epoche';
+  /* Die Farbtafel wohnt jetzt im Fach „Filter" — dieser Aufruf oeffnet es. */
+  if (window.tlkFach && typeof tlkOffen !== 'undefined' && tlkOffen !== 'filter') tlkFach('filter');
 };
 window.legendPickEpoch = function(name) {
   /* in den Epochen-Modus wechseln und nach dieser Epoche filtern (Toggle) */
@@ -10970,6 +11149,7 @@ window.tlSetView = function(mode) {
 };
 
 window.tlSetFilter = function(value) {
+  setTimeout(function(){ try{ tlkMarken(); }catch(e){} }, 0);
   if (filterMode === 'epoch') {
     if (!value) { epoch = ''; window._currentEra = ''; }
     else if (value.indexOf('era:') === 0) { window._currentEra = value.slice(4); epoch = ''; }
@@ -16794,39 +16974,39 @@ const PHILS_V2 = [
     desc:'Italienischer Philosoph. Denker des Ausnahmezustands, der Biopolitik und des nackten Lebens.',
     ideas:['Homo sacer — das nackte Leben','Der Ausnahmezustand wird zur Regel','Das Lager als Nomos der Moderne','Profanierung statt Säkularisierung'],
     influences:[], disc:['Politische Philosophie','Rechtsphilosophie','Ästhetik','Sprachphilosophie'], mov:['Poststrukturalismus','Kontinentale Philosophie'], thema:['Politik','Mensch','Sprache','Gerechtigkeit'], works:['Die kommende Gemeinschaft (1990)','Homo sacer (1995)','Was von Auschwitz bleibt (1998)','Ausnahmezustand (2003)'] },
-  { name:'Konfuzius',display:'Konfuzius (Kongzi)',slug:'konfuzius', birth:-551, death:-479, epoch:'Chinesisch', kreis:'China', color:'#e8a33d', tier:1, above:true,
+  { name:'Konfuzius',display:'Konfuzius (Kongzi)',slug:'konfuzius', birth:-551, death:-479, epoch:'Antike Weisheit', kreis:'China', color:'#e8a33d', tier:1, above:true,
     desc:'Chinesischer Denker der Zhou-Zeit. Begründer einer Ethik der Rollen, Riten und der Selbstkultivierung.',
     ideas:['Ren — Menschlichkeit als Grundtugend','Li — das Ritual als Form des Zusammenlebens','Der Edle (junzi) bildet sich selbst','Namen richtigstellen (zhengming)'],
     influences:[{to:'Menzius',type:'inspires'}], disc:['Ethik','Politische Philosophie','Bildungsphilosophie'], mov:['Konfuzianismus'], thema:['Mensch','Gerechtigkeit','Politik','Bildung'], works:['Gespräche (Lunyu, überliefert)'] },
-  { name:'Laozi',display:'Laozi',slug:'laozi', birth:-571, death:-471, epoch:'Chinesisch', kreis:'China', color:'#e8a33d', tier:1, above:false,
+  { name:'Laozi',display:'Laozi',slug:'laozi', birth:-571, death:-471, epoch:'Antike Weisheit', kreis:'China', color:'#e8a33d', tier:1, above:false,
     desc:'Legendärer Verfasser des Daodejing. Denker des Weges, des Nichthandelns und der Umkehrung aller Gegensätze.',
     ideas:['Dao — der Weg, der sich nicht sagen lässt','Wu wei — Wirken durch Nichteingreifen','Das Weiche besiegt das Harte','Die Leere macht das Gefäß brauchbar'],
     influences:[{to:'Zhuangzi',type:'inspires'}], disc:['Metaphysik','Ethik','Politische Philosophie'], mov:['Daoismus'], thema:['Sein','Natur','Politik','Sprache'], works:['Daodejing (Tao Te King)'] },
-  { name:'Zhuangzi',display:'Zhuangzi',slug:'zhuangzi', birth:-369, death:-286, epoch:'Chinesisch', kreis:'China', color:'#e8a33d', tier:2, above:true,
+  { name:'Zhuangzi',display:'Zhuangzi',slug:'zhuangzi', birth:-369, death:-286, epoch:'Antike Weisheit', kreis:'China', color:'#e8a33d', tier:2, above:true,
     desc:'Daoistischer Denker und Meister des philosophischen Gleichnisses. Radikaler Skeptiker der festen Unterscheidungen.',
     ideas:['Der Schmetterlingstraum: Wer träumt wen?','Die Gleichheit aller Dinge','Das nutzlose Holz überlebt','Freies Schweifen jenseits der Zwecke'],
     influences:[], disc:['Metaphysik','Erkenntnistheorie','Ästhetik'], mov:['Daoismus'], thema:['Sein','Wahrheit','Freiheit','Tod'], works:['Zhuangzi (Das wahre Buch vom südlichen Blütenland)'] },
-  { name:'Mozi',display:'Mozi',slug:'mozi', birth:-470, death:-391, epoch:'Chinesisch', kreis:'China', color:'#e8a33d', tier:3, above:false,
+  { name:'Mozi',display:'Mozi',slug:'mozi', birth:-470, death:-391, epoch:'Antike Weisheit', kreis:'China', color:'#e8a33d', tier:3, above:false,
     desc:'Gegenspieler des Konfuzianismus. Vertreter einer unparteiischen Fürsorge und einer nutzenorientierten Ethik.',
     ideas:['Jian ai — Fürsorge ohne Ansehen der Person','Kritik an Prunk und Ritual','Verurteilung des Angriffskriegs','Nutzen als Maßstab des Handelns'],
     influences:[], disc:['Ethik','Politische Philosophie','Logik'], mov:['Mohismus'], thema:['Gerechtigkeit','Politik','Mensch'], works:['Mozi (Sammlung)'] },
-  { name:'Menzius',display:'Menzius (Mengzi)',slug:'menzius', birth:-372, death:-289, epoch:'Chinesisch', kreis:'China', color:'#e8a33d', tier:3, above:true,
+  { name:'Menzius',display:'Menzius (Mengzi)',slug:'menzius', birth:-372, death:-289, epoch:'Antike Weisheit', kreis:'China', color:'#e8a33d', tier:3, above:true,
     desc:'Wichtigster Nachfolger des Konfuzius. Vertritt die These von der ursprünglichen Güte der menschlichen Natur.',
     ideas:['Die Menschennatur ist gut','Das Kind am Brunnen: Mitgefühl ist unmittelbar','Die vier Keime der Tugend','Das Mandat des Himmels ist entziehbar'],
     influences:[], disc:['Ethik','Politische Philosophie','Anthropologie'], mov:['Konfuzianismus'], thema:['Mensch','Gerechtigkeit','Politik'], works:['Mengzi'] },
-  { name:'Buddha',display:'Siddhartha Gautama (Buddha)',slug:'buddha', birth:-563, death:-483, epoch:'Indisch', kreis:'India', color:'#d96a9a', tier:1, above:true,
+  { name:'Buddha',display:'Siddhartha Gautama (Buddha)',slug:'buddha', birth:-563, death:-483, epoch:'Antike Weisheit', kreis:'India', color:'#d96a9a', tier:1, above:true,
     desc:'Begründer des Buddhismus. Denker des Leidens, der Vergänglichkeit und des Nicht-Selbst.',
     ideas:['Die vier edlen Wahrheiten','Anatta — es gibt kein beständiges Selbst','Anicca — alles ist vergänglich','Der mittlere Weg zwischen den Extremen'],
     influences:[{to:'Nagarjuna',type:'inspires'}], disc:['Metaphysik','Ethik','Anthropologie'], mov:['Buddhismus'], thema:['Leid','Mensch','Tod','Freiheit'], works:['Lehrreden des Pali-Kanons (überliefert)'] },
-  { name:'Nagarjuna',display:'Nāgārjuna',slug:'nagarjuna', birth:150, death:250, epoch:'Indisch', kreis:'India', color:'#d96a9a', tier:2, above:false,
+  { name:'Nagarjuna',display:'Nāgārjuna',slug:'nagarjuna', birth:150, death:250, epoch:'Spätantike', kreis:'India', color:'#d96a9a', tier:2, above:false,
     desc:'Begründer der Madhyamaka-Schule. Denker der Leerheit und der Kritik jeder Substanzannahme.',
     ideas:['Shunyata — Leerheit aller Dinge','Nichts existiert aus sich selbst heraus','Das abhängige Entstehen','Der Mittlere Weg zwischen Sein und Nichtsein'],
     influences:[], disc:['Metaphysik','Logik','Erkenntnistheorie'], mov:['Buddhismus','Madhyamaka'], thema:['Sein','Wahrheit','Sprache'], works:['Mūlamadhyamakakārikā'] },
-  { name:'Patanjali',display:'Patañjali',slug:'patanjali', birth:-200, death:-150, epoch:'Indisch', kreis:'India', color:'#d96a9a', tier:3, above:true,
+  { name:'Patanjali',display:'Patañjali',slug:'patanjali', birth:-200, death:-150, epoch:'Antike Weisheit', kreis:'India', color:'#d96a9a', tier:3, above:true,
     desc:'Verfasser der Yoga-Sutras. Systematiker einer Philosophie der Bewusstseinsschulung.',
     ideas:['Yoga ist das Zur-Ruhe-Bringen der Bewegungen des Geistes','Der achtgliedrige Pfad','Unterscheidung von Purusha und Prakriti','Befreiung durch Erkenntnis'],
     influences:[], disc:['Anthropologie','Erkenntnistheorie','Ethik'], mov:['Yoga','Samkhya'], thema:['Mensch','Freiheit','Wahrheit'], works:['Yogasutra'] },
-  { name:'Shankara',display:'Ādi Shankara',slug:'shankara', birth:788, death:820, epoch:'Indisch', kreis:'India', color:'#d96a9a', tier:2, above:true,
+  { name:'Shankara',display:'Ādi Shankara',slug:'shankara', birth:788, death:820, epoch:'Frühmittelalter', kreis:'India', color:'#d96a9a', tier:2, above:true,
     desc:'Hauptvertreter des Advaita-Vedanta. Denker der Nichtzweiheit von Selbst und Absolutem.',
     ideas:['Advaita — Atman und Brahman sind nicht zwei','Maya: die Welt als Überlagerung','Die Schlange im Seil als Bild des Irrtums','Befreiung ist Erkenntnis, nicht Werk'],
     influences:[], disc:['Metaphysik','Religionsphilosophie','Erkenntnistheorie'], mov:['Vedanta','Advaita'], thema:['Sein','Gott','Wahrheit','Freiheit'], works:['Brahmasutra-Kommentar','Upadeshasahasri'] },
@@ -16887,8 +17067,8 @@ const TIER_THRESHOLDS = { 1: 0.5, 2: 1.0, 3: 1.8, 4: 2.8 };
  * EPOCH METADATA — for filter buttons
  */
 const EPOCHS_META_V2 = [
-  { name:'Chinesisch',         color:'#e8a33d' },
-  { name:'Indisch',            color:'#d96a9a' },
+  { name:'Antike Weisheit',    color:'#e8a33d' },
+  { name:'Frühmittelalter',    color:'#7fa8c9' },
   { name:'Vorsokratik',        color:'#6c63ff' },
   { name:'Sophistik',          color:'#e88040' },
   { name:'Klassisch',          color:'#f7971e' },
@@ -18523,7 +18703,7 @@ function renderKurse(){
 if (typeof registerPageInit === 'function') {
   registerPageInit('favphil',    function() { renderFavphil(); });
   registerPageInit('zitate',     function() { renderZitate(); });
-  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); });
+  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); try{tlkMarken();}catch(e){} });
   registerPageInit('buecher',    function() { renderBuecher(); });
   registerPageInit('nature',     function() { renderNature(); });
   registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
@@ -18533,7 +18713,7 @@ if (typeof registerPageInit === 'function') {
   document.addEventListener('DOMContentLoaded', function() {
     registerPageInit('favphil',    function() { renderFavphil(); });
     registerPageInit('zitate',     function() { renderZitate(); });
-    registerPageInit('philosophy', function() { buildPhil(); });
+    registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){} buildPhil(); try{tlkMarken();}catch(e){} });
     registerPageInit('buecher',    function() { renderBuecher(); });
     registerPageInit('nature',     function() { renderNature(); });
     registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
