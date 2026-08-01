@@ -549,6 +549,12 @@ window.tlHilfeZu = function(){
   var h=document.getElementById('tl-hilfe'); if(h) h.style.display='none';
 };
 window.tlkFach = function(name){
+  /* Falls das Kulturkreis-Fach noch leer ist (Zeitpunkt-Problem beim Seitenaufbau),
+     hier nachbauen — dann steht die Auswahl beim ersten Oeffnen sofort da. */
+  if (name === 'kreis'){
+    var b = document.getElementById('tl-kreise');
+    if (b && !b.childElementCount) { try{ tlKreisLeiste(); }catch(e){} }
+  }
   ['filter','kreis','ansicht','linien'].forEach(function(n){
     var fach = document.getElementById('tlk-fach-'+n);
     var tab  = document.getElementById('tlk-tab-'+n);
@@ -2331,6 +2337,7 @@ function init() {
     buildInflToggles();
     buildEpochFilter();
     buildEpochLegend();
+    tlKreisLeiste();          // Kulturkreis-Fach fuellen (hier existiert #tl-kreise sicher)
     setupDrag();
 
     const tryRender = (attempts) => {

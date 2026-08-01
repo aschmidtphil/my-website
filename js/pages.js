@@ -920,7 +920,12 @@ function renderKurse(){
 if (typeof registerPageInit === 'function') {
   registerPageInit('favphil',    function() { renderFavphil(); });
   registerPageInit('zitate',     function() { renderZitate(); });
-  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); try{tlkMarken();}catch(e){} });
+  /* Die Timeline startet sich selbst ueber init() am Ende ihres Skriptblocks.
+     Hier nur nachziehen, was vom Zustand abhaengt. buildPhil() gehoert NICHT
+     hierher — das ist die Funktion der Lieblingsphilosophen-Seite. */
+  registerPageInit('philosophy', function() {
+    setTimeout(function(){ try{ tlKreisLeiste(); }catch(e){} try{ tlkMarken(); }catch(e){} }, 0);
+  });
   registerPageInit('buecher',    function() { renderBuecher(); });
   registerPageInit('nature',     function() { renderNature(); });
   registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
@@ -930,7 +935,9 @@ if (typeof registerPageInit === 'function') {
   document.addEventListener('DOMContentLoaded', function() {
     registerPageInit('favphil',    function() { renderFavphil(); });
     registerPageInit('zitate',     function() { renderZitate(); });
-    registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){} buildPhil(); try{tlkMarken();}catch(e){} });
+    registerPageInit('philosophy', function() {
+      setTimeout(function(){ try{ tlKreisLeiste(); }catch(e){} try{ tlkMarken(); }catch(e){} }, 0);
+    });
     registerPageInit('buecher',    function() { renderBuecher(); });
     registerPageInit('nature',     function() { renderNature(); });
     registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });

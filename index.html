@@ -9591,6 +9591,12 @@ window.tlHilfeZu = function(){
   var h=document.getElementById('tl-hilfe'); if(h) h.style.display='none';
 };
 window.tlkFach = function(name){
+  /* Falls das Kulturkreis-Fach noch leer ist (Zeitpunkt-Problem beim Seitenaufbau),
+     hier nachbauen — dann steht die Auswahl beim ersten Oeffnen sofort da. */
+  if (name === 'kreis'){
+    var b = document.getElementById('tl-kreise');
+    if (b && !b.childElementCount) { try{ tlKreisLeiste(); }catch(e){} }
+  }
   ['filter','kreis','ansicht','linien'].forEach(function(n){
     var fach = document.getElementById('tlk-fach-'+n);
     var tab  = document.getElementById('tlk-tab-'+n);
@@ -11373,6 +11379,7 @@ function init() {
     buildInflToggles();
     buildEpochFilter();
     buildEpochLegend();
+    tlKreisLeiste();          // Kulturkreis-Fach fuellen (hier existiert #tl-kreise sicher)
     setupDrag();
 
     const tryRender = (attempts) => {
@@ -14656,6 +14663,7 @@ renderGameCards();
   display:flex;flex-direction:column;transition:all .2s}
 .sh-card:hover{border-color:var(--accent);transform:translateY(-3px)}
 .sh-foto{aspect-ratio:4/5;position:relative;background:var(--bg3);overflow:hidden}
+.sh-foto picture{display:block;width:100%;height:100%}
 .sh-foto img{width:100%;height:100%;object-fit:cover;display:block}
 .sh-leer{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:.5rem;color:var(--text3);background:repeating-linear-gradient(45deg,var(--bg3),var(--bg3) 10px,var(--bg2) 10px,var(--bg2) 20px)}
@@ -14804,8 +14812,15 @@ renderGameCards();
     const hell=(s.hex==='#efefe9');
     el.innerHTML=
       '<div class="sh-foto">'
-        +'<img src="assets/images/shirts/'+s.slug+'.jpg" alt="Alexander Schmidt im Shirt „'+s.t+'"'
-        +'" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+        // <picture> statt <img>: Der Browser nimmt AVIF, sonst WebP, sonst JPG.
+        // Fehlen die modernen Formate, greift automatisch das JPG — und fehlt auch
+        // das, blendet onerror den Platzhalter ein.
+        +'<picture>'
+          +'<source srcset="assets/images/shirts/'+s.slug+'.avif" type="image/avif">'
+          +'<source srcset="assets/images/shirts/'+s.slug+'.webp" type="image/webp">'
+          +'<img src="assets/images/shirts/'+s.slug+'.jpg" alt="Alexander Schmidt im Shirt „'+s.t+'"'
+          +'" loading="lazy" onerror="var p=this.closest(\'picture\');p.style.display=\'none\';p.nextElementSibling.style.display=\'flex\'">'
+        +'</picture>'
         +'<div class="sh-leer" style="display:none"><span>👕</span><em>Foto folgt</em></div>'
         +'<div class="sh-farbe"><i class="sh-punkt" style="background:'+s.hex+(hell?';border-color:rgba(0,0,0,.3)':'')+'"></i>'+s.farbe+'</div>'
       +'</div>'
@@ -18703,7 +18718,12 @@ function renderKurse(){
 if (typeof registerPageInit === 'function') {
   registerPageInit('favphil',    function() { renderFavphil(); });
   registerPageInit('zitate',     function() { renderZitate(); });
-  registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){}  buildPhil(); try{tlkMarken();}catch(e){} });
+  /* Die Timeline startet sich selbst ueber init() am Ende ihres Skriptblocks.
+     Hier nur nachziehen, was vom Zustand abhaengt. buildPhil() gehoert NICHT
+     hierher — das ist die Funktion der Lieblingsphilosophen-Seite. */
+  registerPageInit('philosophy', function() {
+    setTimeout(function(){ try{ tlKreisLeiste(); }catch(e){} try{ tlkMarken(); }catch(e){} }, 0);
+  });
   registerPageInit('buecher',    function() { renderBuecher(); });
   registerPageInit('nature',     function() { renderNature(); });
   registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
@@ -18713,7 +18733,9 @@ if (typeof registerPageInit === 'function') {
   document.addEventListener('DOMContentLoaded', function() {
     registerPageInit('favphil',    function() { renderFavphil(); });
     registerPageInit('zitate',     function() { renderZitate(); });
-    registerPageInit('philosophy', function() { try{tlKreisLeiste();}catch(e){} buildPhil(); try{tlkMarken();}catch(e){} });
+    registerPageInit('philosophy', function() {
+      setTimeout(function(){ try{ tlKreisLeiste(); }catch(e){} try{ tlkMarken(); }catch(e){} }, 0);
+    });
     registerPageInit('buecher',    function() { renderBuecher(); });
     registerPageInit('nature',     function() { renderNature(); });
     registerPageInit('studium',    function() { buildFachFilter(); renderKurse(); });
