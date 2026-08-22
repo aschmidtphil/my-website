@@ -1,0 +1,955 @@
+<!-- ════════════════════════════════════════════════════════════════
+     BIBLIOTHEK DER ARGUMENTE
+     ─────────────────────────────────────────────────────────────────
+     Die klassischen Beweisgänge als nummerierte Prämissenketten.
+     Einwände hängen an der Prämisse, die sie treffen — dadurch wird
+     sichtbar, an welcher Stelle ein Argument tatsächlich bricht.
+     (Die Zahl der Argumente stand hier einmal fest im Text und war
+     längst veraltet; sie wird jetzt überall aus ARGUMENTE abgeleitet.)
+
+     Die Stellenangaben stammen aus der Arbeit am Entwurf und sind
+     nicht am Original nachgeschlagen. Vor einer Veröffentlichung
+     prüfen.
+     ════════════════════════════════════════════════════════════════ -->
+
+<div class="arg-hero">
+  <p class="eyebrow" id="arg-eyebrow">Beweisgänge, zerlegt</p>
+  <h1>Bibliothek der Argumente</h1>
+  <p class="lead">Die großen Beweisgänge als das, was sie sind: nummerierte Ketten von
+    Prämissen. Der Unterschied zu jeder Darstellung in Prosa ist, dass die Einwände nicht
+    unter dem Argument stehen, sondern an der einzelnen Prämisse hängen, die sie treffen.</p>
+
+  <!-- Der Eröffnungsabsatz der Vorrede zur ersten Auflage. Er steht hier, weil er
+       benennt, warum diese Sammlung überhaupt eine ist: nicht gelöste Fragen,
+       sondern Fragen, die sich weder abweisen noch beantworten lassen.
+       Wortlaut nach dem Erstdruck von 1781 (Wikisource), Orthographie behutsam
+       modernisiert. -->
+  <figure class="arg-motto">
+    <blockquote>
+      <p>Die menschliche Vernunft hat das besondere Schicksal in einer Gattung ihrer
+        Erkenntnisse: daß sie durch Fragen belästigt wird, die sie nicht abweisen kann;
+        denn sie sind ihr durch die Natur der Vernunft selbst aufgegeben, die sie aber
+        auch nicht beantworten kann; denn sie übersteigen alles Vermögen der menschlichen
+        Vernunft.</p>
+      <p>In diese Verlegenheit gerät sie ohne ihre Schuld. Sie fängt von Grundsätzen an,
+        deren Gebrauch im Laufe der Erfahrung unvermeidlich und zugleich durch diese
+        hinreichend bewährt ist. Mit diesen steigt sie (wie es auch ihre Natur mit sich
+        bringt) immer höher, zu entfernteren Bedingungen. Da sie aber gewahr wird, daß auf
+        diese Art ihr Geschäft jederzeit unvollendet bleiben müsse, weil die Fragen niemals
+        aufhören, so sieht sie sich genötigt, zu Grundsätzen ihre Zuflucht zu nehmen, die
+        allen möglichen Erfahrungsgebrauch überschreiten und gleichwohl so unverdächtig
+        scheinen, daß auch die gemeine Menschenvernunft damit im Einverständnisse steht.
+        Dadurch aber stürzt sie sich in Dunkelheit und Widersprüche, aus welchen sie zwar
+        abnehmen kann, daß irgendwo verborgene Irrtümer zum Grunde liegen müssen, die sie
+        aber nicht entdecken kann, weil die Grundsätze, deren sie sich bedient, da sie über
+        die Grenze aller Erfahrung hinausgehen, keinen Probierstein der Erfahrung mehr
+        anerkennen. <b>Der Kampfplatz dieser endlosen Streitigkeiten heißt nun
+        Metaphysik.</b></p>
+    </blockquote>
+    <figcaption>Immanuel Kant · <cite>Kritik der reinen Vernunft</cite>, Vorrede zur
+      ersten Auflage, A VII–VIII · 1781</figcaption>
+  </figure>
+</div>
+
+<div class="arg-wrap">
+
+  <section class="arg-sec">
+    <div class="arg-sec-kopf">
+      <h2>Argument wählen</h2>
+      <span class="rule"></span>
+      <span class="zahl" id="zaehler"></span>
+    </div>
+    <div class="arg-wahl" id="wahl" role="group" aria-label="Argument wählen"></div>
+    <div id="buehne"></div>
+  </section>
+
+  <section class="arg-sec">
+    <div class="arg-sec-kopf">
+      <h2>Wo die Einwände ansetzen</h2>
+      <span class="rule"></span>
+      <span class="zahl">Angriffe je Prämisse</span>
+    </div>
+    <p style="color:var(--text2);font-size:.88rem;max-width:70ch;margin-bottom:1rem">
+      Diese Ansicht beantwortet eine Frage, die Prosa nur umständlich beantwortet: An welcher
+      Stelle bricht ein Argument tatsächlich? Bei Anselm liegt fast alles auf Prämisse 4,
+      bei Leibniz auf Prämisse 2 — und manche Prämissen hat nie jemand angegriffen.
+    </p>
+    <div class="arg-uebersicht" id="uebersicht"></div>
+  </section>
+
+  <div class="arg-note">
+    <b>Zu den Quellenangaben:</b> Die Stellen — Proslogion 2–3, Summa theologiae I q. 2 a. 3,
+    Kritik der reinen Vernunft B 620–630 und die übrigen — sind aus dem Gedächtnis notiert
+    und nicht am Original nachgeschlagen. Wer damit arbeitet, sollte sie prüfen.
+  </div>
+
+</div>
+
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   BIBLIOTHEK DER ARGUMENTE
+   ──────────────────────────────────────────────────────────────────
+   Die klassischen Beweisgänge als nummerierte Prämissenketten. Der
+   Unterschied zu jeder Prosadarstellung: Einwände hängen an der
+   einzelnen Prämisse, die sie treffen, nicht unter dem Argument.
+
+   Datenformat je Argument:
+     id, kurz     : Kennung und Knopfbeschriftung
+     titel, wer   : Überschrift und Urheber mit Stellenangabe
+     jahr         : für die Angriffsgeschichte
+     these        : ein Satz, worum es geht
+     schritte[]   : { typ, s (der Satz), ew[] }
+     ew[]         : { wer, art, j (Jahr), quelle, t (Einwand), antwort? }
+   ══════════════════════════════════════════════════════════════════ */
+
+.arg-hero{padding:4rem 3.5rem 1.5rem;position:relative}
+.arg-hero .eyebrow{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent3-text);margin-bottom:.7rem;
+  display:flex;align-items:center;gap:.5rem}
+.arg-hero .eyebrow::before{content:'';width:22px;height:1px;background:var(--accent3)}
+.arg-hero h1{font-family:var(--fh);font-weight:800;letter-spacing:-.03em;
+  font-size:clamp(1.9rem,4.5vw,2.9rem);line-height:1.05;margin-bottom:.7rem}
+.arg-hero .lead{color:var(--text2);max-width:64ch;font-size:1rem;line-height:1.7}
+
+/* Motto: der Kant-Absatz über der Sammlung. Bewusst zurückgenommen — er soll
+   den Ton setzen, nicht die Überschrift überstimmen. Der Randstrich links
+   greift den Strich der eyebrow auf. */
+.arg-motto{margin:2rem 0 0;max-width:72ch;border-left:2px solid var(--accent3);
+  padding:.2rem 0 .2rem 1.4rem}
+.arg-motto blockquote{margin:0}
+.arg-motto blockquote p{color:var(--text2);font-size:.92rem;line-height:1.75;
+  hyphens:auto}
+.arg-motto blockquote p + p{margin-top:.7rem}
+.arg-motto blockquote b{color:var(--text);font-weight:600}
+.arg-motto figcaption{margin-top:.8rem;font-family:var(--fm);font-size:.66rem;
+  letter-spacing:.04em;color:var(--text3)}
+.arg-motto cite{font-style:italic}
+
+.arg-wrap{padding:0 3.5rem 4rem}
+.arg-sec{margin-top:2.4rem}
+.arg-sec-kopf{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem}
+.arg-sec-kopf h2{font-family:var(--fh);font-size:1.1rem;font-weight:700;white-space:nowrap}
+.arg-sec-kopf .rule{flex:1;height:1px;background:var(--border)}
+.arg-sec-kopf .zahl{font-family:var(--fm);font-size:.67rem;color:var(--text3);white-space:nowrap}
+
+/* Wie auf der Startseite: Kopf, Trennlinie und Zahl passen auf dem
+   Telefon nicht nebeneinander. Ohne Umbruch schob die Zahl die Seite
+   um 50 px über den Rand hinaus und wurde abgeschnitten.
+   Oberhalb von 900 px unverändert. */
+@media (max-width: 900px){
+  .arg-sec-kopf{flex-wrap:wrap;gap:.5rem .8rem}
+  .arg-sec-kopf .zahl{white-space:normal}
+}
+
+.arg-wahl{display:flex;flex-wrap:wrap;gap:1.1rem .9rem;margin-bottom:1.6rem;align-items:center}
+.arg-gruppe{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.arg-gruppe-titel{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text3);margin-right:.15rem;white-space:nowrap}
+.arg-gruppe + .arg-gruppe{border-left:1px solid var(--border);padding-left:.9rem}
+.arg-knopf{font-family:var(--fm);font-size:.72rem;background:none;cursor:pointer;
+  border:1px solid var(--border);color:var(--text2);border-radius:100px;
+  padding:.34rem .8rem;transition:border-color .18s,color .18s,background .18s}
+@media (hover: hover){ .arg-knopf:hover{border-color:var(--accent);color:var(--accent-text)} }
+.arg-knopf[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+.arg-kopf{border-left:4px solid var(--accent);padding-left:1rem;margin-bottom:1.2rem;position:relative}
+.arg-jahr{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;color:var(--accent-text);
+  margin-bottom:.25rem}
+.arg-kopf h3{font-family:var(--fh);font-size:1.45rem;font-weight:700;letter-spacing:-.02em}
+.arg-kopf .wer{font-family:var(--fm);font-size:.68rem;color:var(--text3);margin-top:.3rem}
+.arg-kopf .these{color:var(--text2);font-size:.92rem;margin-top:.6rem;max-width:66ch;line-height:1.7}
+
+/* ── Angriffsgeschichte ───────────────────────────────────────────
+   Zeigt, über welchen Zeitraum ein Argument bestritten wurde. Bei
+   Anselm liegen zwischen erstem und letztem Einwand 900 Jahre. */
+.zeitachse{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:.7rem .9rem 1.5rem;margin-bottom:1.6rem}
+.za-kopf{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+  font-family:var(--fm);font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:.9rem}
+.za-spanne{text-transform:none;letter-spacing:.02em}
+.za-bahn{position:relative;height:14px;background:linear-gradient(to right,
+  var(--border) 0%,var(--border) 100%) no-repeat center/100% 1px}
+.za-pkt{position:absolute;top:2px;width:10px;height:10px;border-radius:50%;
+  border:1.5px solid var(--card);cursor:pointer;padding:0;transform:translateX(-50%);
+  transition:transform .15s}
+@media (hover: hover){ .za-pkt:hover{transform:translateX(-50%) scale(1.5)} }
+.za-pkt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.za-start{position:absolute;top:-1px;width:2px;height:16px;background:var(--text2);
+  transform:translateX(-50%)}
+
+/* ── Die Prämissenkette ───────────────────────────────────────── */
+.kette{display:flex;flex-direction:column;gap:0;margin:1.4rem 0}
+.pz{display:grid;grid-template-columns:34px 1fr;gap:.9rem;position:relative}
+.pz-nr{font-family:var(--fm);font-size:.72rem;color:var(--text3);text-align:right;padding-top:.85rem}
+.pz-koerper{position:relative;padding-bottom:.55rem}
+.pz:not(:last-child) .pz-koerper::before{content:'';position:absolute;left:-.45rem;top:.9rem;
+  bottom:-.15rem;width:1px;background:var(--border2)}
+.pz-satz{all:unset;display:block;box-sizing:border-box;width:100%;cursor:pointer;
+  background:var(--card);border:1px solid var(--border);border-radius:9px;
+  padding:.7rem .9rem;font-size:.9rem;line-height:1.6;color:var(--text);
+  transition:border-color .18s,box-shadow .18s}
+@media (hover: hover){ .pz-satz:hover{border-color:var(--accent)} }
+.pz-satz:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.pz.offen .pz-satz{border-color:var(--accent2);box-shadow:0 3px 14px rgba(0,0,0,.09)}
+.pz-typ{font-family:var(--fm);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--text3);display:block;margin-bottom:.2rem}
+.pz.schluss .pz-satz{background:var(--surface);border-style:solid;font-weight:500}
+.pz-zaehler{font-family:var(--fm);font-size:.6rem;color:var(--accent2-text);
+  border:1px solid var(--accent2);border-radius:100px;padding:.05rem .45rem;
+  margin-left:.5rem;white-space:nowrap}
+.pz-punkte{display:inline-flex;gap:3px;margin-left:.55rem;vertical-align:middle}
+.pz-punkte i{display:block;width:6px;height:6px;border-radius:50%}
+
+/* ── Einwände, an der Prämisse verankert ──────────────────────── */
+.einwaende{margin:.15rem 0 .8rem 0;display:none;flex-direction:column;gap:.5rem}
+.pz.offen .einwaende{display:flex}
+.ew{border-left:3px solid var(--ef,var(--accent2));background:var(--bg2);
+  border-radius:0 8px 8px 0;padding:.6rem .8rem}
+.ew-kopf{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.ew-wer{font-weight:500;font-size:.85rem}
+.ew-art{font-family:var(--fm);font-size:.58rem;letter-spacing:.05em;text-transform:uppercase;
+  color:#fff;background:var(--ef,var(--accent2));border-radius:100px;padding:.05rem .45rem}
+.ew-jahr{font-family:var(--fm);font-size:.6rem;color:var(--text3)}
+.ew-abstand{font-family:var(--fm);font-size:.58rem;color:var(--text3);opacity:.75}
+.ew-quelle{font-family:var(--fm);font-size:.68rem;color:var(--text3)}
+.ew-text{font-size:.83rem;color:var(--text2);margin-top:.3rem;line-height:1.6}
+.ew-antwort{font-size:.8rem;color:var(--text2);margin-top:.45rem;padding-top:.45rem;
+  border-top:1px dashed var(--border2)}
+.ew-antwort b{color:var(--text);font-weight:500}
+
+.arg-hinweis{font-family:var(--fm);font-size:.66rem;color:var(--text3);margin-bottom:.8rem}
+
+/* ── Übersicht: wo greifen die Einwände an ───────────────────── */
+.arg-uebersicht{display:grid;gap:.5rem;
+  grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))}
+.uk{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.75rem .85rem}
+.uk h4{font-size:.85rem;font-weight:500;margin-bottom:.45rem}
+.uk .bal{display:flex;gap:2px;align-items:flex-end;height:34px;margin-bottom:.35rem}
+.uk .bal i{flex:1;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px;display:block}
+.uk .bal i.null{background:var(--border2)}
+.uk .quelle{display:block;font-family:var(--fm);font-size:.63rem;color:var(--text3)}
+
+.arg-note{background:var(--surface);border-left:3px solid var(--accent4);
+  padding:.9rem 1.1rem;border-radius:0 8px 8px 0;font-size:.87rem;color:var(--text2);
+  margin-top:1.8rem;line-height:1.7}
+
+@media(max-width:900px){
+  .arg-hero{padding:2.5rem 1.5rem 1rem}
+  .arg-wrap{padding:0 1.5rem 3rem}
+  .pz{grid-template-columns:26px 1fr;gap:.6rem}
+
+  /* Mit dreizehn Argumenten brach die Auswahl auf dem Telefon in einen Block
+     von über 600 px Höhe um — mehr als ein halber Bildschirm, nur für Knöpfe.
+     Deshalb hier: je Fachgebiet eine Zeile, die seitwärts geschoben wird
+     statt umzubrechen. Der senkrechte Trennstrich zwischen den Gruppen weicht
+     einer Linie darunter, weil die Gruppen jetzt untereinander stehen.
+     Oberhalb von 900 px unverändert. */
+  .arg-wahl{flex-direction:column;align-items:stretch;gap:.55rem;min-width:0}
+  /* width:100% statt align-items:stretch — gemessen hat die Streckung hier
+     nicht gegriffen: die Zeile blieb auf ihrer Inhaltsbreite von 533 px und
+     ragte bei 390 px Fenster um 167 px hinaus. Mit fester Breite greift der
+     overflow-x und die Zeile wird seitwärts geschoben statt abgeschnitten. */
+  .arg-gruppe{flex-wrap:nowrap;overflow-x:auto;min-width:0;width:100%;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    padding-bottom:.45rem;border-bottom:1px solid var(--border)}
+  .arg-gruppe::-webkit-scrollbar{display:none}
+  .arg-gruppe + .arg-gruppe{border-left:0;padding-left:0}
+  .arg-gruppe > *{flex:0 0 auto}
+  .arg-gruppe-titel{position:sticky;left:0;background:var(--bg);
+    padding-right:.4rem;z-index:1}
+}
+</style>
+
+<script>
+/* Wird bei jedem Aufruf der Seite ausgeführt (registerPageInit). */
+(function(){
+
+/* ── Bestand ───────────────────────────────────────────────────────
+   Feldschema: Argument → Prämissen[] ; jede Prämisse trägt ihre eigenen
+   Einwände; jeder Einwand kann eine Erwiderung tragen. */
+const ARGUMENTE = [
+{
+  id:'anselm', feld:'Gottesbeweise', jahr:1078, kurz:'Ontologischer Gottesbeweis',
+  titel:'Der ontologische Gottesbeweis',
+  wer:'Anselm von Canterbury · Proslogion 2–3 · 1077/78',
+  these:'Aus dem bloßen Begriff Gottes soll folgen, dass er existiert — ohne jede Erfahrung.',
+  schritte:[
+    { typ:'Definition', s:'Unter „Gott" verstehen wir das, worüber hinaus nichts Größeres gedacht werden kann.', ew:[] },
+    { typ:'Prämisse', s:'Auch wer nicht an Gott glaubt, versteht diesen Ausdruck — er hat ihn also im Verstand.', ew:[
+      { wer:'Thomas von Aquin', art:'Einwand', j:1265, quelle:'Summa theologiae I, q. 2, a. 1',
+        t:'Nicht alle verstehen unter „Gott" dasselbe; manche haben einen körperlichen Gott im Sinn. Die Voraussetzung eines geteilten Begriffs trägt nicht.' } ] },
+    { typ:'Prämisse', s:'Was im Verstand und außerdem in Wirklichkeit ist, ist größer als das, was nur im Verstand ist.', ew:[
+      { wer:'Gaunilo von Marmoutiers', art:'Gegenbeispiel', j:1078, quelle:'Liber pro insipiente, um 1078',
+        t:'Nach demselben Muster ließe sich die vollkommenste Insel beweisen — die es nicht gibt. Also taugt das Muster nicht.',
+        antwort:'Anselm: Nur beim Größten überhaupt gehört die Existenz zum Begriff; Inseln lassen sich stets steigern.' } ] },
+    { typ:'Prämisse', s:'Wäre das Größte nur im Verstand, ließe sich ein Größeres denken — nämlich dasselbe in Wirklichkeit.', ew:[
+      { wer:'Immanuel Kant', art:'Grundeinwand', j:1781, quelle:'Kritik der reinen Vernunft, B 620–630',
+        t:'„Sein" ist kein reales Prädikat. Hundert wirkliche Taler enthalten nicht mehr Begriff als hundert mögliche — Existenz erweitert einen Begriff nicht, sie setzt ihn.' },
+      { wer:'Gottlob Frege', art:'Verschärfung', j:1884, quelle:'Die Grundlagen der Arithmetik, 1884, § 53',
+        t:'Existenz ist eine Aussage über Begriffe, nicht über Gegenstände: sie sagt, dass ein Begriff erfüllt ist. Damit kann sie nicht Teil dieses Begriffs sein.' },
+      { wer:'Bertrand Russell', art:'Verschärfung', j:1905, quelle:'On Denoting, 1905',
+        t:'Kennzeichnungen wie „das Größte" sind keine Namen, sondern verkappte Behauptungen. Der Beweis verwechselt Beschreibung mit Bezugnahme.' } ] },
+    { typ:'Schluss', s:'Also existiert das, worüber hinaus nichts Größeres gedacht werden kann — in Wirklichkeit.', ew:[
+      { wer:'Alvin Plantinga', art:'Erneuerung', j:1974, quelle:'The Nature of Necessity, 1974',
+        t:'Modal gefasst hält der Gang stand: Ist maximale Größe möglich, dann in einer möglichen Welt — und weil sie notwendig ist, in allen. Der Streit verschiebt sich auf die Möglichkeitsprämisse.' } ] }
+  ]
+},
+{
+  id:'thomas', feld:'Gottesbeweise', jahr:1265, kurz:'Kosmologisches Argument',
+  titel:'Der Weg von der Bewegung (secunda / prima via)',
+  wer:'Thomas von Aquin · Summa theologiae I, q. 2, a. 3 · 1265–74',
+  these:'Aus der Tatsache, dass überhaupt etwas verursacht wird, soll eine erste Ursache folgen.',
+  schritte:[
+    { typ:'Beobachtung', s:'In der Welt gibt es eine Ordnung wirkender Ursachen.', ew:[] },
+    { typ:'Prämisse', s:'Nichts ist die wirkende Ursache seiner selbst, denn dazu müsste es vor sich selbst sein.', ew:[
+      { wer:'René Descartes', art:'Umkehrung', j:1641, quelle:'Meditationes, Erste Erwiderungen, AT VII 108–111, 1641',
+        t:'Genau das, was hier als unmöglich ausgeschlossen wird, macht Descartes zum Gottesbegriff: Gott sei „gewissermaßen Ursache seiner selbst" — nicht zeitlich vor sich, sondern kraft der Unerschöpflichkeit seiner Macht. Der Begriff der Wirkursache wird eigens ausgeweitet, um ihn zu fassen.',
+        antwort:'Der Schritt kostet etwas: Thomas braucht die Prämisse, um überhaupt zur ersten Ursache zu gelangen. Wird sie aufgegeben, verliert der Weg sein Ziel — man hätte die Ursache seiner selbst dann schon am Anfang.' },
+      { wer:'Antoine Arnauld', art:'Einwand', j:1641, quelle:'Vierte Einwände, AT VII 208–214, 1641',
+        t:'Ursache seiner selbst sei ein Widerspruch in sich. Von Gott dürfe man nur sagen, er habe keine Ursache — „a se" im verneinenden Sinn. Descartes verwandle eine Verneinung unbemerkt in eine Bejahung.',
+        antwort:'Descartes hält dagegen, die bloße Verneinung erkläre nichts: Wer fragt, warum etwas ist, gibt sich mit „es hat eben keinen Grund" nicht zufrieden — auch beim Notwendigen nicht.' },
+      { wer:'Baruch de Spinoza', art:'Umkehrung', j:1677, quelle:'Ethica I, Definitio 1, 1677',
+        t:'Bei Spinoza steht die Ursache seiner selbst nicht mehr am Ende einer Beweiskette, sondern als erste Definition am Anfang des ganzen Werks: dasjenige, dessen Wesen die Existenz einschließt. Was bei Thomas ausgeschlossen war und bei Descartes eine Ausnahme, ist hier der Ausgangspunkt.',
+        antwort:'Der Preis ist die Weltordnung, die daraus folgt: Wenn nur die Substanz Ursache ihrer selbst ist, folgt alles Übrige aus ihr mit derselben Notwendigkeit, mit der aus dem Wesen des Dreiecks die Winkelsumme folgt — die Kette der Wirkursachen wird zur Ableitung.' } ] },
+    { typ:'Prämisse', s:'Eine Reihe wirkender Ursachen kann nicht ins Unendliche zurückgehen.', ew:[
+      { wer:'David Hume', art:'Einwand', j:1779, quelle:'Dialogues concerning Natural Religion, IX, 1779',
+        t:'Ist jedes Glied einer unendlichen Reihe erklärt, ist die Reihe erklärt. Nach der Ursache des Ganzen zu fragen heißt, das Ganze wie ein weiteres Glied zu behandeln.' },
+      { wer:'Immanuel Kant', art:'Grundeinwand', j:1781, quelle:'Kritik der reinen Vernunft, B 454 ff.',
+        t:'Erste Antinomie: Für Anfang wie Anfangslosigkeit der Reihe lassen sich gleich gute Beweise führen. Die Vernunft überschreitet hier ihre Grenze.' } ] },
+    { typ:'Prämisse', s:'Ohne erste Ursache gäbe es keine mittlere und keine letzte — also nichts von dem, was wir sehen.', ew:[
+      { wer:'John Duns Scotus', art:'Präzisierung', j:1305, quelle:'Tractatus de primo principio, um 1305',
+        t:'Der Schluss gilt nur für gleichzeitig wirkende (essentiell geordnete) Ursachen, nicht für eine Kette in der Zeit. Für Letztere ist unendlicher Rückgang denkbar.',
+        antwort:'Thomas meint tatsächlich die essentielle Ordnung — der Einwand schärft, was er ohnehin voraussetzt.' } ] },
+    { typ:'Schluss', s:'Also gibt es eine erste Ursache, die alle Gott nennen.', ew:[
+      { wer:'Bertrand Russell', art:'Einwand', j:1927, quelle:'Why I Am Not a Christian, 1927',
+        t:'Selbst wenn eine erste Ursache folgt: Dass sie allwissend, gütig und personal ist, folgt nicht mit. Zwischen Beweisziel und Gottesbegriff klafft eine Lücke.' } ] }
+  ]
+},
+{
+  id:'theodizee', feld:'Gottesbeweise', jahr:1710, kurz:'Theodizee',
+  titel:'Die beste aller möglichen Welten',
+  wer:'Leibniz · Essais de Théodicée · 1710',
+  these:'Das Übel in der Welt soll mit einem allmächtigen und gütigen Gott vereinbar sein.',
+  schritte:[
+    { typ:'Prämisse', s:'Gott ist allmächtig, allwissend und vollkommen gütig.', ew:[
+      { wer:'Epikur (überliefert)', art:'Trilemma', j:-300, quelle:'bei Laktanz, De ira Dei 13',
+        t:'Will er und kann nicht? Dann ist er ohnmächtig. Kann er und will nicht? Dann missgünstig. Will und kann er? Woher dann das Übel?' } ] },
+    { typ:'Prämisse', s:'Gott hat unter unendlich vielen möglichen Welten diese gewählt.', ew:[
+      { wer:'Voltaire', art:'Spott', j:1759, quelle:'Candide, 1759',
+        t:'Nach dem Erdbeben von Lissabon 1755 ist der Satz von der besten Welt keine These mehr, sondern ein Hohn auf die Opfer.' },
+      { wer:'David Hume', art:'Einwand', j:1779, quelle:'Dialogues, X–XI, 1779',
+        t:'Aus der Welt, die wir sehen, würde niemand auf einen vollkommenen Urheber schließen — man kann ihn nur voraussetzen und die Welt dann zurechtlegen.' },
+      { wer:'William Rowe', art:'Verschärfung', j:1979, quelle:'The Problem of Evil…, 1979',
+        t:'Es gibt Leiden, das erkennbar keinem Gut dient — das Reh, das im Waldbrand verbrennt, ohne dass es jemand sieht. Sinnloses Übel spricht gegen die Auswahlthese.' } ] },
+    { typ:'Prämisse', s:'Eine Welt mit freien Geschöpfen ist besser als eine ohne; Freiheit schließt Missbrauch ein.', ew:[
+      { wer:'J. L. Mackie', art:'Einwand', j:1955, quelle:'Evil and Omnipotence, 1955',
+        t:'Ein Allmächtiger hätte Wesen schaffen können, die frei sind und stets das Gute wählen. Dass beides unvereinbar sei, ist unbewiesen.',
+        antwort:'Plantinga (1974): Es könnte sein, dass jedes mögliche freie Wesen in mindestens einer Lage fehlgeht — dann war jene Welt Gott nicht verfügbar.' } ] },
+    { typ:'Prämisse', s:'Metaphysisches Übel ist bloße Endlichkeit; sie gehört zum Geschöpfsein.', ew:[] },
+    { typ:'Schluss', s:'Also ist diese Welt trotz allen Übels die beste mögliche.', ew:[
+      { wer:'Iwan Karamasow', art:'Ablehnung', j:1880, quelle:'Dostojewski, Die Brüder Karamasow, 1880, Buch V',
+        t:'Selbst wenn die Rechnung aufginge, gibt er die Eintrittskarte zurück: keine Harmonie ist die Träne eines gequälten Kindes wert. Der Einwand bestreitet nicht die Gültigkeit, sondern die Zuständigkeit des Arguments.' } ] }
+  ]
+},
+{
+  id:'gettier', feld:'Erkenntnistheorie', jahr:-369, kurz:'Wissen als wahre begründete Meinung',
+  titel:'Wissen ist wahre, begründete Meinung',
+  wer:'Platon, Theaitetos 201c–210d — Standardanalyse bis 1963',
+  these:'Drei Bedingungen sollen zusammen hinreichen, damit jemand etwas weiß.',
+  schritte:[
+    { typ:'Bedingung', s:'S glaubt, dass p.', ew:[] },
+    { typ:'Bedingung', s:'p ist wahr.', ew:[] },
+    { typ:'Bedingung', s:'S ist in der Annahme, dass p, gerechtfertigt.', ew:[
+      { wer:'Edmund Gettier', art:'Gegenbeispiel', j:1963, quelle:'Is Justified True Belief Knowledge?, 1963',
+        t:'Zwei Fälle, in denen alle drei Bedingungen erfüllt sind und dennoch niemand von Wissen sprechen würde: Die Rechtfertigung führt über eine falsche Zwischenannahme zufällig zu etwas Wahrem.' },
+      { wer:'Alvin Goldman', art:'Reparatur', j:1967, quelle:'A Causal Theory of Knowing, 1967',
+        t:'Es fehlt der kausale Zusammenhang zwischen Tatsache und Überzeugung. Wissen verlangt, dass die Tatsache die Überzeugung hervorgebracht hat.' },
+      { wer:'Robert Nozick', art:'Reparatur', j:1981, quelle:'Philosophical Explanations, 1981',
+        t:'Wissen muss der Wahrheit folgen: Wäre p falsch, würde S es nicht glauben — und wäre p wahr, würde S es glauben.' } ] },
+    { typ:'Schluss', s:'Also weiß S, dass p, genau dann, wenn 1–3 erfüllt sind.', ew:[
+      { wer:'Timothy Williamson', art:'Umkehrung', j:2000, quelle:'Knowledge and its Limits, 2000',
+        t:'Die Zerlegung selbst ist der Fehler. Wissen ist nicht aus Glauben plus Zusätzen zusammengesetzt, sondern der begrifflich erste Zustand.' } ] }
+  ]
+},
+{
+  id:"konsequenz", kurz:"Konsequenzargument", jahr:1983, feld:"Willensfreiheit",
+  titel:"Das Konsequenzargument gegen die Willensfreiheit",
+  wer:"Peter van Inwagen · An Essay on Free Will · 1983",
+  these:"Wenn der Determinismus wahr ist, hängen unsere Handlungen von Dingen ab, über die wir nie Macht hatten — also handeln wir nicht frei.",
+  schritte:[
+    { typ:"Prämisse", s:"Wenn der Determinismus wahr ist, folgen unsere Handlungen aus dem Zustand der Welt in ferner Vergangenheit zusammen mit den Naturgesetzen.", ew:[] },
+    { typ:"Prämisse", s:"Über den Zustand der Welt vor unserer Geburt haben wir keine Macht.", ew:[] },
+    { typ:"Prämisse", s:"Über die Naturgesetze haben wir ebenfalls keine Macht.", ew:[
+      { wer:"David Lewis", art:"Einwand", j:1981, quelle:"Are We Free to Break the Laws?", t:"Zu behaupten, ich könne anders handeln, heißt nicht, ich könne ein Gesetz brechen. Es heißt nur: Hätte ich anders gehandelt, wäre die Vorgeschichte eine andere gewesen. Die schwache Lesart ist harmlos." }
+    ] },
+    { typ:"Prämisse", s:"Hat jemand über A keine Macht und folgt B notwendig aus A, so hat er auch über B keine Macht (Übertragungsprinzip).", ew:[
+      { wer:"Michael McKay & David Johnson", art:"Gegenbeispiel", j:1996, quelle:"A Reconsideration of an Argument against Compatibilism", t:"Das Übertragungsprinzip ist nicht allgemeingültig: Aus zwei Sätzen der Form „ich habe keine Macht darüber\" folgt beim Zusammensetzen nicht dasselbe. Ein Münzwurf zeigt, dass die Regel zusammenbricht." },
+      { wer:"Harry Frankfurt", art:"Umkehrung", j:1969, quelle:"Alternate Possibilities and Moral Responsibility", t:"Verantwortung verlangt gar keine offenen Alternativen. Wenn jemand eingreifen würde, falls ich anders wollte — aber nicht eingreift, weil ich es so will —, bin ich verantwortlich, obwohl ich nicht anders konnte.", antwort:"Die Debatte verschiebt sich damit von der Freiheit zur Verantwortung: Beide könnten verschiedene Bedingungen haben." }
+    ] },
+    { typ:"Schluss", s:"Also haben wir über unsere Handlungen keine Macht — Determinismus und Freiheit vertragen sich nicht.", ew:[
+      { wer:"Peter Strawson", art:"Umkehrung", j:1962, quelle:"Freedom and Resentment", t:"Die Frage ist falsch gestellt. Unsere Praxis des Übelnehmens und Dankens hängt an keiner metaphysischen These und ließe sich auch durch deren Widerlegung nicht abschaffen." },
+      { wer:"Robert Kane", art:"Erneuerung", j:1996, quelle:"The Significance of Free Will", t:"Wer die Freiheit retten will, muss den Determinismus bestreiten: An wenigen selbstformenden Entscheidungen ist der Ausgang tatsächlich offen, und gerade daraus entsteht der eigene Charakter." }
+    ] },
+  ]
+},
+{
+  id:"utilitarismus", kurz:"Utilitaristisches Grundargument", jahr:1789, feld:"Ethik",
+  titel:"Das Prinzip des größten Glücks",
+  wer:"Jeremy Bentham · Einführung in die Prinzipien der Moral · 1789",
+  these:"Richtig ist die Handlung, die die Summe des Wohlergehens am stärksten vermehrt — und sonst nichts.",
+  schritte:[
+    { typ:"Prämisse", s:"Allein Freude und Leid bestimmen, was für ein Wesen gut oder schlecht ist.", ew:[
+      { wer:"Robert Nozick", art:"Gegenbeispiel", j:1974, quelle:"Anarchie, Staat, Utopia", t:"Die Erlebnismaschine: Wer sich lebenslang die angenehmsten Erfahrungen einspielen ließe, hätte maximale Freude — und niemand würde einsteigen wollen. Also zählt mehr als das Erleben." },
+      { wer:"John Stuart Mill", art:"Präzisierung", j:1863, quelle:"Der Utilitarismus", t:"Freuden unterscheiden sich nicht nur der Menge, sondern der Art nach. Besser ein unzufriedener Sokrates als ein zufriedenes Schwein.", antwort:"Damit braucht man aber ein Maß außerhalb der Freude, um Freuden zu ordnen — der Ansatz verliert seine Einfachheit." }
+    ] },
+    { typ:"Prämisse", s:"Jedes Wesen zählt gleich; niemandes Leid wiegt von vornherein schwerer.", ew:[
+      { wer:"Peter Singer", art:"Verschärfung", j:1975, quelle:"Animal Liberation", t:"Konsequent angewandt schließt der Grundsatz die Tiere ein: Wenn Leidensfähigkeit zählt, ist die Artgrenze so willkürlich wie die Rassengrenze." }
+    ] },
+    { typ:"Prämisse", s:"Die Folgen einer Handlung lassen sich abwägen und summieren.", ew:[
+      { wer:"John Rawls", art:"Grundeinwand", j:1971, quelle:"Eine Theorie der Gerechtigkeit", t:"Die Summierung nimmt die Trennung der Personen nicht ernst. Was in einem Leben zulässig ist — heute leiden, um morgen zu gewinnen —, lässt sich nicht auf verschiedene Menschen übertragen." },
+      { wer:"Bernard Williams", art:"Einwand", j:1973, quelle:"Utilitarismus. Pro und Contra", t:"Der Utilitarismus zerstört die Integrität: Er verlangt, die eigenen Vorhaben jederzeit fallenzulassen, sobald die Rechnung es nahelegt — und macht die Person zum bloßen Durchgangsort von Nutzen." }
+    ] },
+    { typ:"Prämisse", s:"Was die Summe erhöht, ist geboten — unabhängig davon, wie es zustande kommt.", ew:[
+      { wer:"Elizabeth Anscombe", art:"Ablehnung", j:1958, quelle:"Modern Moral Philosophy", t:"Wer bereit ist, einen Unschuldigen hinzurichten, sofern die Rechnung aufgeht, zeigt damit nur eine verdorbene Denkungsart. Über solche Vorschläge diskutiert man nicht." }
+    ] },
+    { typ:"Schluss", s:"Also ist diejenige Handlung richtig, die das größte Glück der größten Zahl bewirkt.", ew:[
+      { wer:"R. M. Hare", art:"Reparatur", j:1981, quelle:"Moralisches Denken", t:"Zwei Ebenen trennen: Im Alltag folgen wir Regeln, die sich bewährt haben; nur bei deren Konflikt rechnen wir. Damit entfallen die meisten Gegenbeispiele." }
+    ] },
+  ]
+},
+{
+  id:"muenchhausen", kurz:"Münchhausen-Trilemma", jahr:1968, feld:"Erkenntnistheorie",
+  titel:"Das Münchhausen-Trilemma",
+  wer:"Hans Albert · Traktat über kritische Vernunft · 1968",
+  these:"Jeder Versuch, etwas letztgültig zu begründen, endet in einer von drei gleich unbefriedigenden Lagen.",
+  schritte:[
+    { typ:"Prämisse", s:"Wer eine Aussage begründet, muss die Begründung ihrerseits begründen können.", ew:[
+      { wer:"Ludwig Wittgenstein", art:"Einwand", j:1969, quelle:"Über Gewißheit", t:"Begründungen haben ein Ende — nicht, weil man aufgibt, sondern weil das Handeln zugrunde liegt. Manche Sätze stehen fest wie Angeln, an denen sich die Tür dreht." }
+    ] },
+    { typ:"Prämisse", s:"Entweder bricht man willkürlich ab (Abbruch des Verfahrens).", ew:[
+      { wer:"Roderick Chisholm", art:"Umkehrung", j:1973, quelle:"The Problem of the Criterion", t:"Der Abbruch ist kein Willkürakt, wenn man bei Sätzen ankommt, die sich selbst rechtfertigen. Der Fundamentalismus nimmt genau das an." }
+    ] },
+    { typ:"Prämisse", s:"Oder man dreht sich im Kreis (logischer Zirkel).", ew:[
+      { wer:"Kohärenztheorie", art:"Umkehrung", j:1985, quelle:"Laurence BonJour, The Structure of Empirical Knowledge", t:"Der Kreis ist nur dann fehlerhaft, wenn er klein ist. Ein weites Netz sich gegenseitig stützender Überzeugungen begründet nicht linear, sondern durch Zusammenhang." }
+    ] },
+    { typ:"Prämisse", s:"Oder man begründet endlos weiter (unendlicher Regress).", ew:[
+      { wer:"Peter Klein", art:"Umkehrung", j:1999, quelle:"Human Knowledge and the Infinite Regress of Reasons", t:"Auch der Regress ist keine Katastrophe: Gründe müssen verfügbar sein, nicht abgearbeitet. Ein unendlicher Vorrat an Gründen ist denkbar." }
+    ] },
+    { typ:"Schluss", s:"Also ist eine Letztbegründung unmöglich; an ihre Stelle tritt die kritische Prüfung.", ew:[
+      { wer:"Karl-Otto Apel", art:"Ablehnung", j:1976, quelle:"Das Apriori der Kommunikationsgemeinschaft", t:"Wer das Trilemma vorträgt, setzt dabei Regeln der Argumentation voraus, die er nicht bestreiten kann, ohne sich selbst zu widersprechen. Genau darin liegt eine Letztbegründung.", antwort:"Albert: Der Selbstwiderspruch zeigt nur, dass man diese Regeln faktisch benutzt — nicht, dass sie wahr sind." }
+    ] },
+  ]
+},
+{
+  id:"privatsprache", kurz:"Privatsprachenargument", jahr:1953, feld:"Sprache und Geist",
+  titel:"Das Privatsprachenargument",
+  wer:"Ludwig Wittgenstein · Philosophische Untersuchungen §§ 243–315 · 1953",
+  these:"Eine Sprache, die grundsätzlich nur einer verstehen könnte, ist keine Sprache — und damit fällt das Fundament der Bewusstseinsphilosophie.",
+  schritte:[
+    { typ:"Annahme", s:"Angenommen, jemand führt ein Zeichen „E\" für eine nur ihm zugängliche Empfindung ein.", ew:[] },
+    { typ:"Prämisse", s:"Ein Zeichen zu gebrauchen heißt, einer Regel zu folgen — es kann richtig oder falsch angewandt werden.", ew:[
+      { wer:"Saul Kripke", art:"Verschärfung", j:1982, quelle:"Wittgenstein über Regeln und Privatsprache", t:"Das Problem ist noch tiefer: Keine Tatsache über mich legt fest, welcher Regel ich bisher gefolgt bin. Die Lösung liegt allein in der Übereinstimmung der Gemeinschaft." }
+    ] },
+    { typ:"Prämisse", s:"Bei „E\" gibt es keinen Unterschied zwischen richtiger Anwendung und dem bloßen Eindruck, richtig anzuwenden.", ew:[
+      { wer:"Ayer", art:"Gegenbeispiel", j:1954, quelle:"Can There Be a Private Language?", t:"Ein einsamer Robinson könnte sehr wohl Namen für Dinge einführen und sich später an sie erinnern — Erinnerung ist nicht weniger verlässlich, nur weil niemand zusieht.", antwort:"Rhees: Es geht nicht um Einsamkeit, sondern um grundsätzliche Unzugänglichkeit — Robinsons Sprache wäre für andere erlernbar." }
+    ] },
+    { typ:"Prämisse", s:"Wo es diesen Unterschied nicht gibt, kann von einer Regel keine Rede sein.", ew:[
+      { wer:"Käfer im Schachtel", art:"Präzisierung", j:1953, quelle:"Philosophische Untersuchungen § 293", t:"Wittgensteins eigenes Bild: Wenn jeder eine Schachtel mit etwas darin hat, das „Käfer\" heißt, und niemand in die Schachtel eines anderen sehen kann, dann spielt der Inhalt für den Sprachgebrauch keine Rolle — er könnte auch fehlen." }
+    ] },
+    { typ:"Schluss", s:"Also ist eine private Sprache unmöglich; Bedeutung entsteht im gemeinsamen Gebrauch.", ew:[
+      { wer:"Jerry Fodor", art:"Ablehnung", j:1975, quelle:"The Language of Thought", t:"Denken setzt eine innere Sprache voraus, die niemand gelernt hat und die keiner Gemeinschaft bedarf. Wittgensteins Argument trifft sie nicht." },
+      { wer:"Michel Henry", art:"Umkehrung", j:1963, quelle:"Die Wesensoffenbarung", t:"Aus phänomenologischer Sicht ist die Selbstgegebenheit des Erlebens keine Frage von Regeln: Das Leben erscheint sich selbst, bevor es benannt wird." }
+    ] },
+  ]
+},
+{
+  id:"seeschlacht", kurz:"Die Seeschlacht", jahr:-350, feld:"Willensfreiheit",
+  titel:"Die Seeschlacht von morgen (contingentia futura)",
+  wer:"Aristoteles · De interpretatione 9 (18a28–19b4) · um 350 v. Chr.",
+  these:"Wenn schon heute feststeht, ob morgen eine Seeschlacht stattfindet, scheint für Beratung und Entscheidung kein Raum zu bleiben.",
+  schritte:[
+    { typ:"Prämisse", s:"Von zwei einander widersprechenden Aussagen ist die eine wahr und die andere falsch (Zweiwertigkeit).", ew:[
+      { wer:"Jan Łukasiewicz", art:"Ablehnung", j:1920, quelle:"O logice trójwartościowej, 1920",
+        t:"Genau hier setzt die dreiwertige Logik an: Aussagen über zukünftig Unentschiedenes erhalten einen dritten Wert — weder wahr noch falsch, sondern unbestimmt. Łukasiewicz nennt Aristoteles ausdrücklich als Anlass.",
+        antwort:"Der Preis ist hoch: Mit der Zweiwertigkeit fallen auch der Satz vom ausgeschlossenen Dritten und große Teile der klassischen Schlussregeln." } ] },
+    { typ:"Anwendung", s:"Also ist bereits heute wahr oder falsch, dass morgen eine Seeschlacht stattfinden wird.", ew:[] },
+    { typ:"Prämisse", s:"Eine Aussage ist wahr, weil sich die Sache so verhält — nicht umgekehrt. Ist sie heute wahr, so verhält es sich in dieser Hinsicht bereits heute so.", ew:[
+      { wer:"Wilhelm von Ockham", art:"Präzisierung", j:1324, quelle:"Tractatus de praedestinatione, um 1324",
+        t:"Zu unterscheiden ist, ob eine Aussage schlechthin notwendig ist oder nur unter der Voraussetzung, dass sie wahr ist. Aus „notwendigerweise gilt: wenn p wahr ist, dann p\" folgt nicht „p ist notwendig\".",
+        antwort:"Ockham braucht die Unterscheidung für ein eigenes Problem: göttliches Vorherwissen soll die menschliche Freiheit nicht aufheben." } ] },
+    { typ:"Zwischenschluss", s:"Dann konnte es nie anders kommen: Beraten und Entscheiden wären wirkungslos, weil ohnehin feststeht, was geschieht.", ew:[
+      { wer:"Willard V. O. Quine", art:"Grundeinwand", j:1953, quelle:"On a So-called Paradox, Mind 62, 1953",
+        t:"Der Schluss lebt von einer Verwechslung: Notwendig ist die Folgerung, nicht das Gefolgerte. Dass etwas wahr ist, macht es nicht unvermeidlich — es macht nur seine Verneinung falsch." },
+      { wer:"Boethius", art:"Einwand", j:524, quelle:"Consolatio philosophiae V, prosa 6",
+        t:"Wissen richtet sich nach dem Vermögen des Erkennenden, nicht nach der Natur des Erkannten. Auch ein Blick, der alles zugleich überschaut, macht das Überschaute nicht notwendig." } ] },
+    { typ:"Aristoteles' Ausweg", s:"Notwendig wahr ist nur, dass die Schlacht entweder stattfinden oder nicht stattfinden wird. Dass sie stattfinden wird, ist es nicht — und dass sie es nicht wird, ebenso wenig.", ew:[
+      { wer:"G. E. M. Anscombe", art:"Umkehrung", j:1956, quelle:"Aristotle and the Sea Battle, Mind 65, 1956",
+        t:"Ob Aristoteles überhaupt die Zweiwertigkeit einschränkt, ist umstritten. Nach dieser Lesart bestreitet er nicht, dass die Aussage einen Wahrheitswert hat, sondern nur, dass er schon jetzt feststeht — der Text lässt beides zu.",
+        antwort:"Die Deutungsfrage ist bis heute offen; das Kapitel gilt als eines der meistdiskutierten der gesamten aristotelischen Überlieferung." } ] }
+  ]
+},
+{
+  id:"meisterargument", kurz:"Meisterargument", jahr:-300, feld:"Willensfreiheit",
+  titel:"Das Meisterargument des Diodoros Kronos",
+  wer:"Diodoros Kronos · überliefert bei Epiktet, Dissertationes II 19,1–5 · um 300 v. Chr.",
+  these:"Drei Sätze leuchten einzeln ein und lassen sich zu dritt nicht halten. Je zwei von ihnen erzwingen, den dritten aufzugeben — die Wahl entscheidet über den Begriff des Möglichen.",
+  schritte:[
+    { typ:"Satz 1", s:"Jedes vergangene Wahre ist notwendig. Was einmal geschehen ist, lässt sich nicht mehr anders machen.", ew:[
+      { wer:"Kleanthes", art:"Ablehnung", j:-250, quelle:"bei Epiktet, Dissertationes II 19,2",
+        t:"Kleanthes gibt diesen Satz preis: Nicht jedes vergangene Wahre sei notwendig. Damit bleibt Raum für Möglichkeiten, die sich nie verwirklichen.",
+        antwort:"Der Preis: Die Festigkeit der Vergangenheit selbst wird fraglich — und mit ihr die Rede davon, dass etwas unwiderruflich geschehen ist." } ] },
+    { typ:"Satz 2", s:"Aus einem Möglichen folgt nichts Unmögliches.", ew:[
+      { wer:"Chrysipp", art:"Ablehnung", j:-230, quelle:"bei Epiktet, Dissertationes II 19,2–4",
+        t:"Chrysipp opfert diesen Satz statt des ersten und lässt zu, dass aus Möglichem Unmögliches folgt. Für die Stoa hängt daran, dass Handlungen trotz der Schicksalslehre noch „an uns\" sind." } ] },
+    { typ:"Satz 3", s:"Möglich ist auch das, was weder wahr ist noch jemals wahr sein wird.", ew:[] },
+    { typ:"Feststellung", s:"Die drei Sätze widerstreiten einander. Diodoros gibt den dritten preis.", ew:[
+      { wer:"Zur Überlieferung", art:"Präzisierung", j:110, quelle:"Epiktet, Dissertationes II 19,1",
+        t:"Epiktet nennt die drei Sätze und den Streit darüber — die Ableitung selbst überliefert er nicht. Jede Rekonstruktion des Meisterarguments ergänzt daher Prämissen, die im Text nicht stehen.",
+        antwort:"Deshalb gibt es nicht ein Meisterargument, sondern eine Reihe konkurrierender Rekonstruktionen." } ] },
+    { typ:"Schluss", s:"Möglich ist nur, was entweder wahr ist oder wahr sein wird. Eine Möglichkeit, die sich nie verwirklicht, gibt es nicht.", ew:[
+      { wer:"Arthur N. Prior", art:"Erneuerung", j:1955, quelle:"Diodoran Modalities, Philosophical Quarterly 5, 1955",
+        t:"Mit den Mitteln der Zeitlogik lässt sich der Gang formal nachbauen: Möglichkeit als „jetzt oder irgendwann später wahr\". Der Streit verschiebt sich damit auf die Struktur der Zeit selbst — auf die Frage, ob die Zukunft linear oder verzweigt ist." },
+      { wer:"Einwand der Alltagssprache", art:"Einwand", j:null, quelle:null,
+        t:"Wir nennen ständig Dinge möglich, die nie eintreten: dass dieses Glas zerbricht, dass jemand anders entschieden hätte. Diodoros' Begriff macht solche Rede zu einem durchgehenden Irrtum — was erklärungsbedürftig ist." } ] }
+  ]
+},
+{
+  id:"induktion", kurz:"Induktionsproblem", jahr:1748, feld:"Erkenntnistheorie",
+  titel:"Warum die Sonne morgen aufgehen soll",
+  wer:"David Hume · An Enquiry concerning Human Understanding IV–V · 1748",
+  these:"Kein Schluss von Beobachtetem auf Unbeobachtetes lässt sich rechtfertigen, ohne genau das schon vorauszusetzen, was er beweisen soll.",
+  schritte:[
+    { typ:"Prämisse", s:"Alles Wissen über Tatsachen, das über Wahrnehmung und Gedächtnis hinausgeht, beruht auf dem Verhältnis von Ursache und Wirkung.", ew:[] },
+    { typ:"Prämisse", s:"Dieses Verhältnis erkennen wir nicht durch Denken, sondern durch Erfahrung: Kein Begriff eines Dinges verrät, was es bewirkt.", ew:[
+      { wer:"Immanuel Kant", art:"Umkehrung", j:1781, quelle:"Kritik der reinen Vernunft, B 4–5; Prolegomena, Vorrede",
+        t:"Kant nimmt den Einwand an und dreht ihn um: Kausalität wird nicht aus der Erfahrung gewonnen, sondern ist Bedingung dafür, dass Erfahrung überhaupt zustande kommt. Hume habe ihn aus dem dogmatischen Schlummer geweckt.",
+        antwort:"Der Preis ist die transzendentale Wende: Die Kausalität gilt dann für Erscheinungen, nicht für Dinge an sich." } ] },
+    { typ:"Prämisse", s:"Erfahrung lehrt nur, was bisher geschah. Der Schluss auf künftige Fälle setzt voraus, dass die Zukunft der Vergangenheit gleicht.", ew:[] },
+    { typ:"Zwischenschluss", s:"Diese Voraussetzung lässt sich nicht beweisen: nicht logisch, denn ihr Gegenteil ist widerspruchsfrei — und nicht aus Erfahrung, denn das wäre ein Zirkel.", ew:[
+      { wer:"Peter F. Strawson", art:"Einwand", j:1952, quelle:"Introduction to Logical Theory, Kap. 9, 1952",
+        t:"Die Forderung ist sinnlos. Nach der Rechtfertigung des induktiven Verfahrens im Ganzen zu fragen heißt zu fragen, ob das Vernünftige vernünftig ist — „begründet\" heißt bei Tatsachenfragen eben: durch Induktion gestützt." },
+      { wer:"Nelson Goodman", art:"Verschärfung", j:1955, quelle:"Fact, Fiction, and Forecast, 1955",
+        t:"Das Problem ist schlimmer, als Hume dachte: Selbst wer die Gleichförmigkeit zugesteht, weiß nicht, worin sie besteht. Dieselben Beobachtungen stützen unverträgliche Verallgemeinerungen gleich gut — es fehlt ein Grund, warum manche Begriffe projizierbar sind und andere nicht." } ] },
+    { typ:"Schluss", s:"Nicht die Vernunft führt uns von Beobachtetem zu Unbeobachtetem, sondern Gewohnheit — eine Naturanlage, kein Beweis.", ew:[
+      { wer:"Karl R. Popper", art:"Reparatur", j:1934, quelle:"Logik der Forschung, 1934",
+        t:"Popper gibt Hume in der Sache recht und zieht eine andere Folgerung: Dann arbeitet die Wissenschaft eben nicht induktiv. Theorien werden vermutet und an Erfahrung gescheitert, nie bestätigt — Falsifikation statt Verifikation.",
+        antwort:"Gegenfrage: Warum sollte man einer bislang unwiderlegten Theorie beim Brückenbau vertrauen? Die Rechtfertigung der Praxis bleibt offen." } ] }
+  ]
+},
+{
+  id:"wette", kurz:"Pascals Wette", jahr:1670, feld:"Gottesbeweise",
+  titel:"Die Wette",
+  wer:"Blaise Pascal · Pensées, Fragment Lafuma 418 / Brunschvicg 233 · postum 1670",
+  these:"Kein Beweis, sondern eine Entscheidung unter Ungewissheit: Wer nicht weiß, ob Gott ist, soll ausrechnen, worauf zu setzen vernünftig wäre.",
+  schritte:[
+    { typ:"Ausgangslage", s:"Ob Gott ist, lässt sich mit Vernunft nicht entscheiden. Enthalten kann man sich aber nicht — man ist bereits eingeschifft und setzt so oder so.", ew:[
+      { wer:"Einwand der Enthaltung", art:"Einwand", j:null, quelle:null,
+        t:"Wer keine Meinung hat, wettet nicht, sondern lebt weiter. Dass Nichthandeln bereits ein Einsatz sei, ist keine Beobachtung, sondern eine Setzung — und trägt die ganze Beweislast." } ] },
+    { typ:"Prämisse", s:"Setzt man auf Gott und er ist, ist der Gewinn unendlich. Setzt man auf ihn und er ist nicht, verliert man Endliches.", ew:[
+      { wer:"Alan Hájek", art:"Verschärfung", j:2003, quelle:"Waging War on Pascal's Wager, Philosophical Review 112, 2003",
+        t:"Mit unendlichem Nutzen gerät die Rechnung außer Kontrolle: Auch wer nur mit winziger Wahrscheinlichkeit glaubt oder sein Verhalten dem Zufall überlässt, erreicht denselben unendlichen Erwartungswert. Dann ist jede Strategie gleich gut — und die Wette entscheidet nichts." } ] },
+    { typ:"Prämisse", s:"Ein unendlicher Gewinn überwiegt jeden endlichen Einsatz, sobald die Gewinnchance nicht null ist.", ew:[
+      { wer:"Denis Diderot", art:"Gegenbeispiel", j:1746, quelle:"Pensées philosophiques, § 59, 1746",
+        t:"Dasselbe Argument steht jedem Priester jeder Religion zu Gebote. Ein Imam könnte es ebenso führen — die Wette sagt, dass zu setzen ist, aber nicht, worauf.",
+        antwort:"Pascal schreibt für einen Leser, dem sich die Frage in einer bestimmten Gestalt stellt, nicht für eine Auswahl unter allen denkbaren Göttern. Als allgemeines Argument bleibt der Einwand stehen." },
+      { wer:"Einwand des eifersüchtigen Gottes", art:"Gegenbeispiel", j:null, quelle:null,
+        t:"Denkbar ist auch ein Gott, der gerade den Berechnenden verwirft und den redlichen Zweifler belohnt. Dann kehrt die Rechnung sich um." } ] },
+    { typ:"Schluss", s:"Also ist es vernünftig, auf Gott zu setzen.", ew:[
+      { wer:"Voltaire", art:"Spott", j:1734, quelle:"Lettres philosophiques, 25. Brief (Remarques sur Pascal), 1734",
+        t:"Über sein Heil zu würfeln sei unschicklich und obendrein wirkungslos: Das Interesse, glauben zu wollen, ist kein Beweis dafür, dass etwas ist." },
+      { wer:"William James", art:"Einwand", j:1896, quelle:"The Will to Believe, 1896",
+        t:"Ein Glaube, der aus der Rechnung entspringt, wäre gerade nicht der geforderte. Würde ein Gott, dessen es einen gäbe, solche Anhänger nicht eher zurückweisen als belohnen?" } ] },
+    { typ:"Pascals Zusatz", s:"Wer nicht glauben kann, soll es machen wie die, die einst ebenso gebunden waren: die Riten mitvollziehen. Der Glaube stellt sich ein.", ew:[
+      { wer:"Einwand der Unwillkürlichkeit", art:"Grundeinwand", j:null, quelle:null,
+        t:"Überzeugungen lassen sich nicht beschließen. Man kann sich in eine Lage bringen, in der man am Ende glaubt — aber genau das ist keine Antwort auf die Frage, ob es wahr ist.",
+        antwort:"Pascal sieht das und weicht der Frage nach der Wahrheit bewusst aus: Die Wette gehört zur Vorbereitung des Herzens, nicht zur Erkenntnis." } ] }
+  ]
+},
+{
+  id:"chinesisches-zimmer", kurz:"Chinesisches Zimmer", jahr:1980, feld:"Sprache und Geist",
+  titel:"Das Chinesische Zimmer",
+  wer:"John R. Searle · Minds, Brains, and Programs, Behavioral and Brain Sciences 3 · 1980",
+  these:"Ein Programm kann sich in jedem Verhalten wie ein Verstehender ausnehmen und dabei nichts verstehen — Zeichen zu verarbeiten ist nicht dasselbe wie zu bedeuten.",
+  schritte:[
+    { typ:"Gedankenexperiment", s:"Ein Mensch ohne Chinesischkenntnisse sitzt in einem Raum, empfängt chinesische Zeichen und gibt nach einem Regelbuch andere zurück. Von außen ist er von einem Chinesischsprecher nicht zu unterscheiden.", ew:[] },
+    { typ:"Prämisse", s:"Er versteht dabei kein Wort Chinesisch. Er hantiert mit Formen, nicht mit Bedeutungen.", ew:[
+      { wer:"Systemantwort", art:"Einwand", j:1980, quelle:"in: Searle 1980, Abschnitt I",
+        t:"Nicht der Mensch versteht, sondern das System aus Mensch, Regelbuch und Raum — so wenig wie ein einzelnes Neuron versteht.",
+        antwort:"Searle: Dann lerne der Mensch das Regelbuch auswendig und arbeite im Freien. Nun ist er das ganze System — und versteht noch immer nichts." },
+      { wer:"Roboterantwort", art:"Einwand", j:1980, quelle:"in: Searle 1980, Abschnitt II",
+        t:"Man baue das Programm in einen Körper mit Sinnen und Gliedern ein: Erst der Umgang mit Dingen gibt den Zeichen ihren Bezug.",
+        antwort:"Searle: Das gesteht bereits zu, dass Syntax allein nicht genügt — der Einwand widerlegt den Anspruch nicht, er gibt ihn preis." } ] },
+    { typ:"Prämisse", s:"Ein Rechner tut nichts anderes: Er verarbeitet Zeichen nach ihrer Form. Programme sind rein syntaktisch bestimmt.", ew:[
+      { wer:"Gehirnsimulator", art:"Einwand", j:1980, quelle:"in: Searle 1980, Abschnitt III",
+        t:"Ein Programm könnte die Vorgänge im Gehirn eines Chinesischsprechers Neuron für Neuron nachbilden. Was fehlte ihm dann noch?",
+        antwort:"Searle: Wer die Wasserleitungen einer Stadt so verschaltet, dass sie ein Gehirn abbilden, hat kein Verstehen erzeugt — die Simulation eines Vorgangs ist nicht der Vorgang." } ] },
+    { typ:"Prämisse", s:"Bedeutung ist mehr als Form. Zeichen zu haben heißt noch nicht, sich auf etwas zu beziehen.", ew:[
+      { wer:"Paul & Patricia Churchland", art:"Gegenbeispiel", j:1990, quelle:"Could a Machine Think?, Scientific American 262, 1990",
+        t:"Der Gang beweist zu viel. Mit derselben Form ließe sich zeigen, dass Licht keine elektromagnetische Welle sein kann: Man schwenke im dunklen Zimmer einen Magneten — es wird nicht hell. Die Anschauung versagt bei Größenordnungen." },
+      { wer:"Daniel C. Dennett", art:"Grundeinwand", j:1991, quelle:"Consciousness Explained, 1991",
+        t:"Das Bild lebt davon, dass niemand sich das Regelbuch wirklich vorstellt. Ein Regelwerk, das jedes Gespräch auf Chinesisch bestehen ließe, wäre kein Buch, sondern eine Struktur von einer Verwicklung, für die unsere Intuition schlicht nicht ausgelegt ist." } ] },
+    { typ:"Schluss", s:"Also erzeugt kein Programm allein Verstehen. Was Gehirne tun, muss mehr sein als Zeichenverarbeitung.", ew:[
+      { wer:"Zur Reichweite", art:"Präzisierung", j:1980, quelle:"Searle 1980, Schlussabschnitt",
+        t:"Searle bestreitet nicht, dass Maschinen denken können — Gehirne sind für ihn Maschinen. Bestritten wird allein, dass das richtige Programm dafür genügt.",
+        antwort:"Damit verschiebt sich die Frage auf das, was Searle die kausalen Kräfte des Gehirns nennt — ein Ausdruck, dessen Gehalt seither umstritten ist." } ] }
+  ]
+},
+{
+  id:"physikotheologie", kurz:"Teleologisches Argument", jahr:1802, feld:"Gottesbeweise",
+  titel:"Der physikotheologische Beweis (Argument vom Uhrmacher)",
+  wer:"William Paley · Natural Theology, Kap. 1 · 1802 · Grundgestalt seit der Antike",
+  these:"Aus der Zweckmäßigkeit in der Natur soll auf einen absichtsvollen Urheber geschlossen werden — die dritte der drei Beweisarten, die Kant unterscheidet.",
+  schritte:[
+    { typ:"Beobachtung", s:"In der Natur finden sich Gebilde, deren Teile so aufeinander abgestimmt sind, dass sie zusammen eine Leistung erbringen — das Auge sieht, das Herz pumpt.", ew:[] },
+    { typ:"Analogie", s:"Fände man auf einer Heide eine Uhr, so schlösse man ohne Zögern auf einen Verfertiger — nicht weil man ihn gesehen hätte, sondern wegen der Abstimmung der Teile.", ew:[
+      { wer:"David Hume", art:"Grundeinwand", j:1779, quelle:"Dialogues concerning Natural Religion II und V, postum 1779",
+        t:"Die Analogie trägt nicht: Dass Uhren gemacht werden, wissen wir aus Erfahrung mit Uhren. Über die Entstehung von Welten haben wir keine Erfahrung, denn wir kennen nur diese eine.",
+        antwort:"Hume lässt das Argument nicht ganz fallen — Philo räumt am Ende eine ferne Ähnlichkeit ein. Bestritten wird die Tragfähigkeit, nicht die Beobachtung." },
+      { wer:"David Hume", art:"Verschärfung", j:1779, quelle:"Dialogues V",
+        t:"Selbst wenn sie trüge, führte sie nicht zum gesuchten Ziel: Nach dem Maß der Wirkung wäre auf einen endlichen, vielleicht mehrere, vielleicht sterbliche, jedenfalls nicht auf einen vollkommenen Urheber zu schließen. Schiffe werden von Zimmerleuten gebaut, nicht von Göttern." } ] },
+    { typ:"Prämisse", s:"Organismen übertreffen jede Uhr an Feinheit der Abstimmung.", ew:[
+      { wer:"Charles Darwin", art:"Grundeinwand", j:1859, quelle:"On the Origin of Species, Kap. 6, 1859",
+        t:"Angepasstheit entsteht auch ohne Absicht: durch Häufung kleiner Abweichungen über sehr lange Zeit. Damit fällt die Annahme weg, Zweckmäßigkeit lasse sich nur durch einen Zweckesetzenden erklären.",
+        antwort:"Der Einwand trifft die Prämisse, nicht die Beobachtung: Dass Organismen zweckmäßig gebaut erscheinen, bleibt richtig — nur folgt daraus nichts mehr über einen Urheber." } ] },
+    { typ:"Schluss", s:"Also hat die Natur einen absichtsvollen Urheber.", ew:[
+      { wer:"Immanuel Kant", art:"Grundeinwand", j:1781, quelle:"Kritik der reinen Vernunft, A 620–630 / B 648–658",
+        t:"Zweierlei ist einzuwenden. Erstens reicht der Beweis nur zu einem Weltbaumeister, der vorhandenen Stoff formt — nicht zu einem Schöpfer. Zweitens muss er, um vom Baumeister zum notwendigen Wesen zu kommen, heimlich den ontologischen Beweis zu Hilfe nehmen, den er doch vermeiden wollte.",
+        antwort:"Kant behandelt ihn dennoch mit Achtung: Er sei der älteste, klarste und der gemeinen Vernunft angemessenste — nur eben kein Beweis." },
+      { wer:"Feinabstimmung", art:"Erneuerung", j:1979, quelle:"B. Carter, Large Number Coincidences, 1974; B. J. Carr & M. J. Rees, Nature 278, 1979",
+        t:"In neuer Gestalt setzt das Argument nicht bei Organismen an, sondern bei den Naturkonstanten: Schon geringe Abweichungen ließen keine Materie und keine Sterne zu.",
+        antwort:"Dagegen zweierlei: Ein hinreichend großer Weltenbestand macht das Zusammentreffen erwartbar — und wo immer Beobachter entstehen, finden sie Bedingungen vor, die Beobachter zulassen. Die Auswahl liegt beim Beobachter, nicht beim Urheber." } ] }
+  ]
+},
+{
+  id:"postulat", kurz:"Moralisches Argument", jahr:1788, feld:"Gottesbeweise",
+  titel:"Gott als Postulat der praktischen Vernunft",
+  wer:"Immanuel Kant · Kritik der praktischen Vernunft, A 223–237 · 1788",
+  these:"Kein Beweis, sondern ein Postulat — und ausdrücklich keine der drei spekulativen Beweisarten. Nicht das Wissen führt zu Gott, sondern das Sittengesetz verlangt etwas, das ohne ihn nicht denkbar wäre.",
+  schritte:[
+    { typ:"Abgrenzung", s:"Von den drei Beweisarten aus theoretischer Vernunft — ontologisch, kosmologisch, physikotheologisch — bleibt nach der Kritik keine übrig. Was folgt, tritt nicht an ihre Stelle, sondern auf eine andere Ebene.", ew:[
+      { wer:"Zur Einordnung", art:"Präzisierung", j:1781, quelle:"Kritik der reinen Vernunft, A 590 / B 618",
+        t:"Kant zählt selbst nur drei mögliche Beweisarten aus spekulativer Vernunft. Der moralische gehört nicht dazu — er stammt aus der praktischen Vernunft und beansprucht kein Wissen." } ] },
+    { typ:"Prämisse", s:"Das Sittengesetz gebietet, das höchste Gut zu befördern: Tugend und die ihr angemessene Glückseligkeit in einem.", ew:[
+      { wer:"Einwand gegen das höchste Gut", art:"Einwand", j:null, quelle:null,
+        t:"Gebietet das Sittengesetz das wirklich? Es gebietet, aus Pflicht zu handeln. Dass zur Pflicht auch die Beförderung eines Weltzustands gehört, in dem Glück der Tugend entspricht, ist ein Zusatz — und trägt hier die ganze Last." } ] },
+    { typ:"Prämisse", s:"Sollen setzt Können voraus. Was geboten ist, muss möglich sein.", ew:[
+      { wer:"Zur Reichweite", art:"Einwand", j:null, quelle:null,
+        t:"Der Grundsatz gilt für das, was ich tun soll. Hier wird er auf einen Weltzustand ausgedehnt, den kein Einzelner herbeiführen kann. Von „ich kann handeln\" zu „die Welt muss so eingerichtet sein\" ist ein weiter Schritt." } ] },
+    { typ:"Prämisse", s:"In der Natur hängen Tugend und Glück nicht zusammen. Sie kennt kein Verdienst und richtet sich nicht nach Gesinnung.", ew:[
+      { wer:"Stoische Gegenposition", art:"Ablehnung", j:-250, quelle:"vgl. Cicero, De finibus III",
+        t:"Die Stoa bestreitet die Prämisse: Tugend genüge zur Glückseligkeit, ein Auseinanderfallen gebe es gar nicht. Dann entsteht die Lücke nicht, die das Postulat schließen soll.",
+        antwort:"Kant hält dagegen, das setze Glückseligkeit mit Tugend gleich, statt beides zu verbinden — und verfehle damit, was Menschen unter Glück verstehen." } ] },
+    { typ:"Zwischenschluss", s:"Damit das höchste Gut möglich ist, muss eine Ursache der Natur angenommen werden, die Sittlichkeit und Naturlauf zusammenstimmen lässt.", ew:[] },
+    { typ:"Postulat", s:"Also ist das Dasein Gottes anzunehmen — nicht zu wissen. Ein Postulat der praktischen Vernunft, kein theoretischer Satz.", ew:[
+      { wer:"Arthur Schopenhauer", art:"Spott", j:1841, quelle:"Über die Grundlage der Moral, § 4, 1841",
+        t:"Kant habe die Theologie durch die Hintertür wieder eingelassen, die er vorn verschlossen hatte. Was als Postulat auftritt, sei ein Bedürfnis — und aus einem Bedürfnis folge nichts.",
+        antwort:"Kant nimmt den Einwand vorweg: Das Postulat erweitert das Wissen um keinen Satz. Es ist ein Fürwahrhalten aus praktischem Grund und heißt deshalb Glaube, nicht Erkenntnis." },
+      { wer:"Friedrich Nietzsche", art:"Umkehrung", j:1889, quelle:"Götzen-Dämmerung, Die vier großen Irrtümer, 1889",
+        t:"Der Gang erklärt nicht Gott aus der Moral, sondern zeigt, wie Moral sich ihre Voraussetzungen erschafft. Der Schluss vom Sollen auf ein Sein gehöre zu den Irrtümern, die es zu durchschauen gelte." },
+      { wer:"Einwand des Wunschdenkens", art:"Grundeinwand", j:null, quelle:null,
+        t:"Dass etwas nötig wäre, damit die Welt sinnvoll ist, spricht nicht dafür, dass es so ist. Die Struktur bleibt: Aus dem, was sein soll, wird abgeleitet, was ist." } ] }
+  ]
+},
+{
+  id:"zenon-dichotomie", kurz:"Zenons Dichotomie", jahr:-450, feld:"Metaphysik",
+  titel:"Die Dichotomie — warum keine Bewegung beginnen kann",
+  wer:"Zenon von Elea · überliefert bei Aristoteles, Physik VI 9 (239b) · um 450 v. Chr.",
+  these:"Eine Strecke lässt sich unbegrenzt halbieren. Wer sie durchläuft, müsste unendlich viele Teilstrecken hinter sich bringen — also kann er nicht einmal anfangen.",
+  schritte:[
+    { typ:"Prämisse", s:"Wer eine Strecke durchläuft, muss zuvor deren Hälfte durchlaufen haben.", ew:[] },
+    { typ:"Prämisse", s:"Vor dieser Hälfte deren Hälfte, und so fort ohne Ende. Die Teilung bricht nirgends ab.", ew:[
+      { wer:"Aristoteles", art:"Präzisierung", j:-340, quelle:"Physik VIII 8 (263a)",
+        t:"Zu unterscheiden ist, ob eine Strecke der Möglichkeit nach unbegrenzt teilbar ist oder wirklich aus unendlich vielen Teilen besteht. Nur das Erste ist wahr. Wer sie durchläuft, teilt sie nicht.",
+        antwort:"Die Unterscheidung rettet die Bewegung, verlagert die Frage aber auf den Begriff des Kontinuums — was heißt es, dass eine Strecke teilbar ist, ohne aus Teilen zu bestehen?" } ] },
+    { typ:"Zwischenschluss", s:"Also müsste er unendlich viele Teilstrecken durchlaufen.", ew:[] },
+    { typ:"Prämisse", s:"Unendlich viele Schritte lassen sich in endlicher Zeit nicht vollenden.", ew:[
+      { wer:"Konvergente Reihe", art:"Reparatur", j:1821, quelle:"A.-L. Cauchy, Cours d'analyse, 1821; K. Weierstraß ab 1860",
+        t:"Genau hier bricht das Argument nach heutiger Sicht: Die Summe unendlich vieler Glieder kann endlich sein. Die Hälften ergeben zusammen die ganze Strecke, die Teilzeiten die ganze Zeit.",
+        antwort:"Der strenge Grenzwertbegriff, der das zeigt, stand erst zweieinhalb Jahrtausende später zur Verfügung — Zenons Prämisse war so unschuldig, wie sie klingt." },
+      { wer:"James F. Thomson", art:"Einwand", j:1954, quelle:"Tasks and Super-Tasks, Analysis 15, 1954",
+        t:"Die Reparatur greift zu kurz. Dass eine Reihe konvergiert, heißt nicht, dass eine unendliche Folge von Handlungen ausgeführt werden kann. Eine Lampe, die in immer kürzeren Abständen geschaltet wird, hat nach einer Minute keinen bestimmten Zustand — die Frage nach dem Vollenden bleibt offen.",
+        antwort:"Dagegen: Die Bewegung ist keine Folge von Handlungen, sondern ein durchgehender Vorgang. Zenons Teilung wird ihr von außen auferlegt." } ] },
+    { typ:"Schluss", s:"Also kann eine Bewegung nicht einmal beginnen.", ew:[
+      { wer:"Max Black", art:"Präzisierung", j:1951, quelle:"Achilles and the Tortoise, Analysis 11, 1951",
+        t:"Die Paradoxien zeigen nicht, dass Bewegung unmöglich ist, sondern dass eine bestimmte Beschreibung von ihr in die Irre führt. Sie sind ein Argument gegen eine Sprache, nicht gegen eine Tatsache." },
+      { wer:"Diogenes der Kyniker", art:"Spott", j:-350, quelle:"überliefert bei Diogenes Laertios VI 39",
+        t:"Er soll auf die Bestreitung der Bewegung geantwortet haben, indem er aufstand und umherging.",
+        antwort:"Als Widerlegung taugt es nicht: Zenon bestreitet nicht, dass wir uns bewegt sehen, sondern behauptet, dass die Annahme in Widersprüche führt. Wer aufsteht, hat den Widerspruch nicht aufgelöst." } ] }
+  ]
+},
+{
+  id:"cogito", kurz:"Cogito", jahr:1641, feld:"Erkenntnistheorie",
+  titel:"Cogito, ergo sum",
+  wer:"René Descartes · Meditationes de prima philosophia II, AT VII 25 · 1641",
+  these:"Ein Satz, der sich nicht bezweifeln lässt, weil das Bezweifeln selbst ihn bestätigt — und über dessen logische Form Descartes bereits mit seinen Zeitgenossen stritt.",
+  schritte:[
+    { typ:"Verfahren", s:"Alles, woran sich zweifeln lässt, wird behandelt, als wäre es falsch. Gesucht ist, was diesem Verfahren standhält.", ew:[] },
+    { typ:"Annahme", s:"Ein täuschender Geist von höchster Macht könnte mich in allem hintergehen — auch über Körper, Welt und Mathematik.", ew:[] },
+    { typ:"Prämisse", s:"Über eines kann er mich nicht täuschen: dass ich bin, solange er mich täuscht. Täuschen setzt einen Getäuschten voraus.", ew:[
+      { wer:"Pierre Gassendi", art:"Einwand", j:1641, quelle:"Fünfte Einwände, AT VII 258–259, 1641",
+        t:"Dasselbe ließe sich aus jeder Tätigkeit schließen — „ich gehe, also bin ich\". Der Satz zeichnet das Denken vor nichts aus.",
+        antwort:"Descartes: Beim Gehen kann ich mich täuschen, ich könnte es träumen. Beim Denken nicht — auch das geträumte Denken ist Denken." } ] },
+    { typ:"Schluss", s:"„Ich bin, ich existiere\" ist notwendig wahr, sooft ich es ausspreche oder im Geist erfasse.", ew:[
+      { wer:"Zur logischen Form", art:"Präzisierung", j:1641, quelle:"Zweite Erwiderungen, AT VII 140, 1641",
+        t:"Descartes bestreitet ausdrücklich, dass hier ein Syllogismus vorliegt. Es fehle der Obersatz „alles, was denkt, ist\"; der Satz werde in einer einfachen Einsicht des Geistes erkannt, nicht erschlossen.",
+        antwort:"Das ist keine Nebenbemerkung: Wäre es ein Schluss, bräuchte er eine allgemeine Prämisse — und die stünde selbst wieder unter dem Zweifel." },
+      { wer:"Jaakko Hintikka", art:"Erneuerung", j:1962, quelle:"Cogito, ergo sum: Inference or Performance?, Philosophical Review 71, 1962",
+        t:"Weder Schluss noch bloße Einsicht, sondern eine Selbstverifikation im Vollzug: Der Satz „ich existiere nicht\" widerlegt sich dadurch, dass jemand ihn äußert — wie „ich schweige\". Damit wird die Form formal fassbar." } ] },
+    { typ:"Reichweite", s:"Erkannt ist damit: ein Ding, das denkt.", ew:[
+      { wer:"Georg Christoph Lichtenberg", art:"Grundeinwand", j:1793, quelle:"Sudelbücher, Heft K",
+        t:"Zu sagen wäre nur: es denkt. Wie man sagt: es blitzt. Dass zum Denken ein Ich gehört, das denkt, ist eine Annahme der Grammatik, keine Beobachtung.",
+        antwort:"Descartes' Gegenzug wäre, dass ein Denken ohne Denkenden kein fassbarer Begriff ist. Ob das mehr ist als dieselbe grammatische Annahme, ist der Streitpunkt." },
+      { wer:"Friedrich Nietzsche", art:"Verschärfung", j:1886, quelle:"Jenseits von Gut und Böse, § 16–17, 1886",
+        t:"Der Satz enthält mehr Voraussetzungen, als er zugibt: was Denken sei, dass ich es bin, der denkt, dass Denken eine Tätigkeit mit einem Täter ist. Die Verführung geht vom Sprachbau aus." },
+      { wer:"Bernard Williams", art:"Präzisierung", j:1978, quelle:"Descartes: The Project of Pure Enquiry, Kap. 3, 1978",
+        t:"Selbst wenn der Satz hält, trägt er weniger, als Descartes braucht: Er sichert die Existenz eines Denkenden im Augenblick des Denkens — nicht eine dauernde Substanz, die zwischen zwei Gedanken fortbesteht." } ] }
+  ]
+},
+{
+  id:"gehirn-tank", kurz:"Kein Gehirn im Tank", jahr:1981, feld:"Sprache und Geist",
+  titel:"Warum wir keine Gehirne im Tank sein können",
+  wer:"Hilary Putnam · Reason, Truth and History, Kap. 1 · 1981",
+  these:"Nicht das Szenario ist das Argument, sondern seine Widerlegung: Die Annahme, ein Gehirn im Tank zu sein, lässt sich nicht wahrheitsgemäß aussprechen — aus Gründen der Bezugnahme, nicht der Einbildungskraft.",
+  schritte:[
+    { typ:"Prämisse", s:"Ein Ausdruck bezieht sich nur dann auf etwas, wenn zwischen dem Gebrauch des Ausdrucks und dem Bezeichneten eine geeignete kausale Verbindung besteht. Ähnlichkeit allein genügt nicht.", ew:[
+      { wer:"Zur Voraussetzung", art:"Einwand", j:null, quelle:null,
+        t:"Das ganze Argument steht und fällt mit dieser Referenztheorie. Wer sie nicht teilt — wer Bedeutung etwa an inneren Gehalten festmacht —, wird von der Folgerung nicht getroffen.",
+        antwort:"Putnam hat die Theorie unabhängig begründet (Zwillingserde, 1975). Sie ist keine Hilfsannahme für diesen Zweck, aber eben auch keine Selbstverständlichkeit." } ] },
+    { typ:"Prämisse", s:"Ein Gehirn, das seit jeher im Tank liegt, hatte nie kausalen Kontakt zu Gehirnen, Tanks oder Nährlösungen — nur zu Reizmustern.", ew:[
+      { wer:"Der kürzlich Eingetankte", art:"Präzisierung", j:1986, quelle:"A. Brueckner, Brains in a Vat, Journal of Philosophy 83, 1986",
+        t:"Der Gang gilt nur für lebenslange Gehirne im Tank. Wer gestern eingetankt wurde, bezieht sich mit seinen Wörtern weiter auf wirkliche Tanks — und kann wahrheitsgemäß sagen, er sei eines.",
+        antwort:"Putnam beansprucht auch nicht mehr: Widerlegt wird die radikale Fassung, in der die Täuschung von Anfang an und vollständig ist." } ] },
+    { typ:"Zwischenschluss", s:"In seinem Mund bedeutet „Gehirn im Tank\" also nicht Gehirn im Tank, sondern etwas anderes — das Bild im Reizmuster.", ew:[] },
+    { typ:"Folgerung", s:"Sagt ein Gehirn im Tank „ich bin ein Gehirn im Tank\", so ist das falsch — denn es sagt damit, es sei ein Bild-Gehirn im Bild-Tank, und das ist es nicht.", ew:[] },
+    { typ:"Schluss", s:"Der Satz ist also in jedem Fall falsch: Sind wir keine Gehirne im Tank, ohnehin. Sind wir welche, ebenfalls. Die Annahme widerlegt sich selbst.", ew:[
+      { wer:"Thomas Nagel", art:"Grundeinwand", j:1986, quelle:"The View from Nowhere, Kap. 5, 1986",
+        t:"Bewiesen ist damit etwas über Sprache, nicht über die Welt. Dass ich meinen Zustand nicht wahrheitsgemäß beschreiben kann, macht ihn nicht unmöglich — der Skeptizismus überlebt seine Unaussprechlichkeit.",
+        antwort:"Putnams Gegenzug: Ein Zweifel, der sich grundsätzlich nicht formulieren lässt, ist kein Zweifel mehr, sondern ein Geräusch." },
+      { wer:"Crispin Wright", art:"Verschärfung", j:1992, quelle:"On Putnam's Proof That We Are Not Brains in a Vat, Proceedings of the Aristotelian Society 92, 1992",
+        t:"Der Gang leistet höchstens, dass ich nicht wahrheitsgemäß behaupten kann, ein Gehirn im Tank zu sein. Der Sprung von dort zu „ich bin keines\" braucht eine zusätzliche Annahme darüber, wann ein Beweis wirklich einer ist." } ] }
+  ]
+}
+];
+
+const ART_FARBE = { 'Einwand':'#e8527a', 'Grundeinwand':'#c02040', 'Gegenbeispiel':'#f59e0b',
+  'Verschärfung':'#a04090', 'Trilemma':'#c02040', 'Spott':'#f59e0b', 'Ablehnung':'#c02040',
+  'Reparatur':'#22a05a', 'Erneuerung':'#22a05a', 'Präzisierung':'#3a80c0', 'Umkehrung':'#5b52e8' };
+
+let aktiv = ARGUMENTE[0].id, offen = null, alleOffen = false;
+
+function jahrText(j){
+  if (j == null) return '';
+  return j < 0 ? Math.abs(j) + ' v. Chr.' : String(j);
+}
+/* Wie lange nach dem Argument kam der Einwand? */
+function abstand(basis, j){
+  const d = j - basis;
+  if (!isFinite(d)) return '';
+  if (Math.abs(d) < 2) return 'sofort';
+  if (d < 0) return Math.abs(d) + ' Jahre früher';
+  return '+' + d + ' Jahre';
+}
+
+function wahlBauen(){
+  const z = document.getElementById('wahl');
+  /* Nach Fachgebiet gruppieren: Acht Knöpfe nebeneinander wären eine
+     Reihe ohne Ordnung — so sieht man, aus welchem Feld ein Argument
+     kommt, bevor man es anklickt. */
+  const felder = [];
+  ARGUMENTE.forEach(a => { if (felder.indexOf(a.feld) < 0) felder.push(a.feld); });
+  felder.forEach(feld => {
+    const gruppe = document.createElement('div');
+    gruppe.className = 'arg-gruppe';
+    gruppe.setAttribute('role', 'group');
+    gruppe.setAttribute('aria-label', feld);
+    const titel = document.createElement('span');
+    titel.className = 'arg-gruppe-titel';
+    titel.textContent = feld;
+    gruppe.appendChild(titel);
+    ARGUMENTE.filter(a => a.feld === feld).forEach(a => {
+      const b = document.createElement('button');
+      b.className = 'arg-knopf'; b.textContent = a.kurz; b.dataset.arg = a.id;
+      b.setAttribute('aria-pressed', a.id === aktiv ? 'true' : 'false');
+      b.title = a.titel + ' · ' + a.wer;
+      b.onclick = () => { aktiv = a.id; offen = null; wahlAktiv(); zeigen(); };
+      gruppe.appendChild(b);
+    });
+    z.appendChild(gruppe);
+  });
+  const auf = document.createElement('button');
+  auf.className = 'arg-knopf'; auf.style.marginLeft = 'auto'; auf.dataset.alle = '1';
+  auf.textContent = 'alle Einwände zeigen';
+  auf.onclick = () => { alleOffen = !alleOffen; offen = null;
+    auf.setAttribute('aria-pressed', alleOffen ? 'true' : 'false');
+    auf.textContent = alleOffen ? 'Einwände einklappen' : 'alle Einwände zeigen';
+    zeigen(); };
+  auf.setAttribute('aria-pressed','false');
+  z.appendChild(auf);
+  const n = ARGUMENTE.reduce((s,a) => s + a.schritte.reduce((t,p) => t + p.ew.length, 0), 0);
+  document.getElementById('zaehler').textContent =
+    ARGUMENTE.length + ' Argumente · ' + n + ' Einwände';
+  /* Auch die Zeile über der Überschrift aus den Daten ableiten — sie stand
+     jahrelang auf „Vier Beweisgänge", während es längst acht waren. */
+  const eb = document.getElementById('arg-eyebrow');
+  if (eb) {
+    const felder = [];
+    ARGUMENTE.forEach(a => { if (felder.indexOf(a.feld) < 0) felder.push(a.feld); });
+    eb.textContent = ARGUMENTE.length + ' Beweisgänge aus ' + felder.length
+      + ' Feldern, zerlegt';
+  }
+}
+function wahlAktiv(){
+  document.querySelectorAll('#wahl .arg-knopf[data-arg]').forEach(b =>
+    b.setAttribute('aria-pressed', b.dataset.arg === aktiv ? 'true' : 'false'));
+}
+
+function zeigen(){
+  const a = ARGUMENTE.find(x => x.id === aktiv);
+  const b = document.getElementById('buehne');
+  b.innerHTML = '';
+
+  const kopf = document.createElement('div'); kopf.className = 'arg-kopf';
+  kopf.innerHTML =
+    '<div class="arg-jahr">' + jahrText(a.jahr) + '</div>' +
+    '<h3>' + a.titel + '</h3><div class="wer">' + a.wer + '</div>' +
+    '<p class="these">' + a.these + '</p>';
+  b.appendChild(kopf);
+
+  /* Angriffsgeschichte: wann wurde dieses Argument bestritten?
+     Bei Anselm liegen zwischen dem ersten und dem letzten Einwand
+     neunhundert Jahre — das sagt mehr als jede Aufzählung. */
+  const alleEw = [];
+  a.schritte.forEach((p, i) => p.ew.forEach(e => alleEw.push({ ...e, schritt: i })));
+  if (alleEw.length > 1){
+    const jahre = alleEw.map(e => e.j).concat([a.jahr]);
+    const von = Math.min(...jahre), bis = Math.max(...jahre);
+    const spanne = Math.max(1, bis - von);
+    const achse = document.createElement('div');
+    achse.className = 'zeitachse';
+    achse.innerHTML = '<div class="za-kopf"><span>Angriffsgeschichte</span>' +
+      '<span class="za-spanne">' + jahrText(von) + ' – ' + jahrText(bis) +
+      ' · ' + spanne + ' Jahre</span></div>';
+    const bahn = document.createElement('div'); bahn.className = 'za-bahn';
+    /* Das Argument selbst als Ausgangspunkt */
+    const start = document.createElement('span');
+    start.className = 'za-start'; start.style.left = (100 * (a.jahr - von) / spanne) + '%';
+    start.title = 'Das Argument: ' + jahrText(a.jahr);
+    bahn.appendChild(start);
+    alleEw.sort((x, y) => x.j - y.j).forEach(e => {
+      const pkt = document.createElement('button');
+      pkt.className = 'za-pkt';
+      pkt.style.left = (100 * (e.j - von) / spanne) + '%';
+      pkt.style.background = ART_FARBE[e.art] || 'var(--accent2)';
+      pkt.title = e.wer + ', ' + jahrText(e.j) + ' — ' + e.art +
+                  ' (Schritt ' + (e.schritt + 1) + ')';
+      pkt.setAttribute('aria-label', pkt.title);
+      pkt.onclick = () => { offen = e.schritt; zeigen();
+        /* Nach dem Sprung dorthin, wohin gesprungen wurde — sonst bleibt
+           der Fokus auf der Zeitachse und der Bildschirmleser meldet
+           nichts von der geöffneten Prämisse. */
+        const z2 = document.querySelectorAll('.pz-satz')[e.schritt];
+        if (z2) z2.focus();
+        const z = document.querySelectorAll('.pz')[e.schritt];
+        if (z && z.scrollIntoView) z.scrollIntoView({ block:'center', behavior:'smooth' }); };
+      bahn.appendChild(pkt);
+    });
+    achse.appendChild(bahn);
+    b.appendChild(achse);
+  }
+
+  const hin = document.createElement('p');
+  hin.className = 'hinweis';
+  hin.textContent = 'Auf einen Schritt tippen, um die Einwände zu sehen, die genau dort ansetzen.';
+  b.appendChild(hin);
+
+  const kette = document.createElement('div'); kette.className = 'kette';
+  a.schritte.forEach((p, i) => {
+    const letzt = (i === a.schritte.length - 1);
+    const zeile = document.createElement('div');
+    zeile.className = 'pz' + (letzt ? ' schluss' : '') +
+      ((offen === i || (alleOffen && p.ew.length)) ? ' offen' : '');
+
+    const nr = document.createElement('div'); nr.className = 'pz-nr';
+    nr.textContent = letzt ? '∴' : (i + 1);
+    zeile.appendChild(nr);
+
+    const k = document.createElement('div'); k.className = 'pz-koerper';
+    const s = document.createElement('button');
+    s.className = 'pz-satz';
+    s.setAttribute('aria-expanded', (offen === i || (alleOffen && p.ew.length)) ? 'true' : 'false');
+    const punkte = p.ew.map(e =>
+      '<i style="background:' + (ART_FARBE[e.art] || 'var(--accent2)') + '" title="' +
+      e.art + ': ' + e.wer + '"></i>').join('');
+    s.innerHTML = '<span class="pz-typ">' + p.typ +
+      (p.ew.length ? '<span class="pz-punkte">' + punkte + '</span>' +
+        '<span class="pz-zaehler">' + p.ew.length +
+        (p.ew.length === 1 ? ' Einwand' : ' Einwände') + '</span>' : '') +
+      '</span>' + p.s;
+    s.onclick = () => { alleOffen = false; offen = (offen === i) ? null : i; zeigen(); };
+    /* Mit den Pfeiltasten durch die Kette gehen — sonst muss man sich
+       durch jede Prämisse tabben, um zur nächsten zu kommen. */
+    s.addEventListener('keydown', ev => {
+      const richtung = ev.key === 'ArrowDown' ? 1 : (ev.key === 'ArrowUp' ? -1 : 0);
+      if (!richtung) return;
+      ev.preventDefault();
+      const alle = [...document.querySelectorAll('.pz-satz')];
+      const wo = alle.indexOf(s);
+      const ziel = alle[(wo + richtung + alle.length) % alle.length];
+      if (ziel) ziel.focus();
+    });
+    k.appendChild(s);
+
+    if (p.ew.length){
+      const ewz = document.createElement('div'); ewz.className = 'einwaende';
+      p.ew.forEach(e => {
+        const d = document.createElement('div');
+        d.className = 'ew'; d.style.setProperty('--ef', ART_FARBE[e.art] || 'var(--accent2)');
+        d.innerHTML = '<div class="ew-kopf"><span class="ew-wer">' + e.wer + '</span>' +
+          '<span class="ew-art">' + e.art + '</span>' +
+          '<span class="ew-jahr">' + jahrText(e.j) + '</span>' +
+          '<span class="ew-abstand">' + abstand(a.jahr, e.j) + '</span></div>' +
+          '<div class="ew-quelle">' + e.quelle + '</div>' +
+          '<div class="ew-text">' + e.t + '</div>' +
+          (e.antwort ? '<div class="ew-antwort"><b>Erwiderung:</b> ' + e.antwort + '</div>' : '');
+        ewz.appendChild(d);
+      });
+      k.appendChild(ewz);
+    }
+    zeile.appendChild(k);
+    kette.appendChild(zeile);
+  });
+  b.appendChild(kette);
+}
+
+function uebersichtBauen(){
+  const z = document.getElementById('uebersicht');
+  ARGUMENTE.forEach(a => {
+    const zahlen = a.schritte.map(p => p.ew.length);
+    const max = Math.max.apply(null, zahlen) || 1;
+    const d = document.createElement('div'); d.className = 'uk';
+    d.innerHTML = '<h4>' + a.kurz + '</h4><div class="bal">' +
+      zahlen.map(n => '<i class="' + (n ? '' : 'null') +
+        '" style="height:' + (n ? (100 * n / max) : 6) + '%"></i>').join('') +
+      '</div><span class="ew-quelle">' + zahlen.length + ' Schritte · ' +
+      zahlen.reduce((s,n) => s + n, 0) + ' Einwände · Schwerpunkt auf Schritt ' +
+      (zahlen.indexOf(max) + 1) + '</span>';
+    z.appendChild(d);
+  });
+}
+
+
+
+
+  registerPageInit('argumente', function(){
+    /* Zustand bei jedem Betreten zurücksetzen — sonst bliebe die
+       zuletzt geöffnete Prämisse von der vorigen Sitzung stehen. */
+    aktiv = ARGUMENTE[0].id; offen = null; alleOffen = false;
+    var w = document.getElementById('wahl');
+    if (w) w.innerHTML = '';
+    var u = document.getElementById('uebersicht');
+    if (u) u.innerHTML = '';
+    wahlBauen(); zeigen(); uebersichtBauen();
+  });
+})();
+</script>

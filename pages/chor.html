@@ -4,23 +4,23 @@
 .chor-prose p{font-size:.97rem;line-height:1.85;color:var(--text2);margin:0 0 1.05rem}
 .chor-prose p strong{color:var(--text);font-weight:600}
 .chor-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:1.5rem 1.6rem;position:sticky;top:5.5rem}
-.chor-card h3{font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 1.1rem}
+.chor-card h3{font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-text);margin:0 0 1.1rem}
 .chor-row{display:flex;gap:.9rem;padding:.62rem 0;border-bottom:1px solid var(--border);font-size:.84rem}
 .chor-row:last-of-type{border-bottom:0}
 .chor-row dt{color:var(--text3);min-width:5.6rem;font-family:var(--fm);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding-top:.15rem}
 .chor-row dd{margin:0;color:var(--text2);line-height:1.6}
 .chor-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.2rem;font-family:var(--fm);font-size:.72rem;letter-spacing:.06em;
-  color:var(--accent);text-decoration:none;border:1px solid var(--accent);border-radius:8px;padding:.55rem .95rem;transition:all .18s}
-.chor-link:hover{background:var(--accent);color:var(--bg)}
+  color:var(--accent-text);text-decoration:none;border:1px solid var(--accent);border-radius:8px;padding:.55rem .95rem;transition:all .18s}
+@media (hover: hover){ .chor-link:hover{background:var(--accent);color:var(--bg)} }
 
 .chor-h2{font-size:1.55rem;font-weight:800;letter-spacing:-.02em;margin:3.4rem 0 .5rem;color:var(--text)}
-.chor-h2 span{color:var(--accent)}
+.chor-h2 span{color:var(--accent-text)}
 .chor-sub{font-family:var(--fm);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text3);margin:0 0 1.5rem}
 
 .chor-drei{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
 .chor-nein{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.3rem;transition:all .2s}
-.chor-nein:hover{border-color:var(--accent);transform:translateY(-2px)}
-.chor-nein b{display:block;font-size:2rem;font-weight:800;color:var(--accent);line-height:1;margin-bottom:.55rem}
+@media (hover: hover){ .chor-nein:hover{border-color:var(--accent);transform:translateY(-2px)} }
+.chor-nein b{display:block;font-size:2rem;font-weight:800;color:var(--accent-text);line-height:1;margin-bottom:.55rem}
 .chor-nein h4{margin:0 0 .4rem;font-size:.95rem;color:var(--text)}
 .chor-nein p{margin:0;font-size:.85rem;line-height:1.65;color:var(--text2)}
 
@@ -31,7 +31,7 @@
 .chor-bar{height:1.5rem;border-radius:5px;position:relative;background:linear-gradient(90deg,var(--bg3),var(--bg3))}
 .chor-bar i{position:absolute;top:0;bottom:0;border-radius:5px;background:rgba(255,255,255,.10);display:flex;align-items:center;
   padding-left:.6rem;font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;color:var(--text3);font-style:normal}
-.chor-lage.mein .chor-lage-n{color:var(--accent)}
+.chor-lage.mein .chor-lage-n{color:var(--accent-text)}
 .chor-lage.mein .chor-bar i{background:var(--accent);color:var(--bg);font-weight:700}
 .chor-skala{display:flex;justify-content:space-between;margin:.9rem 0 0 5.6rem;font-family:var(--fm);font-size:.58rem;color:var(--text3);letter-spacing:.08em}
 
@@ -43,7 +43,7 @@
 
 .chor-forsch{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-bottom:1.2rem}
 .chor-fkarte{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.3rem}
-.chor-fkarte .zahl{font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;color:var(--accent3);text-transform:uppercase;margin-bottom:.55rem}
+.chor-fkarte .zahl{font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;color:var(--accent3-text);text-transform:uppercase;margin-bottom:.55rem}
 .chor-fkarte p{margin:0;font-size:.86rem;line-height:1.7;color:var(--text2)}
 .chor-quellen{font-size:.76rem;line-height:1.8;color:var(--text3);border-top:1px solid var(--border);padding-top:1rem}
 .chor-quellen b{color:var(--text2);font-weight:600;font-family:var(--fm);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:.5rem}
@@ -58,7 +58,7 @@
 .chor-ehrlich p{margin:0 0 .9rem;font-size:.93rem;line-height:1.8;color:var(--text2)}
 .chor-ehrlich p:last-child{margin-bottom:0}
 
-.chor-galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem}
+.chor-galerie{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px, 100%), 1fr));gap:1rem}
 .chor-platz{aspect-ratio:4/3;border:1px dashed var(--border);border-radius:12px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:.4rem;color:var(--text3);background:var(--bg2)}
 .chor-platz span{font-size:1.5rem;opacity:.5}
@@ -173,7 +173,7 @@
   <div class="chor-prose" style="margin-top:1.2rem">
     <p>Das gesammelte Repertoire pflegt der Chor öffentlich:
       <a href="https://padlet.com/heanders1/chor-im-loch-sa76l6bvm6xgmggj" target="_blank" rel="noopener"
-         style="color:var(--accent)">Liedsammlung auf Padlet →</a></p>
+         style="color:var(--accent-text)">Liedsammlung auf Padlet →</a></p>
   </div>
 
   <h2 class="chor-h2">Wenn der Chor <span>rausgeht</span></h2>

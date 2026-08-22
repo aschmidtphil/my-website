@@ -28,9 +28,9 @@
 }
 /* Abschlussarbeiten bewusst hervorgehoben — über Farbe, nicht über zusätzliche Größe,
    damit die kompakte Zeilenhöhe für ALLE Gruppen gleich bleibt. */
-.pdoc-group-featured .pdoc-group-title{ color:var(--accent); }
+.pdoc-group-featured .pdoc-group-title{ color:var(--accent-text); }
 .pdoc-group-featured .pdoc-list{ border-color:var(--accent); }
-.pdoc-group-featured .pdoc-row-title{ color:var(--accent); }
+.pdoc-group-featured .pdoc-row-title{ color:var(--accent-text); }
 
 /* ── Kompakte Liste: EINE Zeile Titel + EINE Zeile Meta, knappe Polsterung ── */
 .pdoc-list{
@@ -45,7 +45,7 @@
   transition:background .15s;
 }
 .pdoc-row:last-child{ border-bottom:none; }
-.pdoc-row:hover{ background:var(--surface); }
+@media (hover: hover){ .pdoc-row:hover{ background:var(--surface); } }
 
 .pdoc-row-main{ flex:1 1 auto;min-width:0; }
 .pdoc-row-title-line{ display:flex;align-items:baseline;gap:.4rem;min-width:0; }
@@ -57,7 +57,7 @@
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   text-decoration:none;
 }
-.pdoc-row-title:hover{ text-decoration:underline; }
+@media (hover: hover){ .pdoc-row-title:hover{ text-decoration:underline; } }
 .pdoc-row-title svg{ flex:0 0 auto;width:13px;height:13px;opacity:.55; }
 
 /* kleines Typ-/Ordnungs-Badge neben dem Titel (z.B. "1. Hausarbeit", "Masterarbeit") */
@@ -79,10 +79,10 @@
    passenden Stelle auf der Studium-Seite (window.jumpToKurs, dort definiert). */
 .pdoc-course-link{
   background:none;border:none;padding:0;cursor:pointer;
-  font-family:var(--fm);font-size:.66rem;color:var(--accent2);text-decoration:none;
+  font-family:var(--fm);font-size:.66rem;color:var(--accent2-text);text-decoration:none;
   white-space:nowrap;
 }
-.pdoc-course-link:hover{ text-decoration:underline; }
+@media (hover: hover){ .pdoc-course-link:hover{ text-decoration:underline; } }
 
 /* Download: dezentes Icon statt großem Button */
 .pdoc-dl-icon{
@@ -90,7 +90,7 @@
   display:flex;align-items:center;justify-content:center;
   color:var(--text3);transition:all .15s;
 }
-.pdoc-dl-icon:hover{ background:var(--surface);color:var(--accent2); }
+@media (hover: hover){ .pdoc-dl-icon:hover{ background:var(--surface);color:var(--accent2-text); } }
 .pdoc-dl-icon svg{ width:14px;height:14px; }
 
 /* Status-/Leer-/Fehlerzustände */
@@ -100,7 +100,7 @@
 }
 .pdoc-error code{
   font-family:var(--fm);background:var(--surface);padding:.15rem .45rem;
-  border-radius:5px;color:var(--accent2);font-size:.82em;
+  border-radius:5px;color:var(--accent2-text);font-size:.82em;
 }
 
 /* Kurzes Aufleuchten, wenn man von der Studium-Seite hierher springt */

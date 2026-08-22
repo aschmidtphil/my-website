@@ -4,9 +4,9 @@
 .pod-cat-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem;}
 .pod-cat-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.3rem .8rem;border-radius:20px;cursor:pointer;font-size:.76rem;font-family:var(--fm);transition:all .15s;}
 .pod-cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-.pod-grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;margin-bottom:2rem;}
+.pod-grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px, 100%), 1fr));gap:1.2rem;margin-bottom:2rem;}
 .pod-card2{padding:1.25rem;display:flex;gap:.85rem;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);transition:all .25s;}
-.pod-card2:hover{transform:translateY(-2px);border-color:var(--border2);}
+@media (hover: hover){ .pod-card2:hover{transform:translateY(-2px);border-color:var(--border2);} }
 .pod-icon2{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
 .pod-name2{font-family:var(--fh);font-weight:700;font-size:.88rem;color:var(--text);margin-bottom:.15rem;}
 .pod-badge{display:inline-block;background:var(--surface);color:var(--text3);padding:.1rem .45rem;border-radius:4px;font-family:var(--fm);font-size:.63rem;margin-bottom:.35rem;}
@@ -15,9 +15,9 @@
 .hb-table-wrap{overflow-x:auto;}
 .hb-table{width:100%;border-collapse:collapse;font-size:.81rem;}
 .hb-table th{background:var(--bg3);color:var(--text3);font-family:var(--fm);font-size:.66rem;letter-spacing:.08em;padding:.5rem .9rem;text-align:left;font-weight:500;border-bottom:2px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;}
-.hb-table th:hover{color:var(--accent);}
+@media (hover: hover){ .hb-table th:hover{color:var(--accent-text);} }
 .hb-table td{padding:.55rem .9rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.5;}
-.hb-table tr:hover td{background:var(--bg2);}
+@media (hover: hover){ .hb-table tr:hover td{background:var(--bg2);} }
 .hb-title-cell{font-weight:600;color:var(--text);font-family:var(--fh);font-size:.83rem;}
 .hb-badge{display:inline-block;padding:.1rem .42rem;border-radius:3px;font-size:.63rem;font-family:var(--fm);white-space:nowrap;}
 .hb-philo{background:#ede9fe;color:#4c1d95}[data-theme="dark"] .hb-philo{background:#2d1f5e;color:#c4b5fd}
@@ -32,9 +32,9 @@
 .pod-cover2{width:64px;height:64px;border-radius:10px;flex-shrink:0;object-fit:cover;display:block;box-shadow:0 2px 8px rgba(0,0,0,.2);}
 .pod-body2{flex:1;min-width:0;}
 .pod-link2{margin-left:.5rem;color:var(--text3);text-decoration:none;font-size:.78rem;opacity:.5;transition:all .15s;}
-.pod-link2:hover{color:var(--accent);opacity:1;}
+@media (hover: hover){ .pod-link2:hover{color:var(--accent-text);opacity:1;} }
 .pod-offdesc{margin-top:.5rem;padding-top:.5rem;border-top:1px dashed var(--border);color:var(--text3);font-size:.72rem;line-height:1.55;font-style:italic;}
-.pod-offlabel{font-family:var(--fm);font-style:normal;color:var(--accent);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;margin-right:.3rem;}
+.pod-offlabel{font-family:var(--fm);font-style:normal;color:var(--accent-text);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;margin-right:.3rem;}
 .hb-cover{width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.15);}
 .hb-cover-none{background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.9rem;}
 .hb-row-inner{display:flex;gap:.7rem;align-items:center;}

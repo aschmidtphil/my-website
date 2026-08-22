@@ -18,7 +18,7 @@
 .zitat-page-hero{padding:4rem 3.5rem 2rem;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
 .zitat-page-hero-glow{position:absolute;right:-80px;top:-80px;width:400px;height:400px;background:radial-gradient(circle,var(--glow-accent2) 0%,transparent 70%);pointer-events:none;}
 .zitat-page-hero h1{font-family:var(--fh);font-size:3rem;font-weight:800;letter-spacing:-.04em;color:var(--text);margin:.3rem 0;}
-.zitat-page-hero h1 span{color:var(--accent2);}
+.zitat-page-hero h1 span{color:var(--accent2-text);}
 .zitat-page-hero p.lead{color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.92rem;}
 
 /* ── Zufalls-Showcase oben (groß, mit Porträt) ──────────────── */
@@ -57,12 +57,12 @@
 .zr-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 18%;display:block;filter:contrast(1.05) saturate(.85);}
 .zr-portrait-mono{
   font-family:var(--fh);font-size:4rem;font-weight:800;
-  color:var(--accent);opacity:.4;letter-spacing:-.05em;
+  color:var(--accent-text);opacity:.4;letter-spacing:-.05em;
 }
 .zr-body{flex:1;min-width:0;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;}
 .zr-label{
   font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.7rem;display:flex;align-items:center;gap:.55rem;
+  color:var(--accent-text);margin-bottom:.7rem;display:flex;align-items:center;gap:.55rem;
 }
 .zr-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
 .zr-quote{
@@ -73,10 +73,10 @@
 .zr-quote::before{
   content:'\201C';position:absolute;top:-1.8rem;left:-.6rem;
   font-family:var(--fh);font-size:5rem;font-weight:800;
-  color:var(--accent);opacity:.18;line-height:1;
+  color:var(--accent-text);opacity:.18;line-height:1;
 }
 .zr-meta{font-family:var(--fm);font-size:.78rem;color:var(--text3);letter-spacing:.04em;}
-.zr-author{color:var(--accent2);font-weight:500;}
+.zr-author{color:var(--accent2-text);font-weight:500;}
 .zr-reroll{
   position:absolute;top:.9rem;right:1rem;z-index:2;
   background:rgba(255,255,255,.5);backdrop-filter:blur(8px);
@@ -84,7 +84,7 @@
   width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.95rem;
   transition:all .2s;display:flex;align-items:center;justify-content:center;
 }
-.zr-reroll:hover{border-color:var(--accent);color:var(--accent);transform:rotate(180deg);}
+@media (hover: hover){ .zr-reroll:hover{border-color:var(--accent);color:var(--accent-text);transform:rotate(180deg);} }
 [data-theme="dark"] .zr-reroll{background:rgba(0,0,0,.3);}
 
 @media(max-width:780px){
@@ -105,7 +105,7 @@
 .zitat-filter-bar{padding:1.5rem 3.5rem 0;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;}
 .zitat-filter-label{font-family:var(--fm);font-size:.65rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-right:.5rem;}
 .zitat-filter-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:.35rem .8rem;border-radius:20px;font-size:.75rem;cursor:pointer;font-family:inherit;transition:all .15s;}
-.zitat-filter-btn:hover{border-color:var(--accent);color:var(--accent);}
+@media (hover: hover){ .zitat-filter-btn:hover{border-color:var(--accent);color:var(--accent-text);} }
 .zitat-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 .zitat-filter-btn .ct{margin-left:.4rem;opacity:.7;font-size:.66rem;}
 .zitat-count{margin-left:auto;font-family:var(--fm);font-size:.72rem;color:var(--text3);letter-spacing:.05em;}
@@ -121,7 +121,7 @@
   position:relative;transition:all .25s;
   overflow:hidden;
 }
-.zitat-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-hover);}
+@media (hover: hover){ .zitat-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-hover);} }
 
 /* Karten-Kopf: Porträt + Autor-Namen schön gestylt */
 .zc-head{
@@ -139,13 +139,13 @@
 }
 .zc-portrait picture{width:100%;height:100%;display:block;}
 .zc-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
-.zc-portrait-mono{font-family:var(--fh);font-weight:700;color:var(--accent);font-size:1.05rem;}
+.zc-portrait-mono{font-family:var(--fh);font-weight:700;color:var(--accent-text);font-size:1.05rem;}
 .zc-author-block{flex:1;min-width:0;}
 .zc-author{font-family:var(--fh);font-weight:700;font-size:.95rem;color:var(--text);letter-spacing:-.01em;line-height:1.2;}
 .zc-source{font-family:var(--fm);font-size:.66rem;color:var(--text3);letter-spacing:.03em;margin-top:.15rem;}
 .zc-kat-tag{
   font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--accent);background:var(--accent-bg, rgba(94,67,179,.08));
+  color:var(--accent-text);background:var(--accent-bg, rgba(94,67,179,.08));
   padding:.2rem .55rem;border-radius:10px;flex-shrink:0;
 }
 
@@ -153,7 +153,7 @@
 .zc-body::before{
   content:'\201C';position:absolute;top:-.2rem;left:.8rem;
   font-family:var(--fh);font-size:3.5rem;font-weight:800;
-  color:var(--accent);opacity:.09;line-height:1;pointer-events:none;
+  color:var(--accent-text);opacity:.09;line-height:1;pointer-events:none;
 }
 
 .zc-text{font-family:var(--fh);font-size:.93rem;line-height:1.72;color:var(--text);white-space:pre-wrap;position:relative;z-index:1;}
@@ -167,7 +167,7 @@
 .zc-text-full > p:first-of-type::first-letter{
   font-family:var(--fh);font-size:3.4rem;font-weight:800;
   float:left;line-height:.85;padding:.3rem .55rem 0 0;
-  color:var(--accent);
+  color:var(--accent-text);
 }
 .zc-text-full p{margin:0 0 .85rem;}
 .zc-text-full p:last-child{margin-bottom:0;}
@@ -188,11 +188,11 @@
   display:inline-flex;align-items:center;gap:.4rem;
   margin-top:1rem;padding:.45rem .9rem;
   font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--accent);background:var(--surface);
+  color:var(--accent-text);background:var(--surface);
   border:1px solid var(--border);border-radius:6px;cursor:pointer;
   transition:all .15s;
 }
-.zc-toggle:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
+@media (hover: hover){ .zc-toggle:hover{background:var(--accent);color:#fff;border-color:var(--accent);} }
 
 .zc-foot{
   padding:.7rem 1.5rem .85rem;
@@ -205,7 +205,7 @@
   text-decoration:none;letter-spacing:.02em;
   border-bottom:1px dotted var(--text3);
 }
-.zc-source-link:hover{color:var(--accent);border-bottom-color:var(--accent);}
+@media (hover: hover){ .zc-source-link:hover{color:var(--accent-text);border-bottom-color:var(--accent);} }
 .zc-source-full{font-family:var(--fm);font-size:.7rem;color:var(--text3);letter-spacing:.02em;flex:1;min-width:0;}
 
 .zc-note{
@@ -438,7 +438,13 @@ function renderRandom(){
 
   box.classList.add('swap');
   setTimeout(() => {
+    /* Erneut prüfen: renderRandom() sichert oben zwar `box` ab, aber zwischen
+       dem Aufruf und diesem Rückruf können 260 ms vergehen — genug, um die
+       Seite zu wechseln. Dann ist zr-portrait aus dem DOM und die Zuweisung
+       lief auf null. Das war die Ursache des TypeError beim schnellen
+       Durchklicken; bei gemächlicher Bedienung trat er nie auf. */
     const portraitEl = document.getElementById('zr-portrait');
+    if(!portraitEl || !document.getElementById('zr-showcase')) return;
     portraitEl.innerHTML = '';
     if(z.portrait){
       const base = 'assets/images/philosophen/'+resolveZSlug(z.portrait);

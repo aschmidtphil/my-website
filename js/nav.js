@@ -23,20 +23,6 @@ function applyTheme(t) {
 }
 function toggleTheme() {
   applyTheme(_theme === 'light' ? 'dark' : 'light');
-  try { if (typeof drawMB       === 'function') drawMB(); }       catch(e){}
-  try { if (typeof drawFourier  === 'function') drawFourier(); }  catch(e){}
-  try { if (typeof sortArr !== 'undefined' && sortArr.length) drawSort(sortArr); } catch(e){}
-}
-
-// ── Language ─────────────────────────────────────
-let _lang = 'de';
-const TR = {
-  de: {'t-hero-tag':'Data Scientist & Philosopher'},
-  en: {'t-hero-tag':'Data Scientist & Philosopher'},
-};
-function toggleLang() {
-  _lang = _lang === 'de' ? 'en' : 'de';
-  Object.entries(TR[_lang]).forEach(([id,v]) => { const e = document.getElementById(id); if(e) e.textContent = v; });
 }
 
 // ── Style / Theme System ─────────────────────
@@ -105,7 +91,7 @@ function openStylePicker() {
     row.appendChild(textEl);
     if (isActive) {
       var check = document.createElement('span');
-      check.style.cssText = 'margin-left:auto;color:var(--accent);font-weight:700;';
+      check.style.cssText = 'margin-left:auto;color:var(--accent-text);font-weight:700;';
       check.textContent = '✓';
       row.appendChild(check);
     }
@@ -189,30 +175,32 @@ const PAGE_AUDIO = {
 const NAV = [
   {type:'direct', id:'home', label:'home'},
   {type:'group',  label:'Philosophie', items:[
-    {id:'favphil',    icon:'★', label:'Lieblingsphilosophen'},
-    {id:'zitate',     icon:'❝', label:'Lieblingszitate'},
-    {id:'unendlichkeit', icon:'∞', label:'Unendlichkeit'},
+    {id:'favphil',    icon:'⭐', label:'Lieblingsphilosophen'},
+    {id:'zitate',     icon:'💬', label:'Lieblingszitate'},
+    {id:'unendlichkeit', icon:'🌌', label:'Unendlichkeit'},
     {divider:true},
-    {id:'philosophy', icon:'⊕', label:'Philosophen-Timeline'},
-    {id:'goetter',    icon:'☉', label:'Götterkosmos'},
+    {id:'philosophy', icon:'⏳', label:'Philosophen-Timeline'},
+    {id:'philosophy', sub:['karte'], icon:'🌍', label:'Weltkarte der Denker'},
+    {id:'goetter',    icon:'🔱', label:'Götterkosmos'},
     {id:'diss',       icon:'📖', label:'Dissertation'},
-    {id:'phil-eigene',icon:'◈', label:'Meine Philosophie'},
+    {id:'phil-eigene',icon:'🧭', label:'Meine Philosophie'},
+    {id:'argumente',  icon:'⚖️', label:'Bibliothek der Argumente'},
     {id:'arbeiten',   icon:'📄', label:'Eigene Arbeiten'},
   ]},
   {type:'group', label:'Akademisches', items:[
-    {id:'studium',  icon:'📋', label:'Studium'},
+    {id:'studium',  icon:'🎓', label:'Studium'},
     {id:'buecher',  icon:'📚', label:'Bücher'},
-    {id:'podcasts', icon:'🎙', label:'Podcasts'},
+    {id:'podcasts', icon:'🎧', label:'Podcasts'},
   ]},
   {type:'group', label:'Interessen', items:[
     {id:'gaming', icon:'🎮', label:'Gaming'},
-    {id:'chor',   icon:'♪',  label:'Chor im Loch'},
+    {id:'chor',   icon:'🎵', label:'Chor im Loch'},
     {id:'shirts', icon:'👕', label:'Philosophen-Shirts'},
     {id:'nature', icon:'🌿', label:'Natur'},
   ]},
   {type:'group', label:'Kontakt', items:[
-    {id:'kontakt',   icon:'✉', label:'Kontakt'},
-    {id:'impressum', icon:'§', label:'Impressum & Recht'},
+    {id:'kontakt',   icon:'✉️', label:'Kontakt'},
+    {id:'impressum', icon:'⚖️', label:'Impressum & Recht'},
   ]},
 ];
 
@@ -247,7 +235,29 @@ async function getPageHTML(id) {
 
 // ── Router ────────────────────────────────────────
 let _busy = false;
+
+/* Füllt alle <span data-zahl="…"> aus den Datenbeständen.
+   Fehlt ein Bestand (Skript noch nicht geladen), bleibt der Wert im HTML
+   stehen — deshalb steht dort immer ein plausibler Rückfallwert. */
+function zahlenNachtragen() {
+  const felder = document.querySelectorAll('[data-zahl]');
+  if (!felder.length) return;
+  const G = window.GODS_DATA;
+  const werte = {};
+  if (G && G.panthea) {
+    const kosmen = Object.values(G.panthea);
+    werte.kosmen = kosmen.length;
+    werte.gestalten = kosmen.reduce((s, p) => s + p.gods.length, 0);
+  }
+  if (typeof PHILS_V2 !== 'undefined') werte.denker = PHILS_V2.length;
+  if (typeof FAV_PHILS !== 'undefined' && FAV_PHILS.length) werte.favphil = FAV_PHILS.length;
+  felder.forEach(el => {
+    const w = werte[el.getAttribute('data-zahl')];
+    if (typeof w === 'number' && w > 0) el.textContent = w;
+  });
+}
 let _currentPage = null;
+let _ersterAufbau = true;
 
 /* Hash-Pfade: '#goetter/griechisch/eros' → { page:'goetter', sub:['griechisch','eros'] }.
    Erste Komponente = Seiten-ID, Rest = Sub-Route für die Seite (Deep-Links /
@@ -268,7 +278,6 @@ async function showPage(id, sub) {
     id = 'home'; sub = null;
   }
   _busy = true;
-
   // Sub-Route für die Seite hinterlegen; Seiten-Handler der vorigen Seite löschen
   window._routeSub = (sub && sub.length) ? sub.slice() : [];
   window._pageSubApply = null;
@@ -309,10 +318,25 @@ async function showPage(id, sub) {
   requestAnimationFrame(() => { root.style.opacity = '1'; });
 
   updateNavActive(id);
+  seitenTitelSetzen(id);
+  navMenueSchliessen();
   window.scrollTo(0, 0);
+
+  /* Nach dem Wechsel den Fokus in den Inhalt legen: Vorleseprogramme
+     lesen dann die neue Seite vor, und die Tabulatorfolge beginnt oben.
+     Beim allerersten Aufbau nicht — dort soll der Fokus im Dokument
+     bleiben, damit der Sprunglink als erstes erreichbar ist. */
+  if (_ersterAufbau) { _ersterAufbau = false; }
+  else { root.focus({ preventScroll: true }); }
 
   // Audio
   if (PAGE_AUDIO[id]) setTimeout(PAGE_AUDIO[id], 350);
+
+  /* Zahlen aus den Daten nachtragen. Auf der Seite standen sie jahrelang fest
+     im Text und lagen zuletzt um Hunderte daneben — 775 statt 866 Gestalten,
+     353 statt 580 Denker. Wer künftig Daten ergänzt, muss nichts nachpflegen.
+     Die Werte im HTML sind Rückfallwerte, falls das Skript nicht läuft. */
+  zahlenNachtragen();
 
   // Run page init — EVERY time (not cached)
   if (_pageInits[id]) {
@@ -325,16 +349,103 @@ async function showPage(id, sub) {
   }
 }
 
+/* ── Seitentitel ──────────────────────────────────────────────────────
+   Bis hierher hieß jede der 18 Seiten im Browser-Tab „Alexander Schmidt".
+   Für Lesezeichen, Verlauf und Vorleseprogramme braucht jede Seite einen
+   eigenen Titel; die Beschriftungen stehen ohnehin schon in NAV. */
+const SEITEN_TITEL = (() => {
+  const m = { home: 'Startseite' };
+  NAV.forEach(g => {
+    if (g.type === 'direct') { if (!m[g.id]) m[g.id] = g.label; return; }
+    (g.items || []).forEach(it => { if (it.id && !m[it.id]) m[it.id] = it.label; });
+  });
+  return m;
+})();
+
+function seitenTitelSetzen(id) {
+  const t = SEITEN_TITEL[id];
+  document.title = t && id !== 'home'
+    ? t + ' — Alexander Schmidt'
+    : 'Alexander Schmidt — Philosophie, Mythologie, Phänomenologie';
+}
+
+/* ── Verweise statt Schaltflächen ─────────────────────────────────────
+   Die Menüpunkte sind jetzt <a href="#seite">. Beim einfachen Linksklick
+   übernimmt der Router wie bisher; mit Strg/Cmd, Umschalt oder mittlerer
+   Maustaste lässt der Handler den Browser gewähren — dann öffnet sich
+   die Seite wirklich in einem neuen Tab oder Fenster. */
+function navLinkKlick(e, id, sub) {
+  if (e.defaultPrevented) return false;
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button > 0) return true;
+  e.preventDefault();
+  navMenueSchliessen();
+  showPage(id, sub || null);
+  return false;
+}
+
+function navHash(id, sub) {
+  return '#' + id + (sub && sub.length ? '/' + sub.map(encodeURIComponent).join('/') : '');
+}
+
+/* ── Aufklappfächer schließen ─────────────────────────────────────────
+   An einer Stelle gebündelt, damit `aria-expanded` nie auseinanderläuft. */
+function navGruppenZu(ausser) {
+  document.querySelectorAll('.nav-group').forEach(g => {
+    if (g === ausser) return;
+    g.classList.remove('open');
+    const b = g.querySelector('.nav-group-btn');
+    if (b) b.setAttribute('aria-expanded', 'false');
+  });
+}
+
+/* ── Menüfach für schmale Fenster ─────────────────────────────────── */
+function navMenueUmschalten() {
+  const n = document.querySelector('nav');
+  const b = document.getElementById('nav-burger');
+  if (!n || !b) return;
+  const auf = !n.classList.contains('offen');
+  n.classList.toggle('offen', auf);
+  b.setAttribute('aria-expanded', auf ? 'true' : 'false');
+  b.setAttribute('aria-label', auf ? 'Menü schließen' : 'Menü öffnen');
+  if (!auf) navGruppenZu();
+}
+
+function navMenueSchliessen() {
+  const n = document.querySelector('nav');
+  const b = document.getElementById('nav-burger');
+  if (n) n.classList.remove('offen');
+  if (b) { b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-label', 'Menü öffnen'); }
+  navGruppenZu();
+}
+
+/* Sprunglink: Fokus in den Inhalt setzen, ohne den Hash zu verändern —
+   der Hash steuert hier ja die Seitenwahl. */
+function navZumInhalt(e) {
+  e.preventDefault();
+  const r = document.getElementById('page-root');
+  if (!r) return;
+  r.focus({ preventScroll: true });
+  r.scrollIntoView({ block: 'start' });
+}
+
 function updateNavActive(id) {
-  document.querySelectorAll('.nav-direct,.nav-group-btn').forEach(b => b.classList.remove('active','group-active'));
+  document.querySelectorAll('.nav-direct,.nav-group-btn').forEach(b => {
+    b.classList.remove('active','group-active');
+    b.removeAttribute('aria-current');
+  });
   const d = document.getElementById('navbtn-' + id);
-  if (d) { d.classList.add('active'); return; }
+  if (d) { d.classList.add('active'); d.setAttribute('aria-current','page'); return; }
   NAV.forEach(g => {
     if (g.type !== 'group') return;
     if ((g.items||[]).some(it => it.id === id)) {
       const gb = document.getElementById('navgrp-' + g.label);
       if (gb) gb.classList.add('group-active');
     }
+  });
+  /* Innerhalb der Gruppe den genauen Punkt auszeichnen */
+  document.querySelectorAll('.nav-dropdown-item').forEach(a => {
+    if (a.getAttribute('data-id') === id && !a.getAttribute('data-sub')) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
   });
 }
 
@@ -344,38 +455,63 @@ function buildNav() {
   if (!ul) return;
   ul.innerHTML = '';
 
-  NAV.forEach(item => {
+  NAV.forEach((item, gi) => {
     const li = document.createElement('li');
 
     if (item.type === 'direct') {
-      const b = document.createElement('button');
-      b.className = 'nav-direct'; b.id = 'navbtn-' + item.id;
-      b.textContent = item.label;
-      b.onclick = () => showPage(item.id);
-      li.appendChild(b);
+      const a = document.createElement('a');
+      a.className = 'nav-direct'; a.id = 'navbtn-' + item.id;
+      a.href = navHash(item.id);
+      a.textContent = item.label;
+      a.addEventListener('click', e => navLinkKlick(e, item.id));
+      li.appendChild(a);
 
     } else {
       li.className = 'nav-group';
+      const ddId = 'navdd-' + gi;
       const btn = document.createElement('button');
       btn.className = 'nav-group-btn'; btn.id = 'navgrp-' + item.label;
-      btn.innerHTML = item.label + ' <span class="arr">▾</span>';
+      btn.type = 'button';
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-controls', ddId);
+      btn.innerHTML = item.label + ' <span class="arr" aria-hidden="true">▾</span>';
       btn.addEventListener('click', e => {
         e.stopPropagation();
-        document.querySelectorAll('.nav-group').forEach(g => { if (g !== li) g.classList.remove('open'); });
-        li.classList.toggle('open');
+        navGruppenZu(li);
+        const auf = !li.classList.contains('open');
+        li.classList.toggle('open', auf);
+        btn.setAttribute('aria-expanded', auf ? 'true' : 'false');
+      });
+
+      /* Wandert der Fokus mit dem Tabulator aus der Gruppe heraus,
+         klappt das Fach zu — sonst blieben mehrere offen stehen.
+         relatedTarget ist das Element, das den Fokus bekommt. */
+      li.addEventListener('focusout', e => {
+        if (window.innerWidth <= 900) return;   /* im Mobilfach bleibt es offen */
+        if (e.relatedTarget && li.contains(e.relatedTarget)) return;
+        li.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
       });
 
       const dd = document.createElement('div');
-      dd.className = 'nav-dropdown';
+      dd.className = 'nav-dropdown'; dd.id = ddId;
       const _ghPublish = document.documentElement.getAttribute('data-publish') === 'github';
       (item.items||[]).forEach(it => {
         if (it.divider) { dd.appendChild(Object.assign(document.createElement('div'), {className:'nav-dropdown-divider'})); return; }
         if (it.pubGithubHide && _ghPublish) return;   /* in der GitHub-Version verbergen */
-        const di = document.createElement('div');
-        di.className = 'nav-dropdown-item';
-        di.innerHTML = `<span class="icon">${it.icon}</span>${it.label}`;
-        di.onclick = () => { li.classList.remove('open'); showPage(it.id); };
-        dd.appendChild(di);
+        const a = document.createElement('a');
+        a.className = 'nav-dropdown-item';
+        a.href = navHash(it.id, it.sub);
+        a.setAttribute('data-id', it.id);
+        if (it.sub) a.setAttribute('data-sub', it.sub.join('/'));
+        /* Das Emoji ist Schmuck — Vorleseprogramme sollen es überspringen */
+        a.innerHTML = `<span class="icon" aria-hidden="true">${it.icon}</span>${it.label}`;
+        a.addEventListener('click', e => {
+          li.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+          navLinkKlick(e, it.id, it.sub || null);
+        });
+        dd.appendChild(a);
       });
       li.appendChild(btn); li.appendChild(dd);
     }
@@ -419,12 +555,24 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage(r.page, r.sub);
   });
 
-  // Close dropdowns outside click or Escape
+  // Aufklappfächer und Mobilmenü schließen: Klick daneben oder Escape
   document.addEventListener('click', e => {
-    if (!e.target.closest('nav')) document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+    if (!e.target.closest('nav') && !e.target.closest('.skip-link')) navMenueSchliessen();
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') document.querySelectorAll('.nav-group').forEach(g => g.classList.remove('open'));
+    if (e.key !== 'Escape') return;
+    /* Escape gibt den Fokus an den auslösenden Knopf zurück, damit man
+       nicht aus der Navigation herausfällt. */
+    const off = document.querySelector('.nav-group.open');
+    const imMenue = document.activeElement && document.activeElement.closest('nav');
+    navMenueSchliessen();
+    if (off && imMenue) { const b = off.querySelector('.nav-group-btn'); if (b) b.focus(); }
+  });
+
+  /* Wird das Fenster wieder breit, darf kein halboffenes Mobilfach
+     zurückbleiben. */
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) navMenueSchliessen();
   });
 });
 

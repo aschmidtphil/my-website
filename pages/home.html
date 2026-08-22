@@ -1,19 +1,118 @@
+<style>
+/* ═══ Startseite: Werkschau ══════════════════════════════════════════
+   Die Kacheln zeigen keine Symbolbilder, sondern kleine Ansichten aus
+   den echten Datenbeständen der Seite — die Konstellation kommt aus
+   GODS_DATA, das Histogramm aus PHILS_V2. Was man sieht, ist das, was
+   einen erwartet. */
+
+.hm-sec        { padding: 0 3rem 3.5rem; max-width: 1200px; margin: 0 auto; }
+.hm-sec:first-of-type { padding-top: .5rem; }
+.hm-kopf       { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+.hm-kopf h2    { font-family: var(--fh); font-size: 1.15rem; font-weight: 700;
+                 letter-spacing: -.01em; color: var(--text); white-space: nowrap; }
+.hm-kopf .rule { flex: 1; height: 1px; background: var(--border); }
+.hm-kopf .zahl { font-family: var(--fm); font-size: .68rem; letter-spacing: .08em;
+                 color: var(--text3); white-space: nowrap; }
+
+/* Auf dem Telefon passen Überschrift, Trennlinie und Zahl nicht in eine
+   Zeile — die Zahl ragte über den rechten Rand hinaus und wurde dort
+   abgeschnitten. Ab hier darf umbrochen
+   werden; die Trennlinie verschwindet dann, weil sie in der zweiten
+   Zeile nur stören würde. Oberhalb von 900 px unverändert. */
+@media (max-width: 900px){
+  .hm-kopf       { flex-wrap: wrap; gap: .5rem .8rem; }
+  .hm-kopf .zahl { white-space: normal; }
+}
+
+/* ── Karten ───────────────────────────────────────────────────────── */
+.hm-reihe      { display: grid; gap: 1.1rem; }
+.hm-reihe.zwei { grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+.hm-reihe.drei { grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); }
+
+.hm-karte      { display: flex; flex-direction: column; text-decoration: none; color: inherit;
+                 background: var(--card); border: 1px solid var(--border);
+                 border-radius: var(--r); overflow: hidden;
+                 transition: border-color .2s, transform .2s, box-shadow .2s; }
+@media (hover: hover){ .hm-karte:hover{ border-color: var(--accent); transform: translateY(-3px);
+                 box-shadow: 0 8px 26px rgba(0,0,0,.10); } }
+.hm-karte:focus-visible { transform: translateY(-3px); }
+
+/* Das „Fenster": ein Ausschnitt aus dem Projekt, in seiner eigenen Optik */
+.hm-fenster    { position: relative; aspect-ratio: 2 / 1; background: #080a12; overflow: hidden; }
+.hm-fenster.hell { background: var(--surface); }
+.hm-fenster svg{ display: block; width: 100%; height: 100%; }
+.hm-marke      { position: absolute; left: .7rem; bottom: .55rem; font-family: var(--fm);
+                 font-size: .6rem; letter-spacing: .1em; text-transform: uppercase;
+                 color: rgba(255,255,255,.55); pointer-events: none; }
+.hm-fenster.hell .hm-marke { color: var(--text3); }
+
+.hm-inhalt     { padding: 1.1rem 1.2rem 1.25rem; display: flex; flex-direction: column; gap: .45rem; flex: 1; }
+.hm-titel      { font-family: var(--fh); font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.hm-unter      { font-size: .87rem; line-height: 1.65; color: var(--text2); }
+.hm-meta       { font-family: var(--fm); font-size: .67rem; letter-spacing: .05em;
+                 color: var(--text3); margin-top: auto; padding-top: .5rem; }
+@media (hover: hover){ .hm-karte:hover .hm-titel{ color: var(--accent-text); } }
+
+/* Kapitelliste auf der Philosophie-Karte */
+.hm-kapitel    { list-style: none; display: flex; flex-wrap: wrap; gap: .35rem; margin: .2rem 0 0; }
+.hm-kapitel li { font-family: var(--fm); font-size: .66rem; color: var(--text2);
+                 border: 1px solid var(--border); border-radius: 100px; padding: .15rem .55rem; }
+
+/* Buch statt Datenfenster: die Dissertation hat keine Datengrundlage,
+   sondern einen Rücken — also zeigen wir den. */
+.hm-buch       { display: flex; align-items: center; justify-content: center;
+                 aspect-ratio: 2 / 1; background: var(--surface); position: relative; overflow: hidden; }
+.hm-buch-koerper { width: 92px; height: 128px; background: var(--card);
+                 border: 1px solid var(--border); border-left: 5px solid var(--accent);
+                 border-radius: 2px 4px 4px 2px; box-shadow: 0 10px 24px rgba(0,0,0,.16);
+                 display: flex; flex-direction: column; justify-content: space-between;
+                 padding: .55rem .5rem; transform: rotate(-3deg); transition: transform .3s; }
+@media (hover: hover){ .hm-karte:hover .hm-buch-koerper{ transform: rotate(-1deg) translateY(-3px); } }
+.hm-buch-titel { font-family: var(--fh); font-size: .5rem; font-weight: 700;
+                 line-height: 1.25; color: var(--text); }
+.hm-buch-fuss  { font-family: var(--fm); font-size: .4rem; color: var(--text3); letter-spacing: .04em; }
+
+/* ── Übrige Bereiche: eine Zeile, keine Kachelwand ────────────────── */
+.hm-mehr       { display: flex; flex-wrap: wrap; gap: .45rem; }
+.hm-mehr a     { font-family: var(--fm); font-size: .73rem; color: var(--text2);
+                 text-decoration: none; border: 1px solid var(--border);
+                 border-radius: 100px; padding: .38rem .8rem;
+                 transition: border-color .18s, color .18s; }
+@media (hover: hover){ .hm-mehr a:hover{ border-color: var(--accent); color: var(--accent-text); } }
+
+/* ── Porträtwechsel im Kopf ───────────────────────────────────────── */
+.hm-stapel     { position: relative; }
+.hm-stapel img.hm-alt { position: absolute; inset: 0; width: 100%; height: 100%;
+                 object-fit: cover; opacity: 0; transition: opacity 1.6s ease; }
+.hm-stapel img.hm-alt.an { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-karte, .hm-buch-koerper, .hm-stapel img.hm-alt { transition: none; }
+  @media (hover: hover){ .hm-karte:hover{ transform: none; } }
+}
+@media (max-width: 820px) {
+  .hm-sec { padding: 0 1.5rem 2.5rem; }
+}
+</style>
+
 <div class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
   <!-- Portrait LEFT -->
   <div class="hero-portrait-wrap fade-up d1">
-    <picture>
-      <source srcset="assets/images/me/2.avif" type="image/avif">
-      <source srcset="assets/images/me/2.webp"  type="image/webp">
-      <img class="hero-portrait" src="assets/images/me/2.webp"
-           alt="Alexander Schmidt" width="280" height="360"
-           loading="eager" fetchpriority="high">
-    </picture>
+    <div class="hm-stapel" id="hm-stapel">
+      <picture>
+        <source srcset="assets/images/me/2.avif" type="image/avif">
+        <source srcset="assets/images/me/2.webp"  type="image/webp">
+        <img class="hero-portrait" src="assets/images/me/2.webp"
+             alt="Alexander Schmidt" width="280" height="360"
+             loading="eager" fetchpriority="high">
+      </picture>
+    </div>
   </div>
   <!-- Text RIGHT -->
   <div class="hero-text">
-    <p class="hero-tag fade-up" id="t-hero-tag">Data Scientist &amp; Philosopher</p>
+    <p class="hero-tag fade-up" id="t-hero-tag">Phänomenologie · Mythologie · Daten</p>
     <h1 class="hero-name fade-up d1">
       <span class="n1">Alexander</span>
       <span class="n2">Schmidt<span class="cursor">_</span></span>
@@ -22,7 +121,7 @@
       <span class="pub-hide-github">Dr.&thinsp;phil. &middot; </span>Data Scientist &middot; Entwickler
     </p>
     <p class="hero-desc fade-up d2" id="t-hero-desc">
-      Ich verbinde <em style="font-style:normal;color:var(--accent3)">Datenwissenschaft</em>,
+      Ich verbinde <em style="font-style:normal;color:var(--accent3-text)">Datenwissenschaft</em>,
       Philosophie und Softwareentwicklung &mdash; auf der Suche nach den verborgenen
       Strukturen in Daten, Ideen und Systemen.
     </p>
@@ -33,3 +132,380 @@
     </div>
   </div>
 </div>
+
+<!-- ── Geschrieben ──────────────────────────────────────────────── -->
+<section class="hm-sec">
+  <div class="hm-kopf">
+    <h2>Geschrieben</h2>
+    <span class="rule"></span>
+    <span class="zahl">Schelling · eigene Position</span>
+  </div>
+  <div class="hm-reihe zwei">
+
+    <a class="hm-karte pub-hide-github" href="#diss">
+      <div class="hm-buch" aria-hidden="true">
+        <div class="hm-buch-koerper">
+          <div class="hm-buch-titel">Schellings<br>Zeittheorie</div>
+          <div class="hm-buch-fuss">SCHELLINGIANA 35</div>
+        </div>
+      </div>
+      <div class="hm-inhalt">
+        <div class="hm-titel">Schellings Zeittheorie</div>
+        <p class="hm-unter">Das verborgene System hinter der Weltalterphilosophie. Die
+          Dissertation rekonstruiert, wonach Schelling seine drei Weltalter gegliedert hat.</p>
+        <div class="hm-meta">frommann-holzboog · 2024 · XVI + 346 Seiten</div>
+      </div>
+    </a>
+
+    <a class="hm-karte" href="#phil-eigene">
+      <div class="hm-fenster hell">
+        <svg viewBox="0 0 320 160" role="img" aria-label="Zehn Kapitel, ineinandergreifend">
+          <g id="hm-kap"></g>
+        </svg>
+        <span class="hm-marke">10 Kapitel</span>
+      </div>
+      <div class="hm-inhalt">
+        <div class="hm-titel">Meine Philosophie</div>
+        <p class="hm-unter">Wo ich selbst stehe: der Mensch als endliches, erzählendes,
+          fragendes Wesen — in zehn Kapiteln entwickelt.</p>
+        <ul class="hm-kapitel">
+          <li>Endlichkeit und Tragik</li><li>Erzählendes Wesen</li><li>Kontingenz</li><li>Freiheit</li>
+        </ul>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── Gebaut ───────────────────────────────────────────────────── -->
+<section class="hm-sec">
+  <div class="hm-kopf">
+    <h2>Gebaut</h2>
+    <span class="rule"></span>
+    <span class="zahl">Karten für Unübersichtliches</span>
+  </div>
+  <div class="hm-reihe drei">
+
+    <a class="hm-karte" href="#goetter">
+      <div class="hm-fenster">
+        <svg viewBox="0 0 320 160" role="img" aria-label="Konstellation aus dem Götterkosmos">
+          <g id="hm-konst"></g>
+        </svg>
+        <span class="hm-marke" id="hm-konst-marke">Götterkosmos</span>
+      </div>
+      <div class="hm-inhalt">
+        <div class="hm-titel">Götterkosmos</div>
+        <p class="hm-unter"><span data-zahl="gestalten">866</span> Gestalten aus <span data-zahl="kosmen">36</span> Überlieferungen, nach Primärquellen
+          geordnet — mit ihren Verwandtschaften und den Entsprechungen zwischen den Traditionen.</p>
+        <div class="hm-meta"><span data-zahl="kosmen">36</span> Kosmen · <span data-zahl="gestalten">866</span> Gestalten</div>
+      </div>
+    </a>
+
+    <a class="hm-karte" href="#philosophy">
+      <div class="hm-fenster hell">
+        <svg viewBox="0 0 320 160" role="img" aria-label="Verteilung der Denker über die Jahrhunderte">
+          <g id="hm-zeit"></g>
+        </svg>
+        <span class="hm-marke">600 v. Chr. → heute</span>
+      </div>
+      <div class="hm-inhalt">
+        <div class="hm-titel">Philosophen-Zeitleiste</div>
+        <p class="hm-unter"><span data-zahl="denker">580</span> Denker über zweieinhalb Jahrtausende, nach Epochen und
+          Kulturkreisen — dazu eine Weltkarte mit Geburts- und Sterbeorten.</p>
+        <div class="hm-meta"><span data-zahl="denker">580</span> Denker · Zeitleiste &amp; Karte</div>
+      </div>
+    </a>
+
+    <a class="hm-karte" href="#unendlichkeit">
+      <div class="hm-fenster">
+        <svg viewBox="0 0 320 160" role="img" aria-label="Größenordnungen vom Proton bis zum Universum">
+          <g id="hm-skala"></g>
+        </svg>
+        <span class="hm-marke">43 Größenordnungen</span>
+      </div>
+      <div class="hm-inhalt">
+        <div class="hm-titel">Unendlichkeit</div>
+        <p class="hm-unter">Eine Zoomfahrt zwischen den zwei Unendlichkeiten — vom
+          beobachtbaren Universum bis in eine Milbe, in der der Kosmos von vorn beginnt.</p>
+        <div class="hm-meta">nach Pascal, <i>Pensées</i> L 199</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── Außerdem ─────────────────────────────────────────────────── -->
+<section class="hm-sec">
+  <div class="hm-kopf">
+    <h2>Außerdem</h2>
+    <span class="rule"></span>
+  </div>
+  <nav class="hm-mehr" aria-label="Weitere Bereiche">
+    <a href="#argumente">Bibliothek der Argumente</a>
+    <a href="#favphil">Lieblingsphilosophen</a>
+    <a href="#zitate">Lieblingszitate</a>
+    <a href="#buecher">Bücher</a>
+    <a href="#studium">Studium</a>
+    <a href="#podcasts">Podcasts</a>
+    <a href="#arbeiten" class="pub-hide-github">Eigene Arbeiten</a>
+    <a href="#chor">Chor im Loch</a>
+    <a href="#shirts">Philosophen-Shirts</a>
+    <a href="#nature">Natur</a>
+    <a href="#gaming">Gaming</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+</section>
+
+<script>
+/* ═══ Startseite: die kleinen Ansichten zeichnen ═════════════════════
+   Alles hier zeichnet aus den Beständen, die ohnehin geladen sind.
+   Fehlt ein Bestand, bleibt das Fenster leer statt kaputt. */
+(function(){
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(t, a, txt){
+    var e = document.createElementNS(NS, t);
+    for (var k in a) if (a[k] != null) e.setAttribute(k, a[k]);
+    if (txt != null) e.textContent = txt;
+    return e;
+  }
+  /* Kleiner stabiler Streuwert je Name — damit die Konstellation nicht
+     wie ein Raster aussieht, aber bei jedem Zeichnen gleich bleibt. */
+  function streu(s, spanne){
+    var h = 0;
+    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973;
+    return (h % (2 * spanne + 1)) - spanne;
+  }
+
+  /* ── 1. Konstellation aus einem der Kosmen ──────────────────────── */
+  (function(){
+    var ziel = document.getElementById('hm-konst');
+    var daten = (window.GODS_DATA || {}).panthea;
+    if (!ziel || !daten) return;
+    var namen = Object.keys(daten);
+    if (!namen.length) return;
+    var key = namen[Math.floor(Math.random() * namen.length)];
+    var kosmos = daten[key] || {};
+    var alle = kosmos.gods || [];
+    if (!alle.length) return;
+
+    var haupt = alle.filter(function(g){ return g.rank === 'major'; });
+    if (haupt.length < 7) haupt = alle.slice();
+    haupt = haupt.slice().sort(function(a,b){ return (a.tier||0) - (b.tier||0); }).slice(0, 11);
+
+    var W = 320, H = 160, padX = 30, padY = 34;
+    var stufen = [];
+    haupt.forEach(function(g){ if (stufen.indexOf(g.tier) < 0) stufen.push(g.tier); });
+    stufen.sort(function(a,b){ return a - b; });
+
+    var pos = {};
+    stufen.forEach(function(t, ti){
+      var reihe = haupt.filter(function(g){ return g.tier === t; });
+      var y = stufen.length === 1 ? H/2 : padY + (H - 2*padY) * (ti / (stufen.length - 1));
+      reihe.forEach(function(g, i){
+        pos[g.id] = { x: padX + (W - 2*padX) * ((i + .5) / reihe.length) + streu(g.id, 9),
+                      y: y + streu(g.name, 6), g: g };
+      });
+    });
+
+    /* Sternenstaub im Hintergrund */
+    for (var i = 0; i < 30; i++){
+      ziel.appendChild(el('circle', { cx: (i * 97) % W, cy: (i * 53) % H,
+        r: (i % 3) ? .5 : .8, fill: '#ffffff', opacity: .13 }));
+    }
+    /* Abstammungslinien */
+    haupt.forEach(function(g){
+      (g.parents || []).forEach(function(p){
+        if (pos[g.id] && pos[p]) ziel.appendChild(el('line', {
+          x1: pos[p].x, y1: pos[p].y, x2: pos[g.id].x, y2: pos[g.id].y,
+          stroke: kosmos.color || '#88a0d0', 'stroke-width': .7, opacity: .42 }));
+      });
+    });
+    /* Sterne */
+    var i2 = 0, marken = [];
+    /* Beinamen in Klammern und Gedankenstrich-Zusätze weglassen: im
+       kleinen Feld zählt der Rufname, nicht die volle Titulatur. */
+    function kurz(n){
+      var s = String(n).split(' (')[0].split(' — ')[0].split(' – ')[0].trim();
+      return s.length > 20 ? s.slice(0, 19).trim() + '…' : s;
+    }
+    Object.keys(pos).forEach(function(id){
+      var p = pos[id], gross = i2 < 3;
+      ziel.appendChild(el('circle', { cx: p.x, cy: p.y, r: gross ? 3.4 : 2.1,
+        fill: gross ? (kosmos.accent || '#f0c860') : (kosmos.color || '#88a0d0'),
+        opacity: gross ? 1 : .78 }));
+      if (gross) {
+        ziel.appendChild(el('circle', { cx: p.x, cy: p.y, r: 6.5, fill: 'none',
+          stroke: kosmos.accent || '#f0c860', 'stroke-width': .6, opacity: .3 }));
+        var txt = kurz(p.g.name);
+        var halb = txt.length * 2.3 + 2;                    /* halbe Textbreite bei 7.5px */
+        var tx = Math.min(Math.max(p.x, halb + 3), W - halb - 3);
+        /* Wenn eine Marke schon dicht daneben sitzt, unter den Stern rücken */
+        var unten = marken.some(function(m){
+          return Math.abs(m.x - tx) < halb + m.halb && Math.abs(m.y - (p.y - 9)) < 11; });
+        var ty = unten ? p.y + 15 : p.y - 9;
+        marken.push({ x: tx, y: ty, halb: halb });
+        ziel.appendChild(el('text', { x: tx, y: ty, 'text-anchor': 'middle',
+          'font-family': "'Cinzel', serif", 'font-size': 7.5, fill: '#f4f1ea',
+          opacity: .92 }, txt));
+      }
+      i2++;
+    });
+    var marke = document.getElementById('hm-konst-marke');
+    if (marke) marke.textContent = (kosmos.label || key) + ' · ' + alle.length + ' Gestalten';
+  })();
+
+  /* ── 2. Denker über die Jahrhunderte ────────────────────────────── */
+  (function(){
+    var ziel = document.getElementById('hm-zeit');
+    var liste = window.PHILS_V2 || (typeof PHILS_V2 !== 'undefined' ? PHILS_V2 : null);
+    if (!ziel || !liste || !liste.length) return;
+
+    var VON = -700, BIS = 2000, SCHRITT = 50;
+    var faecher = Math.ceil((BIS - VON) / SCHRITT);
+    var zahl = new Array(faecher).fill(0), farben = [];
+    for (var i = 0; i < faecher; i++) farben.push({});
+    liste.forEach(function(p){
+      if (typeof p.birth !== 'number') return;
+      var f = Math.floor((p.birth - VON) / SCHRITT);
+      if (f < 0 || f >= faecher) return;
+      zahl[f]++;
+      var c = p.color || '#888';
+      farben[f][c] = (farben[f][c] || 0) + 1;
+    });
+    var max = Math.max.apply(null, zahl) || 1;
+
+    var W = 320, H = 160, basis = 128, padX = 14;
+    var breite = (W - 2 * padX) / faecher;
+    zahl.forEach(function(n, i){
+      if (!n) return;
+      var h = 8 + (basis - 26) * (n / max);
+      var beste = null, bestn = 0;
+      for (var c in farben[i]) if (farben[i][c] > bestn) { bestn = farben[i][c]; beste = c; }
+      ziel.appendChild(el('rect', { x: padX + i * breite + .6, y: basis - h,
+        width: Math.max(1.4, breite - 1.2), height: h, rx: .8,
+        fill: beste || 'currentColor', opacity: .85 }));
+    });
+    /* Grundlinie und zwei Marken */
+    ziel.appendChild(el('line', { x1: padX, y1: basis + 2, x2: W - padX, y2: basis + 2,
+      stroke: 'currentColor', 'stroke-width': .8, opacity: .3 }));
+    [[-600, '600 v. Chr.'], [0, 'Zeitenwende'], [1900, 'heute']].forEach(function(m){
+      var x = padX + (W - 2 * padX) * ((m[0] - VON) / (BIS - VON));
+      ziel.appendChild(el('line', { x1: x, y1: basis + 2, x2: x, y2: basis + 7,
+        stroke: 'currentColor', 'stroke-width': .8, opacity: .45 }));
+      ziel.appendChild(el('text', { x: Math.min(Math.max(x, 26), W - 26), y: basis + 19,
+        'text-anchor': 'middle', 'font-family': 'ui-monospace, monospace', 'font-size': 8,
+        fill: 'currentColor', opacity: .6 }, m[1]));
+    });
+    ziel.setAttribute('style', 'color:var(--text3)');
+  })();
+
+  /* ── 3. Größenordnungen ─────────────────────────────────────────── */
+  (function(){
+    var ziel = document.getElementById('hm-skala');
+    if (!ziel) return;
+    /* Die Enden entsprechen den Grenzen der Zoomfahrt selbst. */
+    var LMIN = Math.log10(8e-16), LMAX = Math.log10(9.461e27);
+    var W = 320, H = 160, achse = 96, padX = 20;
+    function x(v){ return padX + (W - 2*padX) * ((Math.log10(v) - LMIN) / (LMAX - LMIN)); }
+
+    /* Dekadenstriche */
+    for (var e = -15; e <= 27; e++){
+      var xi = x(Math.pow(10, e)), gross = (e % 5 === 0);
+      ziel.appendChild(el('line', { x1: xi, y1: achse - (gross ? 6 : 3), x2: xi, y2: achse,
+        stroke: '#7f8ba8', 'stroke-width': gross ? .9 : .5, opacity: gross ? .75 : .4 }));
+    }
+    ziel.appendChild(el('line', { x1: padX, y1: achse, x2: W - padX, y2: achse,
+      stroke: '#7f8ba8', 'stroke-width': 1, opacity: .8 }));
+
+    var stationen = [
+      { v: 1e-15, l: 'Proton',    o: 1 },
+      { v: 1e-5,  l: 'Zelle',     o: 0 },
+      { v: 1.7,   l: 'Mensch',    o: 1, her: 1 },
+      { v: 1.27e7,l: 'Erde',      o: 0 },
+      { v: 8.8e26,l: 'Universum', o: 1 }
+    ];
+    stationen.forEach(function(s){
+      var xi = x(s.v), oben = s.o === 1;
+      ziel.appendChild(el('line', { x1: xi, y1: achse, x2: xi, y2: oben ? achse - 26 : achse + 18,
+        stroke: s.her ? '#f0c860' : '#7f8ba8', 'stroke-width': s.her ? 1.1 : .7,
+        opacity: s.her ? .95 : .55 }));
+      ziel.appendChild(el('circle', { cx: xi, cy: achse, r: s.her ? 3.6 : 2.2,
+        fill: s.her ? '#f0c860' : '#9fb0d0' }));
+      ziel.appendChild(el('text', { x: xi, y: oben ? achse - 31 : achse + 29,
+        'text-anchor': 'middle', 'font-family': 'ui-monospace, monospace', 'font-size': 8.5,
+        fill: s.her ? '#f0c860' : '#cbd5e8', opacity: s.her ? 1 : .8 }, s.l));
+    });
+    /* Die beiden Enden benennen */
+    ziel.appendChild(el('text', { x: padX, y: achse + 47, 'font-family': 'ui-monospace, monospace',
+      'font-size': 8, fill: '#7f8ba8' }, '10⁻¹⁵ m'));
+    ziel.appendChild(el('text', { x: W - padX, y: achse + 47, 'text-anchor': 'end',
+      'font-family': 'ui-monospace, monospace', 'font-size': 8, fill: '#7f8ba8' }, '10²⁷ m'));
+  })();
+
+  /* ── 4. Kapitelbogen ────────────────────────────────────────────── */
+  (function(){
+    var ziel = document.getElementById('hm-kap');
+    if (!ziel) return;
+    var W = 320, H = 160, n = 10, padX = 26;
+    ziel.setAttribute('style', 'color:var(--text3)');
+    /* Zehn Punkte auf einem flachen Bogen, verbunden — die Kapitel
+       bauen aufeinander auf und schließen zum Ausgangsbegriff zurück. */
+    var pkt = [];
+    for (var i = 0; i < n; i++){
+      var t = i / (n - 1);
+      pkt.push({ x: padX + (W - 2*padX) * t, y: 96 - Math.sin(t * Math.PI) * 40 });
+    }
+    var d = pkt.map(function(p, i){ return (i ? 'L' : 'M') + p.x.toFixed(1) + ' ' + p.y.toFixed(1); }).join(' ');
+    ziel.appendChild(el('path', { d: d, fill: 'none', stroke: 'currentColor',
+      'stroke-width': 1, opacity: .45 }));
+    pkt.forEach(function(p, i){
+      var letzt = (i === n - 1);
+      ziel.appendChild(el('circle', { cx: p.x, cy: p.y, r: letzt ? 4.5 : 2.6,
+        fill: letzt ? 'var(--accent)' : 'currentColor', opacity: letzt ? 1 : .6 }));
+    });
+    ziel.appendChild(el('text', { x: pkt[n-1].x, y: pkt[n-1].y + 20, 'text-anchor': 'end',
+      'font-family': 'ui-monospace, monospace', 'font-size': 8.5, fill: 'currentColor',
+      opacity: .75 }, 'endlich · erzählend · fragend'));
+  })();
+
+  /* ── 5. Porträtwechsel ──────────────────────────────────────────────
+     Trage hier weitere Dateinamen aus assets/images/me/ ein — etwa
+     ['2','1','3']. Was sich nicht laden lässt, wird still übersprungen;
+     bei nur einem Bild bleibt alles wie bisher. */
+  (function(){
+    var PORTRAETS = ['2'];
+    var stapel = document.getElementById('hm-stapel');
+    if (!stapel || PORTRAETS.length < 2) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var geladen = [];
+    var offen = PORTRAETS.length - 1;
+    PORTRAETS.slice(1).forEach(function(name){
+      var img = new Image();
+      img.onload = function(){ geladen.push(name); if (!--offen) start(); };
+      img.onerror = function(){ if (!--offen) start(); };
+      img.src = 'assets/images/me/' + name + '.webp';
+    });
+
+    function start(){
+      if (!geladen.length) return;
+      var ebenen = geladen.map(function(name){
+        var im = document.createElement('img');
+        im.className = 'hero-portrait hm-alt';
+        im.src = 'assets/images/me/' + name + '.webp';
+        im.alt = '';
+        im.setAttribute('aria-hidden', 'true');
+        stapel.appendChild(im);
+        return im;
+      });
+      var i = -1;
+      setInterval(function(){
+        if (document.hidden) return;
+        ebenen.forEach(function(e){ e.classList.remove('an'); });
+        i = (i + 1) % (ebenen.length + 1);
+        if (i < ebenen.length) ebenen[i].classList.add('an');
+      }, 7000);
+    }
+  })();
+})();
+</script>

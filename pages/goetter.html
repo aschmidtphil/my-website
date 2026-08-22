@@ -49,9 +49,30 @@
 .gods-tab{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem; letter-spacing:.04em;
   background:transparent; color:var(--gx-ink2); border:1px solid var(--gx-line);
   padding:.45rem 1.1rem; border-radius:2px; cursor:pointer; transition:all .25s; }
-.gods-tab:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); }
+@media (hover: hover){ .gods-tab:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); } }
 .gods-tab.active{ color:#0c0d18; background:var(--pan-color,#c9b876);
   border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
+
+/* Auswahlfeld für Kategorien mit vielen Kosmen — bewusst wie ein gods-tab
+   gestaltet, damit die Leiste nicht in zwei Formensprachen zerfällt. Das
+   eigene Dreieck ersetzt die systemeigene Pfeilgrafik, die je nach Browser
+   hell oder dunkel ausfällt und im dunklen Kosmos-Hintergrund verschwände. */
+.gods-select{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem;
+  letter-spacing:.04em; color:var(--gx-ink2); background:transparent;
+  border:1px solid var(--gx-line); border-radius:2px; cursor:pointer;
+  padding:.45rem 2.2rem .45rem 1.1rem; transition:all .25s;
+  -webkit-appearance:none; appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),
+                   linear-gradient(135deg,currentColor 50%,transparent 50%);
+  background-position:calc(100% - 1.15rem) 55%, calc(100% - .85rem) 55%;
+  background-size:5px 5px, 5px 5px; background-repeat:no-repeat; }
+@media (hover: hover){ .gods-select:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); } }
+.gods-select.active{ color:#0c0d18; background-color:var(--pan-color,#c9b876);
+  border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
+.gods-select:focus-visible{ outline:2px solid var(--gx-star); outline-offset:2px; }
+/* Die Liste selbst zeichnet das Betriebssystem — dort sind eigene Farben
+   nötig, sonst steht helle Schrift auf hellem Grund. */
+.gods-select option{ background:#12131f; color:#e8e4d8; font-family:'Cinzel',serif; }
 
 .gods-controls{ position:relative; z-index:2; display:flex; gap:1.4rem; justify-content:center;
   flex-wrap:wrap; align-items:center; padding:.8rem 1rem 1.2rem; }
@@ -61,7 +82,7 @@
 .gods-ctrl-btn{ font-family:var(--fm); font-size:.74rem; letter-spacing:.04em;
   background:transparent; color:var(--gx-star); border:1px solid var(--gx-star);
   padding:.42rem 1rem; border-radius:2px; cursor:pointer; transition:all .2s; }
-.gods-ctrl-btn:hover{ background:var(--gx-star); color:#0c0d18; }
+@media (hover: hover){ .gods-ctrl-btn:hover{ background:var(--gx-star); color:#0c0d18; } }
 .gods-ctrl-btn.on{ background:var(--gx-star); color:#0c0d18; box-shadow:0 0 16px rgba(201,184,118,.4); }
 
 .gods-stage-wrap{ position:relative; z-index:1; overflow-x:auto; overflow-y:hidden; padding:0 1.5rem 2rem; }
@@ -90,8 +111,8 @@
   align-items:center; gap:.3rem; padding:.55rem .45rem; text-align:center; cursor:pointer;
   background:rgba(10,12,26,.62); border:1px solid rgba(122,126,178,.28); border-radius:12px;
   transition:border-color .15s, transform .15s, box-shadow .15s; }
-.gx-node:hover .gx-hy-card, .gx-cmp-node:hover .gx-hy-card{ border-color:var(--pan-color,#c9b876);
-  transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,0,0,.4); }
+@media (hover: hover){ .gx-node:hover .gx-hy-card, .gx-cmp-node:hover .gx-hy-card{ border-color:var(--pan-color,#c9b876);
+  transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,0,0,.4); } }
 .gx-hy-card.major{ border-color:var(--pan-color,#c9b876); }
 .gx-hy-img{ width:58px; height:58px; border-radius:50%; background-size:cover;
   background-position:center 22%; border:2px solid var(--pan-color,#c9b876);
@@ -123,17 +144,17 @@
 .gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
   font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
   border-radius:999px; cursor:pointer; transition:all .15s; }
-.gx-viewbtn:hover{ color:#e8eaf6; }
+@media (hover: hover){ .gx-viewbtn:hover{ color:#e8eaf6; } }
 .gx-viewbtn.on{ color:var(--pan-color,#c9b876); border-color:var(--pan-color,#c9b876); }
 .gx-cards{ position:relative; z-index:1; }
 .gx-cards-tier{ font-family:var(--fm); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
   color:var(--pan-color,#c9b876); opacity:.85; margin:1.1rem 0 .5rem; }
-.gx-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.6rem; }
+.gx-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(150px, 100%), 1fr)); gap:.6rem; }
 .gx-card{ display:flex; flex-direction:column; align-items:center; gap:.35rem; padding:.7rem .5rem .6rem;
   background:rgba(10,12,26,.55); border:1px solid rgba(122,126,178,.25); border-radius:12px;
   cursor:pointer; text-align:center; transition:transform .15s, border-color .15s, box-shadow .15s; }
-.gx-card:hover{ transform:translateY(-2px); border-color:var(--pan-color,#c9b876);
-  box-shadow:0 4px 18px rgba(0,0,0,.35); }
+@media (hover: hover){ .gx-card:hover{ transform:translateY(-2px); border-color:var(--pan-color,#c9b876);
+  box-shadow:0 4px 18px rgba(0,0,0,.35); } }
 .gx-card.major .gx-card-name{ color:var(--pan-color,#c9b876); }
 .gx-card-img{ width:84px; height:84px; border-radius:50%; background-size:cover;
   background-position:center 22%; border:2px solid var(--pan-color,#c9b876); filter:saturate(.75); }
@@ -155,7 +176,7 @@
 
 .gx-node{ cursor:pointer; transition:opacity .2s; }
 .gx-node .gx-orb{ transition:filter .2s; }
-.gx-node:hover .gx-orb{ filter:brightness(1.35); }
+@media (hover: hover){ .gx-node:hover .gx-orb{ filter:brightness(1.35); } }
 .gx-node.dim{ opacity:.18; }
 .gx-node.sel .gx-name{ fill:var(--gx-star); }
 .gx-name{ font-family:'Cinzel',serif; fill:var(--gx-ink); text-anchor:middle; pointer-events:none; }
@@ -195,9 +216,18 @@
 @media (max-height:560px){ .gx-panel-portrait{ height:76px }
   .gx-panel-name{ font-size:1.25rem } }
 .gx-panel.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
-.gx-panel-close{ position:absolute; top:.8rem; right:.8rem; background:none; border:none;
-  color:var(--gx-ink2); font-size:1.1rem; cursor:pointer; }
-.gx-panel-close:hover{ color:var(--gx-ink); }
+.gx-panel-close{ position:absolute; top:.8rem; right:.8rem; background:rgba(10,12,24,.7);
+  border:none; border-radius:6px; width:1.8rem; height:1.8rem; line-height:1;
+  color:var(--gx-ink); font-size:1.05rem; cursor:pointer; z-index:3;
+  backdrop-filter:blur(4px); }
+/* Der Link-Knopf lag halbtransparent auf dem Portraet und war kaum lesbar. */
+.gx-panel-permalink{ position:absolute; top:.8rem; right:3rem; z-index:3;
+  background:rgba(10,12,24,.78); border:1px solid rgba(236,230,214,.28); border-radius:6px;
+  color:var(--gx-ink); font-family:var(--fm); font-size:.62rem; letter-spacing:.06em;
+  padding:.32rem .55rem; cursor:pointer; backdrop-filter:blur(4px);
+  box-shadow:0 2px 8px rgba(0,0,0,.45); }
+@media (hover: hover){ .gx-panel-permalink:hover{ border-color:var(--gx-star); color:var(--gx-star); } }
+@media (hover: hover){ .gx-panel-close:hover{ color:var(--gx-ink); } }
 .gx-panel-portrait{ width:100%; height:170px; border-radius:4px; overflow:hidden; margin-bottom:1rem;
   background:#0c0d18; border:1px solid var(--gx-line); display:none; }
 .gx-panel-portrait.show{ display:block; }
@@ -219,14 +249,14 @@
 .gx-equiv-chip{ display:inline-block; font-family:var(--fm); font-size:.7rem;
   background:#1a1c3260; border:1px solid var(--gx-line); border-radius:2px;
   padding:.15rem .55rem; margin:.2rem .25rem 0 0; color:var(--gx-star); cursor:pointer; transition:all .15s; }
-.gx-equiv-chip:hover{ border-color:var(--gx-star); background:#1a1c32; }
+@media (hover: hover){ .gx-equiv-chip:hover{ border-color:var(--gx-star); background:#1a1c32; } }
 
 /* ── Bild-Lightbox: Porträt in großer Ansicht ── */
 .gx-panel-portrait.zoomable{ cursor:zoom-in; position:relative; }
 .gx-panel-portrait.zoomable::after{ content:'⤢'; position:absolute; right:.45rem; bottom:.35rem;
   font-size:.85rem; color:#ece6d6; background:rgba(10,12,26,.66); border:1px solid var(--gx-line);
   border-radius:3px; padding:.05rem .35rem; opacity:0; transition:opacity .2s; pointer-events:none; }
-.gx-panel-portrait.zoomable:hover::after{ opacity:.95; }
+@media (hover: hover){ .gx-panel-portrait.zoomable:hover::after{ opacity:.95; } }
 .gx-lightbox{ position:fixed; inset:0; z-index:900; display:flex; flex-direction:column;
   align-items:center; justify-content:center; padding:2.2rem 1.4rem 1.6rem;
   background:rgba(4,5,12,.92); backdrop-filter:blur(8px);
@@ -246,14 +276,14 @@
 .gx-lb-close{ position:absolute; top:1rem; right:1.2rem; background:none; border:1px solid var(--gx-line);
   color:var(--gx-ink2); font-size:1.05rem; line-height:1; padding:.4rem .6rem; border-radius:3px;
   cursor:pointer; transition:all .2s; }
-.gx-lb-close:hover{ color:var(--gx-ink); border-color:var(--gx-star); }
+@media (hover: hover){ .gx-lb-close:hover{ color:var(--gx-ink); border-color:var(--gx-star); } }
 @media (prefers-reduced-motion: reduce){ .gx-lightbox, .gx-lightbox img{ transition:none; } }
 
 /* ── Permalink im Detail-Panel ── */
 .gx-panel-permalink{ position:absolute; top:.8rem; right:2.6rem; background:none; border:none;
   font-family:var(--fm); font-size:.68rem; letter-spacing:.05em; color:var(--gx-ink2);
   cursor:pointer; padding:.1rem .3rem; transition:color .15s; }
-.gx-panel-permalink:hover{ color:var(--gx-star); }
+@media (hover: hover){ .gx-panel-permalink:hover{ color:var(--gx-star); } }
 .gx-panel-permalink.done{ color:var(--gx-star); }
 
 /* ── Entsprechungs-Atlas: alle 67 Entsprechungen als ein Netz ── */
@@ -266,7 +296,7 @@
 .gxa-edge.dim{ opacity:.045; }
 .gxa-node{ cursor:pointer; }
 .gxa-node circle{ transition:r .15s; }
-.gxa-node:hover circle{ r:5.5; }
+@media (hover: hover){ .gxa-node:hover circle{ r:5.5; } }
 .gxa-node.dim{ opacity:.22; }
 .gxa-node.gxa-off{ opacity:.10; }
 .gxa-edge.gxa-off{ opacity:.03; }
@@ -278,7 +308,7 @@
   padding:.32rem .7rem; border-radius:8px; cursor:pointer;
   background:#161832; border:1px solid var(--gx-line); color:var(--gx-ink); transition:all .15s; }
 .gx-zeit-alle.on{ border-color:var(--gx-star); color:var(--gx-star); }
-.gx-zeit-alle:hover{ border-color:var(--gx-star); }
+@media (hover: hover){ .gx-zeit-alle:hover{ border-color:var(--gx-star); } }
 #gx-zeit-slider{ flex:1; min-width:180px; accent-color:var(--gx-star); cursor:pointer; }
 .gx-zeit-lab{ font-family:var(--fm,monospace); font-size:.74rem; color:var(--gx-star);
   min-width:9.5rem; text-align:right; font-weight:700; }
@@ -315,7 +345,7 @@
 .gx-cmp-row-label{ font-family:'Cinzel',serif; font-size:13px; font-weight:600; fill:var(--gx-ink); letter-spacing:.04em; }
 .gx-cmp-node{ cursor:pointer; }
 .gx-cmp-node .gx-orb{ transition:filter .2s; }
-.gx-cmp-node:hover .gx-orb{ filter:brightness(1.35); }
+@media (hover: hover){ .gx-cmp-node:hover .gx-orb{ filter:brightness(1.35); } }
 .gx-cmp-node.dim{ opacity:.15; }
 .gx-cmp-name{ font-family:'Cinzel',serif; font-size:11.5px; font-weight:600; fill:var(--gx-ink); text-anchor:middle; pointer-events:none; }
 .gx-cmp-pan{ font-family:var(--fm); font-size:8px; fill:var(--gx-ink2); text-anchor:middle; pointer-events:none; letter-spacing:.05em; text-transform:uppercase; }
@@ -345,7 +375,7 @@
 .gx-results .r-head{padding:.5rem .8rem;font-size:.78rem;color:var(--gx-ink2,#9aa)}
 .gx-results button{display:block;width:100%;text-align:left;padding:.5rem .8rem;background:none;
   border:0;border-top:1px solid var(--gx-line,#3a3f46);color:var(--gx-ink,inherit);cursor:pointer;font:inherit}
-.gx-results button:hover{background:rgba(128,128,128,.12)}
+@media (hover: hover){ .gx-results button:hover{background:rgba(128,128,128,.12)} }
 .gx-results .r-pan{color:var(--gx-ink2,#9aa);font-size:.78em;margin-left:.45em}
 .gx-results .r-snip{display:block;font-size:.78em;color:var(--gx-ink2,#9aa);margin-top:2px}
 .gx-table{margin:0 1.5rem 2rem;overflow-x:auto}
@@ -355,12 +385,12 @@
   vertical-align:top;text-align:left;color:var(--gx-ink)}
 .gx-table th{background:rgba(255,255,255,.06);color:var(--gx-ink);font-weight:700}
 .gx-table tbody tr:nth-child(even){background:rgba(255,255,255,.028)}
-.gx-table tbody tr:hover{background:rgba(201,184,118,.10)}
+@media (hover: hover){ .gx-table tbody tr:hover{background:rgba(201,184,118,.10)} }
 .gx-table td.gxt-my{max-width:420px}
 .gx-table .gxt-name{background:none;border:0;padding:0;color:inherit;font:inherit;
   font-weight:700;cursor:pointer;text-decoration:underline dotted}
 .gxz-row{cursor:pointer}
-.gxz-row:hover .gxz-bar{filter:brightness(1.3)}
+@media (hover: hover){ .gxz-row:hover .gxz-bar{filter:brightness(1.3)} }
 /* Native Dropdown-Listen (Motiv, Kosmos-Filter, Vergleich) auf dem dunklen Kosmos-Hintergrund lesbar */
 .gods-root select option{ background:#161832; color:#ece6d6; }
 /* Tabellen-Toolbar: Kosmos-Filter + CSV-Export */
@@ -370,7 +400,7 @@
   background:#161832; color:var(--gx-ink); font:inherit; }
 .gxt-export{ padding:.45rem .85rem; border-radius:10px; border:1px solid var(--gx-line);
   background:#161832; color:var(--gx-ink); font:inherit; cursor:pointer; }
-.gxt-export:hover{ border-color:var(--gx-star); color:#fff; }
+@media (hover: hover){ .gxt-export:hover{ border-color:var(--gx-star); color:#fff; } }
 .gxt-kosmos{ font-weight:700; }
 /* Sichtbarer Tastatur-Fokus im ganzen Kosmos (vorher nur am Vergleichs-Select) */
 .gods-root :is(button,select,input,a,[tabindex]):focus-visible{
@@ -382,7 +412,7 @@
 .gx-filterbar b{ color:var(--gx-ink); font-weight:600; }
 .gx-fb-reset{ margin-left:auto; padding:.3rem .7rem; border-radius:8px;
   border:1px solid var(--gx-line); background:#161832; color:var(--gx-ink); font:inherit; cursor:pointer; }
-.gx-fb-reset:hover{ border-color:var(--gx-star); color:#fff; }
+@media (hover: hover){ .gx-fb-reset:hover{ border-color:var(--gx-star); color:#fff; } }
 </style>
 
 <div class="gods-root" id="gods-root">
@@ -432,7 +462,7 @@
     <button type="button" class="gx-viewbtn" data-view="stars" onclick="gxSetView('stars')"
       title="Derselbe Kosmos als Sternkarte — Figuren als leuchtende Gestirne statt Karten">Sternbild</button>
     <button type="button" class="gx-viewbtn" data-view="zeit" onclick="gxSetView('zeit')"
-      title="Alle 24 Kosmen auf einer logarithmischen Zeitachse — datiert nach Kernquellen">Zeitleiste</button>
+      title="Alle Kosmen auf einer logarithmischen Zeitachse — datiert nach Kernquellen">Zeitleiste</button>
     <button type="button" class="gx-viewbtn" data-view="tabelle" onclick="gxSetView('tabelle')"
       title="Dieselben Daten als zugängliche Tabelle (Screenreader, Suchmaschinen)">Tabelle</button>
     <button type="button" class="gx-viewbtn" data-view="atlas" onclick="gxSetView('atlas')"
@@ -534,9 +564,9 @@
     ["Indische Religionen",["buddhismus"]],
     ["Ostasien",["shinto","chinesisch"]],
     ["Mesoamerika",["aztekisch"]],
-    ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","heidegger","levinas","derrida"]],
+    ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
     ["Mystische Traditionen",["gnosis","kabbala"]],
-    ["Moderne Kosmen",["kapitalismus"]],
+    ["Moderne Kosmen",["kapitalismus","kapitalismus-satire"]],
     ["Literarische Kosmen",["lovecraft"]],
   ];
 
@@ -573,13 +603,41 @@
     return best;
   }
 
+  /* Kategorien mit dritter Angabe "dropdown" werden als Auswahlfeld statt als
+     Knopfreihe gezeichnet. Grund: Die philosophischen Kosmen sind auf vierzehn
+     gewachsen; als Knöpfe füllten sie allein drei Zeilen und drängten die
+     übrigen Kategorien aus dem Blick. Alle anderen Kategorien bleiben, wie sie
+     waren — die Darstellung hängt allein an dieser Markierung. */
   function buildTabs(){
     const wrap=document.getElementById('gods-tabs'); wrap.innerHTML='';
-    CATS.forEach(([catLabel,keys])=>{
+    CATS.forEach(([catLabel,keys,darstellung])=>{
       const present=keys.filter(k=>DATA.panthea[k]);
       if(!present.length)return;
       const lbl=document.createElement('div'); lbl.className='gods-cat-label'; lbl.textContent=catLabel;
       wrap.appendChild(lbl);
+      if(darstellung==='dropdown'){
+        const sel=document.createElement('select');
+        sel.className='gods-select'+(present.indexOf(activePan)>=0?' active':'');
+        sel.setAttribute('aria-label',catLabel);
+        const leer=document.createElement('option');
+        leer.value=''; leer.textContent=catLabel+' wählen …';
+        leer.disabled=true; leer.selected=present.indexOf(activePan)<0;
+        sel.appendChild(leer);
+        present.forEach(key=>{
+          const o=document.createElement('option');
+          o.value=key; o.textContent=DATA.panthea[key].label;
+          if(key===activePan) o.selected=true;
+          sel.appendChild(o);
+        });
+        const aktiv=present.indexOf(activePan)>=0?DATA.panthea[activePan]:null;
+        if(aktiv){
+          sel.style.setProperty('--pan-color',aktiv.color);
+          sel.style.setProperty('--pan-glow',hexA(aktiv.color,.4));
+        }
+        sel.onchange=()=>{ if(!sel.value)return; waehlePan(sel.value); };
+        wrap.appendChild(sel);
+        return;
+      }
       present.forEach(key=>{
         const p=DATA.panthea[key];
         const b=document.createElement('button');
@@ -587,10 +645,15 @@
         b.textContent=p.label;
         b.style.setProperty('--pan-color',p.color);
         b.style.setProperty('--pan-glow',hexA(p.color,.4));
-        b.onclick=()=>{activePan=key; equivMode=true; selId=null; syncEquivBtn(); buildTabs(); applyPanColor(); gxClosePanel(); gxRender(); gxSyncHash();};
+        b.onclick=()=>waehlePan(key);
         wrap.appendChild(b);
       });
     });
+  }
+  /* Ein Kosmoswechsel, egal ob über Knopf oder Auswahlfeld. */
+  function waehlePan(key){
+    activePan=key; equivMode=true; selId=null;
+    syncEquivBtn(); buildTabs(); applyPanColor(); gxClosePanel(); gxRender(); gxSyncHash();
   }
   function applyPanColor(){
     const r=document.getElementById('gods-root');
@@ -1253,7 +1316,7 @@
     svg.setAttribute('viewBox','0 0 '+W+' '+H);
     svg.setAttribute('width',W); svg.setAttribute('height',H);
     svg.setAttribute('role','img');
-    svg.setAttribute('aria-label','Zeitleiste: alle 24 Kosmen auf einer logarithmischen Zeitachse, datiert nach Kernquellen. Barrierefreie Textfassung über die Ansicht „Tabelle".');
+    svg.setAttribute('aria-label','Zeitleiste: alle Kosmen auf einer logarithmischen Zeitachse, datiert nach Kernquellen. Barrierefreie Textfassung über die Ansicht „Tabelle".');
     stage.style.width=W+'px'; stage.style.height=H+'px';
     const X0=214, X1=W-36;
     // Boden bei 60 Jahren: die jüngsten ~60 Jahre stauchen nach ganz rechts,
@@ -1526,7 +1589,7 @@
     hits.sort((a,b)=>a.score-b.score||a.g.name.localeCompare(b.g.name));
     box.innerHTML='';
     if(!hits.length){ const d=document.createElement('div'); d.className='r-head';
-      d.textContent='Keine Treffer in 496 Figuren.'; box.appendChild(d); box.hidden=false; return; }
+      d.textContent='Keine Treffer in '+FIGUREN_GESAMT+' Figuren.'; box.appendChild(d); box.hidden=false; return; }
     const d=document.createElement('div'); d.className='r-head';
     d.textContent=hits.length+' Treffer'+(hits.length>30?' — die ersten 30':'');
     box.appendChild(d);
@@ -1891,8 +1954,13 @@
     if(selId)gxClosePanel();
   }
 
+  var FIGUREN_GESAMT = 0;
   function boot(){
     DATA=window.GODS_DATA;
+    /* Aus den Daten, nicht von Hand: die Zahl stand als 496 im Text und
+       war um Hunderte daneben, weil seither Kosmen dazugekommen sind. */
+    FIGUREN_GESAMT = Object.values(DATA.panthea)
+      .reduce(function(s,p){ return s + p.gods.length; }, 0);
     // Entsprechungen normalisieren: Eine Gruppe darf {typ,refs} ODER ein reines
     // Ref-Array sein. Danach ist jede Gruppe ein Array MIT der Eigenschaft .typ —
     // alle vorhandenen Schleifen ueber DATA.equiv arbeiten unveraendert weiter.

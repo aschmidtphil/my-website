@@ -5,7 +5,7 @@
 .game-lb.open{display:flex;}
 .game-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:10px;box-shadow:0 8px 64px rgba(0,0,0,.7);cursor:default;user-select:none;}
 .game-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:10011;}
-.game-lb-x:hover{background:rgba(255,255,255,.3);}
+@media (hover: hover){ .game-lb-x:hover{background:rgba(255,255,255,.3);} }
 .game-lb-caption{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-family:var(--fm);font-size:.78rem;letter-spacing:.04em;pointer-events:none;text-align:center;}
 /* Make cover image show pointer cursor */
 .game-card-cover-wrap{cursor:zoom-in;}
@@ -14,7 +14,7 @@
 .btab{padding:.48rem .95rem;background:transparent;border:none;color:var(--text2);cursor:pointer;font-family:var(--fh);font-size:.76rem;font-weight:600;transition:all .2s;border-right:1px solid var(--border);white-space:nowrap;}
 .btab:last-child{border-right:none;}
 .btab.active{background:rgba(255,149,0,.85);color:#fff;}
-.btab:hover:not(.active){background:rgba(255,149,0,.1);color:var(--text);}
+@media (hover: hover){ .btab:hover:not(.active){background:rgba(255,149,0,.1);color:var(--text);} }
 .bliz-sub{display:none;}.bliz-sub.active{display:block;}
 .bliz-overview{max-width:100%;}
 </style>
@@ -23,7 +23,7 @@
   <div class="gaming-hero-glow"></div>
   <p class="hero-tag">Leidenschaft &amp; Reflexion</p>
   <h1 style="font-family:var(--fh);font-size:2.8rem;font-weight:800;letter-spacing:-.04em;color:var(--text)">
-    Gaming<span style="color:var(--accent3)">.</span>
+    Gaming<span style="color:var(--accent3-text)">.</span>
   </h1>
   <p style="color:var(--text2);max-width:560px;line-height:1.75;margin-top:.5rem;font-size:.9rem">
     Videospiele als kulturelle und narrative Kunst &mdash; eine pers&ouml;nliche Auswahl der Spiele,
@@ -95,7 +95,7 @@
 
   <!-- Overview text -->
   <div class="bliz-overview">
-    <div style="font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem">Persönliche Perspektive</div>
+    <div style="font-family:var(--fm);font-size:.68rem;color:var(--accent-text);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem">Persönliche Perspektive</div>
     <h2 style="font-family:var(--fh);font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:.85rem;letter-spacing:-.02em">
       Blizzard Entertainment
     </h2>
@@ -107,9 +107,9 @@
     </p>
     <p style="color:var(--text2);font-size:.9rem;line-height:1.85;margin-bottom:.85rem;">
       Jason Schreiers <strong style="color:var(--text)">Play Nice</strong> hat dieses Bild bestätigt
-      und vertieft. Auf der einen Seite <span style="color:var(--accent3);font-weight:600">Mike Morhaime</span>,
+      und vertieft. Auf der einen Seite <span style="color:var(--accent3-text);font-weight:600">Mike Morhaime</span>,
       der Mitgründer, der <em>Players First</em> verkörperte. Auf der anderen
-      <span style="color:var(--accent2);font-weight:600">Bobby Kotick</span>, der
+      <span style="color:var(--accent2-text);font-weight:600">Bobby Kotick</span>, der
       <em>Investors First</em> propagierte und Blizzard zunehmend als Cash-Cow behandelte.
     </p>
     <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:1.25rem;">
@@ -490,7 +490,7 @@ function showPokeDet(id) {
   fetch('https://pokeapi.co/api/v2/pokemon/' + id)
     .then(function(r){ return r.json(); })
     .then(function(d){ typeCache[id] = d; renderPokeDet(det, d); })
-    .catch(function(){ det.innerHTML = '<div style="color:var(--accent2);padding:1rem">Fehler beim Laden.</div>'; });
+    .catch(function(){ det.innerHTML = '<div style="color:var(--accent2-text);padding:1rem">Fehler beim Laden.</div>'; });
 }
 
 function renderPokeDet(det, d) {
@@ -597,7 +597,7 @@ renderGameCards();
   color:#fca5a5;width:36px;height:36px;border-radius:50%;cursor:pointer;
   font-size:1.1rem;transition:all .15s;
 }
-.sky-close:hover{background:#b91c1c;color:#fff;transform:rotate(90deg);}
+@media (hover: hover){ .sky-close:hover{background:#b91c1c;color:#fff;transform:rotate(90deg);} }
 
 .sky-stop-all{
   background:linear-gradient(135deg,#dc2626,#7c0a0a);
@@ -606,7 +606,7 @@ renderGameCards();
   padding:.55rem 1rem;border-radius:6px;cursor:pointer;
   box-shadow:0 3px 12px rgba(220,38,38,.4);transition:all .15s;
 }
-.sky-stop-all:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(220,38,38,.6);}
+@media (hover: hover){ .sky-stop-all:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(220,38,38,.6);} }
 
 .sky-cat-section{margin-bottom:1.4rem;}
 .sky-cat-label{
@@ -622,7 +622,7 @@ renderGameCards();
 }
 
 .sky-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(min(180px, 100%), 1fr));
   gap:.55rem;
 }
 .sky-btn{
@@ -642,13 +642,13 @@ renderGameCards();
   background:#dc2626;transform:scaleY(0);transform-origin:bottom;
   transition:transform .25s;
 }
-.sky-btn:hover{
+@media (hover: hover){ .sky-btn:hover{
   background:linear-gradient(180deg,#3e0c0c,#240606);
   border-color:#dc2626;color:#fff;
   transform:translateY(-1px);
   box-shadow:0 0 0 1px rgba(220,38,38,.5),0 4px 14px rgba(220,38,38,.35);
-}
-.sky-btn:hover::before{transform:scaleY(1);}
+} }
+@media (hover: hover){ .sky-btn:hover::before{transform:scaleY(1);} }
 .sky-btn:active{transform:translateY(0);}
 .sky-btn.playing{
   background:linear-gradient(180deg,#dc2626,#7c0a0a);color:#fff;
@@ -681,10 +681,10 @@ renderGameCards();
 .g-subtabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.5rem;}
 .g-subtab{background:var(--surface);border:1px solid var(--border);color:var(--text2);
   padding:.45rem .95rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.78rem;transition:all .15s;}
-.g-subtab:hover{border-color:var(--accent);}
+@media (hover: hover){ .g-subtab:hover{border-color:var(--accent);} }
 .g-subtab.active{background:var(--accent);color:#fff;border-color:transparent;}
 .g-subtab2{background:transparent;border:1px solid var(--border2);color:var(--text3);padding:.35rem .8rem;border-radius:6px;cursor:pointer;font-family:var(--fm);font-size:.72rem;transition:all .15s;}
-.g-subtab2:hover{border-color:var(--accent);color:var(--text2);}
+@media (hover: hover){ .g-subtab2:hover{border-color:var(--accent);color:var(--text2);} }
 .g-subtab2.active{background:var(--accent2,var(--accent));color:#fff;border-color:transparent;}
 
 /* ── Soundboard Flanken-Bilder (Sky Captain) ── */
@@ -696,7 +696,7 @@ renderGameCards();
 }
 .sky-flank picture,.sky-flank img{width:100%;height:auto;display:block;border-radius:10px;}
 .sky-flank img{cursor:zoom-in;transition:transform .2s,box-shadow .2s;}
-.sky-flank img:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(220,38,38,.7);}
+@media (hover: hover){ .sky-flank img:hover{transform:scale(1.04);box-shadow:0 0 40px rgba(220,38,38,.7);} }
 .sky-flank.left{left:max(1rem,calc(50% - 550px - 16vw));}
 .sky-flank.right{right:max(1rem,calc(50% - 550px - 16vw));}
 @keyframes skyFlankIn{from{opacity:0;transform:translateY(-50%) scale(.85);}to{opacity:1;transform:translateY(-50%) scale(1);}}

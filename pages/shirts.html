@@ -8,14 +8,14 @@
 .sh-chip{font-family:var(--fm);font-size:.68rem;letter-spacing:.05em;font-weight:600;
   padding:.42rem .85rem;border-radius:16px;cursor:pointer;background:transparent;
   border:1px solid var(--border);color:var(--text2);transition:all .15s;white-space:nowrap}
-.sh-chip:hover{border-color:var(--accent);color:var(--accent)}
+@media (hover: hover){ .sh-chip:hover{border-color:var(--accent);color:var(--accent-text)} }
 .sh-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .sh-count{margin-left:auto;font-family:var(--fm);font-size:.68rem;color:var(--text3)}
 
-.sh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.5rem}
+.sh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(310px, 100%), 1fr));gap:1.5rem}
 .sh-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;
   display:flex;flex-direction:column;transition:all .2s}
-.sh-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+@media (hover: hover){ .sh-card:hover{border-color:var(--accent);transform:translateY(-3px)} }
 .sh-foto{aspect-ratio:4/5;position:relative;background:var(--bg3);overflow:hidden}
 .sh-foto picture{display:block;width:100%;height:100%}
 .sh-foto img{width:100%;height:100%;object-fit:cover;display:block}
@@ -28,7 +28,7 @@
   font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;color:#e8eaf6;text-transform:uppercase}
 .sh-punkt{width:.62rem;height:.62rem;border-radius:50%;border:1px solid rgba(255,255,255,.45)}
 .sh-body{padding:1.15rem 1.25rem 1.3rem;display:flex;flex-direction:column;flex:1}
-.sh-kat{font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.sh-kat{font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);margin-bottom:.45rem}
 .sh-card h3{margin:0 0 .1rem;font-size:1.02rem;line-height:1.32;color:var(--text)}
 .sh-denker{font-family:var(--fm);font-size:.63rem;letter-spacing:.08em;color:var(--text3);margin-bottom:.7rem}
 .sh-witz{font-size:.855rem;line-height:1.72;color:var(--text2);margin:0 0 .9rem;flex:1}
@@ -36,8 +36,8 @@
 .sh-foot{display:flex;align-items:center;justify-content:space-between;gap:.6rem;
   border-top:1px solid var(--border);padding-top:.8rem;margin-top:auto}
 .sh-typ{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;color:var(--text3);text-transform:uppercase}
-.sh-shop{font-family:var(--fm);font-size:.63rem;letter-spacing:.06em;color:var(--accent);text-decoration:none;white-space:nowrap}
-.sh-shop:hover{text-decoration:underline}
+.sh-shop{font-family:var(--fm);font-size:.63rem;letter-spacing:.06em;color:var(--accent-text);text-decoration:none;white-space:nowrap}
+@media (hover: hover){ .sh-shop:hover{text-decoration:underline} }
 .sh-hinweis{margin-top:2.6rem;padding:1.4rem 1.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:14px}
 .sh-hinweis p{margin:0 0 .7rem;font-size:.86rem;line-height:1.75;color:var(--text2)}
 .sh-hinweis p:last-child{margin-bottom:0}

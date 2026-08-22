@@ -1,6 +1,8 @@
 <!-- ═══════════════════════════════════════════════════════════════
      PHILOSOPHEN-TIMELINE v3 — überarbeitet
-     • 332 Philosoph:innen · korrekte Datumshandhabung (BC/AD/heute)
+     • Denkerzahl wird aus PHILS_V2 abgeleitet, nicht fest eingetragen
+       (hier stand jahrelang 332, während der Bestand längst darüber lag)
+     • korrekte Datumshandhabung (BC/AD/heute)
      • Porträts für Lieblingsphilosophen
      • Bessere Zoom-Stufen
      • Epoche-Bands, Tier-System, Einflusslinien
@@ -13,37 +15,135 @@
 .karte-lg{display:flex;align-items:center;gap:.4rem;font-family:var(--fm);font-size:.66rem;color:var(--text3)}
 .karte-lg i{width:.7rem;height:.7rem;border-radius:50%;display:inline-block}
 .karte-info{margin-left:auto;font-family:var(--fm);font-size:.66rem;color:var(--text3)}
+.karte-trenn{width:1px;height:20px;background:var(--border2);margin:0 .2rem}
+/* Einzelansicht */
+.kf{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;padding:.6rem .9rem;
+  margin-bottom:.6rem;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.kf-etikett{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3);white-space:nowrap}
+.kf-wahl{font-family:var(--fb);font-size:.82rem;padding:.35rem .6rem;border-radius:8px;
+  border:1px solid var(--border2);background-color:var(--feld-bg);color:var(--text);
+  max-width:min(320px,100%)}
+.kf-lage{font-family:var(--fm);font-size:.66rem;color:var(--text3);flex:1;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kf-zurueck{white-space:nowrap}
+.kf.an{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.karte-etikett{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text3)}
+/* Farbige Emojis: etwas größer als die Schrift und mittig ausgerichtet */
+.km-btn, .kf-etikett{ font-variant-emoji:emoji }
+.kz-play{ font-size:1rem }
+/* Statuszeile */
+.ks{display:flex;align-items:center;gap:.5rem .7rem;flex-wrap:wrap;padding:.5rem .2rem .7rem}
+.ks-zahl{font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);white-space:nowrap}
+.ks-teile{display:flex;gap:.35rem;flex-wrap:wrap;flex:1;min-width:0}
+.ks-teil{font-family:var(--fm);font-size:.64rem;color:var(--text2);background:var(--surface);
+  border:1px solid var(--border);border-radius:100px;padding:.15rem .55rem;white-space:nowrap}
+.ks-teil.stumm{color:var(--text3)}
+.ks-reset{white-space:nowrap}
+.ks-leer{font-family:var(--fb);font-size:.82rem;color:var(--text2)}
+
+/* ── Orte der Lehre ────────────────────────────────────────────────
+   Die Marken sind bewusst eckig, damit sie sich von den runden
+   Porträts der Denker auf einen Blick unterscheiden. */
+.lo-marke{width:26px;height:26px;border-radius:5px;display:flex;align-items:center;
+  justify-content:center;font-size:12px;line-height:1;color:#f3f7f6;
+  background:#3d7d6f;border:1.5px solid #7fc9b6;box-shadow:0 1px 6px rgba(0,0,0,.4);
+  cursor:pointer;transition:transform .15s}
+@media (hover: hover){ .lo-marke:hover{transform:scale(1.18)} }
+.lo-marke.art-bibliothek{background:#6a5a9c;border-color:#a99ad8}
+.lo-marke.art-universitaet{background:#3d6a9e;border-color:#8fb6dd}
+.lo-marke.art-zirkel{background:#9c6a3d;border-color:#d8ab7f}
+.lo-marke.lo-viele{background:#2f5f55;border-color:#7fc9b6;font-family:var(--fm);
+  font-size:11px;font-weight:600}
+/* Übersetzungswege */
+.wg-spitze{width:0;height:0;border-top:5px solid transparent;border-bottom:5px solid transparent;
+  border-left:9px solid #888;margin:1px 0 0 1px}
+.lw-punkt{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);
+  box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.lw-punkt.lw-jetzt{width:14px;height:14px;border-width:2px}
+.lw-punkt.lw-unsicher{border-style:dashed;opacity:.75}
+/* Hausgenaue Stationen: ein zweiter Ring zeigt, wo Hineinzoomen lohnt */
+.lw-punkt.lw-genau{box-shadow:0 0 0 2px rgba(255,255,255,.55),0 1px 5px rgba(0,0,0,.5)}
+.lw-adr{font-family:var(--fm);font-size:.66rem;color:var(--text3);cursor:help}
+.lw-adr-genau{color:var(--accent3-text)}
+/* Bei Einzelansicht treten die übrigen Ebenen zurück — sie bleiben als
+   Ortsangabe lesbar, konkurrieren aber nicht mit dem Weg. */
+.lo-blass{opacity:.4;filter:saturate(.5)}
+.wg-station{width:10px;height:10px;border-radius:50%;background:var(--bg,#fff);
+  border:2px solid #6a6a80;margin:2px;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+/* Exil */
+.ex-punkt{width:100%;height:100%;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);
+  box-shadow:0 1px 4px rgba(0,0,0,.45)}
+.ex-punkt.ex-letzt{border-width:2.5px}
+.ex-liste{list-style:none;margin:.5rem 0 .3rem;padding:0}
+.ex-liste li{display:grid;grid-template-columns:44px 1fr;gap:.1rem .6rem;padding:.35rem 0;
+  border-top:1px dashed var(--border)}
+.ex-liste li.an{background:var(--surface);border-radius:6px;padding:.35rem .5rem;margin:0 -.5rem}
+.ex-jahr{font-family:var(--fm);font-size:.68rem;color:var(--text3);padding-top:.1rem}
+.ex-ort{font-weight:500;font-size:.87rem}
+.ex-was{grid-column:2;font-size:.8rem;color:var(--text2);line-height:1.55}
+/* Fundorte */
+.fu-marke{width:24px;height:24px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:#2a2110;background:#d9b45c;border:1.5px solid #f0dda6;
+  border-radius:50%;box-shadow:0 1px 6px rgba(0,0,0,.45);cursor:pointer}
+.lo-karte{border-left:3px solid #4f9e8c;padding:.15rem 0 .15rem .7rem}
+.lo-karte .lo-zeit{font-family:var(--fm);font-size:.63rem;color:var(--text3)}
+.lo-karte .lo-name{font-family:var(--fh);font-weight:700;font-size:.95rem;margin:.1rem 0}
+.lo-karte .lo-was{font-size:.84rem;color:var(--text2);line-height:1.6;max-width:70ch}
+.lo-karte .lo-wer{font-size:.78rem;color:var(--text2);margin-top:.35rem}
+.lo-karte .lo-beleg{font-family:var(--fm);font-size:.63rem;color:var(--text3);margin-top:.3rem}
+
+/* ── Zeitregler der Karte ──────────────────────────────────────────
+   Der Balken unter dem Regler zeigt, wie viele Denker in jedem
+   Jahrzehnt leben. Ohne ihn wüsste niemand, dass zweitausend der
+   zweitausendsechshundert Jahre fast leer sind. */
+.kz{display:flex;align-items:center;gap:.8rem;padding:.7rem .9rem;margin-bottom:.8rem;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.kz-mitte{flex:1;min-width:0}
+.kz-anzeige{display:flex;align-items:baseline;gap:.6rem;margin-bottom:.25rem;flex-wrap:wrap}
+.kz-jahr{font-family:var(--fh);font-size:1.05rem;font-weight:700;color:var(--text);
+  white-space:nowrap}
+.kz-lage{font-family:var(--fm);font-size:.66rem;color:var(--text3);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kz-bahn{position:relative;height:30px}
+.kz-dichte{position:absolute;inset:0;width:100%;height:30px;display:block;
+  pointer-events:none;opacity:.55}
+.kz-bahn input[type=range]{position:absolute;inset:0;width:100%;height:30px;margin:0;
+  background:transparent;-webkit-appearance:none;appearance:none;cursor:ew-resize}
+.kz-bahn input[type=range]:focus{outline:none}
+.kz-bahn input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;
+  border-radius:6px}
+.kz-bahn input[type=range]::-webkit-slider-runnable-track{height:30px;background:transparent}
+.kz-bahn input[type=range]::-moz-range-track{height:30px;background:transparent}
+.kz-bahn input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+  width:4px;height:30px;border-radius:2px;background:var(--accent);
+  box-shadow:0 0 0 1px var(--bg),0 0 8px rgba(0,0,0,.35);cursor:ew-resize}
+.kz-bahn input[type=range]::-moz-range-thumb{width:4px;height:30px;border:none;
+  border-radius:2px;background:var(--accent);cursor:ew-resize}
+.kz-play{flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:1px solid var(--border2);
+  background:var(--card);color:var(--text);font-size:.85rem;cursor:pointer;line-height:1;
+  display:flex;align-items:center;justify-content:center}
+@media (hover: hover){ .kz-play:hover{border-color:var(--accent);color:var(--accent-text)} }
+.kz-play[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.kz-alle{flex:0 0 auto;white-space:nowrap}
+.kz.zeit-an .kz-alle{opacity:.6}
+.kz.zeit-an .kz-alle.active{opacity:1}
+@media(max-width:640px){
+  .kz{flex-wrap:wrap;gap:.6rem}
+  .kz-mitte{order:3;flex-basis:100%}
+  .kz-alle{margin-left:auto}
+}
 /* Die Karte muss in JEDEM Farbschema lesbar sein — hell wie dunkel.
    Darum eigene Variablen mit dunklem Rueckfall; helle Themes setzen sie um. */
-.karte-buehne{position:relative;border:1px solid var(--border);border-radius:12px;overflow:hidden;
-  background:var(--ka-meer,#131622);cursor:grab;touch-action:none;
-  --ka-meer:#101420; --ka-land:#3a4257; --ka-kueste:#586178; --ka-gitter:#1e2432;
-  --ka-schrift:#c9cede; --ka-kontur:#0c0d14}
-html[data-theme="light"] .karte-buehne{
-  --ka-meer:#e8ecf4; --ka-land:#c3ccdc; --ka-kueste:#9aa5bb; --ka-gitter:#d5dbe7;
-  --ka-schrift:#3a4152; --ka-kontur:#ffffff}
-.karte-buehne.zieht{cursor:grabbing}
-#karte-svg{display:block;width:100%;height:auto}
-.ka-land{fill:var(--ka-land);stroke:var(--ka-kueste);stroke-width:.5;
-  stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.ka-gitter{stroke:var(--ka-gitter);stroke-width:.35;fill:none;vector-effect:non-scaling-stroke}
-.ka-punkt{cursor:pointer;transition:opacity .15s}
-.ka-punkt circle{stroke:var(--ka-kontur);stroke-width:.9;vector-effect:non-scaling-stroke}
-.ka-punkt:hover circle{stroke:var(--accent);stroke-width:2}
-.ka-punkt.gedimmt{opacity:.28}
-.ka-zahl{font-family:var(--fm);font-weight:700;text-anchor:middle;dominant-baseline:central;
-  pointer-events:none;fill:#12141c}
-.ka-name{font-family:var(--fm);text-anchor:middle;pointer-events:none;
-  fill:var(--ka-schrift);paint-order:stroke;stroke:var(--ka-meer);stroke-width:3px;
-  stroke-linejoin:round;font-weight:600}
-.karte-liste{margin-top:.9rem;min-height:2rem}
+html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .ka-ort-titel{font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.5rem}
+  color:var(--accent-text);margin-bottom:.5rem}
 .ka-treffer{display:flex;flex-wrap:wrap;gap:.4rem}
 .ka-chip{display:flex;align-items:center;gap:.45rem;padding:.3rem .6rem .3rem .3rem;border-radius:16px;
   border:1px solid var(--border);background:var(--bg2);cursor:pointer;font-size:.76rem;
   color:var(--text2);transition:all .15s}
-.ka-chip:hover{border-color:var(--accent);color:var(--accent)}
+@media (hover: hover){ .ka-chip:hover{border-color:var(--accent);color:var(--accent-text)} }
 .ka-chip img{width:1.5rem;height:1.5rem;border-radius:50%;object-fit:cover;flex-shrink:0}
 .ka-chip .ka-jahr{font-family:var(--fm);font-size:.6rem;color:var(--text3)}
 .karte-fuss{font-size:.74rem;color:var(--text3);line-height:1.6;margin:.8rem 0 0}
@@ -51,19 +151,15 @@ html[data-theme="light"] .karte-buehne{
   border-radius:8px;padding:.2rem;margin-right:.6rem}
 .km-btn{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border:0;
   border-radius:6px;background:transparent;color:var(--text3);cursor:pointer;white-space:nowrap}
-.km-btn:hover{color:var(--accent)}
+@media (hover: hover){ .km-btn:hover{color:var(--accent-text)} }
 .km-btn.active{background:var(--accent);color:#fff}
-.karte-osm{display:none;height:540px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-.karte-osm.an{display:block}
-.karte-buehne.aus{display:none}
+.karte-osm{display:block;height:560px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+/* Gegenort und Spur beim Ueberfahren */
+.osm-gegenort{width:26px;height:26px;border-radius:50%;border:2px solid;background:rgba(12,14,26,.92);
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  box-shadow:0 2px 10px rgba(0,0,0,.6)}
+.osm-spur-tip{font-family:var(--fm);font-size:.68rem}
 /* Auffaecherung: die Einzelnen als runde Portraets um den Ort herum */
-.ka-faecher circle.ka-linie{fill:none}
-.ka-person{cursor:pointer}
-.ka-person circle{stroke:var(--accent);stroke-width:1.6;vector-effect:non-scaling-stroke}
-.ka-person:hover circle{stroke-width:3}
-.ka-pname{font-family:var(--fm);text-anchor:middle;pointer-events:none;fill:var(--ka-schrift);
-  paint-order:stroke;stroke:var(--ka-meer);stroke-width:3px;stroke-linejoin:round;font-weight:600}
-.ka-speiche{stroke:var(--accent);stroke-width:.8;opacity:.5;vector-effect:non-scaling-stroke}
 /* Marker der OSM-Karte */
 .osm-punkt{background:#e8c46a;border:2px solid #0c0d14;border-radius:50%;display:flex;
   align-items:center;justify-content:center;font-family:ui-monospace,monospace;font-weight:700;
@@ -84,8 +180,8 @@ html[data-theme="light"] .karte-buehne{
 .tlk-tab{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.7rem;
   letter-spacing:.04em;padding:.4rem .8rem;border-radius:8px;cursor:pointer;
   background:transparent;border:1px solid var(--border);color:var(--text2);transition:all .15s}
-.tlk-tab:hover{border-color:var(--accent);color:var(--accent)}
-.tlk-tab.auf{background:var(--bg2);border-color:var(--accent);color:var(--accent)}
+@media (hover: hover){ .tlk-tab:hover{border-color:var(--accent);color:var(--accent-text)} }
+.tlk-tab.auf{background:var(--bg2);border-color:var(--accent);color:var(--accent-text)}
 .tlk-tab.auf .tlk-caret{transform:rotate(90deg)}
 .tlk-caret{display:inline-block;transition:transform .15s;font-size:.6rem;opacity:.7}
 .tlk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:1.05rem;height:1.05rem;
@@ -107,7 +203,7 @@ html[data-theme="light"] .karte-buehne{
 .tl-kreis-lab{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-right:.35rem}
 .tl-kreis{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border-radius:14px;
   cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--text3);transition:all .15s}
-.tl-kreis:hover{border-color:var(--accent);color:var(--accent)}
+@media (hover: hover){ .tl-kreis:hover{border-color:var(--accent);color:var(--accent-text)} }
 .tl-kreis.an{background:var(--accent);border-color:var(--accent);color:#fff}
 .tl-kreis i{font-style:normal;opacity:.65;font-size:.58rem;margin-left:.25rem}
 .tl-kreis-haken{display:inline-block;width:.75rem;margin-right:.25rem;font-size:.62rem}
@@ -118,7 +214,7 @@ html[data-theme="light"] .karte-buehne{
 .tlk-zeile-leg .epoch-leg-item{display:flex;align-items:center;gap:.3rem;padding:.22rem .5rem;
   border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.66rem;
   font-family:var(--fm);color:var(--text2);transition:all .15s;white-space:nowrap}
-.tlk-zeile-leg .epoch-leg-item:hover{border-color:var(--accent);color:var(--accent)}
+@media (hover: hover){ .tlk-zeile-leg .epoch-leg-item:hover{border-color:var(--accent);color:var(--accent-text)} }
 .tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:#fff}
 .tlk-zeile-leg .epoch-leg-swatch{width:.6rem;height:.6rem;border-radius:50%;flex-shrink:0}
 #female-btn.active{background:var(--accent2,#c0559a);color:#fff;border-color:transparent}
@@ -128,20 +224,25 @@ html[data-theme="light"] .karte-buehne{
 .tl-hilfe-t b{color:var(--text2);font-weight:600}
 .tl-hilfe-zu{margin-left:auto;background:transparent;border:0;color:var(--text3);
   font-size:1.05rem;line-height:1;cursor:pointer;padding:.1rem .3rem}
-.tl-hilfe-zu:hover{color:var(--accent)}
+@media (hover: hover){ .tl-hilfe-zu:hover{color:var(--accent-text)} }
+/* Auf Zeigegeräten ohne Maus war das Schliesskreuz nur 19 × 20 px gross und
+   damit kaum zu treffen. Mehr Innenabstand macht daraus rund 44 × 40 px,
+   ohne das Zeichen selbst zu vergrössern. Es steht isoliert am rechten Rand
+   des Hinweiskastens, überlappt also nichts. Mit Maus unverändert. */
+@media (pointer: coarse){ .tl-hilfe-zu{ padding:.55rem .7rem; } }
 
 .phil-header   { padding:2.5rem 3rem 1.75rem; background:linear-gradient(180deg,var(--bg2),var(--bg)); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
 .phil-glow     { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); pointer-events:none; }
 .phil-hero .page-hero-glow { left:50%; right:auto; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); }
 .phil-title    { font-family:var(--fh); font-size:clamp(2rem,4vw,2.8rem); font-weight:800; letter-spacing:-.035em; color:var(--text); line-height:1; margin:.3rem 0 .65rem; position:relative; z-index:1; }
-.phil-title span { color:var(--accent); }
+.phil-title span { color:var(--accent-text); }
 .phil-sub      { color:var(--text2); max-width:720px; line-height:1.75; font-size:.92rem; position:relative; z-index:1; }
 .phil-meta     { font-family:var(--fm); font-size:.74rem; color:var(--text3); margin-top:.6rem; position:relative; z-index:1; }
 
 .phil-controls { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.85rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
 .phil-zoom-group { display:flex; gap:.2rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .pzb           { background:transparent; border:none; color:var(--text2); width:30px; height:30px; border-radius:6px; cursor:pointer; font-size:.95rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
-.pzb:hover     { background:var(--accent); color:#fff; }
+@media (hover: hover){ .pzb:hover{ background:var(--accent); color:#fff; } }
 .zoom-label    { font-family:var(--fm); font-size:.72rem; color:var(--text3); padding:0 .4rem; min-width:42px; text-align:center; }
 .phil-search-wrap { position:relative; flex-shrink:0; }
 .phil-search   { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.42rem .75rem .42rem 1.95rem; border-radius:7px; font-family:var(--fb); font-size:.8rem; outline:none; width:190px; height:34px; }
@@ -156,7 +257,7 @@ html[data-theme="light"] .karte-buehne{
 .netz-lg{ display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.66rem;
   letter-spacing:.04em; color:var(--text2); cursor:pointer; user-select:none; padding:.28rem .6rem;
   border:1px solid var(--border); border-radius:14px; transition:all .15s; }
-.netz-lg:hover{ border-color:var(--accent) }
+@media (hover: hover){ .netz-lg:hover{ border-color:var(--accent) } }
 .netz-lg.aus{ opacity:.35 }
 .netz-lg i{ width:1.4rem; height:0; border-top-width:2px; border-top-style:solid; display:inline-block }
 .netz-info{ margin-left:auto; font-family:var(--fm); font-size:.66rem; color:var(--text3) }
@@ -169,7 +270,7 @@ html[data-theme="light"] .karte-buehne{
 .netz-weg-in:focus{ outline:2px solid var(--accent); outline-offset:1px }
 .netz-weg-btn{ font-family:var(--fm); font-size:.66rem; letter-spacing:.05em; padding:.38rem .8rem;
   border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text2); cursor:pointer }
-.netz-weg-btn:hover{ border-color:var(--accent); color:var(--accent) }
+@media (hover: hover){ .netz-weg-btn:hover{ border-color:var(--accent); color:var(--accent-text) } }
 .netz-weg-erg{ font-size:.76rem; color:var(--text2); line-height:1.5 }
 .nz-kante.weg{ stroke-width:3.4 !important; opacity:1 !important }
 #netz-svg{ display:block }
@@ -184,8 +285,15 @@ html[data-theme="light"] .karte-buehne{
 .nz-gitter{ stroke:var(--border); stroke-width:1; opacity:.5 }
 .view-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .vs-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .8rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
-.vs-btn:hover { color:var(--text); }
+@media (hover: hover){ .vs-btn:hover{ color:var(--text); } }
 .vs-btn.active { background:var(--accent); color:#fff; }
+
+/* Die vier Ansichtsknöpfe brauchen zusammen 464 px und schoben die
+   Rand auf dem Telefon um 74 px, der letzte war unlesbar. Ab hier dürfen sie
+   umbrechen. Oberhalb von 900 px unverändert. */
+@media (max-width: 900px){
+  .view-switch { flex-wrap:wrap; flex-shrink:1; max-width:100%; }
+}
 /* ── Tabellenansicht ── */
 .tl-table-wrap { display:none; padding:1.2rem 3rem 3rem; overflow-x:auto; }
 .tl-table-wrap.active { display:block; }
@@ -193,11 +301,11 @@ html[data-theme="light"] .karte-buehne{
 .tl-table { width:100%; border-collapse:collapse; font-size:.84rem; }
 .tl-table th { font-family:var(--fm); font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--text3); text-align:left; padding:.55rem .7rem; border-bottom:2px solid var(--border2); white-space:nowrap; }
 .tl-table th.sortable { cursor:pointer; user-select:none; }
-.tl-table th.sortable:hover { color:var(--text); }
+@media (hover: hover){ .tl-table th.sortable:hover{ color:var(--text); } }
 .tl-table th .sort-arrow { font-size:.6rem; margin-left:.25rem; opacity:.8; }
 .tl-table td { padding:.5rem .7rem; border-bottom:1px solid var(--border); vertical-align:top; }
 .tl-table tbody tr { cursor:pointer; transition:background .12s; }
-.tl-table tbody tr:hover { background:var(--surface); }
+@media (hover: hover){ .tl-table tbody tr:hover{ background:var(--surface); } }
 .tl-tbl-name { font-weight:600; color:var(--text); white-space:nowrap; }
 .tl-tbl-dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:.45rem; vertical-align:0; }
 .tl-tbl-life { font-family:var(--fm); font-size:.76rem; color:var(--text2); white-space:nowrap; }
@@ -205,7 +313,7 @@ html[data-theme="light"] .karte-buehne{
 .tl-epoch-pill { display:inline-block; font-family:var(--fm); font-size:.7rem; padding:.14rem .55rem; border-radius:6px; border:1px solid; white-space:nowrap; font-weight:600; }
 .tl-table-meta-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.7rem; }
 .tl-export-btn { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.38rem .85rem; border-radius:7px; cursor:pointer; font-family:var(--fm); font-size:.72rem; transition:all .15s; white-space:nowrap; }
-.tl-export-btn:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
+@media (hover: hover){ .tl-export-btn:hover{ background:var(--accent); border-color:var(--accent); color:#fff; } }
 .tl-badge { display:inline-block; font-family:var(--fm); font-size:.64rem; background:var(--surface); border:1px solid var(--border2); color:var(--text2); border-radius:5px; padding:.1rem .42rem; margin:.1rem .18rem .1rem 0; white-space:nowrap; }
 .tl-badge.hl { background:var(--accent); border-color:var(--accent); color:#fff; }
 @media (max-width:900px){ .tl-table-wrap{ padding:1rem 1.2rem 2.5rem; } .tl-table .opt-col{ display:none; } }
@@ -220,11 +328,11 @@ html[data-theme="light"] .karte-buehne{
 /* Großepochen-Umschalter + Epochen-Dropdown */
 .era-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
 .era-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
-.era-btn:hover { color:var(--text); }
+@media (hover: hover){ .era-btn:hover{ color:var(--text); } }
 .era-btn.active { background:var(--accent); color:#fff; }
 .filter-mode-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
 .fm-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
-.fm-btn:hover { color:var(--text); }
+@media (hover: hover){ .fm-btn:hover{ color:var(--text); } }
 .fm-btn.active { background:var(--accent); color:#fff; }
 .epoch-dd-wrap { display:inline-flex; align-items:center; gap:.5rem; margin-left:1rem; }
 .epoch-dd-label { font-size:.72rem; font-family:var(--fm); color:var(--text3); }
@@ -241,13 +349,13 @@ html[data-theme="light"] .karte-buehne{
 /* Die freistehende Epochen-Legende ist entfallen; die Farbtafel steht jetzt im
    Fach Filter und wird ueber .tlk-zeile-leg gestaltet. */
 .epoch-leg-item { display:flex; align-items:center; gap:.35rem; font-family:var(--fm); font-size:.66rem; color:var(--text2); white-space:nowrap; cursor:pointer; padding:.1rem .2rem; border-radius:4px; transition:background .12s; }
-.epoch-leg-item:hover { background:var(--surface); color:var(--text); }
+@media (hover: hover){ .epoch-leg-item:hover{ background:var(--surface); color:var(--text); } }
 .epoch-leg-item.active { background:var(--accent)22; color:var(--text); font-weight:600; }
 .epoch-leg-swatch { width:11px; height:11px; border-radius:3px; flex-shrink:0; }
 .tier-fav      { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
 .tier-fav-icon { width:14px; height:14px; border-radius:50%; background:var(--accent2); display:flex; align-items:center; justify-content:center; color:#fff; font-size:.6rem; flex-shrink:0; }
 .vis-count     { margin-left:auto; font-family:var(--fm); font-size:.68rem; color:var(--text3); }
-.vc-hl         { color:var(--accent); font-weight:700; }
+.vc-hl         { color:var(--accent-text); font-weight:700; }
 .vc-sep        { opacity:.5; }
 .vc-dim        { opacity:.7; }
 
@@ -256,7 +364,7 @@ html[data-theme="light"] .karte-buehne{
 .tl-canvas-wrap:active { cursor:grabbing; }
 .tl-canvas-wrap::-webkit-scrollbar { height:8px; }
 .tl-canvas-wrap::-webkit-scrollbar-thumb { background:var(--border2); border-radius:4px; }
-.tl-canvas-wrap::-webkit-scrollbar-thumb:hover { background:var(--accent); }
+@media (hover: hover){ .tl-canvas-wrap::-webkit-scrollbar-thumb:hover{ background:var(--accent); } }
 #tl-svg        { display:block; }
 .phil-node-group { cursor:pointer; transition:opacity .25s; }
 .tl-canvas-wrap.zooming .phil-node-group { transition:none !important; }
@@ -280,7 +388,7 @@ html[data-theme="light"] .karte-buehne{
 .pmodal-overlay.open { display:flex; }
 .pmodal-box    { background:var(--card); border:1px solid var(--border2); border-radius:18px; padding:2rem 2.25rem; max-width:620px; width:100%; max-height:86vh; overflow-y:auto; position:relative; box-shadow:0 24px 72px rgba(0,0,0,.3); }
 .pmodal-close  { position:absolute; top:1rem; right:1rem; background:var(--surface); border:none; color:var(--text2); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:.95rem; transition:all .2s; }
-.pmodal-close:hover { background:var(--accent); color:#fff; }
+@media (hover: hover){ .pmodal-close:hover{ background:var(--accent); color:#fff; } }
 
 .pmodal-header { display:flex; gap:1.2rem; align-items:flex-start; margin-bottom:1.2rem; }
 .pmodal-portrait { width:90px; height:120px; flex-shrink:0; border-radius:10px; overflow:hidden; background:var(--surface); border:2px solid var(--accent); box-shadow:0 6px 20px rgba(0,0,0,.15); }
@@ -300,11 +408,11 @@ html[data-theme="light"] .karte-buehne{
 .pmodal-works-lbl { font-family:var(--fm); font-size:.7rem; color:var(--text3); letter-spacing:.1em; margin:.4rem 0 .55rem; display:block; text-transform:uppercase; }
 .pmodal-works { display:flex; flex-direction:column; gap:.3rem; margin-bottom:1.1rem; }
 .pmodal-work { display:flex; align-items:center; gap:.55rem; padding:.42rem .8rem; background:var(--surface); border-radius:6px; font-size:.8rem; color:var(--text2); border-left:3px solid var(--accent2); }
-.pmodal-work-icon { color:var(--accent2); font-size:.8rem; flex-shrink:0; }
+.pmodal-work-icon { color:var(--accent2-text); font-size:.8rem; flex-shrink:0; }
 .pmodal-infl-lbl { font-family:var(--fm); font-size:.7rem; color:var(--text3); letter-spacing:.1em; margin:.8rem 0 .55rem; display:block; text-transform:uppercase; }
 .pmodal-chips  { display:flex; gap:.42rem; flex-wrap:wrap; }
 .pmodal-chip   { display:flex; align-items:center; gap:.32rem; padding:.3rem .68rem; border-radius:6px; font-size:.76rem; font-family:var(--fm); cursor:pointer; border:1px solid transparent; transition:opacity .15s; }
-.pmodal-chip:hover { opacity:.75; }
+@media (hover: hover){ .pmodal-chip:hover{ opacity:.75; } }
 .chip-dot      { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
 
 @media (max-width:780px) {
@@ -319,8 +427,8 @@ html[data-theme="light"] .karte-buehne{
   <div class="page-hero-glow"></div>
   <p class="hero-tag">Von Thales bis zur Gegenwart</p>
   <h1 class="page-title">Philosophen-Timeline<span>.</span></h1>
-  <p class="page-desc">
-    332 Philosoph:innen · 2 600 Jahre Denkgeschichte · Einflussverbindungen, Epochen und Tier-System
+  <p class="page-desc" id="phil-desc">
+    2 600 Jahre Denkgeschichte · Einflussverbindungen, Epochen und Tier-System
   </p>
   <p class="phil-meta">
     Klick + Drag zum Scrollen · Mausrad zum Zoomen · Hover zeigt Verbindungen · Klick öffnet Details
@@ -336,10 +444,10 @@ html[data-theme="light"] .karte-buehne{
 
   <div class="tlk-haupt">
     <div class="view-switch" id="view-switch">
-      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" title="Denker auf der Zeitachse">Zeitachse</button>
-      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" title="Sortierbare Tabelle mit CSV-Export">Tabelle</button>
-      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" title="Wer hat wen beeinflusst">Einflussnetz</button>
-      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" title="Geburtsorte auf der Weltkarte">Weltkarte</button>
+      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" title="Denker auf der Zeitachse">⏳ Zeitachse</button>
+      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" title="Sortierbare Tabelle mit CSV-Export">📊 Tabelle</button>
+      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" title="Wer hat wen beeinflusst">🕸️ Einflussnetz</button>
+      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" title="Geburts- und Sterbeorte auf der Weltkarte">🌍 Weltkarte</button>
     </div>
 
     <div class="phil-search-wrap">
@@ -360,13 +468,13 @@ html[data-theme="light"] .karte-buehne{
 
   <div class="tlk-faecher">
     <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> Filter <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
+      <span class="tlk-caret">▸</span> 🔍 Filter <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
     <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> Kulturkreis <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
+      <span class="tlk-caret">▸</span> 🌐 Kulturkreis <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
     <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> Darstellung</button>
+      <span class="tlk-caret">▸</span> 🎨 Darstellung</button>
     <button class="tlk-tab" id="tlk-tab-linien" onclick="tlkFach('linien')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> Einflusslinien</button>
+      <span class="tlk-caret">▸</span> 🕸️ Einflusslinien</button>
     <button class="tlk-tab tlk-tab-reset" onclick="tlkAllesZuruecksetzen()" title="Alle Filter aufheben">alles zeigen</button>
   </div>
 
@@ -467,27 +575,97 @@ html[data-theme="light"] .karte-buehne{
 <div class="karte-wrap" id="karte-wrap">
   <div class="karte-kopf">
     <div class="karte-modus">
-      <button type="button" class="km-btn" id="km-svg" onclick="kaModus('svg')">Gezeichnete Karte</button>
-      <button type="button" class="km-btn active" id="km-osm" onclick="kaModus('osm')">OpenStreetMap</button>
+      <button type="button" class="km-btn active" id="ko-geburt" onclick="kaOrtart('geburt')"
+        title="Wo die Denker geboren wurden">🎂 Geburtsort</button>
+      <button type="button" class="km-btn" id="ko-tod" onclick="kaOrtart('tod')"
+        title="Wo sie gestorben sind — zeigt Wanderung und Exil">🪦 Sterbeort</button>
     </div>
-    <span class="karte-lg"><i style="background:#e8c46a"></i>Ein Punkt je Ort — Klick fächert auf</span>
-    <button type="button" class="itbtn" onclick="kaZoom(1.4)" aria-label="Vergrößern">+</button>
-    <button type="button" class="itbtn" onclick="kaZoom(0.7)" aria-label="Verkleinern">−</button>
-    <button type="button" class="itbtn" onclick="kaReset()">Ansicht zurücksetzen</button>
+    <span class="karte-trenn" aria-hidden="true"></span>
+    <span class="karte-etikett">Ebenen</span>
+    <button type="button" class="km-btn active" id="ko-lehr" onclick="kaLehrUm()"
+            title="Schulen, Bibliotheken, Universitäten und Zirkel ein- und ausblenden"
+            aria-pressed="true">🏛️ Orte der Lehre</button>
+
+    <button type="button" class="km-btn" id="ko-funde" onclick="kaFundeUm()"
+            title="Wo die Quellen des Götterkosmos gefunden wurden"
+            aria-pressed="false">🏺 Fundorte</button>
+    <span class="karte-trenn" aria-hidden="true"></span>
+    <button type="button" class="km-btn" id="ko-phil-aus" onclick="kaPhilAusUm()"
+            title="Alle Denker-Punkte ausblenden — nützlich, um nur die Ebenen für sich zu sehen"
+            aria-pressed="false">🙈 Philosoph*innen ausblenden</button>
     <span class="karte-info" id="karte-info"></span>
   </div>
-  <div class="karte-buehne aus" id="karte-buehne">
-    <svg id="karte-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+
+  <!-- Einzelansicht: Wege sind Erzählungen, keine Ebenen. Sie ergeben nur
+       Sinn für eine Person zur Zeit — und dann ohne die 353 Geburtspunkte
+       im Hintergrund, sonst sieht man die Linie vor lauter Karte nicht. -->
+  <div class="kf">
+    <label class="kf-etikett" for="kf-wahl">🧭 Einen Weg verfolgen</label>
+    <select id="kf-wahl" class="kf-wahl" aria-describedby="kf-lage">
+      <option value="">— aus, alle Denker zeigen —</option>
+    </select>
+    <span class="kf-lage" id="kf-lage"></span>
+    <button type="button" class="km-btn kf-zurueck" id="kf-zurueck" hidden>Übersicht</button>
+  </div>
+  <!-- Zeitregler: zeigt nur die Denker, die im eingestellten Jahr leben.
+       Beim Abspielen wandert das Zentrum der Philosophie über die Karte —
+       von der ionischen Küste über Athen, Alexandria und Bagdad nach
+       Paris, Deutschland und schließlich Nordamerika. -->
+  <div class="kz" id="kz-leiste">
+    <button type="button" class="kz-play" id="kz-play" aria-pressed="false"
+            aria-label="Zeitlauf starten" title="Zeitlauf starten">▶️</button>
+    <div class="kz-mitte">
+      <div class="kz-anzeige">
+        <span class="kz-jahr" id="kz-jahr">alle Zeiten</span>
+        <span class="kz-lage" id="kz-lage">2600 Jahre auf einen Blick</span>
+      </div>
+      <div class="kz-bahn">
+        <svg class="kz-dichte" id="kz-dichte" viewBox="0 0 1000 30" preserveAspectRatio="none"
+             aria-hidden="true"></svg>
+        <input type="range" id="kz-regler" min="-650" max="2025" step="5" value="2025"
+               aria-label="Jahr wählen">
+      </div>
+    </div>
+    <button type="button" class="km-btn kz-alle active" id="kz-alle"
+            title="Zeitfilter aufheben">alle Zeiten</button>
   </div>
   <!-- OpenStreetMap: echte Karte mit Staedten. Laedt Kacheln von fremden
        Servern — deshalb umschaltbar und nicht voreingestellt. -->
+  <!-- Statuszeile: beantwortet die Frage, warum man gerade das sieht, was
+       man sieht. Nennt jede wirksame Einstellung im Klartext und bietet
+       einen einzigen Weg zurück in den Ausgangszustand. -->
+  <div class="ks" id="ks-leiste">
+    <span class="ks-zahl" id="ks-zahl"></span>
+    <span class="ks-teile" id="ks-teile"></span>
+    <button type="button" class="km-btn ks-reset" id="ks-reset" hidden
+            title="Alle Einstellungen der Karte zurücknehmen">↺ Alles zurücksetzen</button>
+  </div>
   <div class="karte-osm an" id="karte-osm"></div>
   <div class="karte-liste" id="karte-liste"></div>
-  <p class="karte-fuss">Ziehen verschiebt, Mausrad zoomt. Ein <b>Klick auf einen Ort</b> fächert ihn
-    in die einzelnen Denker auf; ein Klick auf ein Porträt öffnet die Detailkarte. Orte mit <b>?</b>
-    sind geschätzt. Alle Filter oben wirken auch hier.<br>
-    <b>OpenStreetMap</b> zeigt echte Karten mit Städten, lädt dafür aber Kartenkacheln von fremden
-    Servern — die gezeichnete Karte kommt ohne externe Anfragen aus.</p>
+  <p class="karte-fuss">Ein <b>Klick auf einen Ort</b> fächert ihn in die einzelnen Denker auf;
+    ein Klick auf ein Porträt öffnet die Detailkarte. Beim <b>Überfahren</b> erscheint eine
+    gestrichelte Linie zum jeweils anderen Ort — grün für den Geburts-, rot für den Sterbeort.
+    Orte mit <b>?</b> sind geschätzt; alle Filter oben wirken auch hier.<br>
+    <b>Sterbeort</b> zeigt statt der Herkunft, wo die Denker gestorben sind — dort werden Wanderung
+    und Exil sichtbar. Die 16 lebenden Denker erscheinen in dieser Ansicht nicht.<br>
+    <b>Orte der Lehre</b> blendet 28 Einrichtungen ein — antike Schulen, Bibliotheken,
+    Universitäten und Zirkel, jede mit ihrer Zeitspanne. Ein Klick auf eine Marke zeigt
+    unten, was dort geschah, wer dort war und woher man es weiß. Die Form unterscheidet
+    sie von den runden Porträts: △ Schule, ▤ Bibliothek, ▣ Universität, ◆ Zirkel.<br>
+    <b>Einen Weg verfolgen</b> ist die Einzelansicht: Ein Name aus der Liste zeigt nur
+    dessen Stationen — und blendet dafür alle anderen Denker aus, weil ein Weg mit acht
+    Punkten zwischen 353 Geburtsorten nicht zu erkennen wäre. Die Karte springt auf den
+    gewählten Weg, die übrigen Ebenen treten als blasser Hintergrund zurück. Zur Auswahl
+    stehen 22 Lebenswege, 15 Exilwege von 1933 und der Überlieferungsweg der griechischen
+    Schriften von Athen nach Paris. Mit „Übersicht" kommt man zurück.<br>
+    <b>Der Zeitregler</b> zeigt nur, wer im eingestellten Jahr lebt; der Balken darunter gibt an,
+    wie dicht besetzt jedes Vierteljahrhundert ist. Mit ▶ läuft die Zeit ab — dabei wandert das
+    Zentrum von der ionischen Küste über Athen, Alexandria und Bagdad nach Paris, Deutschland
+    und zuletzt nach Nordamerika. Die Einrichtungen laufen mit: Platons Akademie steht
+    neunhundert Jahre, Bagdad geht 830 auf und erlischt 1258 mit dem Mongolensturm.
+    In der Sterbeort-Ansicht sieht man dabei im Voraus, wohin es die gerade Lebenden noch
+    verschlagen wird.
+    Die Karte lädt Kacheln von OpenStreetMap; Näheres in der Datenschutzerklärung.</p>
 </div>
 <!-- Einflussnetz: wer hat wen beeinflusst. Waagerecht chronologisch,
      senkrecht durch Kraefte geloest, damit verbundene Denker beieinanderliegen. -->
@@ -689,9 +867,9 @@ function tlHerkunftFuellen(){
   sel.innerHTML = h + '</optgroup>';
 }
 
-var TL_KREISE = ['European','Islamic','India','China','Africana'];
-var TL_KREIS_LABEL = { European:'Europa', Islamic:'Islamische Welt', India:'Indien', China:'China', Africana:'Africana' };
-var tlKreisAktiv = { European:true, Islamic:true, India:false, China:false, Africana:false };
+var TL_KREISE = ['European','Islamic','India','China','Ostasien','Africana'];
+var TL_KREIS_LABEL = { European:'Europa', Islamic:'Islamische Welt', India:'Indien', China:'China', Ostasien:'Ostasien', Africana:'Africana' };
+var tlKreisAktiv = { European:true, Islamic:true, India:false, China:false, Ostasien:false, Africana:false };
 function phils() {
   var L = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2 : [];
   return L.filter(function(p){
@@ -768,15 +946,16 @@ function tlNeuzeichnen(){
   try{ if(document.getElementById('netz-svg')) renderNetz(); }catch(e){}
   try{ if(document.getElementById('karte-wrap') &&
         document.getElementById('karte-wrap').classList.contains('active')){
-    if (kaAnsicht === 'osm') osmZeichne(); else renderKarte();
+    osmZeichne();
   } }catch(e){}
   try{ tlkMarken(); }catch(e){}
   try{ var a=document.getElementById('vis-count'), b=document.getElementById('vis-count-2');
        if(a&&b) b.textContent=a.textContent; }catch(e){}
 }
 window.tlKreisUm = function(k){
+  /* Auch alles abwählen ist erlaubt — die leere Karte ist eine gültige
+     Antwort und leichter zu verstehen als ein Knopf, der sich weigert. */
   tlKreisAktiv[k] = !tlKreisAktiv[k];
-  if (!TL_KREISE.some(function(x){ return tlKreisAktiv[x]; })) tlKreisAktiv[k] = true;  // nie alles aus
   tlKreisLeiste();
   tlNeuzeichnen();
 };
@@ -792,6 +971,13 @@ window.tlKreisAlle = function(){
 function tlKreisLeiste(){
   var box = document.getElementById('tl-kreise'); if (!box) return;
   var alleP = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2.filter(Boolean) : [];
+  /* Der Untertitel nannte jahrelang eine feste Zahl (332), während der
+     Bestand längst darüber hinausgewachsen war. Sie wird jetzt hier
+     abgeleitet — an derselben Stelle, an der ohnehin gezählt wird. */
+  var descEl = document.getElementById('phil-desc');
+  if (descEl && alleP.length && descEl.textContent.indexOf('Philosoph:innen') < 0) {
+    descEl.textContent = alleP.length + ' Philosoph:innen · ' + descEl.textContent.trim();
+  }
   var sichtbar = alleP.filter(function(p){ return tlKreisAktiv[p.kreis || 'European']; }).length;
   var alleAn = TL_KREISE.every(function(x){ return tlKreisAktiv[x]; });
   box.innerHTML =
@@ -1735,7 +1921,6 @@ function buildEpochFilter() {
      era: 'Antike' | 'Mittelalter' | 'Neuzeit'  */
   const EPOCH_META = {
     'Antike Weisheit':    { era:'Antike',      from:-570, to:-200 },
-    'Frühmittelalter':    { era:'Mittelalter', from: 700, to: 1000 },
     'Vorsokratik':        { era:'Antike',      from:-600, to:-430 },
     'Sophistik':          { era:'Antike',      from:-485, to:-380 },
     'Klassisch':          { era:'Antike',      from:-450, to:-320 },
@@ -2253,175 +2438,1933 @@ function nzKlar(){
 
 
 /* ══ WELTKARTE ════════════════════════════════════════════════════
-   Eigene SVG-Karte statt Kartenkacheln: keine externen Anfragen, laeuft
-   offline und passt farblich zur Seite. Plattkarte (equirectangular) —
-   Laenge/Breite werden linear auf x/y abgebildet, das genuegt fuer
-   Punktverteilung und verzerrt weniger als Mercator.                */
-var KA_W = 1010, KA_H = 520;            // Zeichenflaeche
-var kaZ = 1, kaX = 0, kaY = 0;          // Zoom und Verschiebung
-var kaOrtOffen = null;
+   OpenStreetMap über Leaflet. Die Bibliothek liegt lokal in js/leaflet/,
+   nur die Kartenkacheln kommen von tile.openstreetmap.org — die
+   Namensnennung steht fest in der Karte, der Hinweis im Datenschutz.  */
 
-function kaProj(lat, lon){              // Grad -> Zeichenkoordinaten
-  return [ (lon + 180) / 360 * KA_W, (90 - lat) / 180 * KA_H ];
-}
+var osmKarte = null, osmSchicht = null, osmOffen = null, osmSpur = null;
 
-/* Stark vereinfachte Landumrisse in Laenge/Breite. Bewusst grob: Es geht
-   um Wiedererkennbarkeit der Kontinente, nicht um Kartografie. */
-var KA_LAND = [
- /* Europa + Asien (Mittelmeer bleibt frei, Afrika ist ein eigenes Polygon) */
- [[-9.5,38.7],[-9,37],[-7.4,37],[-6.3,36.8],[-5.6,36],[-4.4,36.7],[-2.1,36.7],[-0.5,37.6],[0.9,41],[3.2,41.9],[3,43.1],[5.4,43.2],[6.8,43.4],[8.8,44.4],[10,44],[11.5,42.4],[13,41.2],[15.7,40],[18.5,40.1],[18,40.9],[16,41.9],[13.5,43.6],[12.4,44.9],[13.6,45.5],[15.3,44.2],[16.9,43.4],[18.5,42.6],[19.3,41.9],[20,39.6],[21,38.4],[23,38],[23.7,37.9],[24.1,37.4],[23.6,36.4],[22.5,36.4],[21.1,37.6],[21.3,38.3],[20.8,39.6],[19.9,40.4],[20.7,41.1],[22.6,40.5],[24.1,40.6],[25.6,40.9],[26.4,40.3],[26.2,39.5],[27,38.4],[26.4,38.2],[26.8,37.7],[27.4,37],[28.3,36.7],[30.5,36.3],[32.8,36.1],[34.9,36.2],[35.9,36.6],[36,35.5],[35.6,34.6],[35.1,33.1],[34.9,32.5],[34.3,31.2],[34.5,29.5],[35.2,29.5],[36.5,28],[38.5,22],[38.9,19.6],[41.8,18.5],[42.6,16.4],[43.4,14.8],[43.3,12.6],[45,12.7],[48.9,12.7],[51.3,11.8],[51.1,10.4],[55,17],[57,20],[59,22.5],[57,24],[54,24],[51,24.5],[50,27],[48.5,29.5],[48,30],[49.5,30],[52,27],[56,26.5],[60,25],[63,25],[66,25],[68,23.5],[70,21],[72,20],[73,16],[75,13],[77,8],[80,10],[80,13],[82,16],[85,19],[87,21],[89,22],[92,21],[94,17],[97,17],[98,13],[100,13],[101,10],[104,8.5],[104,1.5],[106,2],[109,3],[110,5],[114,7],[117,7],[119,10],[121,14],[121,18],[122,25],[121,29],[122,31],[124,34],[126,34],[129,35],[126,38],[125,40],[122,40],[121,41],[124,43],[128,43],[131,43],[132,43],[135,48],[137,50],[140,53],[142,54],[143,59],[147,60],[152,59],[156,61],[160,61],[163,60],[166,62],[170,65],[173,65],[178,66],[180,66],[180,71],[176,70],[170,70],[165,70],[160,71],[152,72],[145,72],[140,73],[135,73],[130,72],[125,73],[120,73],[115,74],[110,76],[105,77],[100,77],[95,76],[90,76],[85,74],[80,74],[75,73],[72,73],[69,73],[66,72],[62,71],[58,71],[55,70],[52,70],[48,68],[44,68],[41,67],[38,66],[35,67],[33,69],[31,70],[29,70],[26,70],[23,70],[20,69],[18,69],[16,68],[14,66],[12,64],[10,63],[8,62],[6,62],[5,60],[7,58],[9,57],[11,58],[13,56],[12,55],[10,55],[8,55],[7,53],[5,53],[4,52],[3,51],[1,50],[-1,49],[-2,48],[-4,48],[-4.7,48.5],[-4,47.5],[-2,47],[-1,46],[-1.2,45],[-1.5,44],[-1.8,43.4],[-3,43.5],[-6,43.5],[-8,43.7],[-9,43],[-9,41],[-9.5,38.7]],
- /* Afrika */
- [[-6.3,34.1],[-5.4,35.9],[-3.9,35.2],[-1.6,35.7],[1,36.5],[2.9,36.8],[4.8,36.9],[6.5,37],[8.6,37.1],[10.3,36.8],[10.7,35.7],[10.2,34.3],[11.1,33.8],[13.2,32.9],[15.2,32.4],[17.5,31],[19.2,30.3],[20,30.9],[23,32.2],[25,31.6],[28.5,31],[30,31.5],[31.2,31.4],[33,31.2],[34.3,31.2],[34.9,29.4],[35.5,27],[37,23.5],[38.5,18],[39.5,15],[41,14],[43,12.5],[44,10.5],[47,11.5],[51,12],[51.3,10.4],[48,5],[45,4],[43,2],[41.5,-2],[40.1,-4.6],[39.5,-6.9],[39.2,-8],[40.4,-12.5],[40.5,-16.1],[35,-19.8],[35.4,-21.2],[34.8,-24.5],[32.9,-26],[32.1,-28.5],[30,-31],[27,-33],[25.7,-33.9],[22.6,-34],[19.7,-34.8],[18.4,-32.9],[17.6,-30],[15.7,-27.9],[14.5,-22.5],[13.4,-17.5],[11.7,-15.8],[13.8,-12.6],[12.2,-9.3],[12,-6],[13.4,-4.9],[11.8,-2.9],[9.8,0],[9.3,2.2],[9.7,3.8],[8.5,4.5],[5.6,4.4],[3.4,6.4],[1.2,6],[-1.2,5],[-4,5.2],[-7,4.4],[-9.1,5.2],[-11.5,7.7],[-13.6,9.6],[-15.2,12.2],[-16.8,13.6],[-16.1,16.5],[-16.5,19.4],[-17,21.4],[-15.9,23.7],[-13,27.7],[-11.4,28.5],[-9.8,30],[-9.3,32.3],[-7.6,33.3],[-6.3,34.1]],
- /* Britische Inseln */ [[-5.7,50],[-4,50.3],[-3,50.7],[-1.5,50.7],[0.7,50.8],[1.5,51.4],[1.3,52.9],[0,53.5],[-0.2,54.3],[-1.3,55.2],[-1.8,55.8],[-2.5,56.6],[-2.1,57.7],[-3,58.6],[-5,58.6],[-5.8,57.5],[-5.3,56.5],[-4.8,55.9],[-5,54.7],[-3.6,54.5],[-3.1,53.4],[-4.2,53.3],[-4.7,52.8],[-4.1,52.2],[-5.2,51.7],[-3.5,51.4],[-3.5,50.6],[-5.7,50]],
- /* Irland */ [[-10.5,51.6],[-8.4,51.6],[-6.2,52.2],[-6,53.4],[-6.2,54.1],[-7.6,55],[-8.7,54.7],[-9.9,54.3],[-9.7,53.2],[-10.5,52],[-10.5,51.6]],
- /* Italien (Stiefel, separat fuer klare Form) */ [[7.5,44],[9,44.2],[10,44],[12.4,44.2],[13.5,43.6],[14.5,42.2],[15.5,41.9],[16.2,41.4],[17.5,40.8],[18.5,40.1],[17.9,40.5],[16.5,39.5],[15.7,38],[16.2,37.9],[17.2,38.9],[16.5,39.6],[15.3,40],[14.2,40.8],[13.2,41.3],[11.2,42.4],[10.3,43.6],[8.9,44.4],[7.5,44]],
- /* Griechenland */ [[20,39.6],[21,38.4],[22.5,38.3],[23.7,38],[24.1,37.4],[23.6,36.4],[22.5,36.4],[21.1,37.6],[21.3,38.3],[20.8,39.6],[20,39.6]],
- /* Anatolien */ [[26.2,39.5],[27,38.4],[28.3,36.7],[30.5,36.3],[32.8,36.1],[34.9,36.2],[35.9,36.6],[36.5,37.5],[38.5,37.5],[41,37.3],[43,37.5],[44.5,39.5],[43,41],[41,41.5],[38,41],[36.5,41],[34,42],[31,41.1],[29,41],[27.3,40.6],[26.2,39.5]],
- /* Madagaskar */ [[43.3,-12.2],[49.5,-15.5],[50.5,-19],[47.5,-25.5],[45,-25.5],[43.3,-21],[43.3,-16],[43.3,-12.2]],
- /* Nordamerika */ [[-168,65.7],[-165,60.5],[-162,58.5],[-158,57],[-153,57.5],[-149,60],[-140,59.5],[-135,57],[-131,53],[-128,51],[-125,49],[-124,44],[-124,40],[-121,36],[-118,33.5],[-117,32.5],[-114,31],[-110,24],[-106,22],[-105,20],[-97,16],[-94,16],[-92,14],[-88,15.5],[-87,13],[-83,9],[-79,9],[-83,10],[-85,15],[-88,21],[-87,21.5],[-90,21],[-94,18.5],[-97,21],[-97,26],[-94,29.5],[-89,29],[-85,29.5],[-82,25],[-80,25.5],[-81,31],[-78,34],[-76,37],[-74,40],[-71,41.5],[-67,44],[-66,45],[-64,46],[-60,46.5],[-56,51],[-58,54],[-64,58],[-66,60],[-78,62],[-80,65],[-85,66],[-90,68],[-95,68],[-105,69],[-115,70],[-125,70],[-133,69],[-141,70],[-150,71],[-156,71],[-162,70],[-166,68],[-168,65.7]],
- /* Groenland */ [[-45,60],[-42,63],[-38,66],[-30,69],[-22,70],[-19,73],[-20,77],[-30,82],[-45,83],[-60,82],[-68,78],[-72,76],[-65,70],[-55,66],[-50,63],[-45,60]],
- /* Suedamerika */ [[-81,-4],[-80,-2],[-78,1],[-77,7],[-75,9],[-71,11],[-68,11],[-62,10.5],[-57,6],[-51,4],[-50,0],[-46,-1],[-44,-2.5],[-38,-5],[-35,-6],[-35,-9],[-38,-13],[-39,-17],[-42,-22],[-48,-25],[-52,-30],[-56,-34],[-58,-38],[-62,-40],[-64,-43],[-66,-46],[-68,-50],[-69,-52],[-75,-53],[-74,-50],[-73,-45],[-73,-40],[-72,-33],[-70,-25],[-70,-18],[-76,-14],[-79,-8],[-81,-4]],
- /* Australien */ [[113,-22],[113,-26],[115,-31],[118,-35],[123,-34],[129,-32],[133,-32],[137,-35],[139,-36],[141,-38],[145,-39],[148,-38],[150,-36],[153,-31],[153,-27],[152,-25],[149,-22],[146,-19],[143,-14],[142,-11],[137,-12],[135,-12],[130,-11],[128,-14],[124,-16],[122,-18],[117,-21],[113,-22]],
- /* Tasmanien */ [[145,-41],[148,-41],[148,-43],[145,-43],[145,-41]],
- /* Neuseeland */ [[173,-35],[175,-37],[178,-38],[176,-41],[174,-41],[171,-43],[168,-46],[167,-46],[170,-44],[172,-41],[173,-35]],
- /* Japan */ [[130,31],[131,33],[133,34],[136,34],[137,35],[140,35],[141,38],[141,41],[141,45],[145,44],[144,42],[141,40],[140,38],[137,37],[136,36],[133,35],[131,34],[130,31]],
- /* Island */ [[-24.5,65.5],[-22,66.5],[-18,66.2],[-14,66],[-13.5,64.5],[-18,63.4],[-22,63.8],[-24.5,65.5]],
- /* Sri Lanka */ [[79.8,9.4],[81.9,7.5],[81.5,6],[80,6],[79.8,9.4]],
- /* Sizilien */ [[12.4,37.8],[15.1,38.2],[15.6,38.2],[15.2,37.2],[12.4,37.8]],
- /* Sardinien/Korsika */ [[8.2,41],[9.7,41],[9.6,43],[8.6,42.6],[8.2,41]],
- /* Kreta */ [[23.5,35.5],[26.3,35.3],[26,34.9],[23.5,35.2],[23.5,35.5]],
- /* Zypern */ [[32.3,35.1],[34.6,35.7],[34,34.6],[32.3,34.6],[32.3,35.1]],
- /* Indonesien angedeutet */ [[95,5.5],[105,-6],[115,-8],[120,-9],[125,-8],[131,-1],[128,2],[120,0],[110,2],[103,1.5],[100,5],[95,5.5]],
+/* Geburts- oder Sterbeort. Der Sterbeort zeigt Wanderung und Exil — etwa die
+   Emigration der 1930er Jahre, die auf der Geburtskarte unsichtbar bleibt. */
+/* ── Orte der Lehre ────────────────────────────────────────────────
+   Wo Philosophie eine Einrichtung hatte: Schulen, Bibliotheken,
+   Universitäten, Zirkel. Jeder Eintrag trägt eine Zeitspanne, damit der
+   Zeitregler auch auf sie wirkt — beim Ablauf sieht man die Zentren
+   entstehen und wieder verschwinden.
+
+   Felder: id, name, ort, lat, lon, von, bis (Jahre, negativ = v. Chr.),
+           art ('schule' | 'bibliothek' | 'universitaet' | 'zirkel'),
+           was (ein Satz), wer (die wichtigsten Namen), beleg.
+   „bis: null" heißt: besteht bis heute.                             */
+window.LEHR_ORTE = [
+
+  /* ── Antike ──────────────────────────────────────────────────── */
+  { id:'akademie', name:'Platons Akademie', ort:'Athen', lat:37.9920, lon:23.7120,
+    von:-387, bis:529, art:'schule',
+    was:'Die erste dauerhafte Philosophenschule des Abendlands. Justinian schließt sie nach über neunhundert Jahren — das längste Bestehen einer philosophischen Einrichtung überhaupt.',
+    wer:'Platon, Speusippos, Arkesilaos, Karneades, Proklos',
+    beleg:'Diogenes Laertios III, 5; Malalas, Chronographia XVIII' },
+
+  { id:'lykeion', name:'Aristoteles’ Lykeion', ort:'Athen', lat:37.9750, lon:23.7440,
+    von:-335, bis:-86, art:'schule',
+    was:'Der Peripatos — nach dem Wandelgang benannt, in dem gelehrt wurde. Hier entsteht die erste systematische Sammlung von Fachwissen: Logik, Physik, Zoologie, Verfassungen.',
+    wer:'Aristoteles, Theophrast, Straton',
+    beleg:'Diogenes Laertios V, 2' },
+
+  { id:'stoa', name:'Stoa Poikile', ort:'Athen', lat:37.9760, lon:23.7230,
+    von:-301, bis:260, art:'schule',
+    was:'Die Bunte Halle am Markt, kein eigenes Gelände — die Schule ist nach dem öffentlichen Ort benannt, an dem sie stattfand. Daraus wird die einflussreichste Ethik der Antike.',
+    wer:'Zenon von Kition, Chrysipp, Epiktet, Mark Aurel',
+    beleg:'Diogenes Laertios VII, 5' },
+
+  { id:'kepos', name:'Der Garten Epikurs', ort:'Athen', lat:37.9780, lon:23.7170,
+    von:-306, bis:-86, art:'schule',
+    was:'Eine Gemeinschaft außerhalb der Stadt, die als einzige antike Schule Frauen und Sklaven aufnahm. Über der Tür soll gestanden haben, dass hier die Lust das höchste Gut sei.',
+    wer:'Epikur, Metrodor, Hermarchos',
+    beleg:'Diogenes Laertios X, 10' },
+
+  { id:'museion', name:'Museion und Bibliothek', ort:'Alexandria', lat:31.2080, lon:29.9090,
+    von:-285, bis:391, art:'bibliothek',
+    was:'Kein Lehrbetrieb, sondern eine Forschungsstätte mit Vollzeitgelehrten auf königliche Kosten — die erste ihrer Art. Die Textkritik, mit der wir bis heute arbeiten, ist hier erfunden worden.',
+    wer:'Euklid, Eratosthenes, Aristarch, Hypatia',
+    beleg:'Strabon XVII, 1, 8' },
+
+  /* ── Spätantike und Osten ────────────────────────────────────── */
+  { id:'nisibis', name:'Schule von Nisibis', ort:'Nusaybin', lat:37.0750, lon:41.2150,
+    von:489, bis:700, art:'schule',
+    was:'Syrischsprachige Hochschule, an der Aristoteles ins Syrische übersetzt wurde. Über diesen Umweg gelangt die griechische Logik später ins Arabische.',
+    wer:'Narsai, Barhadbschabba',
+    beleg:'Statuten der Schule von Nisibis, 496' },
+
+  { id:'gundischapur', name:'Akademie von Gundischapur', ort:'Chuzestan', lat:32.2900, lon:48.5200,
+    von:531, bis:900, art:'schule',
+    was:'Zufluchtsort der aus Athen vertriebenen Neuplatoniker und Sammelpunkt griechischer, syrischer und indischer Gelehrsamkeit unter den Sassaniden.',
+    wer:'Damaskios, Simplikios (zeitweise), Burzoe',
+    beleg:'Agathias, Historien II, 30–31' },
+
+  { id:'nalanda', name:'Nalanda Mahavihara', ort:'Bihar', lat:25.1350, lon:85.4440,
+    von:427, bis:1197, art:'universitaet',
+    was:'Buddhistische Hochschule mit mehreren tausend Studenten, Logik und Erkenntnistheorie auf hohem Niveau. 1197 niedergebrannt; die Bibliothek soll monatelang gebrannt haben.',
+    wer:'Dharmakirti, Dignaga, Shantarakshita',
+    beleg:'Xuanzang, Bericht über die westlichen Länder, 645' },
+
+  /* ── Islamische Welt ─────────────────────────────────────────── */
+  { id:'bayt', name:'Haus der Weisheit', ort:'Bagdad', lat:33.3400, lon:44.4000,
+    von:830, bis:1258, art:'bibliothek',
+    was:'Übersetzungsbetrieb im großen Stil: fast der gesamte griechische Bestand an Philosophie und Wissenschaft wird hier ins Arabische gebracht. Ohne diese Arbeit wäre Aristoteles in Europa unbekannt geblieben.',
+    wer:'al-Kindi, Hunain ibn Ishaq, al-Farabi',
+    beleg:'Ibn an-Nadim, Kitab al-Fihrist, 987' },
+
+  { id:'qarawiyyin', name:'al-Qarawiyyin', ort:'Fès', lat:34.0650, lon:-4.9730,
+    von:859, bis:null, art:'universitaet',
+    was:'Von Fatima al-Fihri gestiftet und seither ohne Unterbrechung in Betrieb — die älteste durchgehend bestehende Hochschule der Welt.',
+    wer:'Ibn Chaldun, Maimonides (zeitweise)',
+    beleg:'Ibn Abi Zar, Raud al-Qirtas' },
+
+  { id:'cordoba', name:'Córdoba', ort:'Córdoba', lat:37.8790, lon:-4.7790,
+    von:929, bis:1236, art:'schule',
+    was:'Zentrum der andalusischen Philosophie, an dem arabische, jüdische und christliche Gelehrsamkeit nebeneinander arbeiteten. Averroes’ Aristoteles-Kommentare bestimmen zwei Jahrhunderte später die Pariser Debatten.',
+    wer:'Averroes, Maimonides, Ibn Tufail',
+    beleg:'Ibn Abi Usaibia, Uyun al-anba' },
+
+  { id:'toledo', name:'Übersetzerschule von Toledo', ort:'Toledo', lat:39.8580, lon:-4.0240,
+    von:1130, bis:1284, art:'bibliothek',
+    was:'Hier wird ins Lateinische übersetzt, was aus Bagdad und Córdoba kommt — häufig über eine dritte Sprache, weil christliche, jüdische und muslimische Übersetzer zusammenarbeiteten.',
+    wer:'Gerhard von Cremona, Dominicus Gundissalinus, Michael Scotus',
+    beleg:'Gerhard von Cremona, Vita und Werkverzeichnis, um 1187' },
+
+  /* ── Mittelalterliches Europa ────────────────────────────────── */
+  { id:'bologna', name:'Universität Bologna', ort:'Bologna', lat:44.4970, lon:11.3520,
+    von:1088, bis:null, art:'universitaet',
+    was:'Die älteste Universität Europas, aus einer Vereinigung von Studenten hervorgegangen — die Lehrenden waren zunächst Angestellte der Studierenden.',
+    wer:'Irnerius, Pietro Pomponazzi (später Padua)',
+    beleg:'Authentica Habita Friedrichs I., 1155' },
+
+  { id:'paris-uni', name:'Universität Paris', ort:'Paris', lat:48.8480, lon:2.3430,
+    von:1200, bis:null, art:'universitaet',
+    was:'Das Zentrum der Scholastik. Hier prallen Aristoteles-Rezeption und kirchliche Lehre aufeinander; die Verurteilungen von 1270 und 1277 sind die schärfsten Eingriffe in die Lehrfreiheit des Mittelalters.',
+    wer:'Albertus Magnus, Thomas von Aquin, Bonaventura, Buridan',
+    beleg:'Chartularium Universitatis Parisiensis I, Nr. 473 (1277)' },
+
+  { id:'oxford', name:'Universität Oxford', ort:'Oxford', lat:51.7540, lon:-1.2540,
+    von:1167, bis:null, art:'universitaet',
+    was:'Der Gegenpol zu Paris: naturwissenschaftlicher, mathematischer, skeptischer gegenüber der Metaphysik. Von hier kommt die Kritik, die die Scholastik am Ende aufbricht.',
+    wer:'Robert Grosseteste, Roger Bacon, Duns Scotus, Wilhelm von Ockham',
+    beleg:'Statuta Antiqua Universitatis Oxoniensis' },
+
+  { id:'padua', name:'Universität Padua', ort:'Padua', lat:45.4070, lon:11.8770,
+    von:1222, bis:null, art:'universitaet',
+    was:'Hochburg des Averroismus und der aristotelischen Naturphilosophie — und damit der Ort, an dem sich die Naturwissenschaft von der Theologie zu lösen beginnt.',
+    wer:'Pietro d’Abano, Pomponazzi, Galilei (Lehrstuhl 1592–1610)',
+    beleg:'Acta Graduum Academicorum Gymnasii Patavini' },
+
+  /* ── Neuzeit ─────────────────────────────────────────────────── */
+  { id:'halle', name:'Universität Halle', ort:'Halle', lat:51.4890, lon:11.9690,
+    von:1694, bis:null, art:'universitaet',
+    was:'Erste Universität, an der auf Deutsch statt Latein gelehrt wurde. Wolffs Vertreibung 1723 auf Betreiben der Pietisten wird zum europäischen Fall über die Freiheit der Lehre.',
+    wer:'Christian Thomasius, Christian Wolff',
+    beleg:'Kabinettsordre Friedrich Wilhelms I., 8. November 1723' },
+
+  { id:'goettingen', name:'Universität Göttingen', ort:'Göttingen', lat:51.5410, lon:9.9370,
+    von:1737, bis:null, art:'universitaet',
+    was:'Aufklärungsuniversität ohne theologische Vorzensur, mit der ersten modernen Forschungsbibliothek. Vorbild für Humboldts Berliner Gründung.',
+    wer:'Lichtenberg, Kästner, später Husserl (Professur 1901–1916)',
+    beleg:'Gründungsprivileg Georgs II., 1734' },
+
+  { id:'koenigsberg', name:'Universität Königsberg', ort:'Königsberg', lat:54.7060, lon:20.5100,
+    von:1544, bis:1945, art:'universitaet',
+    was:'Kant hat die Stadt zeitlebens kaum verlassen und hier vierzig Jahre gelehrt. 1945 zerstört, die Universität nicht wiedergegründet.',
+    wer:'Immanuel Kant, Johann Georg Hamann (in der Stadt)',
+    beleg:'Kant, Anthropologie, AA VII, 120 f.' },
+
+  { id:'jena', name:'Universität Jena', ort:'Jena', lat:50.9300, lon:11.5860,
+    von:1789, bis:1806, art:'universitaet',
+    was:'Siebzehn Jahre lang das Zentrum der Welt: Reinhold, Fichte, Schelling und Hegel lehren nacheinander an derselben kleinen Universität. Mit Napoleons Sieg bei Jena 1806 ist es vorbei.',
+    wer:'Reinhold, Fichte, Schelling, Hegel, Schiller',
+    beleg:'Hegel an Niethammer, 13. Oktober 1806' },
+
+  { id:'berlin', name:'Universität Berlin', ort:'Berlin', lat:52.5180, lon:13.3930,
+    von:1810, bis:null, art:'universitaet',
+    was:'Humboldts Gründung mit dem Grundsatz der Einheit von Forschung und Lehre. Hegels Vorlesungen machen sie für zwei Jahrzehnte zur maßgeblichen philosophischen Adresse Europas.',
+    wer:'Fichte, Schleiermacher, Hegel, Dilthey',
+    beleg:'Humboldt, Über die innere und äußere Organisation, 1810' },
+
+  { id:'marburg', name:'Marburger Schule', ort:'Marburg', lat:50.8100, lon:8.7720,
+    von:1876, bis:1918, art:'zirkel',
+    was:'Der Neukantianismus, der Kant von der Erkenntnistheorie her liest und die Philosophie auf die Wissenschaftslehre verpflichtet. Heidegger lehrt hier später gegen genau diese Ausrichtung.',
+    wer:'Hermann Cohen, Paul Natorp, Ernst Cassirer',
+    beleg:'Cohen, Kants Theorie der Erfahrung, 1871' },
+
+  { id:'freiburg', name:'Freiburg', ort:'Freiburg im Breisgau', lat:47.9950, lon:7.8450,
+    von:1916, bis:1976, art:'zirkel',
+    was:'Husserl baut hier die Phänomenologie als Schule auf; Heidegger folgt ihm 1928 auf den Lehrstuhl und wird 1933 Rektor. Der Bruch zwischen beiden ist einer der folgenreichsten der Philosophiegeschichte.',
+    wer:'Husserl, Heidegger, Edith Stein, Fink',
+    beleg:'Husserl an Ingarden, 19. November 1927' },
+
+  { id:'wienerkreis', name:'Wiener Kreis', ort:'Wien', lat:48.2230, lon:16.3570,
+    von:1924, bis:1936, art:'zirkel',
+    was:'Kein Institut, sondern ein Donnerstagsseminar in der Boltzmanngasse. Nach Schlicks Ermordung 1936 auf der Universitätstreppe zerstreut sich der Kreis ins Exil — und prägt dort die angelsächsische Philosophie.',
+    wer:'Moritz Schlick, Rudolf Carnap, Otto Neurath, Kurt Gödel',
+    beleg:'Wissenschaftliche Weltauffassung. Der Wiener Kreis, 1929' },
+
+  { id:'frankfurt', name:'Institut für Sozialforschung', ort:'Frankfurt am Main',
+    lat:50.1170, lon:8.6530, von:1924, bis:null, art:'zirkel',
+    was:'1933 geschlossen, über Genf und New York ins Exil, 1951 zurückgekehrt. Die Kritische Theorie entsteht in der Emigration und kehrt als deutsche Schule wieder.',
+    wer:'Horkheimer, Adorno, Marcuse, Habermas',
+    beleg:'Horkheimer, Die gegenwärtige Lage der Sozialphilosophie, 1931' },
+
+  { id:'cambridge', name:'Cambridge', ort:'Cambridge', lat:52.2050, lon:0.1170,
+    von:1900, bis:1951, art:'zirkel',
+    was:'Wo die analytische Philosophie beginnt: Moores Bruch mit dem Idealismus, Russells Logik, Wittgensteins zwei Philosophien — beide in derselben Stadt entwickelt und verworfen.',
+    wer:'Moore, Russell, Wittgenstein, Ramsey',
+    beleg:'Moore, The Refutation of Idealism, 1903' },
+
+  { id:'ens', name:'École Normale Supérieure', ort:'Paris', lat:48.8420, lon:2.3450,
+    von:1794, bis:null, art:'universitaet',
+    was:'Durch die Jahrgänge dieser einen Schule läuft fast die gesamte französische Philosophie des 20. Jahrhunderts — Existenzialismus, Strukturalismus und ihre Kritik gehen von hier aus.',
+    wer:'Sartre, Merleau-Ponty, Beauvoir (assoziiert), Althusser, Foucault, Derrida',
+    beleg:'Bourdieu, Homo academicus, 1984' },
+
+  { id:'harvard', name:'Harvard', ort:'Cambridge, Massachusetts', lat:42.3770, lon:-71.1170,
+    von:1872, bis:null, art:'universitaet',
+    was:'Vom Pragmatismus des Metaphysical Club über Quines Kritik der Analytizität bis zu Rawls’ Theorie der Gerechtigkeit — das Zentrum verlagert sich im 20. Jahrhundert hierher.',
+    wer:'William James, Josiah Royce, Quine, Rawls, Putnam',
+    beleg:'Peirce, How to Make Our Ideas Clear, 1878' }
 ];
 
-function renderKarte(){
-  var svg = document.getElementById('karte-svg'); if (!svg) return;
-  tlGeoAnhaengen();
-  svg.setAttribute('viewBox', '0 0 ' + KA_W + ' ' + KA_H);
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-  var NS = 'http://www.w3.org/2000/svg';
-  function el(t, a){ var e = document.createElementNS(NS, t);
-    for (var k in a) e.setAttribute(k, a[k]); return e; }
+var kaOrtart = 'geburt';
 
-  var g = el('g', { id:'ka-welt',
-    transform:'translate('+kaX+','+kaY+') scale('+kaZ+')' });
-  svg.appendChild(g);
+/* ── Zeitregler ────────────────────────────────────────────────────
+   kaJahr === null heisst: kein Zeitfilter, alles wird gezeigt. Sonst
+   erscheinen nur die Denker, die in diesem Jahr am Leben sind. Wer
+   noch lebt, gilt bis heute als lebend. */
+var kaJahr = null, kaLauf = null;
+var KZ_VON = -650, KZ_BIS = 2025, KZ_HEUTE = 2026;
 
-  /* Gradnetz */
-  var gitter = el('g', {});
-  for (var lo = -180; lo <= 180; lo += 30){
-    var a = kaProj(90, lo), b = kaProj(-90, lo);
-    gitter.appendChild(el('line', {class:'ka-gitter', x1:a[0], y1:a[1], x2:b[0], y2:b[1]}));
-  }
-  for (var la = -60; la <= 60; la += 30){
-    var c = kaProj(la, -180), d = kaProj(la, 180);
-    gitter.appendChild(el('line', {class:'ka-gitter', x1:c[0], y1:c[1], x2:d[0], y2:d[1]}));
-  }
-  g.appendChild(gitter);
+/* ── Fundorte ──────────────────────────────────────────────────────
+   Wo die Texte gefunden wurden, auf denen der Götterkosmos beruht. Die
+   Karte macht sichtbar, was in den Quellenangaben untergeht: dass fast
+   alles, was wir über die Gnosis wissen, an einem einzigen Fund von 1945
+   hängt — und dass ganze Götterwelten erst im 19. und 20. Jahrhundert
+   wieder auftauchten, nachdem sie zweitausend Jahre verschollen waren.
 
-  /* Landmassen */
-  /* Kuestenlinien geglaettet: aus dem Polygonzug wird eine geschlossene
-     Catmull-Rom-Kurve, in Bezier umgerechnet. Das nimmt den Umrissen das
-     Eckige, ohne dass mehr Stuetzpunkte noetig waeren. */
-  function glatt(poly){
-    var P = poly.map(function(pt){ return kaProj(pt[1], pt[0]); });
-    var n = P.length;
-    if (n < 3) return '';
-    var d = 'M' + P[0][0].toFixed(1) + ' ' + P[0][1].toFixed(1);
-    for (var i = 0; i < n; i++){
-      var p0 = P[(i - 1 + n) % n], p1 = P[i], p2 = P[(i + 1) % n], p3 = P[(i + 2) % n];
-      var c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
-      var c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
-      d += 'C' + c1x.toFixed(1) + ' ' + c1y.toFixed(1) + ',' +
-                 c2x.toFixed(1) + ' ' + c2y.toFixed(1) + ',' +
-                 p2[0].toFixed(1) + ' ' + p2[1].toFixed(1);
-    }
-    return d + 'Z';
-  }
-  var land = el('g', {});
-  KA_LAND.forEach(function(poly){
-    land.appendChild(el('path', { class:'ka-land', d: glatt(poly) }));
-  });
-  g.appendChild(land);
+   Felder: id, name, ort, lat, lon, fund (Jahr des Fundes),
+           text (Entstehungszeit der Texte, negativ = v. Chr.),
+           was, kosmos (Bezug zum Götterkosmos), beleg.             */
 
-  /* Philosophen nach Ort buendeln */
-  /* dimmed() ist das Filterpraedikat der Zeitachse — Epoche, Disziplin,
-     Stroemung, Grundposition, Thema, Suche und Philosophinnen. Ohne diesen
-     Aufruf wirkten auf der Karte nur Kulturkreis und Herkunft. */
-  var L = phils().filter(function(p){
-    return p.lat !== undefined && !dimmed(p);
-  });
-  /* Nach KOORDINATEN buendeln, nicht nach dem Ortsnamen — sonst trennt eine
-     abweichende Schreibweise denselben Ort in zwei Punkte. */
-  var orte = {};
-  L.forEach(function(p){
-    var k = p.lat + '|' + p.lon;
-    (orte[k] = orte[k] || { ort:p.ort, lat:p.lat, lon:p.lon, land:p.land,
-                            region:p.region, leute:[] }).leute.push(p);
-  });
-  var liste = Object.keys(orte).map(function(k){ return orte[k]; })
-                    .sort(function(a,b){ return a.leute.length - b.leute.length; });
+window.FUND_ORTE = [
+  { id:'ninive', name:'Bibliothek des Assurbanipal', ort:'Ninive', lat:36.3600, lon:43.1520,
+    fund:1853, text:-650,
+    was:'Rund dreißigtausend Tontafeln, im Palast des letzten großen Assyrerkönigs. Darunter die vollständigste Fassung des Gilgamesch-Epos — George Smith erkennt 1872 beim Entziffern die Flutgeschichte und soll vor Aufregung im Lesesaal seine Kleider abgelegt haben.',
+    kosmos:'Mesopotamisch', beleg:'Smith, The Chaldean Account of the Deluge, 1873' },
 
-  var punkte = el('g', {});
-  liste.forEach(function(o){
-    var q = kaProj(o.lat, o.lon);
-    var n = o.leute.length;
-    var r = Math.min(16, 3.6 + Math.sqrt(n) * 2.6);
-    var farbe = o.leute[0].color || '#e8c46a';
-    var grp = el('g', { class:'ka-punkt', 'data-ort':(o.lat + '|' + o.lon) });
-    grp.appendChild(el('circle', { cx:q[0], cy:q[1], r:r, fill:farbe, 'fill-opacity':.85 }));
-    if (n > 1){
-      var t = el('text', { class:'ka-zahl', x:q[0], y:q[1],
-        'font-size': Math.min(11, r * 1.05) });
-      t.textContent = n; grp.appendChild(t);
-    }
-    /* Ortsname erst ab genuegend Zoom oder bei grossen Punkten */
-    if (n >= 4 || kaZ >= 2.2){
-      var nm = el('text', { class:'ka-name', x:q[0], y:q[1] - r - 3.5,
-        'font-size': (7 / Math.max(1, kaZ * .55)).toFixed(1) });
-      nm.textContent = o.ort.replace(/\s*\(.*?\)/, '');
-      grp.appendChild(nm);
-    }
-    grp.__ort = o;
-    /* Klick UND Zeigerdruck abfangen: manche Browser unterdruecken das
-       click-Ereignis, wenn zwischendurch ein pointermove kam. */
-    function oeffnen(ev){ ev.stopPropagation(); ev.preventDefault(); kaZeigeOrt(o); }
-    grp.addEventListener('click', oeffnen);
-    grp.addEventListener('pointerup', oeffnen);
-    punkte.appendChild(grp);
-  });
-  g.appendChild(punkte);
+  { id:'naghammadi', name:'Die Kodizes von Nag Hammadi', ort:'Nag Hammadi',
+    lat:26.0450, lon:32.2390, fund:1945, text:350,
+    was:'Dreizehn Papyruskodizes in einem versiegelten Krug, gefunden von Bauern beim Graben nach Dünger. Vorher kannte man die Gnosis fast nur aus den Schriften ihrer Gegner — seither aus ihren eigenen.',
+    kosmos:'Gnosis', beleg:'Robinson, The Nag Hammadi Library in English, 1977' },
 
-  var info = document.getElementById('karte-info');
-  if (info) info.textContent = L.length + ' Denker an ' + liste.length + ' Orten'
-    + (L.length < phils().length ? '  ·  ' + (phils().length - L.length) + ' ohne Ort' : '');
+  { id:'ugarit', name:'Ras Schamra — Ugarit', ort:'Ugarit', lat:35.6020, lon:35.7820,
+    fund:1929, text:-1350,
+    was:'Ein Bauer stößt beim Pflügen auf ein Grab; darunter liegt eine Stadt mit Tontafeln in einer bis dahin unbekannten Alphabetschrift. Der Baal-Zyklus zeigt, wie kanaanäische Mythen aussahen, gegen die die hebräische Bibel anschreibt.',
+    kosmos:'Kanaanäisch, Hebräisch', beleg:'Virolleaud, La légende de Keret, 1936' },
 
-  kaSetzeStand();
-}
+  { id:'hattusa', name:'Boğazköy — Hattuša', ort:'Hattuša', lat:40.0200, lon:34.6150,
+    fund:1906, text:-1300,
+    was:'Das Staatsarchiv der Hethiter mit über dreißigtausend Tafeln. Es enthält den Mythos vom Königtum im Himmel — eine Abfolge gestürzter Göttergenerationen, die Hesiods Theogonie so ähnlich ist, dass ein Zusammenhang kaum zu bestreiten ist.',
+    kosmos:'Hethitisch, Griechisch', beleg:'Güterbock, Kumarbi. Mythen vom churritischen Kronos, 1946' },
 
-function kaSetzeStand(){
-  var g = document.getElementById('ka-welt');
-  if (g) g.setAttribute('transform', 'translate('+kaX+','+kaY+') scale('+kaZ+')');
-}
+  { id:'knossos', name:'Linear B', ort:'Knossos', lat:35.2980, lon:25.1630,
+    fund:1900, text:-1400,
+    was:'Evans findet die Tafeln, kann sie aber nicht lesen. Erst Ventris entziffert 1952 die Schrift als frühes Griechisch — und darin stehen Namen wie Zeus, Hera, Poseidon und Dionysos, sechshundert Jahre vor Homer.',
+    kosmos:'Griechisch', beleg:'Ventris und Chadwick, Evidence for Greek Dialect in the Mycenaean Archives, 1953' },
 
+  { id:'qumran', name:'Die Schriftrollen vom Toten Meer', ort:'Qumran', lat:31.7410, lon:35.4590,
+    fund:1947, text:-150,
+    was:'Ein Hirte wirft einen Stein in eine Höhle und hört Tongefäße zerbrechen. Die Funde verschieben die ältesten bekannten Bibelhandschriften um tausend Jahre nach hinten.',
+    kosmos:'Hebräisch', beleg:'Vermes, The Complete Dead Sea Scrolls in English, 1997' },
 
-/* ══ OPENSTREETMAP-ANSICHT ═══════════════════════════════════════
-   Leaflet liegt lokal in js/leaflet/ — nur die Kacheln kommen von
-   fremden Servern. Deshalb ist diese Ansicht nicht voreingestellt
-   und die Namensnennung steht fest in der Karte.                  */
-var kaAnsicht = 'osm';        // 'svg' | 'osm' — OSM ist voreingestellt
-var osmKarte = null, osmSchicht = null, osmOffen = null;
+  { id:'turfan', name:'Die Turfan-Funde', ort:'Turfan', lat:42.9480, lon:89.1800,
+    fund:1904, text:800,
+    was:'In den Ruinenstädten der Seidenstraße finden deutsche Expeditionen manichäische Handschriften in einem Dutzend Sprachen. Vor diesem Fund war der Manichäismus nur aus den Polemiken Augustins bekannt, der selbst neun Jahre lang Manichäer war.',
+    kosmos:'Manichäisch, Gnosis', beleg:'Le Coq, Chotscho, 1913' },
 
-window.kaModus = function(m){
-  kaAnsicht = m;
-  document.getElementById('km-svg')?.classList.toggle('active', m === 'svg');
-  document.getElementById('km-osm')?.classList.toggle('active', m === 'osm');
-  var b = document.getElementById('karte-buehne'), o = document.getElementById('karte-osm');
-  if (b) b.classList.toggle('aus', m === 'osm');
-  if (o) o.classList.toggle('an',  m === 'osm');
-  var liste = document.getElementById('karte-liste'); if (liste) liste.innerHTML = '';
-  if (m === 'osm') osmZeichne(); else renderKarte();
+  { id:'herculaneum', name:'Villa dei Papiri', ort:'Herculaneum', lat:40.8060, lon:14.3480,
+    fund:1752, text:-50,
+    was:'Rund achtzehnhundert verkohlte Papyrusrollen, vom Vesuv 79 n. Chr. konserviert und zerstört zugleich — die einzige aus der Antike erhaltene Bibliothek. Sie enthält vor allem epikureische Schriften; die Entzifferung läuft bis heute.',
+    kosmos:'Griechisch (Epikureismus)', beleg:'Sider, The Library of the Villa dei Papiri, 2005' },
+
+  { id:'amarna', name:'Die Amarna-Briefe', ort:'Tell el-Amarna', lat:27.6450, lon:30.8960,
+    fund:1887, text:-1350,
+    was:'Eine Bäuerin gräbt Tontafeln aus, die als Dünger verkauft werden sollen. Es ist die diplomatische Korrespondenz Echnatons — und der Große Aton-Hymnus dokumentiert den ersten bekannten Versuch, viele Götter durch einen zu ersetzen.',
+    kosmos:'Ägyptisch', beleg:'Moran, The Amarna Letters, 1992' },
+
+  { id:'oxyrhynchos', name:'Die Papyri von Oxyrhynchos', ort:'Oxyrhynchos',
+    lat:28.5320, lon:30.6570, fund:1896, text:200,
+    was:'Auf einer antiken Müllhalde finden Grenfell und Hunt über eine halbe Million Papyrusfetzen: Steuerquittungen neben verlorenen Sapphogedichten, Menanderkomödien und dem griechischen Thomasevangelium.',
+    kosmos:'Griechisch, Gnosis', beleg:'Grenfell und Hunt, The Oxyrhynchus Papyri, ab 1898' },
+
+  { id:'mari', name:'Tell Hariri — Mari', ort:'Mari', lat:34.5490, lon:40.8890,
+    fund:1933, text:-1750,
+    was:'Zwanzigtausend Tafeln aus dem Palastarchiv, darunter Prophetenbriefe — Menschen, die im Namen eines Gottes dem König etwas ausrichten. Die Form ist dieselbe wie in der hebräischen Prophetie, sechshundert Jahre früher.',
+    kosmos:'Mesopotamisch, Hebräisch', beleg:'Durand, Archives épistolaires de Mari, 1988' },
+
+  { id:'dunhuang', name:'Die Höhlenbibliothek', ort:'Dunhuang', lat:40.0410, lon:94.8040,
+    fund:1900, text:900,
+    was:'Ein Mönch entdeckt eine zugemauerte Kammer mit vierzigtausend Handschriften: buddhistische, daoistische, manichäische und christliche Texte nebeneinander, verschlossen um das Jahr 1000 und tausend Jahre unberührt.',
+    kosmos:'Buddhistisch, Daoistisch, Manichäisch', beleg:'Stein, Serindia, 1921' },
+
+  { id:'ebla', name:'Tell Mardich — Ebla', ort:'Ebla', lat:35.7980, lon:36.7980,
+    fund:1975, text:-2350,
+    was:'Siebzehntausend Tafeln aus dem dritten Jahrtausend, darunter die ältesten bekannten zweisprachigen Wörterlisten. Sie zeigen einen semitischen Götterhimmel, tausend Jahre vor Ugarit.',
+    kosmos:'Mesopotamisch, Kanaanäisch', beleg:'Pettinato, Ebla. Un impero inciso nell’argilla, 1979' }
+];
+
+/* ── Exil ──────────────────────────────────────────────────────────
+   Die Vertreibung der Philosophie aus dem deutschsprachigen Raum. Die
+   vorhandene Sterbeort-Ansicht zeigt nur Anfang und Ende; hier stehen
+   die Zwischenstationen — und die sind oft das Eigentliche: Reichenbach
+   lehrt fünf Jahre in Istanbul, Löwith sechs in Japan, Arendt sitzt in
+   Gurs interniert.
+
+   ausgang: 'zurueck'   — nach Deutschland oder Österreich zurückgekehrt
+            'geblieben' — im Aufnahmeland geblieben
+            'gestorben' — auf der Flucht gestorben
+            'ermordet'  — deportiert und ermordet
+   Jede Station: jahr, ort, lat, lon, was.                            */
+
+/* ── Lebenswege ────────────────────────────────────────────────────
+   Wo die Denker tatsächlich gelebt haben, nicht nur wo sie geboren und
+   gestorben sind. Die Auswahl ist bewusst gemischt: Wege über drei
+   Kontinente stehen neben Kant, der Königsberg nie weiter als eine
+   Tagesreise verlassen hat — der Gegensatz ist der Punkt.
+
+   Felder je Person: id, name, epoche (bestimmt die Farbe), von/bis
+   (Lebensdaten), zusammenfassung, beleg.
+   Stationen: ort, lat, lon, jahr (Ankunft), was, sicher (0 = die
+   Überlieferung ist unsicher; wird gestrichelt gezeichnet).
+
+   Optional je Station, wo das Gebäude bekannt ist:
+     adresse     — Straße und Hausnummer
+     praezision  — 'haus' (Koordinate trifft das Gebäude) oder
+                   'ort' (Koordinate ist nur die Stadtmitte)
+     ortsbeleg   — woher die Angabe stammt
+   Ohne praezision gilt 'ort'. Nur wo 'haus' steht, darf man
+   hineinzoomen und erwarten, das richtige Dach zu sehen.            */
+
+window.LEBENSWEGE = [
+
+  { id:'platon', name:'Platon', epoche:'antike', von:-427, bis:-347,
+    zusammenfassung:'Drei Reisen nach Sizilien, um einen Herrscher zur Philosophie zu erziehen — alle drei scheitern, die letzte beinahe tödlich. Der Siebte Brief, ob echt oder nicht, ist der einzige antike Text, in dem ein Philosoph sein politisches Versagen selbst beschreibt.',
+    beleg:'Siebter Brief 324a–352a; Diogenes Laertios III, 6–23',
+    stationen:[
+      { ort:'Athen',      lat:37.9760, lon:23.7270, jahr:-427, sicher:1, was:'Geburt in eine der vornehmsten Familien der Stadt.' },
+      { ort:'Megara',     lat:37.9970, lon:23.3430, jahr:-399, sicher:1, was:'Nach der Hinrichtung des Sokrates flieht der Schülerkreis zu Eukleides.' },
+      { ort:'Kyrene',     lat:32.8250, lon:21.8580, jahr:-395, sicher:0, was:'Reisen nach Ägypten und Kyrene werden berichtet, sind aber nicht gesichert.' },
+      { ort:'Syrakus',    lat:37.0750, lon:15.2870, jahr:-388, sicher:1, was:'Erste Sizilienreise. Er soll auf der Rückfahrt als Sklave verkauft und freigekauft worden sein.' },
+      { ort:'Athen',      lat:37.9920, lon:23.7120, jahr:-387, sicher:1, was:'Gründung der Akademie im Hain des Heros Akademos.' },
+      { ort:'Syrakus',    lat:37.0750, lon:15.2870, jahr:-367, sicher:1, was:'Zweite Reise: Dion holt ihn, um den jungen Dionysios II. zu erziehen.' },
+      { ort:'Syrakus',    lat:37.0750, lon:15.2870, jahr:-361, sicher:1, was:'Dritte Reise, faktisch Hausarrest. Er kommt nur durch Vermittlung frei.' },
+      { ort:'Athen',      lat:37.9920, lon:23.7120, jahr:-360, sicher:1, was:'Rückkehr für die letzten dreizehn Jahre.' }
+    ] },
+
+  { id:'aristoteles', name:'Aristoteles', epoche:'antike', von:-384, bis:-322,
+    zusammenfassung:'Zwanzig Jahre Schüler, dreizehn Jahre unterwegs, zwölf Jahre eigene Schule. Die Jahre an der kleinasiatischen Küste sind die biologischen: Ein Drittel der Tierarten, die er beschreibt, kommt aus der Lagune von Lesbos.',
+    beleg:'Diogenes Laertios V, 1–35; Historia animalium (Ortsangaben)',
+    stationen:[
+      { ort:'Stageira',   lat:40.5290, lon:23.7500, jahr:-384, sicher:1, was:'Sohn des makedonischen Hofarztes.' },
+      { ort:'Athen',      lat:37.9920, lon:23.7120, jahr:-367, sicher:1, was:'Zwanzig Jahre in der Akademie, bis zu Platons Tod.' },
+      { ort:'Assos',      lat:39.4890, lon:26.3380, jahr:-347, sicher:1, was:'Nach Platons Tod an den Hof des Hermias.' },
+      { ort:'Mytilene',   lat:39.1070, lon:26.5540, jahr:-345, sicher:1, was:'Zwei Jahre auf Lesbos — die Grundlage der gesamten antiken Zoologie.' },
+      { ort:'Pella',      lat:40.7620, lon:22.5240, jahr:-343, sicher:1, was:'Erzieher des dreizehnjährigen Alexander.' },
+      { ort:'Athen',      lat:37.9750, lon:23.7440, jahr:-335, sicher:1, was:'Gründung des Lykeion.' },
+      { ort:'Chalkis',    lat:38.4640, lon:23.5990, jahr:-323, sicher:1, was:'Nach Alexanders Tod Flucht vor der Anklage — Athen solle sich nicht ein zweites Mal an der Philosophie versündigen.' }
+    ] },
+
+  { id:'augustinus', name:'Augustinus', epoche:'antike', von:354, bis:430,
+    zusammenfassung:'Der am besten dokumentierte Lebensweg der Antike, weil er ihn selbst aufgeschrieben hat. Von Nordafrika nach Rom, weil dort die Studenten die Gebühren zahlen; von Rom nach Mailand über eine Stellenvermittlung des Stadtpräfekten.',
+    beleg:'Confessiones III–IX; Possidius, Vita Augustini',
+    stationen:[
+      { ort:'Thagaste',   lat:36.2870, lon:7.9510,  jahr:354, sicher:1, was:'Geburt im heutigen Algerien.' },
+      { ort:'Karthago',   lat:36.8530, lon:10.3230, jahr:370, sicher:1, was:'Rhetorikstudium; hier wird er Manichäer.' },
+      { ort:'Rom',        lat:41.8930, lon:12.4830, jahr:383, sicher:1, was:'Heimliche Abreise gegen den Willen der Mutter.' },
+      { ort:'Mailand',    lat:45.4640, lon:9.1900,  jahr:384, sicher:1, was:'Hofrhetor; Begegnung mit Ambrosius und den Platonikern.' },
+      { ort:'Ostia',      lat:41.7550, lon:12.2910, jahr:387, sicher:1, was:'Auf der Rückreise stirbt Monnica — die Szene am Fenster.' },
+      { ort:'Thagaste',   lat:36.2870, lon:7.9510,  jahr:388, sicher:1, was:'Drei Jahre klösterliches Leben auf dem Familiengut.' },
+      { ort:'Hippo',      lat:36.9000, lon:7.7660,  jahr:391, sicher:1, was:'Gegen seinen Willen zum Priester gedrängt, ab 395 Bischof — neununddreißig Jahre.' }
+    ] },
+
+  { id:'maimonides', name:'Maimonides', epoche:'mittelalter', von:1138, bis:1204,
+    zusammenfassung:'Eine Fluchtgeschichte über dreißig Jahre und viertausend Kilometer. Die Almohaden stellten Juden vor die Wahl zwischen Übertritt, Auswanderung und Tod; die Familie zog von Stadt zu Stadt, bis Ägypten Sicherheit bot.',
+    beleg:'Ibn al-Qifti, Ta’rich al-hukama; Maimonides, Brief an Jonatan aus Lunel',
+    stationen:[
+      { ort:'Córdoba',    lat:37.8790, lon:-4.7790, jahr:1138, sicher:1, was:'Geburt; 1148 nehmen die Almohaden die Stadt.' },
+      { ort:'Almería',    lat:36.8400, lon:-2.4680, jahr:1148, sicher:0, was:'Jahre der Wanderung durch Andalusien, die Stationen sind unsicher.' },
+      { ort:'Fès',        lat:34.0330, lon:-5.0000, jahr:1160, sicher:1, was:'Fünf Jahre im Herzen des almohadischen Reiches — vermutlich äußerlich als Muslim lebend.' },
+      { ort:'Akkon',      lat:32.9280, lon:35.0830, jahr:1165, sicher:1, was:'Fünf Monate im Kreuzfahrerkönigreich, dann weiter.' },
+      { ort:'Alexandria', lat:31.2080, lon:29.9090, jahr:1166, sicher:1, was:'Der Vater stirbt kurz nach der Ankunft.' },
+      { ort:'Fustat',     lat:30.0060, lon:31.2300, jahr:1168, sicher:1, was:'Leibarzt des Wesirs Saladins; hier entsteht der Führer der Unschlüssigen.' }
+    ] },
+
+  { id:'thomas', slug:'thomas-v-aquin', name:'Thomas von Aquin', epoche:'mittelalter', von:1225, bis:1274,
+    zusammenfassung:'Ein Leben zwischen Neapel und Paris, mehrfach hin und her — der Orden schickte ihn, wo er gebraucht wurde. Die Familie sperrte ihn ein Jahr lang ein, um den Eintritt bei den Bettelmönchen zu verhindern.',
+    beleg:'Wilhelm von Tocco, Ystoria sancti Thome de Aquino, 1323',
+    stationen:[
+      { ort:'Roccasecca',  lat:41.5560, lon:13.6640, jahr:1225, sicher:1, was:'Geburt auf der Burg der Grafen von Aquino.' },
+      { ort:'Neapel',      lat:40.8520, lon:14.2680, jahr:1239, sicher:1, was:'Studium an der Universität Friedrichs II.; Eintritt bei den Dominikanern.' },
+      { ort:'Paris',       lat:48.8480, lon:2.3430,  jahr:1245, sicher:1, was:'Erste Pariser Zeit, Schüler des Albertus Magnus.' },
+      { ort:'Köln',        lat:50.9370, lon:6.9600,  jahr:1248, sicher:1, was:'Mit Albert an das neue Ordensstudium.' },
+      { ort:'Paris',       lat:48.8480, lon:2.3430,  jahr:1252, sicher:1, was:'Magister der Theologie mit achtundzwanzig Jahren.' },
+      { ort:'Orvieto',     lat:42.7170, lon:12.1110, jahr:1261, sicher:1, was:'Am päpstlichen Hof; hier beginnt die Zusammenarbeit mit Moerbeke.' },
+      { ort:'Rom',         lat:41.8930, lon:12.4830, jahr:1265, sicher:1, was:'Beginn der Summa theologiae.' },
+      { ort:'Paris',       lat:48.8480, lon:2.3430,  jahr:1268, sicher:1, was:'Zweite Regentschaft, mitten im Averroismusstreit.' },
+      { ort:'Neapel',      lat:40.8520, lon:14.2680, jahr:1272, sicher:1, was:'Aufbau eines Ordensstudiums; im Dezember 1273 bricht er die Summa ab.' },
+      { ort:'Fossanova',   lat:41.4820, lon:13.2290, jahr:1274, sicher:1, was:'Stirbt auf dem Weg zum Konzil von Lyon.' }
+    ] },
+
+  { id:'descartes', name:'René Descartes', epoche:'neuzeit', von:1596, bis:1650,
+    zusammenfassung:'Er zog um, wenn es zu gesellig wurde — in zwanzig niederländischen Jahren mindestens achtzehnmal. Die Winterquartier-Szene von 1619, aus der die ganze Methode hervorgeht, spielte in einem geheizten Zimmer irgendwo an der Donau.',
+    beleg:'Baillet, La Vie de Monsieur Des-Cartes, 1691; Discours de la méthode II',
+    stationen:[
+      { ort:'La Haye',     lat:46.9730, lon:0.7060,  jahr:1596, sicher:1, was:'Der Ort heißt heute Descartes.' },
+      { ort:'La Flèche',   lat:47.6970, lon:-0.0760, jahr:1607, sicher:1, was:'Acht Jahre Jesuitenkolleg.' },
+      { ort:'Breda',       lat:51.5880, lon:4.7760,  jahr:1618, sicher:1, was:'Als Freiwilliger im Heer des Moritz von Oranien; Begegnung mit Beeckman.' },
+      { ort:'Neuburg',     lat:48.7330, lon:11.1830, jahr:1619, sicher:0, was:'Das „Ofenzimmer" und die drei Träume vom 10. November — der genaue Ort ist umstritten.' },
+      { ort:'Paris',       lat:48.8570, lon:2.3410,  jahr:1625, sicher:1, was:'Drei Jahre im Kreis um Mersenne.' },
+      { ort:'Amsterdam',   lat:52.3700, lon:4.8950,  jahr:1629, sicher:1, was:'Beginn der niederländischen Jahre, in denen fast alles entsteht.' },
+      { ort:'Endegeest',   lat:52.1600, lon:4.4900,  jahr:1641, sicher:1, was:'Schloss bei Leiden; Erscheinen der Meditationes.' },
+      { ort:'Stockholm',   lat:59.3290, lon:18.0690, jahr:1649, sicher:1, was:'Auf Einladung Christinas — Unterricht um fünf Uhr morgens. Nach vier Monaten tot.' }
+    ] },
+
+  { id:'spinoza', name:'Baruch de Spinoza', epoche:'neuzeit', von:1632, bis:1677,
+    zusammenfassung:'Der ganze Lebensweg passt in einen Umkreis von vierzig Kilometern. Nach dem Bann der Amsterdamer Gemeinde zog er dreimal um, immer weiter aus der Stadt heraus, und schliff Linsen für den Lebensunterhalt.',
+    beleg:'Lucas, La Vie de Monsieur Benoît de Spinosa, um 1678; Colerus, 1705',
+    stationen:[
+      { ort:'Amsterdam',   lat:52.3670, lon:4.9030,  jahr:1632, sicher:1, was:'Geburt in der portugiesisch-jüdischen Gemeinde; 1656 der Bann.' },
+      { ort:'Rijnsburg',   lat:52.1910, lon:4.4370,  jahr:1661, sicher:1, was:'Dorf bei Leiden; hier entsteht der Anfang der Ethik.' },
+      { ort:'Voorburg',    lat:52.0670, lon:4.3600,  jahr:1663, sicher:1, was:'Näher an Den Haag, Kontakt zu Christiaan Huygens.' },
+      { ort:'Den Haag',    lat:52.0780, lon:4.2880,  jahr:1670, sicher:1, was:'Letzte sieben Jahre; die Ethik erscheint erst nach seinem Tod.' }
+    ] },
+
+  { id:'leibniz', name:'Gottfried Wilhelm Leibniz', epoche:'neuzeit', von:1646, bis:1716,
+    zusammenfassung:'Vier Pariser Jahre machten aus einem Juristen den Mathematiker; danach vierzig Jahre Hannover, unterbrochen von einer dreijährigen Italienreise für die Familiengeschichte seines Dienstherrn. Auf dem Rückweg von Paris besuchte er Spinoza.',
+    beleg:'Leibniz, Briefwechsel; Müller/Krönert, Leben und Werk von Leibniz, 1969',
+    stationen:[
+      { ort:'Leipzig',     lat:51.3400, lon:12.3750, jahr:1646, sicher:1, was:'Sohn eines Professors; liest sich mit acht Jahren durch dessen Bibliothek.' },
+      { ort:'Altdorf',     lat:49.3860, lon:11.3560, jahr:1666, sicher:1, was:'Promotion, nachdem Leipzig ihn wegen seiner Jugend abgewiesen hatte.' },
+      { ort:'Mainz',       lat:49.9920, lon:8.2470,  jahr:1667, sicher:1, was:'Dienst beim Kurfürsten, juristische Reformarbeit.' },
+      { ort:'Paris',       lat:48.8570, lon:2.3410,  jahr:1672, sicher:1, was:'Vier Jahre: Huygens wird sein Lehrer, die Infinitesimalrechnung entsteht.' },
+      { ort:'London',      lat:51.5070, lon:-0.1280, jahr:1673, sicher:1, was:'Vorführung der Rechenmaschine vor der Royal Society.' },
+      { ort:'Den Haag',    lat:52.0780, lon:4.2880,  jahr:1676, sicher:1, was:'Mehrere Tage bei Spinoza, der ihm aus der unveröffentlichten Ethik vorliest.' },
+      { ort:'Hannover',    lat:52.3750, lon:9.7320,  jahr:1676, sicher:1, was:'Hofbibliothekar — vierzig Jahre, bis zum Tod.' },
+      { ort:'Rom',         lat:41.8930, lon:12.4830, jahr:1689, sicher:1, was:'Auf der Italienreise für die welfische Hausgeschichte; Angebot einer Stelle im Vatikan.' }
+    ] },
+
+  { id:'rousseau', name:'Jean-Jacques Rousseau', epoche:'neuzeit', von:1712, bis:1778,
+    zusammenfassung:'Nach der Verurteilung des Émile 1762 wurde er in Frankreich und Genf zugleich gesucht und zog acht Jahre lang weiter. Hume holte ihn nach England, dann zerstritten sie sich öffentlich — Rousseau hielt ihn für den Anführer einer Verschwörung.',
+    beleg:'Rousseau, Confessions VIII–XII; Briefwechsel Hume–Rousseau, 1766',
+    stationen:[
+      { ort:'Genf',        lat:46.2040, lon:6.1430,  jahr:1712, sicher:1,
+        adresse:'Grand-Rue 40', praezision:'ort',
+        ortsbeleg:'Maison Rousseau et Littérature; das heutige Gebäude steht am Ort des Geburtshauses',
+        was:'Die Mutter stirbt neun Tage nach der Geburt; mit sechzehn läuft er weg.' },
+      { ort:'Chambéry',    lat:45.5640, lon:5.9170,  jahr:1731, sicher:1, was:'Zehn Jahre bei Madame de Warens, größtenteils Selbststudium.' },
+      { ort:'Paris',       lat:48.8570, lon:2.3410,  jahr:1742, sicher:1, was:'Musiktheorie, Enzyklopädie-Artikel, Freundschaft und Bruch mit Diderot.' },
+      { ort:'Venedig',     lat:45.4400, lon:12.3200, jahr:1743, sicher:1, was:'Ein Jahr als Sekretär des französischen Gesandten.' },
+      { ort:'Montmorency', lat:49.0000, lon:2.3200,  jahr:1756, sicher:1, was:'Sechs Jahre auf dem Land — hier entstehen Émile und Contrat social.' },
+      { ort:'Môtiers',     lat:46.9190, lon:6.5960,  jahr:1762, sicher:1, was:'Flucht nach dem Haftbefehl; 1765 wird sein Haus mit Steinen beworfen.' },
+      { ort:'Wootton',     lat:52.9900, lon:-1.8300, jahr:1766, sicher:1, was:'Auf Humes Vermittlung nach England; nach einem Jahr überstürzte Abreise.' },
+      { ort:'Ermenonville',lat:49.1240, lon:2.6960,  jahr:1778, sicher:1, was:'Stirbt sechs Wochen nach der Ankunft; das Grab wird zum Wallfahrtsort.' }
+    ] },
+
+  { id:'hume', name:'David Hume', epoche:'neuzeit', von:1711, bis:1776,
+    zusammenfassung:'Sein Hauptwerk schrieb er mit sechsundzwanzig in La Flèche — im selben Ort, an dem Descartes zur Schule gegangen war, und mit den Jesuiten der Bibliothek als Gesprächspartnern.',
+    beleg:'Hume, My Own Life, 1776; Mossner, The Life of David Hume, 1954',
+    stationen:[
+      { ort:'Edinburgh',   lat:55.9530, lon:-3.1880, jahr:1711, sicher:1, was:'Studium ab dem zwölften Lebensjahr, ohne Abschluss.' },
+      { ort:'Bristol',     lat:51.4550, lon:-2.5870, jahr:1734, sicher:1, was:'Kurzer Versuch als Handelsgehilfe — er hielt es nicht aus.' },
+      { ort:'La Flèche',   lat:47.6970, lon:-0.0760, jahr:1735, sicher:1, was:'Drei Jahre; hier entsteht der Treatise, der „tot aus der Presse fiel".' },
+      { ort:'London',      lat:51.5070, lon:-0.1280, jahr:1739, sicher:1, was:'Veröffentlichung ohne Wirkung.' },
+      { ort:'Edinburgh',   lat:55.9530, lon:-3.1880, jahr:1751, sicher:1, was:'Bibliothekar der Anwaltskammer; hier entsteht die Geschichte Englands.' },
+      { ort:'Paris',       lat:48.8570, lon:2.3410,  jahr:1763, sicher:1, was:'Gesandtschaftssekretär und Salonberühmtheit — „le bon David".' },
+      { ort:'Edinburgh',   lat:55.9530, lon:-3.1880, jahr:1769, sicher:1, was:'Rückkehr; die Dialogues erscheinen erst nach seinem Tod.' }
+    ] },
+
+  { id:'kant', name:'Immanuel Kant', epoche:'neuzeit', von:1724, bis:1804,
+    zusammenfassung:'Der Gegenfall zu allen anderen: Er hat Königsberg und Umgebung nie weiter als etwa hundertfünfzig Kilometer verlassen. Sieben Jahre als Hauslehrer auf Gütern der Umgebung sind die einzige Bewegung in achtzig Jahren.',
+    beleg:'Kant, Anthropologie AA VII, 120 f.; Kühn, Kant — Eine Biographie, 2003',
+    stationen:[
+      { ort:'Königsberg',  lat:54.7060, lon:20.5100, jahr:1724, sicher:1,
+        adresse:'Sattlerstraße (später Kantstraße)', praezision:'ort',
+        ortsbeleg:'Das Haus wurde 1944/45 mit der Innenstadt zerstört; die genaue Lage lässt sich im heutigen Kaliningrad nicht mehr bestimmen',
+        was:'Geburt als Sohn eines Riemermeisters in der Sattlergasse.' },
+      { ort:'Judtschen',   lat:54.5600, lon:22.0500, jahr:1748, sicher:1, was:'Hauslehrer bei einem Pfarrer, etwa hundert Kilometer östlich.' },
+      { ort:'Groß-Arnsdorf',lat:53.9800, lon:19.6000, jahr:1750, sicher:0, was:'Weitere Hauslehrerstellen; die genauen Orte sind teilweise unsicher.' },
+      { ort:'Königsberg',  lat:54.7060, lon:20.5100, jahr:1754, sicher:1, was:'Rückkehr für die restlichen fünfzig Jahre — Privatdozent, ab 1770 Professor.' }
+    ] },
+
+  { id:'schelling', name:'Friedrich Wilhelm Joseph Schelling', epoche:'idealismus', von:1775, bis:1854,
+    zusammenfassung:'Mit dreiundzwanzig Professor in Jena, mit sechsundsechzig nach Berlin berufen, um die Hegelianer zu widerlegen. Dazwischen fünf Städte und ein Vierteljahrhundert, in dem er fast nichts veröffentlichte.',
+    beleg:'Schelling, Briefe und Dokumente, hg. Fuhrmans; Tilliette, Schelling — Biographie, 1999',
+    stationen:[
+      { ort:'Leonberg',    lat:48.7980, lon:9.0130,  jahr:1775, sicher:1,
+        adresse:'Pfarrstraße 14 (nach anderer Angabe 15)', praezision:'ort',
+        ortsbeleg:'Stadt Leonberg und erlebnisregion-stuttgart.de nennen Nr. 14, literaturland-bw.de Nr. 15 — die Hausnummer ist strittig',
+        was:'Geburt im Pfarrhaus, in dem binnen zwanzig Jahren drei bekannte Männer zur Welt kamen.' },
+      { ort:'Bebenhausen', lat:48.5590, lon:9.0570,  jahr:1783, sicher:1, was:'Klosterschule; er lernt Griechisch, Hebräisch und Arabisch, bevor er fünfzehn ist.' },
+      { ort:'Tübingen',    lat:48.5210, lon:9.0570,  jahr:1790, sicher:1, was:'Mit fünfzehn ins Stift; Stubengenossen sind Hegel und Hölderlin.' },
+      { ort:'Leipzig',     lat:51.3400, lon:12.3750, jahr:1796, sicher:1, was:'Als Hauslehrer zweier Barone; hört Mathematik, Physik und Medizin — die Grundlage der Naturphilosophie.' },
+      { ort:'Dresden',     lat:51.0500, lon:13.7380, jahr:1798, sicher:1, was:'Winter bei den Schlegels; Begegnung mit Novalis und der Gemäldegalerie.' },
+      { ort:'Jena',        lat:50.9300, lon:11.5860, jahr:1798, sicher:1, was:'Mit dreiundzwanzig auf Goethes Betreiben Professor, neben Fichte.' },
+      { ort:'Würzburg',    lat:49.7940, lon:9.9290,  jahr:1803, sicher:1, was:'Nach der Heirat mit Caroline Schlegel und dem Bruch mit Jena.' },
+      { ort:'München',     lat:48.1370, lon:11.5750, jahr:1806, sicher:1, was:'Akademie der Wissenschaften; 1809 erscheint die Freiheitsschrift, danach fast dreißig Jahre Schweigen.' },
+      { ort:'Stuttgart',   lat:48.7760, lon:9.1830,  jahr:1810, sicher:1, was:'Die Stuttgarter Privatvorlesungen vor einem kleinen Kreis — der erste Anlauf zur Weltalter-Lehre, ein Jahr nach Carolines Tod.' },
+      { ort:'Erlangen',    lat:49.5980, lon:11.0040, jahr:1820, sicher:1, was:'Sieben Jahre Vorlesungen zur Weltalter-Philosophie, die er nie abschließt.' },
+      { ort:'München',     lat:48.1370, lon:11.5750, jahr:1827, sicher:1, was:'Rückkehr als Präsident der Akademie.' },
+      { ort:'Berlin',      lat:52.5180, lon:13.3930, jahr:1841, sicher:1, was:'Berufung gegen den Hegelianismus. Im Publikum sitzen Kierkegaard, Bakunin, Engels, Burckhardt.' },
+      { ort:'Bad Ragaz',   lat:47.0050, lon:9.5030,  jahr:1854, sicher:1, was:'Stirbt auf einer Kur in der Schweiz.' }
+    ] },
+
+  { id:'nietzsche', name:'Friedrich Nietzsche', epoche:'19jh', von:1844, bis:1900,
+    zusammenfassung:'Nach der Aufgabe der Basler Professur zehn Jahre ohne Wohnsitz, immer der Höhenluft und dem Licht nach: Sommer in Sils-Maria, Winter in Genua oder Nizza. Fast das gesamte Werk ist unterwegs geschrieben.',
+    beleg:'Nietzsche, Briefwechsel; Janz, Friedrich Nietzsche — Biographie, 1978',
+    stationen:[
+      { ort:'Röcken',      lat:51.2630, lon:12.1640, jahr:1844, sicher:1, was:'Pfarrerssohn; der Vater stirbt, als er vier ist.' },
+      { ort:'Leipzig',     lat:51.3400, lon:12.3750, jahr:1865, sicher:1, was:'Philologiestudium; er findet Schopenhauer in einem Antiquariat.' },
+      { ort:'Basel',       lat:47.5590, lon:7.5880,  jahr:1869, sicher:1, was:'Mit vierundzwanzig Professor, ohne Promotion. Besuche bei Wagner in Tribschen.' },
+      { ort:'Sorrent',     lat:40.6260, lon:14.3750, jahr:1876, sicher:1, was:'Krankheitsurlaub; letzte Begegnung mit Wagner.' },
+      { ort:'Genua',       lat:44.4070, lon:8.9340,  jahr:1880, sicher:1, was:'Erste Winter am Meer; die Fröhliche Wissenschaft entsteht.' },
+      { ort:'Sils-Maria',  lat:46.4310, lon:9.7620,  jahr:1881, sicher:1, was:'Der Gedanke der ewigen Wiederkunft, „6000 Fuß jenseits von Mensch und Zeit".' },
+      { ort:'Nizza',       lat:43.7000, lon:7.2650,  jahr:1883, sicher:1, was:'Winterquartiere; Teile des Zarathustra.' },
+      { ort:'Turin',       lat:45.0700, lon:7.6870,  jahr:1888, sicher:1, was:'Das letzte produktive Jahr; am 3. Januar 1889 der Zusammenbruch auf der Piazza Carlo Alberto.' },
+      { ort:'Weimar',      lat:50.9800, lon:11.3290, jahr:1897, sicher:1, was:'Die letzten drei Jahre im Haus der Schwester, ohne Bewusstsein seiner Wirkung.' }
+    ] },
+
+  { id:'wittgenstein', name:'Ludwig Wittgenstein', epoche:'20jh', von:1889, bis:1951,
+    zusammenfassung:'Zweimal verließ er die Philosophie: nach dem Tractatus wurde er Volksschullehrer in niederösterreichischen Dörfern, später Gärtner und Krankenhausgehilfe. Die Hütte in Norwegen baute er selbst, um allein zu sein.',
+    beleg:'Monk, Ludwig Wittgenstein — The Duty of Genius, 1990; Briefe an Russell und Engelmann',
+    stationen:[
+      { ort:'Wien',        lat:48.2080, lon:16.3730, jahr:1889, sicher:1, was:'Jüngstes von acht Kindern einer der reichsten Familien Österreichs.' },
+      { ort:'Manchester',  lat:53.4800, lon:-2.2440, jahr:1908, sicher:1, was:'Luftfahrtforschung; über die Mathematik kommt er zur Logik.' },
+      { ort:'Cambridge',   lat:52.2050, lon:0.1170,  jahr:1911, sicher:1, was:'Kommt unangemeldet zu Russell und bleibt.' },
+      { ort:'Skjolden',    lat:61.4210, lon:7.6050,  jahr:1913, sicher:1, was:'Erste Hütte am Fjord, um in völliger Abgeschiedenheit zu arbeiten.' },
+      { ort:'Trattenbach', lat:47.6300, lon:16.0300, jahr:1920, sicher:1, was:'Sechs Jahre Volksschullehrer, nachdem er sein Erbe verschenkt hatte.' },
+      { ort:'Wien',        lat:48.1930, lon:16.3760, jahr:1926, sicher:1, was:'Baut das Haus für seine Schwester in der Kundmanngasse.' },
+      { ort:'Cambridge',   lat:52.2050, lon:0.1170,  jahr:1929, sicher:1, was:'Rückkehr; der Tractatus wird als Dissertation angenommen.' },
+      { ort:'Skjolden',    lat:61.4210, lon:7.6050,  jahr:1936, sicher:1, was:'Ein Jahr allein — der erste Teil der Philosophischen Untersuchungen.' },
+      { ort:'Dublin',      lat:53.3500, lon:-6.2600, jahr:1948, sicher:1, was:'Nach dem Rücktritt vom Lehrstuhl; Arbeit an den letzten Manuskripten.' },
+      { ort:'Cambridge',   lat:52.2050, lon:0.1170,  jahr:1951, sicher:1, was:'Stirbt im Haus seines Arztes: „Sagen Sie ihnen, ich hatte ein wunderbares Leben."' }
+    ] },
+
+  { id:'averroes', name:'Averroes', epoche:'mittelalter', von:1126, bis:1198,
+    zusammenfassung:'Oberrichter, Leibarzt des Kalifen — und am Ende verbannt, seine Bücher öffentlich verbrannt. Zwei Jahre später rehabilitiert, aber die Philosophie im Westen des Islam erholte sich davon nicht mehr; gelesen wurde er fortan in Paris und in hebräischer Übersetzung.',
+    beleg:'Ibn Abi Usaibia, Uyun al-anba; al-Ansari, Bericht über die Verurteilung 1195',
+    stationen:[
+      { ort:'Córdoba',     lat:37.8790, lon:-4.7790, jahr:1126, sicher:1, was:'Dritte Generation von Oberrichtern der Stadt.' },
+      { ort:'Marrakesch',  lat:31.6300, lon:-7.9810, jahr:1153, sicher:1, was:'Am Hof der Almohaden; Ibn Tufail stellt ihn dem Kalifen vor, der einen Aristoteles-Kommentar wünscht.' },
+      { ort:'Sevilla',     lat:37.3890, lon:-5.9840, jahr:1169, sicher:1, was:'Richter; parallel entstehen die ersten Kommentarreihen.' },
+      { ort:'Córdoba',     lat:37.8790, lon:-4.7790, jahr:1171, sicher:1, was:'Oberrichter der Heimatstadt, zwölf Jahre neben der wissenschaftlichen Arbeit.' },
+      { ort:'Marrakesch',  lat:31.6300, lon:-7.9810, jahr:1182, sicher:1, was:'Leibarzt des Kalifen Abu Yaqub Yusuf.' },
+      { ort:'Lucena',      lat:37.4120, lon:-4.4850, jahr:1195, sicher:1, was:'Verbannung in die ehemals jüdische Stadt; die philosophischen Schriften werden verbrannt.' },
+      { ort:'Marrakesch',  lat:31.6300, lon:-7.9810, jahr:1197, sicher:1, was:'Rehabilitiert, stirbt ein Jahr darauf. Sein Leichnam wird nach Córdoba überführt.' }
+    ] },
+
+  { id:'ibnchaldun', slug:'ibn-khaldun', name:'Ibn Chaldun', epoche:'mittelalter', von:1332, bis:1406,
+    zusammenfassung:'Vier Jahre Rückzug in eine Burg im algerischen Hinterland genügten für die Muqaddima — den ersten Versuch, Geschichte als Wissenschaft von den Gesetzen des Gemeinwesens zu betreiben. 1401 verhandelte er vor den Mauern von Damaskus persönlich mit Timur.',
+    beleg:'Ibn Chaldun, at-Ta’rif (Autobiographie); Muqaddima, Vorrede',
+    stationen:[
+      { ort:'Tunis',       lat:36.8070, lon:10.1810, jahr:1332, sicher:1, was:'Familie aus Sevilla, nach der Reconquista nach Ifriqiya geflohen. Die Pest 1348 tötet beide Eltern.' },
+      { ort:'Fès',         lat:34.0330, lon:-5.0000, jahr:1354, sicher:1, was:'Sekretär am Merinidenhof — und zweimal im Gefängnis, wenn die Partei wechselte.' },
+      { ort:'Granada',     lat:37.1770, lon:-3.5980, jahr:1362, sicher:1, was:'Gesandter des Nasridenhofs bei Peter I. von Kastilien in Sevilla, der Stadt seiner Vorfahren.' },
+      { ort:'Bidschaja',   lat:36.7500, lon:5.0840,  jahr:1365, sicher:1, was:'Kanzler des Hafsidenherrschers — ein Jahr, dann fällt die Stadt.' },
+      { ort:'Qalat Ibn Salama', lat:34.9400, lon:1.0500, jahr:1375, sicher:1, was:'Vier Jahre Rückzug in eine Burg im Hinterland. Hier entsteht die Muqaddima.' },
+      { ort:'Kairo',       lat:30.0440, lon:31.2360, jahr:1382, sicher:1, was:'Malikitischer Oberrichter, sechsmal ein- und wieder abgesetzt. Frau und Kinder ertrinken auf der Überfahrt.' },
+      { ort:'Damaskus',    lat:33.5130, lon:36.2920, jahr:1401, sicher:1, was:'Lässt sich an einem Seil über die belagerte Stadtmauer hinab und spricht fünfunddreißig Tage mit Timur.' },
+      { ort:'Kairo',       lat:30.0440, lon:31.2360, jahr:1402, sicher:1, was:'Rückkehr; stirbt vier Jahre später im Amt.' }
+    ] },
+
+  { id:'konfuzius', name:'Konfuzius', epoche:'antike', von:-551, bis:-479,
+    zusammenfassung:'Vierzehn Jahre zog er mit seinen Schülern von Fürstenhof zu Fürstenhof, um einen Herrscher zu finden, der seine Lehre anwenden würde. Er fand keinen. Die Wanderjahre gelten als Scheitern — und sind der Grund, warum aus dem Beamten ein Lehrer wurde.',
+    beleg:'Sima Qian, Shiji 47 (Haus des Kongzi); Gespräche (Lunyu) XI, XV',
+    stationen:[
+      { ort:'Qufu',        lat:35.5960, lon:116.9910, jahr:-551, sicher:1, was:'Geburt im Staat Lu; der Vater stirbt früh, die Familie ist verarmt.' },
+      { ort:'Linzi',       lat:36.8580, lon:118.3100, jahr:-517, sicher:0, was:'Aufenthalt im Staat Qi wird berichtet; die Chronologie der frühen Jahre ist unsicher.' },
+      { ort:'Qufu',        lat:35.5960, lon:116.9910, jahr:-501, sicher:1, was:'Ämter in Lu, zuletzt als Justizminister — und der Bruch mit dem Fürsten.' },
+      { ort:'Puyang',      lat:35.7610, lon:115.0290, jahr:-497, sicher:1, was:'Beginn der vierzehn Wanderjahre im Staat Wei.' },
+      { ort:'Huaiyang',    lat:33.7320, lon:114.8860, jahr:-492, sicher:0, was:'Zwischen Chen und Cai; hier die Episode, in der die Gruppe hungert und die Schüler murren.' },
+      { ort:'Shangcai',    lat:33.2620, lon:114.2560, jahr:-489, sicher:0, was:'Weitere Stationen im Süden, die Überlieferung schwankt.' },
+      { ort:'Qufu',        lat:35.5960, lon:116.9910, jahr:-484, sicher:1, was:'Rückkehr nach Lu ohne Amt. Die letzten Jahre gehören dem Unterricht und den Büchern.' }
+    ] },
+
+  { id:'hegel', name:'Georg Wilhelm Friedrich Hegel', epoche:'idealismus', von:1770, bis:1831,
+    zusammenfassung:'Erst mit sechsundvierzig eine ordentliche Professur. Davor Hauslehrer, Zeitungsredakteur und Gymnasialrektor — die Phänomenologie schrieb er in Jena fertig, während Napoleons Truppen in die Stadt einrückten.',
+    beleg:'Hegel an Niethammer, 13. Oktober 1806; Rosenkranz, Hegels Leben, 1844',
+    stationen:[
+      { ort:'Stuttgart',   lat:48.7731, lon:9.1769,  jahr:1770, sicher:1,
+        adresse:'Eberhardstraße 53', praezision:'haus',
+        ortsbeleg:'Museum Hegel-Haus der Stadt Stuttgart; Wikipedia „Hegelhaus" (Koordinatenangabe)',
+        was:'Sohn eines herzoglichen Rentkammersekretärs. Das Haus aus dem 16. Jahrhundert überstand den Krieg und ist heute Museum.' },
+      { ort:'Tübingen',    lat:48.5210, lon:9.0570,  jahr:1788, sicher:1, was:'Stift; Stubengenossen sind Hölderlin und der fünf Jahre jüngere Schelling.' },
+      { ort:'Bern',        lat:46.9480, lon:7.4470,  jahr:1793, sicher:1, was:'Drei Jahre Hauslehrer, in der Bibliothek der Familie liest er die Ökonomen.' },
+      { ort:'Frankfurt',   lat:50.1170, lon:8.6530,  jahr:1797, sicher:1, was:'Auf Hölderlins Vermittlung; die frühen theologischen Schriften entstehen.' },
+      { ort:'Jena',        lat:50.9300, lon:11.5860, jahr:1801, sicher:1, was:'Habilitation neben Schelling. 1806 die Phänomenologie — und Napoleon, „die Weltseele zu Pferde".' },
+      { ort:'Bamberg',     lat:49.8910, lon:10.8870, jahr:1807, sicher:1, was:'Redakteur der Bamberger Zeitung, weil die Universität geschlossen ist.' },
+      { ort:'Nürnberg',    lat:49.4520, lon:11.0770, jahr:1808, sicher:1, was:'Acht Jahre Gymnasialrektor; nebenher die Wissenschaft der Logik.' },
+      { ort:'Heidelberg',  lat:49.4090, lon:8.6940,  jahr:1816, sicher:1, was:'Erste Professur, mit sechsundvierzig Jahren.' },
+      { ort:'Berlin',      lat:52.5180, lon:13.3930, jahr:1818, sicher:1, was:'Dreizehn Jahre auf Fichtes Lehrstuhl; stirbt 1831 in einer Choleraepidemie.' }
+    ] },
+
+  { id:'kierkegaard', name:'Søren Kierkegaard', epoche:'19jh', von:1813, bis:1855,
+    zusammenfassung:'Er verließ Kopenhagen im Grunde nie — außer für vier Reisen nach Berlin. Die erste, 1841, galt Schellings Vorlesung über die positive Philosophie: Er kam begeistert an und reiste enttäuscht ab, aber der Begriff der Existenz, um den es dort ging, blieb.',
+    beleg:'Kierkegaard, Tagebücher; Brief an Emil Boesen, 27. Februar 1842',
+    stationen:[
+      { ort:'Kopenhagen',  lat:55.6760, lon:12.5680, jahr:1813, sicher:1, was:'Jüngstes von sieben Kindern; fünf Geschwister sterben, bevor er einundzwanzig ist.' },
+      { ort:'Berlin',      lat:52.5180, lon:13.3930, jahr:1841, sicher:1, was:'Nach der Auflösung der Verlobung mit Regine Olsen; hört Schelling, neben Bakunin und Engels.' },
+      { ort:'Kopenhagen',  lat:55.6760, lon:12.5680, jahr:1842, sicher:1, was:'Rückkehr im März; binnen eines Jahres entsteht Entweder — Oder.' },
+      { ort:'Berlin',      lat:52.5180, lon:13.3930, jahr:1843, sicher:1, was:'Zweite Reise, aus der die Wiederholung wird — ein Buch darüber, dass sich nichts wiederholen lässt.' },
+      { ort:'Kopenhagen',  lat:55.6760, lon:12.5680, jahr:1846, sicher:1, was:'Der Corsaren-Streit macht ihn zur Witzfigur der Stadt; er verlässt kaum noch das Haus.' },
+      { ort:'Kopenhagen',  lat:55.6760, lon:12.5680, jahr:1855, sicher:1, was:'Nach dem Angriff auf die Staatskirche bricht er auf der Straße zusammen und stirbt mit zweiundvierzig.' }
+    ] },
+
+  { id:'marx', name:'Karl Marx', epoche:'19jh', von:1818, bis:1883,
+    zusammenfassung:'Dreimal ausgewiesen, einmal ausgebürgert, dann vierunddreißig Jahre London. Das Kapital entstand im Lesesaal des British Museum, finanziert von Engels’ Anteil an einer Manchester Baumwollspinnerei.',
+    beleg:'Marx-Engels-Briefwechsel; Ausweisungsdekret des französischen Innenministers, Januar 1845',
+    stationen:[
+      { ort:'Trier',       lat:49.7560, lon:6.6410,  jahr:1818, sicher:1, was:'Vater ein zum Protestantismus übergetretener Anwalt aus einer Rabbinerfamilie.' },
+      { ort:'Bonn',        lat:50.7340, lon:7.0980,  jahr:1835, sicher:1, was:'Ein Jahr Jura, mehr Trinkgelage als Vorlesungen.' },
+      { ort:'Berlin',      lat:52.5180, lon:13.3930, jahr:1836, sicher:1, was:'Fünf Jahre; Anschluss an die Junghegelianer.' },
+      { ort:'Köln',        lat:50.9370, lon:6.9600,  jahr:1842, sicher:1, was:'Redakteur der Rheinischen Zeitung, bis sie verboten wird.' },
+      { ort:'Paris',       lat:48.8570, lon:2.3410,  jahr:1843, sicher:1, was:'Die Pariser Manuskripte; Beginn der Freundschaft mit Engels. 1845 auf preußisches Betreiben ausgewiesen.' },
+      { ort:'Brüssel',     lat:50.8470, lon:4.3530,  jahr:1845, sicher:1, was:'Drei Jahre; hier entsteht das Kommunistische Manifest.' },
+      { ort:'Köln',        lat:50.9370, lon:6.9600,  jahr:1848, sicher:1, was:'Neue Rheinische Zeitung während der Revolution; 1849 Ausweisung und Verlust der Staatsbürgerschaft.' },
+      { ort:'London',      lat:51.5070, lon:-0.1280, jahr:1849, sicher:1, was:'Vierunddreißig Jahre staatenlos in Soho und Kentish Town; drei Kinder sterben in den ersten Jahren.' }
+    ] },
+
+  { id:'husserl', name:'Edmund Husserl', epoche:'20jh', von:1859, bis:1938,
+    zusammenfassung:'Vom Mathematiker zum Begründer der Phänomenologie — vierzehn Jahre unbesoldeter Privatdozent in Halle, bevor es weiterging. 1933 wird ihm in Freiburg die Lehrbefugnis entzogen; sein Nachlass von 40 000 Seiten wird 1938 heimlich nach Löwen gebracht und überlebt dort den Krieg.',
+    beleg:'Husserl-Chronik, hg. Schuhmann, 1977; van Breda, Bericht über die Rettung des Nachlasses',
+    stationen:[
+      { ort:'Proßnitz',    lat:49.4720, lon:17.1070, jahr:1859, sicher:1, was:'Geburt in Mähren, in einer jüdischen Kaufmannsfamilie.' },
+      { ort:'Leipzig',     lat:51.3400, lon:12.3750, jahr:1876, sicher:1, was:'Mathematik, Physik, Astronomie; hört bei Wundt Philosophie.' },
+      { ort:'Berlin',      lat:52.5180, lon:13.3930, jahr:1878, sicher:1, was:'Drei Jahre bei Weierstraß — die Strenge der Analysis prägt seine spätere Idee von Philosophie als strenger Wissenschaft.' },
+      { ort:'Wien',        lat:48.2080, lon:16.3730, jahr:1884, sicher:1, was:'Zwei Jahre bei Franz Brentano; der Wechsel von der Mathematik zur Philosophie.' },
+      { ort:'Halle',       lat:51.4890, lon:11.9690, jahr:1887, sicher:1, was:'Vierzehn Jahre Privatdozent ohne Gehalt. 1900/01 die Logischen Untersuchungen.' },
+      { ort:'Göttingen',   lat:51.5410, lon:9.9370,  jahr:1901, sicher:1, was:'Fünfzehn Jahre; um ihn bildet sich der Göttinger Kreis, dem Edith Stein angehört.' },
+      { ort:'Freiburg',    lat:47.9950, lon:7.8450,  jahr:1916, sicher:1, was:'Lehrstuhl als Nachfolger Rickerts; Heidegger wird sein Assistent und 1928 sein Nachfolger.' },
+      { ort:'Freiburg',    lat:47.9950, lon:7.8450,  jahr:1933, sicher:1, was:'Als Jude von der Universitätsliste gestrichen, Betretungsverbot der Bibliothek. Stirbt 1938 weitgehend isoliert.' }
+    ] },
+
+  { id:'heidegger', name:'Martin Heidegger', epoche:'20jh', von:1889, bis:1976,
+    zusammenfassung:'Ein Leben in einem Umkreis von zweihundert Kilometern, mit einem Fixpunkt: der selbstgebauten Hütte in Todtnauberg, in der fast alles geschrieben wurde. Marburg brachte Sein und Zeit, Freiburg 1933 das Rektorat und danach das Lehrverbot.',
+    beleg:'Heidegger-Jahrbuch; Ott, Martin Heidegger — Unterwegs zu seiner Biographie, 1988',
+    stationen:[
+      { ort:'Meßkirch',    lat:47.9940, lon:9.1130,  jahr:1889, sicher:1, was:'Sohn des Mesners; die katholische Kirche finanziert seine Ausbildung.' },
+      { ort:'Freiburg',    lat:47.9950, lon:7.8450,  jahr:1909, sicher:1, was:'Erst Theologie, dann Bruch mit dem Priesterweg; 1913 Promotion.' },
+      { ort:'Todtnauberg', lat:47.8330, lon:7.9500,  jahr:1922, sicher:1, was:'Die Hütte im Schwarzwald, 1150 Meter hoch, ohne fließendes Wasser. Arbeitsort für fünf Jahrzehnte.' },
+      { ort:'Marburg',     lat:50.8100, lon:8.7720,  jahr:1923, sicher:1, was:'Fünf Jahre; 1927 erscheint Sein und Zeit, um die Professur zu bekommen.' },
+      { ort:'Freiburg',    lat:47.9950, lon:7.8450,  jahr:1928, sicher:1, was:'Nachfolger Husserls, dessen Verhältnis zu ihm daran zerbricht.' },
+      { ort:'Freiburg',    lat:47.9950, lon:7.8450,  jahr:1933, sicher:1, was:'Rektorat und Eintritt in die NSDAP; nach einem Jahr Rücktritt, die Mitgliedschaft bleibt bis 1945.' },
+      { ort:'Freiburg',    lat:47.9950, lon:7.8450,  jahr:1945, sicher:1, was:'Lehrverbot durch die französische Besatzung bis 1949.' },
+      { ort:'Meßkirch',    lat:47.9940, lon:9.1130,  jahr:1976, sicher:1, was:'Beerdigt im Heimatort, nach eigenem Wunsch ohne kirchliches Begräbnis — dann doch mit.' }
+    ] }
+];
+
+window.EXIL_WEGE = [
+  { id:'cassirer', name:'Ernst Cassirer', ausgang:'geblieben',
+    fach:'Kulturphilosophie',
+    stationen:[
+      { jahr:1933, ort:'Hamburg', lat:53.5500, lon:9.9900, was:'Rücktritt vom Rektorat und Ausreise, wenige Wochen nach dem Gesetz zur Wiederherstellung des Berufsbeamtentums.' },
+      { jahr:1933, ort:'Oxford', lat:51.7540, lon:-1.2540, was:'Zwei Jahre als Gastdozent an All Souls.' },
+      { jahr:1935, ort:'Göteborg', lat:57.7080, lon:11.9740, was:'Sechs Jahre Professur in Schweden; hier entsteht die Arbeit über den Mythos des Staates.' },
+      { jahr:1941, ort:'New Haven', lat:41.3100, lon:-72.9250, was:'Yale. Die Überfahrt führt über Schweden, die Ostsee war zu diesem Zeitpunkt Kriegsgebiet.' },
+      { jahr:1944, ort:'New York', lat:40.8080, lon:-73.9620, was:'Columbia. Er stirbt 1945 auf offener Straße, wenige Wochen vor Kriegsende.' }
+    ],
+    beleg:'Toni Cassirer, Mein Leben mit Ernst Cassirer, 1981' },
+
+  { id:'horkheimer', name:'Max Horkheimer', ausgang:'zurueck',
+    fach:'Kritische Theorie',
+    stationen:[
+      { jahr:1933, ort:'Frankfurt am Main', lat:50.1170, lon:8.6530, was:'Das Institut für Sozialforschung wird geschlossen, die Bibliothek beschlagnahmt.' },
+      { jahr:1933, ort:'Genf', lat:46.2040, lon:6.1430, was:'Zweigstelle, die schon 1931 vorsorglich eingerichtet worden war — die Weitsicht rettet das Institut.' },
+      { jahr:1934, ort:'New York', lat:40.8080, lon:-73.9620, was:'Columbia stellt Räume zur Verfügung; das Institut arbeitet als Gast weiter.' },
+      { jahr:1941, ort:'Los Angeles', lat:34.0480, lon:-118.5260, was:'Pacific Palisades. Hier entsteht mit Adorno die Dialektik der Aufklärung.' },
+      { jahr:1949, ort:'Frankfurt am Main', lat:50.1170, lon:8.6530, was:'Rückkehr auf den Lehrstuhl; 1951 Rektor der Universität.' }
+    ],
+    beleg:'Horkheimer, Gesammelte Schriften Bd. 15–17 (Briefwechsel)' },
+
+  { id:'adorno', name:'Theodor W. Adorno', ausgang:'zurueck',
+    fach:'Kritische Theorie',
+    stationen:[
+      { jahr:1934, ort:'Oxford', lat:51.7540, lon:-1.2540, was:'Merton College, als „advanced student" — eine Rückstufung nach entzogener Lehrbefugnis.' },
+      { jahr:1938, ort:'New York', lat:40.8080, lon:-73.9620, was:'Mitarbeit am Radioforschungsprojekt; die empirische Sozialforschung lernt er hier.' },
+      { jahr:1941, ort:'Los Angeles', lat:34.0480, lon:-118.5260, was:'Die Minima Moralia entstehen im kalifornischen Exil, mit dem Untertitel „Reflexionen aus dem beschädigten Leben".' },
+      { jahr:1949, ort:'Frankfurt am Main', lat:50.1170, lon:8.6530, was:'Rückkehr; ab 1953 dauerhaft am wiedereröffneten Institut.' }
+    ],
+    beleg:'Adorno, Minima Moralia, Zueignung, 1951' },
+
+  { id:'marcuse', name:'Herbert Marcuse', ausgang:'geblieben',
+    fach:'Kritische Theorie',
+    stationen:[
+      { jahr:1933, ort:'Freiburg im Breisgau', lat:47.9950, lon:7.8450, was:'Die geplante Habilitation bei Heidegger kommt nicht zustande.' },
+      { jahr:1933, ort:'Genf', lat:46.2040, lon:6.1430, was:'Anschluss an die Genfer Zweigstelle des Instituts.' },
+      { jahr:1934, ort:'New York', lat:40.8080, lon:-73.9620, was:'Columbia.' },
+      { jahr:1943, ort:'Washington', lat:38.9000, lon:-77.0400, was:'Analyst im Office of Strategic Services — die Kritische Theorie arbeitet zeitweise für den amerikanischen Geheimdienst.' },
+      { jahr:1965, ort:'San Diego', lat:32.8800, lon:-117.2340, was:'Kalifornien; von hier wirkt er auf die Studentenbewegung beider Kontinente.' }
+    ],
+    beleg:'Marcuse, Feindanalysen. Über die Deutschen, hrsg. 1998' },
+
+  { id:'arendt', name:'Hannah Arendt', ausgang:'geblieben',
+    fach:'Politische Theorie',
+    stationen:[
+      { jahr:1933, ort:'Berlin', lat:52.5180, lon:13.3930, was:'Nach acht Tagen Haft Flucht über die grüne Grenze ins Erzgebirge.' },
+      { jahr:1933, ort:'Paris', lat:48.8560, lon:2.3520, was:'Arbeit für die Jugend-Alija, die jüdische Kinder nach Palästina bringt.' },
+      { jahr:1940, ort:'Gurs', lat:43.2300, lon:-0.7500, was:'Internierungslager in den Pyrenäen — von Frankreich als „feindliche Ausländerin" inhaftiert. Sie entkommt im Chaos nach dem Waffenstillstand.' },
+      { jahr:1941, ort:'Lissabon', lat:38.7220, lon:-9.1390, was:'Drei Monate Wartezeit auf die Schiffspassage.' },
+      { jahr:1941, ort:'New York', lat:40.8080, lon:-73.9620, was:'Achtzehn Jahre staatenlos, bis zur Einbürgerung 1951.' }
+    ],
+    beleg:'Arendt, Wir Flüchtlinge, 1943' },
+
+  { id:'loewith', name:'Karl Löwith', ausgang:'zurueck',
+    fach:'Geschichtsphilosophie',
+    stationen:[
+      { jahr:1934, ort:'Rom', lat:41.8930, lon:12.4830, was:'Rockefeller-Stipendium; er bleibt drei Jahre in Italien.' },
+      { jahr:1936, ort:'Sendai', lat:38.2680, lon:140.8690, was:'Professur in Japan, vermittelt über Kuki Shuzo. Fünf Jahre lehrt er dort deutsche Philosophie.' },
+      { jahr:1941, ort:'Hartford', lat:41.7650, lon:-72.6730, was:'Nach dem Dreimächtepakt wird Japan unsicher; Weiterreise in die USA.' },
+      { jahr:1952, ort:'Heidelberg', lat:49.4100, lon:8.7100, was:'Rückkehr auf einen Lehrstuhl — als einer der wenigen, die es taten.' }
+    ],
+    beleg:'Löwith, Mein Leben in Deutschland vor und nach 1933, verfasst 1940' },
+
+  { id:'reichenbach', name:'Hans Reichenbach', ausgang:'geblieben',
+    fach:'Wissenschaftstheorie',
+    stationen:[
+      { jahr:1933, ort:'Berlin', lat:52.5180, lon:13.3930, was:'Entlassung aus dem Lehramt.' },
+      { jahr:1933, ort:'Istanbul', lat:41.0080, lon:28.9780, was:'Fünf Jahre an der neu gegründeten Universität — die türkische Hochschulreform holt gezielt vertriebene deutsche Gelehrte.' },
+      { jahr:1938, ort:'Los Angeles', lat:34.0730, lon:-118.4400, was:'UCLA. Hier wird er zum Lehrer einer ganzen Generation amerikanischer Wissenschaftstheoretiker.' }
+    ],
+    beleg:'Reichenbach an Einstein, 1933 (Reichenbach-Nachlass, Pittsburgh)' },
+
+  { id:'carnap', name:'Rudolf Carnap', ausgang:'geblieben',
+    fach:'Logischer Empirismus',
+    stationen:[
+      { jahr:1931, ort:'Prag', lat:50.0880, lon:14.4200, was:'Professur an der Deutschen Universität — schon vor 1933 außerhalb Deutschlands.' },
+      { jahr:1935, ort:'Chicago', lat:41.7900, lon:-87.6000, was:'Auf Quines Vermittlung; der Wiener Kreis wird in Amerika zur analytischen Philosophie.' },
+      { jahr:1954, ort:'Los Angeles', lat:34.0730, lon:-118.4400, was:'UCLA, auf Reichenbachs Lehrstuhl nach dessen Tod.' }
+    ],
+    beleg:'Carnap, Intellectual Autobiography, 1963' },
+
+  { id:'popper', name:'Karl Popper', ausgang:'geblieben',
+    fach:'Wissenschaftstheorie',
+    stationen:[
+      { jahr:1937, ort:'Christchurch', lat:-43.5300, lon:172.6300, was:'Neuseeland — so weit von Europa entfernt wie kaum ein Ort. Hier schreibt er Die offene Gesellschaft, seinen „Kriegsbeitrag".' },
+      { jahr:1946, ort:'London', lat:51.5140, lon:-0.1170, was:'London School of Economics.' }
+    ],
+    beleg:'Popper, Ausgangspunkte, 1974, Kap. 20' },
+
+  { id:'bloch', name:'Ernst Bloch', ausgang:'zurueck',
+    fach:'Utopie und Hoffnung',
+    stationen:[
+      { jahr:1933, ort:'Zürich', lat:47.3770, lon:8.5400, was:'Erste Station einer Flucht mit mehreren Zwischenaufenthalten.' },
+      { jahr:1936, ort:'Prag', lat:50.0880, lon:14.4200, was:'Bis zum Münchner Abkommen.' },
+      { jahr:1938, ort:'New York', lat:40.8080, lon:-73.9620, was:'Elf Jahre USA, überwiegend ohne Anstellung; das Prinzip Hoffnung entsteht hier.' },
+      { jahr:1949, ort:'Leipzig', lat:51.3400, lon:12.3750, was:'Lehrstuhl in der DDR — die einzige Rückkehr in den Osten.' },
+      { jahr:1961, ort:'Tübingen', lat:48.5200, lon:9.0560, was:'Nach dem Mauerbau kehrt er von einer Westreise nicht zurück. Zweimal emigriert, in entgegengesetzte Richtungen.' }
+    ],
+    beleg:'Bloch, Briefe 1903–1975, hrsg. 1985' },
+
+  { id:'strauss', name:'Leo Strauss', ausgang:'geblieben',
+    fach:'Politische Philosophie',
+    stationen:[
+      { jahr:1932, ort:'Paris', lat:48.8560, lon:2.3520, was:'Rockefeller-Stipendium; die Rückkehr nach Deutschland unterbleibt.' },
+      { jahr:1934, ort:'Cambridge', lat:52.2050, lon:0.1170, was:'England, Arbeit über Hobbes.' },
+      { jahr:1937, ort:'New York', lat:40.7300, lon:-73.9930, was:'New School for Social Research — die „University in Exile".' },
+      { jahr:1949, ort:'Chicago', lat:41.7900, lon:-87.6000, was:'Zwanzig Jahre Lehre, aus der eine eigene Schule hervorgeht.' }
+    ],
+    beleg:'Strauss an Löwith, Briefwechsel, Gesammelte Schriften Bd. 3' },
+
+  { id:'jonas', name:'Hans Jonas', ausgang:'geblieben',
+    fach:'Gnosisforschung, Ethik',
+    stationen:[
+      { jahr:1933, ort:'Jerusalem', lat:31.7780, lon:35.2350, was:'Er verlässt Deutschland mit dem Vorsatz, nur als Soldat einer siegreichen Armee zurückzukehren.' },
+      { jahr:1943, ort:'Rom', lat:41.8930, lon:12.4830, was:'Als Soldat der Jüdischen Brigade der britischen Armee in Italien — der Vorsatz wird eingelöst.' },
+      { jahr:1949, ort:'Montreal', lat:45.5040, lon:-73.5770, was:'Kanada.' },
+      { jahr:1955, ort:'New York', lat:40.7300, lon:-73.9930, was:'New School. Das Prinzip Verantwortung erscheint 1979.' }
+    ],
+    beleg:'Jonas, Erinnerungen, hrsg. 2003' },
+
+  { id:'benjamin', name:'Walter Benjamin', ausgang:'gestorben',
+    fach:'Sprach- und Geschichtsphilosophie',
+    stationen:[
+      { jahr:1933, ort:'Paris', lat:48.8560, lon:2.3520, was:'Sieben Jahre Arbeit an der Passagenarbeit in der Nationalbibliothek, in großer Armut.' },
+      { jahr:1940, ort:'Marseille', lat:43.2960, lon:5.3700, was:'Nach dem Waffenstillstand Flucht in den Süden; das Manuskript bleibt zurück.' },
+      { jahr:1940, ort:'Portbou', lat:42.4260, lon:3.1600, was:'Über die Pyrenäen erreicht er die spanische Grenze. Weil die Gruppe zurückgewiesen werden soll, nimmt er sich in der Nacht das Leben. Am nächsten Tag lässt man die anderen passieren.' }
+    ],
+    beleg:'Benjamin, Über den Begriff der Geschichte, 1940 (letzte Fassung)' },
+
+  { id:'stein', name:'Edith Stein', ausgang:'ermordet',
+    fach:'Phänomenologie',
+    stationen:[
+      { jahr:1933, ort:'Köln', lat:50.9380, lon:6.9600, was:'Nach dem Berufsverbot Eintritt in den Karmel als Schwester Teresia Benedicta a Cruce.' },
+      { jahr:1938, ort:'Echt', lat:51.1070, lon:5.8700, was:'Verlegung in die Niederlande nach der Novemberpogromnacht — ein Ausweichen, keine Rettung.' },
+      { jahr:1942, ort:'Auschwitz', lat:50.0270, lon:19.2020, was:'Als Vergeltung für den Hirtenbrief der niederländischen Bischöfe gegen die Deportationen verhaftet und eine Woche später ermordet.' }
+    ],
+    beleg:'Stein, Selbstbildnis in Briefen, Gesamtausgabe Bde. 2–4' },
+
+  { id:'anders', name:'Günther Anders', ausgang:'zurueck',
+    fach:'Technikphilosophie',
+    stationen:[
+      { jahr:1933, ort:'Paris', lat:48.8560, lon:2.3520, was:'Flucht nach dem Reichstagsbrand.' },
+      { jahr:1936, ort:'New York', lat:40.8080, lon:-73.9620, was:'Gelegenheitsarbeiten, unter anderem als Fabrikarbeiter und Kostümreiniger in Hollywood.' },
+      { jahr:1950, ort:'Wien', lat:48.2090, lon:16.3720, was:'Rückkehr nach Europa; die Antiquiertheit des Menschen erscheint 1956.' }
+    ],
+    beleg:'Anders, Die Antiquiertheit des Menschen I, Vorwort, 1956' }
+];
+
+/* ── Übersetzungswege ──────────────────────────────────────────────
+   Wie die griechischen Schriften nach Europa kamen. Zwei Wege laufen
+   nebeneinander: der lange über Syrisch und Arabisch, und der direkte
+   aus dem Griechischen, der erst im 12. Jahrhundert einsetzt. Am Ende
+   setzt sich der direkte durch — aber die Fragen, die man an Aristoteles
+   stellte, kamen aus dem arabischen Kommentar.
+
+   WEG_ORTE: Stationen mit Koordinaten.
+   WEG_ETAPPEN: gerichtete Übersetzungsschritte mit Zeitraum, Sprachen,
+   Person, Sache und Beleg. „bis" darf gleich „von" sein.            */
+
+window.WEG_ORTE = {
+  athen:        { name:'Athen',          lat:37.9750, lon:23.7440 },
+  rom:          { name:'Rom',            lat:41.8930, lon:12.4830 },
+  alexandria:   { name:'Alexandria',     lat:31.2080, lon:29.9090 },
+  qenneschre:   { name:'Qenneschre',     lat:36.4000, lon:38.0000 },
+  reschaina:    { name:'Reschaina',      lat:36.8500, lon:40.0700 },
+  gundischapur: { name:'Gundischapur',   lat:32.2900, lon:48.5200 },
+  bagdad:       { name:'Bagdad',         lat:33.3400, lon:44.4000 },
+  kairo:        { name:'Kairo',          lat:30.0440, lon:31.2360 },
+  cordoba:      { name:'Córdoba',        lat:37.8790, lon:-4.7790 },
+  toledo:       { name:'Toledo',         lat:39.8580, lon:-4.0240 },
+  palermo:      { name:'Palermo',        lat:38.1160, lon:13.3610 },
+  konstantinopel:{name:'Konstantinopel', lat:41.0080, lon:28.9780 },
+  venedig:      { name:'Venedig',        lat:45.4400, lon:12.3200 },
+  viterbo:      { name:'Viterbo',        lat:42.4200, lon:12.1000 },
+  neapel:       { name:'Neapel',         lat:40.8520, lon:14.2680 },
+  montpellier:  { name:'Montpellier',    lat:43.6110, lon:3.8770 },
+  paris:        { name:'Paris',          lat:48.8480, lon:2.3430 }
 };
+
+window.WEG_ETAPPEN = [
+  { von:'athen', nach:'rom', jahr:-60, bis:-40, sprache:'griechisch',
+    wer:'Andronikos von Rhodos',
+    was:'Ordnet die zerstreuten Vorlesungsschriften zur ersten Gesamtausgabe. Die Reihenfolge, in der wir Aristoteles heute lesen, stammt von ihm — auch der Name „Metaphysik", der nur bedeutet: die Bücher nach der Physik.',
+    beleg:'Plutarch, Sulla 26; Porphyrios, Vita Plotini 24' },
+
+  { von:'athen', nach:'alexandria', jahr:400, bis:610, sprache:'griechisch',
+    wer:'Ammonios, Johannes Philoponos, Simplikios',
+    was:'Die Neuplatoniker kommentieren Aristoteles Satz für Satz. Diese Kommentare, nicht die Originale, werden das eigentliche Lehrbuch — sie bestimmen, welche Fragen man dem Text stellt.',
+    beleg:'Commentaria in Aristotelem Graeca, Bde. 4–17' },
+
+  { von:'alexandria', nach:'reschaina', jahr:520, bis:536, sprache:'syrisch',
+    wer:'Sergios von Reschaina',
+    was:'Erste Übertragungen ins Syrische, aus dem Griechischen. Damit beginnt die Kette, die Aristoteles über zwei fremde Sprachen zurück nach Europa bringen wird.',
+    beleg:'Sergios, Abhandlung über die Kategorien (BL Add. 14658)' },
+
+  { von:'athen', nach:'gundischapur', jahr:529, bis:532, sprache:'griechisch',
+    wer:'Damaskios, Simplikios und fünf weitere',
+    was:'Nach der Schließung der Akademie gehen die letzten Neuplatoniker an den Sassanidenhof. Sie kehren bald enttäuscht zurück — aber die Bücher bleiben im Osten.',
+    beleg:'Agathias, Historien II, 30–31' },
+
+  { von:'reschaina', nach:'qenneschre', jahr:600, bis:700, sprache:'syrisch',
+    wer:'Athanasios von Balad, Jakob von Edessa',
+    was:'Das Kloster am Euphrat wird zur Schule für aristotelische Logik. Hier entsteht das Handwerk, von dem die Übersetzer in Bagdad zwei Jahrhunderte später leben.',
+    beleg:'Barhebraeus, Chronicon Ecclesiasticum' },
+
+  { von:'qenneschre', nach:'bagdad', jahr:830, bis:910, sprache:'arabisch',
+    wer:'Hunain ibn Ishaq, sein Sohn Ishaq, Thabit ibn Qurra',
+    was:'Der große Übersetzungsbetrieb: erst Griechisch ins Syrische, dann Syrisch ins Arabische — oft von denselben Familien. Hunain beschreibt in einem Brief, wie er für jede Schrift die Handschriften vergleicht.',
+    beleg:'Hunain ibn Ishaq, Sendschreiben über die Galen-Übersetzungen, 856' },
+
+  { von:'bagdad', nach:'kairo', jahr:950, bis:1100, sprache:'arabisch',
+    wer:'al-Farabi, Ibn Sina (Wirkung)',
+    was:'Aus der Übersetzung wird eigene Philosophie. al-Farabis Kommentare und Avicennas System sind es, die später in Europa gelesen werden — nicht nur als Vermittlung, sondern als Position.',
+    beleg:'al-Farabi, Über die Wissenschaften; Avicenna, Kitab asch-Schifa' },
+
+  { von:'kairo', nach:'cordoba', jahr:1150, bis:1198, sprache:'arabisch',
+    wer:'Averroes (Ibn Ruschd)',
+    was:'Drei Kommentarreihen zu fast allen Schriften — der kleine, der mittlere und der große Kommentar. In Europa heißt er später nur „der Kommentator", ohne Namensnennung.',
+    beleg:'Ibn Ruschd, Tafsir Ma ba‘d at-Tabi‘a' },
+
+  { von:'cordoba', nach:'toledo', jahr:1150, bis:1200, sprache:'lateinisch',
+    wer:'Gerhard von Cremona, Dominicus Gundissalinus, Michael Scotus',
+    was:'Übersetzung ins Lateinische, häufig über eine mündliche Zwischenstufe: Ein jüdischer Gelehrter las den arabischen Text auf Kastilisch vor, ein christlicher schrieb Latein mit. Drei Sprachen in einem Raum.',
+    beleg:'Vita Gerardi Cremonensis, um 1187' },
+
+  { von:'cordoba', nach:'montpellier', jahr:1200, bis:1280, sprache:'hebräisch',
+    wer:'Samuel und Moses ibn Tibbon, Jakob Anatoli',
+    was:'Der jüdische Weg: Averroes wird ins Hebräische übersetzt und in der Provence weitergegeben. Manche Schriften sind nur in dieser Fassung erhalten — das arabische Original ist verloren.',
+    beleg:'Steinschneider, Die hebräischen Übersetzungen des Mittelalters, 1893' },
+
+  { von:'konstantinopel', nach:'venedig', jahr:1128, bis:1150, sprache:'lateinisch',
+    wer:'Jacobus Venetus',
+    was:'Der Beginn des direkten Weges: Übersetzung aus dem Griechischen, ohne arabischen Umweg. Seine Fassung der Zweiten Analytik ist die erste, mit der der lateinische Westen Aristoteles’ Wissenschaftslehre liest.',
+    beleg:'Chronik von Robert von Torigni zum Jahr 1128' },
+
+  { von:'konstantinopel', nach:'palermo', jahr:1155, bis:1165, sprache:'lateinisch',
+    wer:'Heinricus Aristippus',
+    was:'Am normannischen Hof in Sizilien, wo Griechisch, Arabisch und Latein nebeneinander Amtssprachen sind, wird direkt aus griechischen Handschriften übersetzt — darunter Platons Menon und Phaidon.',
+    beleg:'Aristippus, Vorrede zur Phaidon-Übersetzung' },
+
+  { von:'venedig', nach:'paris', jahr:1200, bis:1255, sprache:'lateinisch',
+    wer:'Die Artistenfakultät',
+    was:'Die Aufnahme in den Lehrplan gegen wiederholte Verbote: 1210 und 1215 untersagt, 1255 vorgeschrieben. Innerhalb von vierzig Jahren wird aus verbotener Lektüre der Prüfungsstoff.',
+    beleg:'Chartularium Universitatis Parisiensis I, Nr. 11 und Nr. 246' },
+
+  { von:'toledo', nach:'paris', jahr:1230, bis:1277, sprache:'lateinisch',
+    wer:'Siger von Brabant, Boethius von Dacien (Wirkung)',
+    was:'Averroes’ Kommentare bestimmen die Debatte — bis der Pariser Bischof 1277 zweihundertneunzehn Sätze verurteilt, viele davon averroistisch. Das schärfste Eingreifen in die mittelalterliche Lehrfreiheit.',
+    beleg:'Chartularium Universitatis Parisiensis I, Nr. 473' },
+
+  { von:'viterbo', nach:'paris', jahr:1260, bis:1278, sprache:'lateinisch',
+    wer:'Wilhelm von Moerbeke',
+    was:'Neuübersetzung fast des gesamten Aristoteles direkt aus dem Griechischen, auf Bitten des Thomas von Aquin. Damit endet die Abhängigkeit vom arabischen Umweg — nach siebenhundert Jahren.',
+    beleg:'Aristoteles Latinus, Bände zu Moerbeke' },
+
+  { von:'neapel', nach:'paris', jahr:1270, bis:1274, sprache:'lateinisch',
+    wer:'Thomas von Aquin',
+    was:'Die Verarbeitung: Kommentare zu zwölf aristotelischen Schriften, geschrieben neben der Summa. Was als fremdes, verdächtiges Denken ankam, ist am Ende die Sprache der Theologie selbst.',
+    beleg:'Thomas, Sententia libri Metaphysicae, um 1271' }
+];
+
+/* ── Fundorte auf der Karte ────────────────────────────────────────
+   Anders als alle übrigen Ebenen hat diese zwei Zeiten: wann die Texte
+   entstanden und wann sie gefunden wurden. Der Zeitregler folgt dem
+   Fundjahr — wer bis 1850 zurückschiebt, sieht fast nichts, und genau
+   das ist die Aussage. */
+var kaFunde = false, osmFunde = null;
+
+window.kaFundeUm = function(){
+  kaFunde = !kaFunde;
+  var b = document.getElementById('ko-funde');
+  if (b){ b.classList.toggle('active', kaFunde);
+          b.setAttribute('aria-pressed', kaFunde ? 'true' : 'false'); }
+  kaAuffrischen();
+};
+
+/* Blendet alle 416 Denker-Punkte aus, ohne die Ebenen (Lehrorte,
+   Fundorte) oder die Einzelansicht anzutasten — für wer nur die
+   Ebenen für sich betrachten will, ohne von der Menge erschlagen
+   zu werden. */
+var kaPhilAus = false;
+window.kaPhilAusUm = function(){
+  kaPhilAus = !kaPhilAus;
+  var b = document.getElementById('ko-phil-aus');
+  if (b){ b.classList.toggle('active', kaPhilAus);
+          b.setAttribute('aria-pressed', kaPhilAus ? 'true' : 'false'); }
+  kaAuffrischen();
+};
+function fuSichtbar(){
+  var alle = window.FUND_ORTE || [];
+  if (!kaFunde) return [];
+  if (kaJahr === null) return alle;
+  return alle.filter(function(o){ return o.fund <= kaJahr; });
+}
+function fuJahrText(j){ return j < 0 ? Math.abs(j) + ' v. Chr.' : String(j); }
+function fuZeichnen(){
+  if (osmFunde){ osmFunde.remove(); osmFunde = null; }
+  var liste = fuSichtbar();
+  if (!liste.length || !osmKarte) return;
+  osmFunde = L.layerGroup().addTo(osmKarte);
+  liste.forEach(function(o){
+    var m = L.marker([o.lat, o.lon], { icon: L.divIcon({
+      className:'', iconSize:[24,24], iconAnchor:[12,12],
+      html:'<div class="fu-marke' + (kfAktiv() ? ' lo-blass' : '') + '">◈</div>'
+    })}).addTo(osmFunde);
+    m.bindTooltip(o.name + ' · gefunden ' + o.fund + ' · Texte von ' + fuJahrText(o.text),
+                  { direction:'top', offset:[0,-12] });
+    m.on('click', function(ev){ L.DomEvent.stopPropagation(ev); fuZeigen(o); });
+  });
+}
+function fuZeigen(o){
+  var ziel = document.getElementById('karte-liste'); if (!ziel) return;
+  var abstand = o.fund - o.text;
+  ziel.innerHTML =
+    '<div class="lo-karte" style="border-left-color:#b08a30">' +
+    '<div class="lo-zeit">' + o.ort + ' · Texte von ' + fuJahrText(o.text) +
+      ' · gefunden ' + o.fund + '</div>' +
+    '<div class="lo-name">' + o.name + '</div>' +
+    '<p class="lo-was">' + o.was + '</p>' +
+    '<div class="lo-wer"><b>Im Götterkosmos:</b> ' + o.kosmos + '</div>' +
+    '<div class="lo-wer"><b>Verschollen:</b> rund ' +
+      Math.round(abstand / 100) * 100 + ' Jahre</div>' +
+    '<div class="lo-beleg">Beleg · ' + o.beleg + '</div></div>';
+}
+
+/* ── Exil auf der Karte ────────────────────────────────────────────
+   Ein Weg je Person, gefärbt nach dem Ausgang. Der Zeitregler lässt die
+   Wege wachsen: 1933 setzt fast alles gleichzeitig ein, 1940/41 laufen
+   die Linien über Lissabon und Marseille zusammen, ab 1949 gehen einige
+   wenige zurück. */
+var osmExil = null, exilGewaehlt = null;
+var EXIL_FARBE = {
+  zurueck:   '#2f9e63',
+  geblieben: '#3a80c0',
+  gestorben: '#c8952a',
+  ermordet:  '#c8324a'
+};
+var EXIL_AUSGANG = {
+  zurueck:   'zurückgekehrt',
+  geblieben: 'geblieben',
+  gestorben: 'auf der Flucht gestorben',
+  ermordet:  'deportiert und ermordet'
+};
+
+
+/* Stationen bis zum eingestellten Jahr — vor 1931 ist nichts zu sehen */
+function exStationen(p){
+  var alle = p.stationen;
+  if (kaJahr === null) return alle;
+  return alle.filter(function(s){ return s.jahr <= kaJahr; });
+}
+function exZeichnen(){
+  if (osmExil){ osmExil.remove(); osmExil = null; }
+  if (!osmKarte) return;
+  /* Fünfzehn Fluchtwege übereinander sind ein Knäuel — einer ist eine
+     Geschichte. Deshalb nur der aus der Einzelansicht gewählte. */
+  if (!kaFokus || kaFokus.art !== 'exil') return;
+  var wege = (window.EXIL_WEGE || []).filter(function(x, i){
+    return (x.slug || String(i)) === kaFokus.id; });
+  if (!wege.length) return;
+  osmExil = L.layerGroup().addTo(osmKarte);
+
+  wege.forEach(function(p){
+    var st = exStationen(p);
+    if (!st.length) return;
+    var farbe = EXIL_FARBE[p.ausgang] || '#888';
+    var gedimmt = exilGewaehlt && exilGewaehlt !== p.id;
+    var hervor = exilGewaehlt === p.id;
+
+    /* Linienzug über alle bisherigen Stationen */
+    if (st.length > 1){
+      var punkte = st.map(function(s){ return [s.lat, s.lon]; });
+      var linie = L.polyline(punkte, {
+        color: farbe, weight: hervor ? 4 : 2.2,
+        opacity: gedimmt ? .12 : (hervor ? 1 : .7),
+        dashArray: (p.ausgang === 'ermordet' || p.ausgang === 'gestorben') ? '7 4' : null,
+        lineJoin:'round'
+      }).addTo(osmExil);
+      linie.bindTooltip(p.name + ' · ' + EXIL_AUSGANG[p.ausgang], { sticky:true });
+      linie.on('click', function(ev){ L.DomEvent.stopPropagation(ev); exZeigen(p); });
+    }
+    /* Stationen als kleine Punkte, der letzte größer */
+    st.forEach(function(s, i){
+      var letzt = (i === st.length - 1);
+      var m = L.marker([s.lat, s.lon], { icon: L.divIcon({
+        className:'', iconSize:[letzt ? 14 : 10, letzt ? 14 : 10],
+        iconAnchor:[letzt ? 7 : 5, letzt ? 7 : 5],
+        html:'<div class="ex-punkt' + (letzt ? ' ex-letzt' : '') +
+             '" style="background:' + farbe + ';opacity:' + (gedimmt ? .15 : 1) + '"></div>'
+      })}).addTo(osmExil);
+      m.bindTooltip(p.name + ' · ' + s.jahr + ' · ' + s.ort,
+                    { direction:'top', offset:[0,-8] });
+      m.on('click', function(ev){ L.DomEvent.stopPropagation(ev); exZeigen(p, i); });
+    });
+  });
+}
+function exZeigen(p, index){
+  exilGewaehlt = (exilGewaehlt === p.id && index == null) ? null : p.id;
+  var ziel = document.getElementById('karte-liste');
+  if (ziel){
+    var st = exStationen(p);
+    ziel.innerHTML =
+      '<div class="lo-karte" style="border-left-color:' + (EXIL_FARBE[p.ausgang] || '#888') + '">' +
+      '<div class="lo-zeit">' + p.fach + ' · ' + EXIL_AUSGANG[p.ausgang] + '</div>' +
+      '<div class="lo-name">' + p.name + '</div>' +
+      '<ol class="ex-liste">' +
+      st.map(function(s, i){
+        return '<li' + (index === i ? ' class="an"' : '') + '>' +
+          '<span class="ex-jahr">' + s.jahr + '</span>' +
+          '<span class="ex-ort">' + s.ort + '</span>' +
+          '<span class="ex-was">' + s.was + '</span></li>';
+      }).join('') + '</ol>' +
+      (st.length < p.stationen.length
+        ? '<div class="lo-beleg">' + (p.stationen.length - st.length) +
+          ' weitere Station' + (p.stationen.length - st.length === 1 ? '' : 'en') +
+          ' liegen nach dem eingestellten Jahr.</div>' : '') +
+      '<div class="lo-beleg">Beleg · ' + p.beleg + '</div></div>';
+  }
+  kaAuffrischen();
+}
+
+/* ── Statuszeile ───────────────────────────────────────────────────
+   Sie beantwortet die einzige Frage, die man bei vielen Filtern hat:
+   Warum sehe ich gerade das? Jede wirksame Einstellung wird benannt,
+   und ein einziger Knopf nimmt alle zurück. */
+function ksTeil(text, stumm){
+  return '<span class="ks-teil' + (stumm ? ' stumm' : '') + '">' + text + '</span>';
+}
+function ksAuffrischen(anzahl, orte){
+  var zEl = document.getElementById('ks-zahl');
+  var tEl = document.getElementById('ks-teile');
+  var rEl = document.getElementById('ks-reset');
+  if (!zEl || !tEl) return;
+
+  var teile = [], wirksam = false;
+
+  /* Einzelansicht überschreibt alles andere */
+  if (kfAktiv()){
+    zEl.textContent = '';
+    tEl.innerHTML = '<span class="ks-leer">' + kfStandText() +
+      ' — alle übrigen Denker sind ausgeblendet.</span>';
+    if (rEl) rEl.hidden = false;
+    return;
+  }
+
+  /* Wie viele von wie vielen? */
+  var gesamt = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2.length : 0;
+  if (anzahl === 0){
+    zEl.textContent = 'Kein Denker sichtbar';
+  } else {
+    zEl.textContent = anzahl + (gesamt && anzahl < gesamt ? ' von ' + gesamt : '') +
+      ' Denker' + (orte ? ' an ' + orte + ' Orten' : '');
+  }
+
+  teile.push(ksTeil(kaOrtart === 'tod' ? '🪦 Sterbeorte' : '🎂 Geburtsorte', true));
+  if (kaPhilAus){ teile.push(ksTeil('🙈 Denker ausgeblendet')); wirksam = true; }
+
+  /* Kulturkreise, sofern nicht alle an sind */
+  try{
+    var ausK = TL_KREISE.filter(function(k){ return !tlKreisAktiv[k]; });
+    var anK  = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+    if (!anK.length){ teile.push(ksTeil('🌐 kein Kulturkreis gewählt')); wirksam = true; }
+    else if (ausK.length){
+      teile.push(ksTeil('🌐 ' + anK.map(function(k){ return TL_KREIS_LABEL[k] || k; }).join(', ')));
+      wirksam = true;
+    }
+  }catch(e){}
+
+  /* Zeitfilter */
+  if (kaJahr !== null){ teile.push(ksTeil('⏳ Jahr ' + kaJahrText(kaJahr))); wirksam = true; }
+
+  /* Ebenen */
+  if (kaLehr) teile.push(ksTeil('🏛️ Orte der Lehre', true));
+  if (kaFunde) teile.push(ksTeil('🏺 Fundorte', true));
+
+  /* Übrige Filter der Seite, sofern sie greifen. Die Variablen gehören
+     der Zeitleiste; sie wirken auch auf die Karte. */
+  var weitere = [];
+  try{ if (epoch) weitere.push('Epoche ' + epoch); }catch(e){}
+  try{ if (discFilter) weitere.push(discFilter); }catch(e){}
+  try{ if (movFilter) weitere.push(movFilter); }catch(e){}
+  try{ if (posFilter) weitere.push(posFilter); }catch(e){}
+  try{ if (themaFilter) weitere.push(themaFilter); }catch(e){}
+  try{ if (femaleOnly) weitere.push('nur Denkerinnen'); }catch(e){}
+  try{ var sf = document.getElementById('phil-search');
+       if (sf && sf.value.trim()) weitere.push('Suche „' + sf.value.trim() + '"'); }catch(e){}
+  if (weitere.length){ teile.push(ksTeil('🔍 ' + weitere.join(' · '))); wirksam = true; }
+
+  tEl.innerHTML = teile.join('');
+  if (anzahl === 0 && wirksam)
+    tEl.innerHTML += '<span class="ks-leer">Die Einstellungen schließen alle Denker aus.</span>';
+  if (rEl) rEl.hidden = !wirksam;
+}
+
+/* Ein Knopf, der in den Ausgangszustand zurückführt. */
+function ksZuruecksetzen(){
+  try{ if (kfAktiv()) kfSetzen(''); }catch(e){}
+  try{ if (kaJahr !== null) kzSetzen(null, true); }catch(e){}
+  try{ if (kaPhilAus) kaPhilAusUm(); }catch(e){}
+  /* Setzt Epoche, Disziplin, Suche, Kulturkreise usw. gemeinsam zurück —
+     dieselbe Funktion, die auch die Zeitleiste benutzt. */
+  try{ if (typeof tlkAllesZuruecksetzen === 'function') tlkAllesZuruecksetzen(); }catch(e){}
+  kaAuffrischen();
+}
+function ksBinden(){
+  var r = document.getElementById('ks-reset');
+  if (!r || r._gebunden) return;
+  r._gebunden = true;
+  r.addEventListener('click', ksZuruecksetzen);
+}
+
+/* ── Einzelansicht ─────────────────────────────────────────────────
+   Wege sind Erzählungen, keine Ebenen. Alle 22 Lebenswege zugleich
+   ergäben 170 Punkte und 148 Linien über 353 Geburtsorten — man sähe
+   nichts mehr. Deshalb: immer nur ein Weg, und solange einer läuft,
+   treten die Denkerpunkte ganz zurück und die übrigen Ebenen werden
+   zu blassem Kontext. */
+var kaFokus = null;            /* null | {art:'leben'|'exil'|'wege', id} */
+
+function kfAktiv(){ return kaFokus !== null; }
+function kfIstLeben(id){ return kaFokus && kaFokus.art === 'leben' && kaFokus.id === id; }
+function kfIstExil(id){  return kaFokus && kaFokus.art === 'exil'  && kaFokus.id === id; }
+
+/* Auswahlliste aufbauen — nach Epoche gruppiert, innerhalb nach Zeit */
+function kfListeBauen(){
+  var sel = document.getElementById('kf-wahl');
+  if (!sel || sel._gebaut) return;
+  sel._gebaut = true;
+
+  var lw = (window.LEBENSWEGE || []).slice().sort(function(a,b){ return a.von - b.von; });
+  if (lw.length){
+    var g1 = document.createElement('optgroup');
+    g1.label = 'Lebenswege (' + lw.length + ')';
+    lw.forEach(function(p){
+      var o = document.createElement('option');
+      o.value = 'leben:' + p.id;
+      o.textContent = p.name + ' · ' + lwJahrText(p.von) + '–' + lwJahrText(p.bis) +
+        ' · ' + p.stationen.length + ' Stationen';
+      g1.appendChild(o);
+    });
+    sel.appendChild(g1);
+  }
+
+  var ex = (window.EXIL_WEGE || []).slice();
+  if (ex.length){
+    var g2 = document.createElement('optgroup');
+    g2.label = 'Exil 1933 (' + ex.length + ')';
+    ex.forEach(function(p, i){
+      var o = document.createElement('option');
+      o.value = 'exil:' + (p.slug || i);
+      o.textContent = p.name + ' · ' + p.stationen.length + ' Stationen';
+      g2.appendChild(o);
+    });
+    sel.appendChild(g2);
+  }
+
+  var g3 = document.createElement('optgroup');
+  g3.label = 'Überlieferung';
+  var o3 = document.createElement('option');
+  o3.value = 'wege:aristoteles';
+  o3.textContent = 'Der Weg der griechischen Schriften · 16 Etappen';
+  g3.appendChild(o3);
+  sel.appendChild(g3);
+
+  sel.addEventListener('change', function(){ kfSetzen(sel.value); });
+  var zurueck = document.getElementById('kf-zurueck');
+  if (zurueck) zurueck.addEventListener('click', function(){ kfSetzen(''); });
+}
+
+/* In der Einzelansicht gehört der Zeitregler dem gewählten Weg: Er läuft
+   von dessen Anfang bis zu dessen Ende. Sonst könnte man Platon auf das
+   Jahr 1800 stellen und sähe seinen vollständigen Weg dort stehen. */
+function kfSpanne(){
+  if (!kaFokus) return null;
+  if (kaFokus.art === 'leben'){
+    var p = (window.LEBENSWEGE || []).filter(function(x){ return x.id === kaFokus.id; })[0];
+    return p ? { von: p.von, bis: p.bis, marken: p.stationen.map(function(s){ return s.jahr; }) } : null;
+  }
+  if (kaFokus.art === 'exil'){
+    var q = (window.EXIL_WEGE || []).filter(function(x, i){
+      return (x.slug || String(i)) === kaFokus.id; })[0];
+    if (!q) return null;
+    var j = q.stationen.map(function(s){ return s.jahr; });
+    return { von: Math.min.apply(null, j), bis: Math.max.apply(null, j), marken: j };
+  }
+  var e = window.WEG_ETAPPEN || [];
+  if (!e.length) return null;
+  return { von: Math.min.apply(null, e.map(function(x){ return x.jahr; })),
+           bis: Math.max.apply(null, e.map(function(x){ return x.bis; })),
+           marken: e.map(function(x){ return x.jahr; }) };
+}
+
+/* Regler auf die Spanne des Weges stellen — oder zurück auf die
+   ganze Geschichte, wenn die Einzelansicht verlassen wird. */
+function kfReglerAnpassen(){
+  var regler = document.getElementById('kz-regler');
+  if (!regler) return;
+  var sp = kfSpanne();
+  if (sp && sp.bis > sp.von){
+    regler.min = sp.von; regler.max = sp.bis; regler.step = 1;
+    kzDichteZeichnen(sp.marken, sp.von, sp.bis);
+  } else {
+    regler.min = KZ_VON; regler.max = KZ_BIS; regler.step = 5;
+    kzDichteZeichnen();
+  }
+}
+
+/* Was zeigt der Weg beim eingestellten Jahr? */
+function kfStandText(){
+  if (!kaFokus) return '';
+  if (kaFokus.art === 'leben'){
+    var p = (window.LEBENSWEGE || []).filter(function(x){ return x.id === kaFokus.id; })[0];
+    if (!p) return '';
+    if (kaJahr === null) return p.name + ' · ganzer Weg, ' + p.stationen.length + ' Stationen';
+    var bis = p.stationen.filter(function(s){ return s.jahr <= kaJahr; });
+    if (!bis.length) return p.name + ' · noch nicht geboren';
+    return p.name + ' · ' + bis[bis.length-1].ort + ' · Station ' + bis.length +
+           ' von ' + p.stationen.length;
+  }
+  if (kaFokus.art === 'exil'){
+    var q = (window.EXIL_WEGE || []).filter(function(x, i){
+      return (x.slug || String(i)) === kaFokus.id; })[0];
+    if (!q) return '';
+    if (kaJahr === null) return q.name + ' · ganzer Weg, ' + q.stationen.length + ' Stationen';
+    var b2 = q.stationen.filter(function(s){ return s.jahr <= kaJahr; });
+    return q.name + (b2.length ? ' · ' + b2[b2.length-1].ort : ' · noch in Deutschland');
+  }
+  var n = wgSichtbar().length;
+  return 'Überlieferung · ' + n + ' von ' + (window.WEG_ETAPPEN || []).length + ' Etappen';
+}
+
+function kfSetzen(wert){
+  var sel = document.getElementById('kf-wahl');
+  var leiste = document.querySelector('.kf');
+  var zurueck = document.getElementById('kf-zurueck');
+  var lage = document.getElementById('kf-lage');
+
+  if (!wert){
+    kaFokus = null;
+    if (sel) sel.value = '';
+    if (leiste) leiste.classList.remove('an');
+    if (zurueck) zurueck.hidden = true;
+    if (lage) lage.textContent = 'Alle Denker auf der Karte. Einen Namen wählen, um nur dessen Weg zu sehen.';
+    var liste0 = document.getElementById('karte-liste'); if (liste0) liste0.innerHTML = '';
+    lebenGewaehlt = null; exilGewaehlt = null;
+    kfReglerAnpassen();
+    if (kaJahr !== null) kzSetzen(null, true); else kaAuffrischen();
+    return;
+  }
+
+  var teile = wert.split(':');
+  kaFokus = { art: teile[0], id: teile.slice(1).join(':') };
+  if (sel) sel.value = wert;
+  if (leiste) leiste.classList.add('an');
+  if (zurueck) zurueck.hidden = false;
+
+  var punkte = [];
+  if (kaFokus.art === 'leben'){
+    var p = (window.LEBENSWEGE || []).filter(function(x){ return x.id === kaFokus.id; })[0];
+    if (p){
+      /* Ein Zeitfilter, der die Person ausschließt, macht die Auswahl
+         wirkungslos — dann lieber zurücksetzen als leere Karte zeigen. */
+      punkte = p.stationen.map(function(s){ return [s.lat, s.lon]; });
+      if (lage) lage.textContent = p.name + ' · ' + p.stationen.length + ' Stationen · ' +
+        LEBEN_EPOCHE[p.epoche];
+      lebenGewaehlt = null;   /* damit lwZeigen sie tatsächlich setzt */
+      lwZeigen(p);
+    }
+  } else if (kaFokus.art === 'exil'){
+    var e = (window.EXIL_WEGE || []).filter(function(x, i){
+      return (x.slug || String(i)) === kaFokus.id; })[0];
+    if (e){
+      punkte = e.stationen.map(function(s){ return [s.lat, s.lon]; });
+      if (lage) lage.textContent = e.name + ' · ' + e.stationen.length + ' Stationen · ' +
+        (EXIL_AUSGANG[e.ausgang] || '');
+      if (typeof exZeigen === 'function'){ exilGewaehlt = null; exZeigen(e); }
+    }
+  } else {
+    var O = window.WEG_ORTE || {};
+    punkte = Object.keys(O).map(function(k){ return [O[k].lat, O[k].lon]; });
+    if (lage) lage.textContent = 'Athen bis Paris · 16 Etappen · 60 v. Chr. bis 1280';
+    var liste1 = document.getElementById('karte-liste'); if (liste1) liste1.innerHTML = '';
+  }
+
+  /* Der Regler gehört jetzt diesem Weg; ein Jahr von vorher wäre
+     außerhalb seiner Spanne. */
+  kfReglerAnpassen();
+  if (kaJahr !== null) kzSetzen(null, true);
+  kaAuffrischen();
+  /* Auf den gewählten Weg zoomen — sonst muss man ihn erst suchen.
+     Nur hier, nicht bei jedem Neuzeichnen, sonst kämpft die Karte
+     gegen das Verschieben durch den Benutzer. */
+  if (punkte.length && osmKarte){
+    try{ osmKarte.fitBounds(L.latLngBounds(punkte).pad(0.15)); }catch(e){}
+  }
+}
+
+/* ── Lebenswege auf der Karte ──────────────────────────────────────
+   Wie die Exilwege, aber für die ganze Lebenszeit und über alle
+   Epochen. Zwei Dinge unterscheiden sie: Die Farbe folgt der Epoche,
+   und unsichere Stationen — etwa Platons Ägyptenreise — werden
+   gestrichelt gezeichnet, weil die Überlieferung sie nicht deckt. */
+var osmLeben = null, lebenGewaehlt = null;
+var LEBEN_FARBE = {
+  antike:      '#c8952a',
+  mittelalter: '#2f9e63',
+  neuzeit:     '#3a80c0',
+  idealismus:  '#8a4fc0',
+  '19jh':      '#c8324a',
+  '20jh':      '#6a6a80'
+};
+var LEBEN_EPOCHE = {
+  antike:'Antike', mittelalter:'Mittelalter', neuzeit:'Neuzeit',
+  idealismus:'Deutscher Idealismus', '19jh':'19. Jahrhundert', '20jh':'20. Jahrhundert'
+};
+
+
+/* Welche Stationen sind zum eingestellten Jahr schon erreicht?
+   Ohne Zeitfilter der ganze Weg. */
+function lwStationen(p){
+  if (kaJahr === null) return p.stationen;
+  return p.stationen.filter(function(s){ return s.jahr <= kaJahr; });
+}
+function lwSichtbar(){
+  var alle = window.LEBENSWEGE || [];
+  /* Genau einer, wenn die Einzelansicht darauf steht — sonst keiner. */
+  if (kaFokus && kaFokus.art === 'leben')
+    return alle.filter(function(p){ return p.id === kaFokus.id; });
+  return [];
+}
+
+function lwJahrText(j){ return j < 0 ? Math.abs(j) + ' v. Chr.' : String(j); }
+/* Die meisten Kennungen stimmen mit denen der Denkerdaten überein;
+   wo nicht, steht ein eigenes slug-Feld daneben. */
+function lwSlug(p){ return p.slug || p.id; }
+
+function lwZeichnen(){
+  if (osmLeben){ osmLeben.remove(); osmLeben = null; }
+  var liste = lwSichtbar();
+  if (!liste.length || !osmKarte) return;
+  osmLeben = L.layerGroup().addTo(osmKarte);
+
+  liste.forEach(function(p){
+    var st = lwStationen(p);
+    if (!st.length) return;
+    var farbe = LEBEN_FARBE[p.epoche] || '#888';
+    var gedimmt = lebenGewaehlt && lebenGewaehlt !== p.id;
+    var hervor = lebenGewaehlt === p.id;
+
+    /* Abschnittsweise zeichnen, damit unsichere Etappen als solche
+       erkennbar bleiben. */
+    for (var i = 1; i < st.length; i++){
+      var a = st[i-1], b = st[i];
+      if (a.lat === b.lat && a.lon === b.lon) continue;
+      var unsicher = (!a.sicher || !b.sicher);
+      var linie = L.polyline([[a.lat, a.lon], [b.lat, b.lon]], {
+        color: farbe, weight: hervor ? 3.6 : 2,
+        opacity: gedimmt ? .1 : (hervor ? 1 : .62),
+        dashArray: unsicher ? '4 5' : null, lineJoin:'round'
+      }).addTo(osmLeben);
+      linie.bindTooltip(p.name + ' · ' + a.ort + ' → ' + b.ort + ' · ' + lwJahrText(b.jahr) +
+        (unsicher ? ' · Überlieferung unsicher' : ''), { sticky:true });
+      linie.on('click', function(ev){ L.DomEvent.stopPropagation(ev); lwZeigen(p); });
+    }
+
+    st.forEach(function(s, i){
+      var letzte = (i === st.length - 1);
+      var m = L.marker([s.lat, s.lon], { icon: L.divIcon({
+        className:'', iconSize:[letzte ? 14 : 10, letzte ? 14 : 10],
+        iconAnchor:[letzte ? 7 : 5, letzte ? 7 : 5],
+        html:'<div class="lw-punkt' + (letzte ? ' lw-jetzt' : '') +
+             (s.sicher ? '' : ' lw-unsicher') +
+             (s.praezision === 'haus' ? ' lw-genau' : '') + '" style="background:' + farbe +
+             ';opacity:' + (gedimmt ? .15 : 1) + '"></div>'
+      })}).addTo(osmLeben);
+      m.bindTooltip(p.name + ' · ' + s.ort + ' · ' + lwJahrText(s.jahr) +
+        (s.adresse ? '<br>' + s.adresse +
+          (s.praezision === 'haus' ? '' : ' (Koordinate nur ortsgenau)') : ''),
+        { direction:'top' });
+      m.on('click', function(ev){ L.DomEvent.stopPropagation(ev); lwZeigen(p); });
+    });
+  });
+}
+
+function lwZeigen(p){
+  lebenGewaehlt = (lebenGewaehlt === p.id) ? null : p.id;
+  var ziel = document.getElementById('karte-liste');
+  if (ziel && lebenGewaehlt){
+    var farbe = LEBEN_FARBE[p.epoche] || '#888';
+    var st = lwStationen(p);
+    ziel.innerHTML = '<div class="lo-karte" style="border-left-color:' + farbe + '">' +
+      '<div class="lo-zeit">' + LEBEN_EPOCHE[p.epoche] + ' · ' +
+        lwJahrText(p.von) + '–' + lwJahrText(p.bis) + ' · ' +
+        p.stationen.length + ' Stationen</div>' +
+      '<div class="lo-name">' + p.name + '</div>' +
+      '<p class="lo-was">' + p.zusammenfassung + '</p>' +
+      '<div style="margin-top:.6rem">' + st.map(function(s){
+        return '<div style="display:grid;grid-template-columns:56px 1fr;gap:.5rem;' +
+          'font-size:.82rem;padding:.2rem 0;border-top:1px solid var(--border)">' +
+          '<span class="lo-zeit">' + lwJahrText(s.jahr) + '</span>' +
+          '<span><b>' + s.ort + '</b>' + (s.sicher ? '' :
+            ' <span class="lo-zeit">(unsicher)</span>') +
+          (s.adresse ? ' <span class="lw-adr' + (s.praezision === 'haus' ? ' lw-adr-genau' : '') +
+            '" title="' + (s.ortsbeleg || '').replace(/"/g, '') + '">' + s.adresse +
+            (s.praezision === 'haus' ? ' ⌖' : '') + '</span>' : '') +
+          '<br><span style="color:var(--text2)">' + s.was + '</span></span></div>';
+      }).join('') + '</div>' +
+      '<div class="lo-beleg">Beleg · ' + p.beleg + '</div>' +
+      '<div style="margin-top:.6rem"><button type="button" class="km-btn" ' +
+        'data-phil="' + lwSlug(p) + '">Steckbrief öffnen</button></div></div>';
+    /* Von der Karte zurück zum Denker: die Zeitleiste kennt dieselbe
+       Person über ihren Bezeichner. */
+    var knopf = ziel.querySelector('[data-phil]');
+    if (knopf) knopf.addEventListener('click', function(){
+      var slug = knopf.dataset.phil;
+      var daten = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2 : (window.PHILS_V2 || []);
+      var treffer = daten.filter(function(x){ return x.slug === slug; })[0];
+      /* tlOpenModal ist die lebende Fassung; openPhilModal gehört zu einer
+         alten Zeitleiste, deren Markup es nicht mehr gibt. */
+      if (treffer && typeof tlOpenModal === 'function') tlOpenModal(treffer);
+    });
+  } else if (ziel){ ziel.innerHTML = ''; }
+  kaAuffrischen();
+}
+
+/* ── Übersetzungswege auf der Karte ────────────────────────────────
+   Gebogene Pfeile zwischen den Stationen, gefärbt nach der Sprache, in
+   die übersetzt wurde. Der Zeitregler lässt das Netz wachsen: Etappen,
+   die noch nicht begonnen haben, fehlen; laufende sind kräftig,
+   abgeschlossene bleiben blass stehen — so sieht man den Weg entstehen. */
+var osmWege = null;
+var WEG_FARBE = {
+  griechisch: '#c8952a',
+  syrisch:    '#8a4fc0',
+  arabisch:   '#2f9e63',
+  hebräisch:  '#3a80c0',
+  lateinisch: '#c8324a'
+};
+
+
+function wgSichtbar(){
+  var alle = window.WEG_ETAPPEN || [];
+  if (!kaFokus || kaFokus.art !== 'wege') return [];
+  if (kaJahr === null) return alle.map(function(e){ return { e:e, laeuft:false, fertig:true }; });
+  return alle.filter(function(e){ return e.jahr <= kaJahr; })
+             .map(function(e){
+               return { e:e, laeuft: kaJahr <= e.bis, fertig: kaJahr > e.bis };
+             });
+}
+function wgZeitText(e){
+  function j(x){ return x < 0 ? Math.abs(x) + ' v. Chr.' : String(x); }
+  return e.jahr === e.bis ? j(e.jahr) : j(e.jahr) + '–' + j(e.bis);
+}
+function wgZeichnen(){
+  if (osmWege){ osmWege.remove(); osmWege = null; }
+  var liste = wgSichtbar();
+  if (!liste.length || !osmKarte) return;
+  var O = window.WEG_ORTE || {};
+  osmWege = L.layerGroup().addTo(osmKarte);
+
+  /* Erst die Linien, danach die Stationsmarken darüber */
+  liste.forEach(function(x){
+    var a = O[x.e.von], b = O[x.e.nach];
+    if (!a || !b) return;
+    var farbe = WEG_FARBE[x.e.sprache] || '#888';
+    var stark = x.laeuft || kaJahr === null;
+    /* Leichter Bogen, damit sich Hin- und Rückwege nicht überdecken */
+    var mLat = (a.lat + b.lat) / 2, mLon = (a.lon + b.lon) / 2;
+    var dLat = b.lat - a.lat, dLon = b.lon - a.lon;
+    var laenge = Math.sqrt(dLat*dLat + dLon*dLon) || 1;
+    var bogen = Math.min(6, laenge * 0.18);
+    var kLat = mLat + (-dLon / laenge) * bogen * 0.5;
+    var kLon = mLon + ( dLat / laenge) * bogen * 0.5;
+    var punkte = [];
+    for (var i = 0; i <= 16; i++){
+      var s = i / 16, g = (1 - s);
+      punkte.push([ g*g*a.lat + 2*g*s*kLat + s*s*b.lat,
+                    g*g*a.lon + 2*g*s*kLon + s*s*b.lon ]);
+    }
+    var linie = L.polyline(punkte, {
+      color: farbe, weight: stark ? 3 : 1.8,
+      opacity: stark ? .95 : .4, lineCap:'round'
+    }).addTo(osmWege);
+    linie.bindTooltip(x.e.wer + ' · ' + wgZeitText(x.e) + ' · ins ' +
+      x.e.sprache.charAt(0).toUpperCase() + x.e.sprache.slice(1) + 'e',
+      { direction:'top', sticky:true });
+    linie.on('click', function(ev){ L.DomEvent.stopPropagation(ev); wgListeFuellen(x.e); });
+
+    /* Pfeilspitze am Ziel */
+    var vor = punkte[13], ziel = punkte[16];
+    var wink = Math.atan2(ziel[0] - vor[0], ziel[1] - vor[1]) * 180 / Math.PI;
+    L.marker(ziel, { icon: L.divIcon({
+      className:'', iconSize:[12,12], iconAnchor:[6,6],
+      html:'<div class="wg-spitze" style="border-left-color:' + farbe +
+           ';transform:rotate(' + (-wink) + 'deg);opacity:' + (stark ? .95 : .4) + '"></div>'
+    })}).addTo(osmWege);
+  });
+
+  /* Stationen */
+  var benutzt = {};
+  liste.forEach(function(x){ benutzt[x.e.von] = true; benutzt[x.e.nach] = true; });
+  Object.keys(benutzt).forEach(function(k){
+    var o = O[k]; if (!o) return;
+    var m = L.marker([o.lat, o.lon], { icon: L.divIcon({
+      className:'', iconSize:[14,14], iconAnchor:[7,7],
+      html:'<div class="wg-station"></div>'
+    })}).addTo(osmWege);
+    m.bindTooltip(o.name, { direction:'top', offset:[0,-8] });
+    m.on('click', function(ev){ L.DomEvent.stopPropagation(ev); wgStationZeigen(k); });
+  });
+}
+function wgListeFuellen(e){
+  var ziel = document.getElementById('karte-liste'); if (!ziel) return;
+  var O = window.WEG_ORTE || {};
+  ziel.innerHTML =
+    '<div class="lo-karte" style="border-left-color:' + (WEG_FARBE[e.sprache] || '#888') + '">' +
+    '<div class="lo-zeit">' + O[e.von].name + ' → ' + O[e.nach].name + ' · ' +
+      wgZeitText(e) + ' · ins ' + e.sprache.charAt(0).toUpperCase() + e.sprache.slice(1) + 'e</div>' +
+    '<div class="lo-name">' + e.wer + '</div>' +
+    '<p class="lo-was">' + e.was + '</p>' +
+    '<div class="lo-beleg">Beleg · ' + e.beleg + '</div></div>';
+}
+function wgStationZeigen(k){
+  var O = window.WEG_ORTE || {}, o = O[k];
+  var raus = (window.WEG_ETAPPEN || []).filter(function(e){ return e.von === k; });
+  var rein = (window.WEG_ETAPPEN || []).filter(function(e){ return e.nach === k; });
+  var ziel = document.getElementById('karte-liste'); if (!ziel) return;
+  function zeile(e, pfeil, gegen){
+    return '<div style="margin:.3rem 0;font-size:.82rem;color:var(--text2)">' +
+      '<span style="color:' + (WEG_FARBE[e.sprache] || '#888') + '">' + pfeil + '</span> ' +
+      O[gegen].name + ' · ' + wgZeitText(e) + ' · ' + e.wer + '</div>';
+  }
+  ziel.innerHTML = '<div class="ka-ort-titel">' + o.name + '</div>' +
+    (rein.length ? '<div class="lo-zeit">kommt an</div>' +
+      rein.map(function(e){ return zeile(e, '←', e.von); }).join('') : '') +
+    (raus.length ? '<div class="lo-zeit" style="margin-top:.5rem">geht weiter</div>' +
+      raus.map(function(e){ return zeile(e, '→', e.nach); }).join('') : '');
+}
+
+/* ── Orte der Lehre auf der Karte ──────────────────────────────────
+   Eigene Ebene mit eckigen Marken. Sie folgen demselben Zeitfilter wie
+   die Denker: Beim Ablauf sieht man die Akademie neunhundert Jahre
+   stehen, Bagdad aufgehen und mit dem Mongolensturm erlöschen. */
+var kaLehr = true, osmLehr = null;
+var LO_ZEICHEN = { schule:'△', bibliothek:'▤', universitaet:'▣', zirkel:'◆' };
+var LO_ART_NAME = { schule:'Schule', bibliothek:'Bibliothek',
+                    universitaet:'Universität', zirkel:'Zirkel' };
+
+window.kaLehrUm = function(){
+  kaLehr = !kaLehr;
+  var b = document.getElementById('ko-lehr');
+  if (b){ b.classList.toggle('active', kaLehr);
+          b.setAttribute('aria-pressed', kaLehr ? 'true' : 'false'); }
+  kaAuffrischen();
+};
+
+function loBesteht(o, jahr){
+  var ende = (o.bis === null || o.bis === undefined) ? KZ_HEUTE : o.bis;
+  return o.von <= jahr && jahr <= ende;
+}
+function loZeitText(o){
+  var a = o.von < 0 ? Math.abs(o.von) + ' v. Chr.' : String(o.von);
+  var b = (o.bis === null || o.bis === undefined) ? 'heute'
+        : (o.bis < 0 ? Math.abs(o.bis) + ' v. Chr.' : String(o.bis));
+  return a + ' – ' + b;
+}
+function loSichtbar(){
+  var alle = window.LEHR_ORTE || [];
+  if (!kaLehr) return [];
+  if (kaJahr === null) return alle;
+  return alle.filter(function(o){ return loBesteht(o, kaJahr); });
+}
+/* Vier der Schulen liegen in Athen, zwei Einrichtungen in Paris — bei
+   geringem Zoom decken sie einander und wären nicht mehr anklickbar.
+   Deshalb werden Marken gebündelt, die im aktuellen Maßstab weniger als
+   dreißig Bildpunkte auseinanderliegen; beim Hineinzoomen trennen sie
+   sich von selbst. Die Koordinaten bleiben unangetastet. */
+function loBuendeln(liste){
+  var gruppen = [];
+  if (!osmKarte) return liste.map(function(o){ return [o]; });
+  var punkte;
+  try{
+    punkte = liste.map(function(o){
+      return { o:o, p: osmKarte.latLngToLayerPoint([o.lat, o.lon]) };
+    });
+  }catch(e){ return liste.map(function(o){ return [o]; }); }
+  punkte.forEach(function(x){
+    for (var i = 0; i < gruppen.length; i++){
+      var g = gruppen[i][0];
+      if (Math.abs(g.p.x - x.p.x) < 30 && Math.abs(g.p.y - x.p.y) < 30){
+        gruppen[i].push(x); return;
+      }
+    }
+    gruppen.push([x]);
+  });
+  return gruppen.map(function(g){ return g.map(function(x){ return x.o; }); });
+}
+
+function loZeichnen(){
+  if (osmLehr){ osmLehr.remove(); osmLehr = null; }
+  var liste = loSichtbar();
+  if (!liste.length || !osmKarte) return;
+  osmLehr = L.layerGroup().addTo(osmKarte);
+
+  loBuendeln(liste).forEach(function(gruppe){
+    var erste = gruppe[0];
+    var viele = gruppe.length > 1;
+    var html = viele
+      ? '<div class="lo-marke lo-viele' + (kfAktiv() ? ' lo-blass' : '') + '">' +
+        gruppe.length + '</div>'
+      : '<div class="lo-marke art-' + erste.art + (kfAktiv() ? ' lo-blass' : '') + '">' +
+        (LO_ZEICHEN[erste.art] || '▣') + '</div>';
+    var m = L.marker([erste.lat, erste.lon], { icon: L.divIcon({
+      className:'', iconSize:[26,26], iconAnchor:[13,13], html: html
+    })}).addTo(osmLehr);
+    m.bindTooltip(viele
+      ? gruppe.length + ' Einrichtungen · ' + loOrtText(gruppe) + ' — klicken oder näher heranzoomen'
+      : erste.name + ' · ' + erste.ort + ' · ' + loZeitText(erste),
+      { direction:'top', offset:[0,-14] });
+    m.on('click', function(ev){
+      L.DomEvent.stopPropagation(ev);
+      if (viele) loListeMehrere(gruppe); else loListeFuellen(erste);
+    });
+  });
+}
+/* Eine Sammelmarke kann Einrichtungen aus verschiedenen Städten
+   enthalten — dann darf sie nicht den Ort der ersten behaupten. */
+function loOrtText(gruppe){
+  var orte = [];
+  gruppe.forEach(function(o){ if (orte.indexOf(o.ort) < 0) orte.push(o.ort); });
+  if (orte.length === 1) return orte[0];
+  if (orte.length <= 3) return orte.join(', ');
+  return orte.slice(0, 2).join(', ') + ' und ' + (orte.length - 2) + ' weitere';
+}
+function loListeMehrere(gruppe){
+  var ziel = document.getElementById('karte-liste');
+  if (!ziel) return;
+  ziel.innerHTML = '<div class="ka-ort-titel">' + gruppe.length + ' Einrichtungen · '
+    + loOrtText(gruppe) + '</div>'
+    + gruppe.map(function(o){
+        return '<div class="lo-karte" style="margin-bottom:.7rem">'
+          + '<div class="lo-zeit">' + LO_ART_NAME[o.art] + ' · ' + o.ort + ' · '
+          + loZeitText(o) + '</div>'
+          + '<div class="lo-name">' + o.name + '</div>'
+          + '<p class="lo-was">' + o.was + '</p>'
+          + '<div class="lo-wer"><b>Namen:</b> ' + o.wer + '</div>'
+          + '<div class="lo-beleg">Beleg · ' + o.beleg + '</div></div>';
+      }).join('');
+}
+function loListeFuellen(o){
+  var ziel = document.getElementById('karte-liste');
+  if (!ziel) return;
+  ziel.innerHTML =
+    '<div class="lo-karte">' +
+    '<div class="lo-zeit">' + LO_ART_NAME[o.art] + ' · ' + o.ort + ' · ' + loZeitText(o) + '</div>' +
+    '<div class="lo-name">' + o.name + '</div>' +
+    '<p class="lo-was">' + o.was + '</p>' +
+    '<div class="lo-wer"><b>Namen:</b> ' + o.wer + '</div>' +
+    '<div class="lo-beleg">Beleg · ' + o.beleg + '</div>' +
+    '</div>';
+}
+
+function kaLebt(p, jahr){
+  if (typeof p.birth !== 'number') return false;
+  var ende = (typeof p.death === 'number') ? p.death : KZ_HEUTE;
+  return p.birth <= jahr && jahr <= ende;
+}
+function kaZeitPasst(p){
+  return kaJahr === null || kaLebt(p, kaJahr);
+}
+function kaJahrText(j){
+  return j < 0 ? Math.abs(j) + ' v. Chr.' : String(j);
+}
+
+/* Wie viele Denker leben in welchem Jahrzehnt? Das ergibt den Balken
+   unter dem Regler und macht die Ungleichverteilung sichtbar. */
+function kzDichteZeichnen(marken, von, bis){
+  var svg = document.getElementById('kz-dichte');
+  if (!svg) return;
+  /* In der Einzelansicht zeigt der Balken, wo die Stationen liegen —
+     die Denkerdichte wäre dort ohne Aussage. */
+  if (marken && marken.length && bis > von){
+    var striche = '';
+    marken.forEach(function(j){
+      var x = 1000 * (j - von) / (bis - von);
+      striche += '<rect x="' + Math.max(0, Math.min(997, x - 1.5)).toFixed(1) +
+                 '" y="6" width="3" height="24" rx="1.5" fill="currentColor"/>';
+    });
+    svg.innerHTML = striche;
+    svg.setAttribute('style', 'color:var(--accent)');
+    return;
+  }
+  if (typeof PHILS_V2 === 'undefined') return;
+  var SCHRITT = 25, faecher = Math.ceil((KZ_BIS - KZ_VON) / SCHRITT);
+  var zahl = new Array(faecher).fill(0);
+  PHILS_V2.forEach(function(p){
+    if (typeof p.birth !== 'number') return;
+    var ende = (typeof p.death === 'number') ? p.death : KZ_HEUTE;
+    var a = Math.max(0, Math.floor((p.birth - KZ_VON) / SCHRITT));
+    var b = Math.min(faecher - 1, Math.floor((ende - KZ_VON) / SCHRITT));
+    for (var i = a; i <= b; i++) zahl[i]++;
+  });
+  var max = Math.max.apply(null, zahl) || 1;
+  var breite = 1000 / faecher, teile = '';
+  zahl.forEach(function(n, i){
+    if (!n) return;
+    var h = 3 + 26 * (n / max);
+    teile += '<rect x="' + (i * breite).toFixed(2) + '" y="' + (30 - h).toFixed(2) +
+             '" width="' + Math.max(1, breite - .4).toFixed(2) + '" height="' + h.toFixed(2) +
+             '" fill="currentColor"/>';
+  });
+  svg.innerHTML = teile;
+  svg.setAttribute('style', 'color:var(--text3)');
+}
+
+/* Anzeige über dem Regler: Jahr, Anzahl, dichteste Region.
+   Die Region kommt aus den Geodaten und ist damit belegt, nicht geraten. */
+function kzAnzeigeAuffrischen(){
+  var jEl = document.getElementById('kz-jahr'), lEl = document.getElementById('kz-lage');
+  if (!jEl || !lEl) return;
+  if (kaJahr === null){
+    jEl.textContent = 'alle Zeiten';
+    lEl.textContent = '2600 Jahre auf einen Blick';
+    return;
+  }
+  jEl.textContent = kaJahrText(kaJahr);
+  var lebende = phils().filter(function(p){ return !dimmed(p) && kaLebt(p, kaJahr) && kaOrtVon(p); });
+  if (!lebende.length){ lEl.textContent = 'niemand aus dem Bestand'; return; }
+  var regionen = {}, epochen = {};
+  lebende.forEach(function(p){
+    var w = kaOrtVon(p);
+    if (w && w.region) regionen[w.region] = (regionen[w.region] || 0) + 1;
+    if (p.epoch) epochen[p.epoch] = (epochen[p.epoch] || 0) + 1;
+  });
+  function haeufigste(o){
+    var b = null, n = 0;
+    for (var k in o) if (o[k] > n){ n = o[k]; b = k; }
+    return b ? { name:b, n:n } : null;
+  }
+  var r = haeufigste(regionen), e = haeufigste(epochen);
+  /* Bei zwei oder drei Denkern ist „Schwerpunkt" eine Überinterpretation —
+     dann wird nur genannt, wo sie sind, nicht wo das Zentrum liegt. */
+  var lageText = '';
+  if (r && lebende.length >= 5) lageText = ' · Schwerpunkt ' + r.name;
+  else if (r) lageText = ' · ' + r.name;
+  var orte = loSichtbar().length;
+  var laufend = wgSichtbar().filter(function(x){ return x.laeuft; }).length;
+  /* In der Einzelansicht zählt nicht mehr die Menge, sondern der eine
+     Weg — die Anzeige nennt dann seinen Stand statt einer Statistik. */
+  if (kfAktiv()){
+    lEl.textContent = kfStandText() + (e ? ' · ' + e.name : '');
+    return;
+  }
+  lEl.textContent = lebende.length + ' Denker'
+    + (kaLehr && orte ? ' · ' + orte + (orte === 1 ? ' Einrichtung' : ' Einrichtungen') : '')
+    + (kaFunde ? ' · ' + fuSichtbar().length + ' Funde gemacht' : '')
+    + (e ? ' · ' + e.name : '') + lageText;
+}
+
+var kzWartet = null;
+function kzSetzen(jahr, sofort){
+  kaJahr = jahr;
+  var leiste = document.getElementById('kz-leiste');
+  var alle = document.getElementById('kz-alle');
+  var regler = document.getElementById('kz-regler');
+  if (leiste) leiste.classList.toggle('zeit-an', jahr !== null);
+  if (alle) alle.classList.toggle('active', jahr === null);
+  if (regler && jahr !== null && +regler.value !== jahr) regler.value = jahr;
+  kzAnzeigeAuffrischen();                       /* Beschriftung folgt sofort */
+  var liste = document.getElementById('karte-liste'); if (liste) liste.innerHTML = '';
+  /* Die Karte kostet mehr: beim Ziehen bündeln, damit der Regler flüssig
+     bleibt und nicht jede Zwischenstellung Marker neu aufbaut. */
+  if (kzWartet){ clearTimeout(kzWartet); kzWartet = null; }
+  if (sofort){ kaAuffrischen(); }
+  else kzWartet = setTimeout(function(){ kzWartet = null; kaAuffrischen(); }, 90);
+}
+
+function kzLaufAn(){
+  var knopf = document.getElementById('kz-play');
+  if (kaLauf){ kzLaufAus(); return; }
+  if (kaJahr === null) kzSetzen(KZ_VON, true);
+  if (knopf){ knopf.setAttribute('aria-pressed','true'); knopf.textContent = '⏸️';
+              knopf.setAttribute('aria-label','Zeitlauf anhalten'); }
+  kaLauf = setInterval(function(){
+    var neu = kaJahr + 15;
+    if (neu > KZ_BIS){ kzSetzen(KZ_BIS, true); kzLaufAus(); return; }
+    kzSetzen(neu, true);
+  }, 150);
+}
+function kzLaufAus(){
+  if (kaLauf){ clearInterval(kaLauf); kaLauf = null; }
+  var knopf = document.getElementById('kz-play');
+  if (knopf){ knopf.setAttribute('aria-pressed','false'); knopf.textContent = '▶️';
+              knopf.setAttribute('aria-label','Zeitlauf starten'); }
+}
+
+function kzBinden(){
+  var regler = document.getElementById('kz-regler');
+  if (!regler || regler._gebunden) return;
+  regler._gebunden = true;
+  regler.addEventListener('input', function(){ kzLaufAus(); kzSetzen(+regler.value); });
+  document.getElementById('kz-play').addEventListener('click', kzLaufAn);
+  document.getElementById('kz-alle').addEventListener('click', function(){
+    kzLaufAus(); kzSetzen(null, true);
+  });
+  kzDichteZeichnen();
+  kzAnzeigeAuffrischen();
+}
+window.kaOrtart = function(a){
+  kaOrtart = a;
+  document.getElementById('ko-geburt')?.classList.toggle('active', a === 'geburt');
+  document.getElementById('ko-tod')?.classList.toggle('active', a === 'tod');
+  var liste = document.getElementById('karte-liste'); if (liste) liste.innerHTML = '';
+  kaAuffrischen();
+};
+
+/* Ort eines Denkers in der gewaehlten Art, oder null.
+   Lebende haben keinen Sterbeort und fallen dort einfach heraus. */
+function kaOrtVon(p, art){
+  art = art || kaOrtart;
+  if (art === 'geburt'){
+    return (p.lat === undefined) ? null
+      : { ort:p.ort, lat:p.lat, lon:p.lon, land:p.land, region:p.region,
+          sicher: p.geoSicher !== false };
+  }
+  var g = window.PHIL_GEO && window.PHIL_GEO[p.slug];
+  if (!g || !g.tod) return null;
+  return { ort:g.tod.ort, lat:g.tod.lat, lon:g.tod.lon, land:g.tod.land,
+           region:g.tod.region, sicher: !!g.tod.sicher };
+}
+
+/* Karte neu zeichnen, wenn sie sichtbar ist. Wird von allen Filterfunktionen
+   aufgerufen — sonst wirken Epoche, Disziplin, Stroemung usw. nur auf der
+   Zeitachse und der Tabelle, aber nicht auf der Weltkarte. */
+window.kaAuffrischen = function(){
+  var w = document.getElementById('karte-wrap');
+  if (!w || !w.classList.contains('active')) return;
+  try{ kzBinden(); }catch(e){ console.warn('Zeitregler:', e); }
+  try{ kfListeBauen(); }catch(e){ console.warn('Einzelansicht:', e); }
+  try{ ksBinden(); }catch(e){ console.warn('Statuszeile:', e); }
+  try{ osmZeichne(); }catch(e){ console.warn('Weltkarte:', e); }
+};
+
+function osmJahr(p, art){
+  var j = (art === 'tod') ? p.death : p.birth;
+  if (j === null || j === undefined) return '';
+  var t = (j < 0) ? Math.abs(j) + ' v. Chr.' : String(j);
+  return (art === 'tod' ? '† ' : '* ') + t;
+}
+function osmKuerzel(p){
+  return (p.display || p.name).replace(/[^A-Za-zÄÖÜäöüß ]/g,'').split(' ')
+    .filter(Boolean).map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+}
+function osmBeschriftung(p){
+  var w = kaOrtVon(p);
+  return (p.display || p.name) + ' · ' + osmJahr(p, kaOrtart) + (w ? ' · ' + w.ort : '');
+}
+function osmPortraetHtml(p, d){
+  return '<div class="osm-person" style="width:'+d+'px;height:'+d+'px">'
+    + '<img src="assets/images/philosophen/' + p.slug + '.jpg" alt="" loading="lazy"'
+    + ' onerror="this.parentNode.innerHTML=\'<span class=&quot;osm-kuerzel&quot;>'
+    + osmKuerzel(p) + '</span>\'">'
+    + '</div>';
+}
+
+/* ── Spur: gestrichelte Linie zum jeweils anderen Ort ──────────────
+   Beim Ueberfahren erscheint die Verbindung Geburt ↔ Tod samt einem
+   Kreis am Gegenort, in einer eigenen Ebene ueber allem anderen.
+   Sie bleibt stehen, bis eine andere Gestalt ueberfahren wird.      */
+function osmSpurZeigen(p){
+  osmSpurWeg();
+  var hier = kaOrtVon(p);
+  var andereArt = (kaOrtart === 'geburt') ? 'tod' : 'geburt';
+  var dort = kaOrtVon(p, andereArt);
+  if (!hier || !dort) return;
+  if (Math.abs(hier.lat - dort.lat) < 1e-6 && Math.abs(hier.lon - dort.lon) < 1e-6) return;
+
+  osmSpur = L.layerGroup().addTo(osmKarte);
+  L.polyline([[hier.lat, hier.lon], [dort.lat, dort.lon]], {
+    color:'#e8c46a', weight:2, opacity:.9, dashArray:'6 5', pane:'spurPane'
+  }).addTo(osmSpur);
+
+  var istGeburt = (andereArt === 'geburt');
+  var farbe = istGeburt ? '#7fd18c' : '#d9787f';
+  var zeichen = istGeburt ? '✳' : '†';
+  L.marker([dort.lat, dort.lon], { pane:'spurPane', icon: L.divIcon({
+    className:'', iconSize:[26,26], iconAnchor:[13,13],
+    html:'<div class="osm-gegenort" style="border-color:'+farbe+';color:'+farbe+'">'
+         + zeichen + '</div>'
+  })}).addTo(osmSpur)
+    .bindTooltip((istGeburt ? 'geboren ' : 'gestorben ') + dort.ort
+      + ' · ' + osmJahr(p, andereArt), { direction:'top', offset:[0,-14], className:'osm-spur-tip' })
+    .openTooltip();
+}
+function osmSpurWeg(){ if (osmSpur){ osmSpur.remove(); osmSpur = null; } }
 
 function osmZeichne(){
   var ziel = document.getElementById('karte-osm'); if (!ziel) return;
@@ -2432,32 +4375,47 @@ function osmZeichne(){
   }
   tlGeoAnhaengen();
   if (!osmKarte){
-    osmKarte = L.map(ziel, { worldCopyJump:true, minZoom:2 }).setView([40, 10], 3);
+    osmKarte = L.map(ziel, { worldCopyJump:true, minZoom:2 }).setView([42, 12], 4);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende'
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende'
     }).addTo(osmKarte);
-    osmKarte.on('click', function(){ osmSchliesse(); });
+    osmKarte.createPane('spurPane');              /* Spur ueber allen Markern */
+    osmKarte.getPane('spurPane').style.zIndex = 650;
+    osmKarte.on('click', function(){ osmSchliesse(); osmSpurWeg(); });
+    /* Die Bündelung hängt vom Maßstab ab und muss nach jedem Zoom neu */
+    osmKarte.on('zoomend', function(){ try{ loZeichnen(); }catch(e){} });
   }
+  osmSpurWeg();
   if (osmSchicht) osmSchicht.remove();
   osmSchicht = L.layerGroup().addTo(osmKarte);
+  try{ lwZeichnen(); }catch(e){ console.warn('Lebenswege:', e); }
+  try{ wgZeichnen(); }catch(e){ console.warn('Übersetzungswege:', e); }
+  try{ exZeichnen(); }catch(e){ console.warn('Exil:', e); }
+  try{ fuZeichnen(); }catch(e){ console.warn('Fundorte:', e); }
+  try{ loZeichnen(); }catch(e){ console.warn('Orte der Lehre:', e); }
 
-  var L2 = phils().filter(function(p){ return p.lat !== undefined && !dimmed(p); });
+  /* Bei Einzelansicht treten die Geburtsorte ganz zurück: Ein Weg mit
+     acht Stationen ist zwischen 353 Punkten nicht zu erkennen. */
+  var LP = (kfAktiv() || kaPhilAus) ? []
+         : phils().filter(function(p){ return !dimmed(p) && kaZeitPasst(p) && kaOrtVon(p); });
   var orte = {};
-  L2.forEach(function(p){
-    var k = p.lat + '|' + p.lon;          /* siehe oben: nach Koordinaten buendeln */
-    (orte[k] = orte[k] || { ort:p.ort, lat:p.lat, lon:p.lon, land:p.land,
-                            region:p.region, leute:[] }).leute.push(p);
+  LP.forEach(function(p){
+    var w = kaOrtVon(p);
+    var k = w.lat + '|' + w.lon;                  /* nach Koordinaten buendeln */
+    (orte[k] = orte[k] || { ort:w.ort, lat:w.lat, lon:w.lon, land:w.land,
+                            region:w.region, leute:[] }).leute.push(p);
   });
+
   Object.keys(orte).forEach(function(k){
     var o = orte[k], n = o.leute.length;
     if (n === 1){
-      /* Einzelner Ort: gleich das Portraet zeigen, kein Auffaechern noetig. */
       var p = o.leute[0];
       var m1 = L.marker([o.lat, o.lon], { icon: L.divIcon({
-        className:'', iconSize:[38,38], iconAnchor:[19,19],
-        html: osmPortraetHtml(p, 38)
+        className:'', iconSize:[38,38], iconAnchor:[19,19], html: osmPortraetHtml(p, 38)
       })}).addTo(osmSchicht);
       m1.bindTooltip(osmBeschriftung(p), { direction:'top', offset:[0,-20] });
+      m1.on('mouseover', function(){ osmSpurZeigen(p); });
       m1.on('click', function(ev){ L.DomEvent.stopPropagation(ev);
         if (window.tlOpenModal) tlOpenModal(p); kaListeFuellen(o); });
       return;
@@ -2471,47 +4429,30 @@ function osmZeichne(){
       { direction:'top', offset:[0,-d/2] });
     m.on('click', function(ev){ L.DomEvent.stopPropagation(ev); osmFaechern(o); });
   });
+
   var info = document.getElementById('karte-info');
-  if (info) info.textContent = L2.length + ' Denker an ' + Object.keys(orte).length + ' Orten';
+  if (info) info.textContent = '';
+  try{ ksAuffrischen(LP.length, Object.keys(orte).length); }catch(e){ console.warn('Statuszeile:', e); }
   setTimeout(function(){ osmKarte.invalidateSize(); }, 60);
 }
 
-/* Ein Portraet-Marker; fehlt das Bild, erscheint das Namenskuerzel. */
-function osmKuerzel(p){
-  return (p.display || p.name).replace(/[^A-Za-zÄÖÜäöüß ]/g,'').split(' ')
-    .filter(Boolean).map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
-}
-function osmBeschriftung(p){
-  return (p.display || p.name) + ' · '
-    + (p.birth < 0 ? Math.abs(p.birth) + ' v. Chr.' : p.birth)
-    + (p.ort ? ' · ' + p.ort : '');
-}
-function osmPortraetHtml(p, d){
-  return '<div class="osm-person" style="width:'+d+'px;height:'+d+'px">'
-    + '<img src="assets/images/philosophen/' + p.slug + '.jpg" alt="" loading="lazy"'
-    + ' onerror="this.parentNode.innerHTML=\'<span class=&quot;osm-kuerzel&quot;>'
-    + osmKuerzel(p) + '</span>\'">'
-    + '</div>';
-}
-
-/* Auffaechern in der OSM-Karte: die Einzelnen als Portraet-Marker im Kreis */
+/* Auffaechern: die Einzelnen als Portraet-Marker im Kreis um den Ort */
 function osmFaechern(o){
-  osmSchliesse();
+  osmSchliesse(); osmSpurWeg();
   osmOffen = L.layerGroup().addTo(osmKarte);
   var leute = o.leute.slice().sort(function(a,b){ return a.birth - b.birth; });
   var n = leute.length;
-  var z = osmKarte.getZoom();
   var mitte = osmKarte.latLngToLayerPoint([o.lat, o.lon]);
-  var rad = n === 1 ? 0 : Math.max(46, 22 + n * 8);
+  var rad = Math.max(46, 22 + n * 8);
   leute.forEach(function(p, i){
     var w = (i / n) * Math.PI * 2 - Math.PI / 2;
-    var pt = L.point(mitte.x + Math.cos(w) * rad, mitte.y + Math.sin(w) * rad);
-    var ll = osmKarte.layerPointToLatLng(pt);
-    if (n > 1) L.polyline([[o.lat,o.lon], ll],
-      { color:'#e8c46a', weight:1, opacity:.55 }).addTo(osmOffen);
+    var ll = osmKarte.layerPointToLatLng(
+      L.point(mitte.x + Math.cos(w) * rad, mitte.y + Math.sin(w) * rad));
+    L.polyline([[o.lat, o.lon], ll], { color:'#e8c46a', weight:1, opacity:.55 }).addTo(osmOffen);
     var m = L.marker(ll, { icon: L.divIcon({ className:'', iconSize:[44,44],
       iconAnchor:[22,22], html: osmPortraetHtml(p, 44) }) }).addTo(osmOffen);
     m.bindTooltip(osmBeschriftung(p), { direction:'top', offset:[0,-24] });
+    m.on('mouseover', function(){ osmSpurZeigen(p); });
     m.on('click', function(ev){ L.DomEvent.stopPropagation(ev);
       if (window.tlOpenModal) tlOpenModal(p); });
   });
@@ -2522,67 +4463,7 @@ function osmSchliesse(){
   var box = document.getElementById('karte-liste'); if (box) box.innerHTML = '';
 }
 
-function kaLeerklick(){
-  kaOrtOffen = null;
-  var f = document.getElementById('ka-faecher'); if (f) f.remove();
-  var box = document.getElementById('karte-liste'); if (box) box.innerHTML = '';
-  var svg = document.getElementById('karte-svg');
-  if (svg) svg.querySelectorAll('.ka-punkt').forEach(function(p){ p.classList.remove('gedimmt'); });
-}
-/* Einen Ort auffaechern: die Einzelnen legen sich als runde Portraets im Kreis
-   um den Punkt. So loest sich die Buendelung sichtbar auf, statt nur eine Liste
-   darunter zu zeigen. */
-function kaFaechern(o){
-  var svg = document.getElementById('karte-svg'); if (!svg) return;
-  var alt = svg.querySelector('#ka-faecher'); if (alt) alt.remove();
-  var welt = document.getElementById('ka-welt'); if (!welt) return;
-  var NS = 'http://www.w3.org/2000/svg';
-  function el(t,a){ var e=document.createElementNS(NS,t); for(var k in a) e.setAttribute(k,a[k]); return e; }
-  var g = el('g', { id:'ka-faecher', class:'ka-faecher' });
-  var q = kaProj(o.lat, o.lon);
-  var leute = o.leute.slice().sort(function(a,b){ return a.birth - b.birth; });
-  var n = leute.length;
-  var rad = n === 1 ? 0 : Math.max(16, 7 + n * 2.4) / Math.max(1, kaZ * .8);
-  var pr  = Math.max(5, 9 / Math.max(1, kaZ * .55));      // Portraetradius
-  leute.forEach(function(p, i){
-    var w = (i / n) * Math.PI * 2 - Math.PI / 2;
-    var px = q[0] + Math.cos(w) * rad, py = q[1] + Math.sin(w) * rad;
-    if (n > 1) g.appendChild(el('line', { class:'ka-speiche', x1:q[0], y1:q[1], x2:px, y2:py }));
-    var pg = el('g', { class:'ka-person' });
-    var id = 'kap-' + p.slug;
-    var defs = el('defs', {});
-    var cp = el('clipPath', { id:id });
-    cp.appendChild(el('circle', { cx:px, cy:py, r:pr }));
-    defs.appendChild(cp); pg.appendChild(defs);
-    pg.appendChild(el('circle', { cx:px, cy:py, r:pr, fill:'#1b1c25' }));
-    var im = el('image', { x:px-pr, y:py-pr, width:pr*2, height:pr*2,
-      'clip-path':'url(#'+id+')', preserveAspectRatio:'xMidYMid slice',
-      href:'assets/images/philosophen/'+p.slug+'.jpg' });
-    im.setAttributeNS('http://www.w3.org/1999/xlink','xlink:href',
-      'assets/images/philosophen/'+p.slug+'.jpg');
-    pg.appendChild(im);
-    pg.appendChild(el('circle', { cx:px, cy:py, r:pr, fill:'none' }));
-    var nm = el('text', { class:'ka-pname', x:px, y:py + pr + pr*0.75,
-      'font-size': (pr*0.78).toFixed(1) });
-    nm.textContent = (p.display || p.name).split(' ').pop();
-    pg.appendChild(nm);
-    pg.addEventListener('click', function(ev){ ev.stopPropagation(); if(window.tlOpenModal) tlOpenModal(p); });
-    pg.addEventListener('pointerup', function(ev){ ev.stopPropagation(); });
-    g.appendChild(pg);
-  });
-  welt.appendChild(g);
-}
-
-function kaZeigeOrt(o){
-  kaOrtOffen = o.lat + '|' + o.lon;
-  var box = document.getElementById('karte-liste'); if (!box) return;
-  var svg = document.getElementById('karte-svg');
-  if (svg) svg.querySelectorAll('.ka-punkt').forEach(function(p){
-    p.classList.toggle('gedimmt', p.getAttribute('data-ort') !== (o.lat + '|' + o.lon));
-  });
-  kaFaechern(o);
-  kaListeFuellen(o);
-}
+/* Liste unter der Karte */
 function kaListeFuellen(o){
   var box = document.getElementById('karte-liste'); if (!box) return;
   var leute = o.leute.slice().sort(function(a,b){ return a.birth - b.birth; });
@@ -2590,93 +4471,21 @@ function kaListeFuellen(o){
            + '  (' + leute.length + ')';
   var h = '<div class="ka-ort-titel">' + kopf + '</div><div class="ka-treffer">';
   leute.forEach(function(p){
-    var jahr = (p.birth < 0 ? Math.abs(p.birth) + ' v. Chr.' : p.birth);
-    var unsicher = p.geoSicher === false ? ' ?' : '';
+    var w = kaOrtVon(p);
+    var unsicher = (w && w.sicher === false) ? ' ?' : '';
     h += '<button type="button" class="ka-chip" onclick="kaOeffne(\'' +
          String(p.name).replace(/'/g, "\\'") + '\')">' +
          '<img src="assets/images/philosophen/' + p.slug + '.jpg" alt="" loading="lazy"' +
          ' onerror="this.style.visibility=\'hidden\'">' +
          '<span>' + (p.display || p.name) + '</span>' +
-         '<span class="ka-jahr">' + jahr + unsicher + '</span></button>';
+         '<span class="ka-jahr">' + osmJahr(p, kaOrtart) + unsicher + '</span></button>';
   });
   box.innerHTML = h + '</div>';
 }
-
 window.kaOeffne = function(name){
   var p = tlByName(name);
   if (p && window.tlOpenModal) tlOpenModal(p);
 };
-
-window.kaZoom = function(f){
-  var alt = kaZ;
-  kaZ = Math.max(1, Math.min(8, kaZ * f));
-  /* zur Mitte hin zoomen */
-  kaX = KA_W/2 - (KA_W/2 - kaX) * (kaZ/alt);
-  kaY = KA_H/2 - (KA_H/2 - kaY) * (kaZ/alt);
-  kaGrenzen(); renderKarte();
-};
-window.kaReset = function(){
-  kaZ = 1; kaX = 0; kaY = 0; kaOrtOffen = null;
-  var box = document.getElementById('karte-liste'); if (box) box.innerHTML = '';
-  renderKarte();
-};
-function kaGrenzen(){
-  var minX = KA_W - KA_W * kaZ, minY = KA_H - KA_H * kaZ;
-  kaX = Math.max(minX, Math.min(0, kaX));
-  kaY = Math.max(minY, Math.min(0, kaY));
-}
-
-/* Ziehen und Mausrad */
-(function kaBedienung(){
-  var b = document.getElementById('karte-buehne');
-  if (!b || b.dataset.bereit) return;
-  b.dataset.bereit = '1';
-  var zieht=false, gefangen=false, sx=0, sy=0, ax=0, ay=0, bewegt=false, pid=null;
-  b.addEventListener('pointerdown', function(e){
-    /* Liegt der Druck auf einem Punkt, wird gar nicht erst gezogen — dann
-       bleibt der Klick beim Punkt und wird von dessen eigenem Listener bedient. */
-    if (e.target && e.target.closest && e.target.closest('.ka-punkt')) { zieht=false; return; }
-    zieht=true; bewegt=false; gefangen=false; pid=e.pointerId;
-    sx=e.clientX; sy=e.clientY; ax=kaX; ay=kaY;
-    /* WICHTIG: hier NICHT setPointerCapture aufrufen. Der Zeigerfang leitet alle
-       Folgeereignisse an die Buehne um — der Klick erreicht die Punkte dann nie.
-       Gefangen wird erst, wenn wirklich gezogen wird. */
-  });
-  b.addEventListener('pointermove', function(e){
-    if (!zieht) return;
-    var f = KA_W / b.clientWidth;
-    var dx = (e.clientX - sx) * f, dy = (e.clientY - sy) * f;
-    if (!bewegt && Math.abs(dx) + Math.abs(dy) > 4){
-      bewegt = true;
-      b.classList.add('zieht');
-      try{ b.setPointerCapture(pid); gefangen = true; }catch(err){}
-    }
-    if (!bewegt) return;
-    kaX = ax + dx; kaY = ay + dy; kaGrenzen(); kaSetzeStand();
-  });
-  function ende(e){
-    if (gefangen){ try{ b.releasePointerCapture(pid); }catch(err){} }
-    if (zieht && !bewegt) kaLeerklick();   /* Klick ins Leere schliesst die Auswahl */
-    zieht=false; bewegt=false; gefangen=false;
-    b.classList.remove('zieht');
-  }
-  b.addEventListener('pointerup', ende);
-  b.addEventListener('pointercancel', function(){ zieht=false; bewegt=false;
-    if(gefangen){ try{ b.releasePointerCapture(pid); }catch(err){} } gefangen=false;
-    b.classList.remove('zieht'); });
-  b.addEventListener('wheel', function(e){
-    e.preventDefault();
-    var f = e.deltaY < 0 ? 1.22 : 1/1.22;
-    var r = b.getBoundingClientRect();
-    var mx = (e.clientX - r.left) / r.width * KA_W;
-    var my = (e.clientY - r.top) / r.height * KA_H;
-    var alt2 = kaZ;
-    kaZ = Math.max(1, Math.min(8, kaZ * f));
-    kaX = mx - (mx - kaX) * (kaZ/alt2);
-    kaY = my - (my - kaY) * (kaZ/alt2);
-    kaGrenzen(); renderKarte();
-  }, { passive:false });
-})();
 
 window.tlSetView = function(mode) {
   viewMode = mode;
@@ -2706,7 +4515,7 @@ window.tlSetView = function(mode) {
     if (outer) outer.style.display = 'none';
     if (legend) legend.style.display = 'none';
     if (kwrap) kwrap.classList.add('active');
-    if (kaAnsicht === 'osm') osmZeichne(); else renderKarte();
+    osmZeichne();
   } else {
     if (outer) outer.style.display = '';
     if (legend) legend.style.display = '';
@@ -2720,7 +4529,13 @@ window.tlSetFilter = function(value) {
     else if (value.indexOf('era:') === 0) { window._currentEra = value.slice(4); epoch = ''; }
     else { epoch = value; window._currentEra = ''; }
   }
-  if (window.updateEpochLegendActive) updateEpochLegendActive(); else if (filterMode === 'disc') {
+  /* Der Aufruf der Epochenlegende stand früher am Anfang dieser Kette und
+     hat sie damit abgeschnitten: Sobald updateEpochLegendActive existierte
+     — also immer —, wurden Disziplin, Strömung, Grundposition und Thema
+     nie gesetzt. Die vier Filter waren vorhanden, blieben aber wirkungslos. */
+  if (window.updateEpochLegendActive) updateEpochLegendActive();
+
+  if (filterMode === 'disc') {
     discFilter = value || '';
   } else if (filterMode === 'mov') {
     movFilter = value || '';
@@ -2736,10 +4551,16 @@ window.tlSetFilter = function(value) {
 /* Karte neu zeichnen, wenn sie sichtbar ist. Wird von allen Filterfunktionen
    aufgerufen — sonst wirken Epoche, Disziplin, Stroemung usw. nur auf der
    Zeitachse und der Tabelle, aber nicht auf der Weltkarte. */
+/* Achtung: Diese Zuweisung überschreibt die gleichnamige weiter oben.
+   Beide müssen dasselbe tun, sonst hängt das Verhalten davon ab, welche
+   zuletzt ausgeführt wurde. */
 window.kaAuffrischen = function(){
   var w = document.getElementById('karte-wrap');
   if (!w || !w.classList.contains('active')) return;
-  try{ if (kaAnsicht === 'osm') osmZeichne(); else renderKarte(); }catch(e){}
+  try{ kzBinden(); }catch(e){ console.warn('Zeitregler:', e); }
+  try{ kfListeBauen(); }catch(e){ console.warn('Einzelansicht:', e); }
+  try{ ksBinden(); }catch(e){ console.warn('Statuszeile:', e); }
+  try{ osmZeichne(); }catch(e){}
 };
 
 /* Filter-Modus umschalten (Epoche / Disziplin / Strömung) */
@@ -2950,6 +4771,10 @@ function init() {
     buildEpochFilter();
     buildEpochLegend();
     tlKreisLeiste();          // Kulturkreis-Fach fuellen (hier existiert #tl-kreise sicher)
+    /* Aufruf ueber den Menuepunkt „Weltkarte" (#philosophy/karte): direkt dorthin. */
+    try{ if (window._routeSub && window._routeSub[0] === 'karte'){
+      setTimeout(function(){ tlSetView('karte'); }, 0);
+    } }catch(e){}
     tlGeoAnhaengen(); tlHerkunftFuellen();   // Geodaten + Herkunftsauswahl
     setupDrag();
 

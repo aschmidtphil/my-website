@@ -4,10 +4,10 @@
 .wc-lb.open{display:flex;}
 .wc-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:8px;cursor:default;user-select:none;}
 .wc-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:2001;}
-.wc-lb-x:hover{background:rgba(255,255,255,.28);}
+@media (hover: hover){ .wc-lb-x:hover{background:rgba(255,255,255,.28);} }
 .wc-lb-btns{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);display:flex;gap:.4rem;z-index:2001;}
 .wc-lb-btn{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);color:#fff;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.05rem;font-weight:700;}
-.wc-lb-btn:hover{background:rgba(255,255,255,.3);}
+@media (hover: hover){ .wc-lb-btn:hover{background:rgba(255,255,255,.3);} }
 .wc-thumb-wrap{position:relative;cursor:zoom-in;border-radius:var(--r);overflow:hidden;}
 .wc-hint{position:absolute;bottom:.5rem;right:.6rem;background:rgba(0,0,0,.62);color:#fff;font-family:var(--fm);font-size:.63rem;padding:.18rem .45rem;border-radius:4px;pointer-events:none;letter-spacing:.04em;}
 
@@ -70,7 +70,7 @@
   /* important: NO justify-content space-between - keep everything left-aligned */
 }
 .toc-row:last-child{border-bottom:none;}
-.toc-row:hover{background:var(--surface);}
+@media (hover: hover){ .toc-row:hover{background:var(--surface);} }
 .toc-row.has-children{cursor:pointer;}
 .toc-row.l0{padding-left:.35rem;}
 .toc-row.l1{padding-left:1.4rem;font-size:.79rem;}
@@ -78,7 +78,7 @@
 .toc-row.l3{padding-left:3.9rem;font-size:.73rem;color:var(--text3);}
 .toc-arrow{font-size:.56rem;color:var(--text3);flex:0 0 11px;text-align:center;transition:transform .2s;}
 .toc-row.open>.toc-arrow{transform:rotate(90deg);}
-.toc-num{font-family:var(--fm);font-size:.67rem;color:var(--accent);flex:0 0 auto;min-width:30px;}
+.toc-num{font-family:var(--fm);font-size:.67rem;color:var(--accent-text);flex:0 0 auto;min-width:30px;}
 .toc-num.muted{color:var(--text3);}
 /* KEY FIX: title takes only its own width — no flex grow */
 .toc-name{flex:0 1 auto;color:inherit;padding-right:.25rem;}
@@ -93,7 +93,7 @@
 
 /* Right col: wordcloud */
 .diss-wc-col{position:sticky;top:72px;}
-.diss-wc-label{font-family:var(--fm);font-size:.66rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;}
+.diss-wc-label{font-family:var(--fm);font-size:.66rem;color:var(--accent-text);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;}
 .diss-wc-note{font-size:.67rem;color:var(--text3);margin-top:.5rem;line-height:1.5;font-family:var(--fm);}
 
 /* ── Diss image lightbox ── */
@@ -101,13 +101,29 @@
 .diss-img-lb.open{display:flex;}
 .diss-img-lb img{max-width:94vw;max-height:90vh;object-fit:contain;border-radius:10px;box-shadow:0 8px 64px rgba(0,0,0,.7);cursor:default;user-select:none;}
 .diss-img-lb-x{position:fixed;top:.9rem;right:1.1rem;background:rgba(255,255,255,.15);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:1rem;cursor:pointer;z-index:2001;}
-.diss-img-lb-x:hover{background:rgba(255,255,255,.3);}
+@media (hover: hover){ .diss-img-lb-x:hover{background:rgba(255,255,255,.3);} }
 
 /* Diss images clickable */
 .diss-hero-img img,
 .diss-abstract-row .diss-side-img img{cursor:zoom-in;transition:transform .25s,box-shadow .25s;}
-.diss-hero-img img:hover,
-.diss-abstract-row .diss-side-img img:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+
+/* Textspalte (mind. 200 px) und Randbild (fest 200 px) plus Abstand
+   ergeben 428 px — die Seite schob sich auf dem Telefon um 86 px
+   über den Rand hinaus. Ab hier stehen beide untereinander, das Bild passt sich
+   der Breite an. Oberhalb von 900 px unverändert. */
+@media (max-width: 900px){
+  .diss-abstract-row{flex-direction:column;gap:1.2rem;}
+  .diss-abstract-row .diss-side-img{align-self:center;max-width:100%;}
+  .diss-abstract-row .diss-side-img img{width:100%;max-width:260px;}
+
+  /* „Weltalterphilosophie." passt in eine 294 px breite Überschrift nicht
+     und lief über den rechten Rand hinaus. (Das dekorative Leuchten ragt
+     konstruktiv 60 px hinaus — das ist Absicht und wird von overflow:hidden
+     sauber abgeschnitten, es war nie ein Fehler.) */
+  .diss-hero{overflow:hidden;}
+  .diss-hero h1, .diss-hero .page-title{overflow-wrap:break-word; hyphens:auto;}
+}
+@media (hover: hover){ .diss-hero-img img:hover, .diss-abstract-row .diss-side-img img:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,.4);} }
 </style>
 
 <!-- ═══ HERO ═══════════════════════════════════════════ -->
@@ -123,7 +139,7 @@
     </p>
     <h1 style="font-family:var(--fh);font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.1;max-width:680px;margin-bottom:1rem;">
       Schellings Zeittheorie.<br>
-      <span style="color:var(--accent)">Das verborgene System hinter der Weltalterphilosophie.</span>
+      <span style="color:var(--accent-text)">Das verborgene System hinter der Weltalterphilosophie.</span>
     </h1>
     <div class="diss-meta-row">
       <span class="diss-meta-badge accent">
@@ -194,19 +210,19 @@
     <ul class="toc-list" id="diss-toc"></ul>
 
     <!-- Context cards -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:2rem;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px, 100%), 1fr));gap:1rem;margin-top:2rem;">
       <div class="card" style="padding:1.2rem;">
-        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.35rem;">VERLAGSREIHE</div>
+        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent-text);letter-spacing:.1em;margin-bottom:.35rem;">VERLAGSREIHE</div>
         <div style="font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.28rem;">Schellingiana</div>
         <div style="color:var(--text2);font-size:.77rem;line-height:1.62;">Die führende Schelling-Forschungsreihe im deutschsprachigen Raum. Band 35 von 36.</div>
       </div>
       <div class="card" style="padding:1.2rem;">
-        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.35rem;">BETREUUNG</div>
+        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent-text);letter-spacing:.1em;margin-bottom:.35rem;">BETREUUNG</div>
         <div style="font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.28rem;">Prof. Dr. Alexander Schnell</div>
         <div style="color:var(--text2);font-size:.77rem;line-height:1.62;">Lehrstuhl für Theoretische Philosophie &amp; Phänomenologie, BU Wuppertal.</div>
       </div>
       <div class="card" style="padding:1.2rem;">
-        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.35rem;">KERNTHESE</div>
+        <div style="font-family:var(--fm);font-size:.65rem;color:var(--accent-text);letter-spacing:.1em;margin-bottom:.35rem;">KERNTHESE</div>
         <div style="font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);margin-bottom:.28rem;">Zeit als christliche Heilsgeschichte</div>
         <div style="color:var(--text2);font-size:.77rem;line-height:1.62;">Die Weltalterentwürfe als christliche Zeittheorie in Anlehnung an Paulus.</div>
       </div>

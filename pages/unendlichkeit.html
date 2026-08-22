@@ -87,7 +87,7 @@
 .inf-wrap{ position:relative; width:100%; height:min(72vh,760px); min-height:430px;
   background:#04050c; border:1px solid var(--border); border-radius:var(--r);
   overflow:hidden; box-shadow:var(--shadow); }
-.inf-wrap:fullscreen{ height:100vh; border-radius:0; }
+.inf-wrap:fullscreen{ height:100dvh; border-radius:0; }
 #inf-canvas{ width:100%; height:100%; display:block; cursor:ns-resize; touch-action:none; }
 .inf-controls{ position:absolute; bottom:.85rem; right:.85rem; display:flex; flex-wrap:wrap;
   justify-content:flex-end; gap:.4rem; z-index:5; max-width:calc(100% - 1.7rem); }
@@ -100,7 +100,7 @@
   display:inline-flex; align-items:center; justify-content:center;
   border-radius:8px; cursor:pointer; backdrop-filter:blur(6px); transition:all .18s;
   box-shadow:0 2px 10px rgba(0,0,0,.45); }
-.inf-btn:hover{ background-color:rgba(24,28,52,.95); border-color:#e8c46a; color:#f6e7bb; }
+@media (hover: hover){ .inf-btn:hover{ background-color:rgba(24,28,52,.95); border-color:#e8c46a; color:#f6e7bb; } }
 .inf-btn:focus-visible{ outline:2px solid #e8c46a; outline-offset:2px; }
 .inf-btn.on, .inf-btn[aria-pressed="true"]{ border-color:#e8c46a; color:#f6e7bb;
   background-color:rgba(46,38,16,.92); }
@@ -139,7 +139,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   <div class="inf-hero-cols">
     <div>
       <p class="hero-tag">Makrokosmos &#8644; Mikrokosmos</p>
-      <h1 class="page-title">Unendlich<span style="color:var(--accent2)">keit</span><span>.</span></h1>
+      <h1 class="page-title">Unendlich<span style="color:var(--accent2-text)">keit</span><span>.</span></h1>
       <p class="page-desc">Eine unendliche Zoomfahrt zwischen den zwei Unendlichkeiten: aus dem Universum im freien Fall zur Erde, über Landschaften voller Leben zu einer roten Milbe &mdash; und in ihrem Innersten beginnt der Kosmos von neuem. Jeder Zyklus eine andere Welt: mal endet die Reise auf einem Moospolster, mal unter der Oberfläche eines Teichs oder des offenen Meers, mal als Larve auf dem Rücken eines Weberknechts.</p>
     </div>
   </div>
@@ -2924,4 +2924,3 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   raf=requestAnimationFrame(frame);
 })();
 </script>
-

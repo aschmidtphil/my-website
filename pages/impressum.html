@@ -4,13 +4,13 @@
 <style>
 .legal-wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
 .legal-hero{margin-bottom:2.5rem;}
-.legal-hero .hero-tag{font-family:var(--fm);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem;}
+.legal-hero .hero-tag{font-family:var(--fm);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);margin-bottom:.6rem;}
 .legal-hero h1{font-family:var(--fh);font-size:clamp(1.9rem,4vw,2.6rem);font-weight:800;letter-spacing:-.03em;color:var(--text);line-height:1.05;}
 .legal-hero p{color:var(--text2);margin-top:.7rem;line-height:1.7;font-size:.92rem;}
 
 .legal-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:1rem;}
 .legal-tab{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.8rem;transition:all .15s;}
-.legal-tab:hover{border-color:var(--accent);}
+@media (hover: hover){ .legal-tab:hover{border-color:var(--accent);} }
 .legal-tab.active{background:var(--accent);color:#fff;border-color:transparent;}
 
 .legal-section{display:none;animation:legalFade .3s ease;}
@@ -21,8 +21,8 @@
 .legal-section h2:first-child{margin-top:0;}
 .legal-section h3{font-family:var(--fh);font-size:1.05rem;font-weight:700;color:var(--text);margin:1.4rem 0 .5rem;}
 .legal-section p{color:var(--text2);line-height:1.75;margin-bottom:.9rem;font-size:.9rem;}
-.legal-section a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s;}
-.legal-section a:hover{border-color:var(--accent);}
+.legal-section a{color:var(--accent-text);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s;}
+@media (hover: hover){ .legal-section a:hover{border-color:var(--accent);} }
 .legal-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.5rem;margin-bottom:1.2rem;}
 .legal-card .label{font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem;}
 .legal-card .val{color:var(--text);font-size:.95rem;font-weight:500;}
@@ -36,15 +36,15 @@
 .lic-pdtoggle{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.74rem;color:var(--text2);cursor:pointer;white-space:nowrap;}
 .lic-pdtoggle input{cursor:pointer;accent-color:var(--accent);}
 .lic-pdnote{font-size:.78rem;color:var(--text3);margin:-.4rem 0 1.1rem;line-height:1.4;font-style:italic;}
-.lic-author-short .lic-more{color:var(--accent);text-decoration:none;font-size:.95em;opacity:.85;}
-.lic-author-short .lic-more:hover{text-decoration:underline;}
+.lic-author-short .lic-more{color:var(--accent-text);text-decoration:none;font-size:.95em;opacity:.85;}
+@media (hover: hover){ .lic-author-short .lic-more:hover{text-decoration:underline;} }
 .lic-list{display:flex;flex-direction:column;gap:.5rem;}
 .lic-item{display:flex;gap:.9rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.7rem .9rem;}
 .lic-thumb{width:44px;height:44px;border-radius:50%;object-fit:cover;flex-shrink:0;background:var(--card);border:1px solid var(--border2);}
 .lic-info{flex:1;min-width:0;}
 .lic-name{font-family:var(--fh);font-weight:700;font-size:.92rem;color:var(--text);}
 .lic-meta{font-family:var(--fm);font-size:.72rem;color:var(--text3);margin-top:.15rem;line-height:1.5;}
-.lic-meta a{color:var(--accent);text-decoration:none;}
+.lic-meta a{color:var(--accent-text);text-decoration:none;}
 .lic-badge{display:inline-block;font-family:var(--fm);font-size:.62rem;padding:.12rem .45rem;border-radius:4px;margin-right:.3rem;white-space:nowrap;}
 .lic-badge.pd{background:#22c55e22;color:#22c55e;}
 .lic-badge.cc{background:#5b80e822;color:#5b80e8;}
@@ -108,8 +108,44 @@
     <h3>Hosting &amp; Server-Logs</h3>
     <p>Diese Seite wird über GitHub Pages (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA) bereitgestellt. Beim Aufruf der Seite werden durch den Hoster technisch notwendige Zugriffsdaten in Server-Logfiles verarbeitet (z.&thinsp;B. IP-Adresse, Datum und Uhrzeit des Zugriffs, abgerufene Datei, Browsertyp). Diese Verarbeitung erfolgt zur Gewährleistung eines störungsfreien Betriebs auf Grundlage des berechtigten Interesses gemäß Art. 6 Abs. 1 lit. f DSGVO. Auf diese serverseitige Verarbeitung habe ich als Seitenbetreiber keinen direkten Einfluss; es gelten die Datenschutzbestimmungen von GitHub.</p>
 
+    <h3>Kartendarstellung (OpenStreetMap)</h3>
+    <p>Auf der Seite <em>Philosophen-Timeline</em> lässt sich die Ansicht <em>Weltkarte</em> aufrufen.
+      In der Voreinstellung nutzt sie Kartenmaterial von OpenStreetMap. Beim Aufruf dieser Ansicht werden
+      Kartenkacheln von Servern der OpenStreetMap Foundation (St John&rsquo;s Innovation Centre, Cowley Road,
+      Cambridge, CB4&nbsp;0WS, Vereinigtes Königreich) geladen. Dabei wird Ihre IP-Adresse an diese Server
+      übermittelt; auf die dortige Verarbeitung habe ich keinen Einfluss. Rechtsgrundlage ist das
+      berechtigte Interesse an einer anschaulichen Darstellung gemäß Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f
+      DSGVO. Die Datenschutzerklärung der OSM Foundation finden Sie unter
+      <a href="https://osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener">osmfoundation.org</a>.</p>
+    <p>Die Kartenansicht wird nur geladen, wenn Sie sie ausdrücklich öffnen — beim übrigen Besuch der Seite
+      entstehen keine Verbindungen dorthin. Die verwendete Kartenbibliothek Leaflet wird von diesem Server
+      ausgeliefert; insoweit findet keine Verbindung zu Dritten statt.</p>
+
+    <h3>Schriftarten</h3>
+    <p>Alle verwendeten Schriften (Syne, DM&nbsp;Sans, JetBrains&nbsp;Mono, Cinzel) liegen als Dateien auf
+      diesem Server und werden von dort geladen. Es besteht <strong>keine Verbindung zu Google Fonts</strong>
+      oder einem anderen Schrift-Dienst; es wird also auch keine IP-Adresse an Dritte übermittelt. Die
+      Schriften stehen unter der SIL Open Font License 1.1 (Nachweise in den <a href="#" onclick="legalShow('bilder',document.querySelector('[data-sec=bilder]'));return false;">Bildnachweisen</a>).</p>
+
     <h3>Keine Cookies, kein Tracking</h3>
-    <p>Diese Seite verwendet keine Cookies, kein Web-Analyse-Werkzeug (wie Google Analytics) und keine eingebetteten Drittinhalte, die Daten an externe Server übertragen. Alle Schriftarten, Bilder und Skripte werden lokal von dieser Seite geladen. Eine Einwilligung (Cookie-Banner) ist daher nicht erforderlich.</p>
+    <p>Diese Seite verwendet keine Cookies und kein Web-Analyse-Werkzeug (wie Google Analytics). Eine Einwilligung (Cookie-Banner) ist daher nicht erforderlich.</p>
+
+    <h3>Inhalte Dritter auf einzelnen Unterseiten</h3>
+    <p>Das Grundgerüst der Seite — Schriften, Stile, Skripte, eigene Bilder — wird vollständig von diesem
+      Server ausgeliefert. Auf drei Unterseiten werden jedoch Inhalte nachgeladen, die von fremden Servern
+      stammen; dabei wird Ihre IP-Adresse an den jeweiligen Anbieter übermittelt. Das geschieht erst, wenn
+      Sie die betreffende Seite öffnen, und nicht beim übrigen Besuch:</p>
+    <ul style="margin:.4rem 0 1rem 1.2rem;line-height:1.7">
+      <li><em>Weltkarte der Denker</em> — Kartenkacheln von OpenStreetMap (siehe Abschnitt oben)</li>
+      <li><em>Gaming</em> — Titelbilder von <a href="https://rawg.io/" target="_blank" rel="noopener">RAWG</a>
+        sowie Abbildungen und Daten aus der offenen <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokéAPI</a>
+        (ausgeliefert über GitHub)</li>
+      <li><em>Bücher</em> — Buchcover und Suchergebnisse der
+        <a href="https://openlibrary.org/" target="_blank" rel="noopener">Open Library</a> des Internet Archive</li>
+    </ul>
+    <p>Rechtsgrundlage ist das berechtigte Interesse an einer anschaulichen Darstellung gemäß Art.&nbsp;6
+      Abs.&nbsp;1 lit.&nbsp;f DSGVO. Es werden dabei keine Daten von mir gespeichert; auf die Verarbeitung
+      beim jeweiligen Anbieter habe ich keinen Einfluss.</p>
 
     <h3>Lokale Speicherung im Browser</h3>
     <p>Einstellungen wie das gewählte Design (hell/dunkel) und der Stil werden ausschließlich lokal in deinem Browser gespeichert (Local Storage) und nicht an einen Server übertragen. Sie verbleiben auf deinem Gerät und können jederzeit über die Browser-Einstellungen gelöscht werden.</p>
@@ -124,6 +160,19 @@
   <!-- ═══ BILDNACHWEISE ═══ -->
   <section class="legal-section" id="legal-bilder">
     <h2>Bildnachweise</h2>
+    <p style="font-size:.86rem;line-height:1.7;margin-bottom:1.2rem">
+      <b>Verwendete Software:</b> Kartenbibliothek <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>
+      1.9.4, &copy; Volodymyr Agafonkin und Mitwirkende, BSD-2-Clause-Lizenz.
+      Kartendaten der Weltkarten-Ansicht: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>-Mitwirkende,
+      Open Database License (ODbL).</p>
+    <p style="font-size:.86rem;line-height:1.7;margin-bottom:1.2rem">
+      <b>Verwendete Schriften</b> (lokal ausgeliefert, alle unter der
+      <a href="https://openfontlicense.org/" target="_blank" rel="noopener">SIL Open Font License 1.1</a>):
+      <em>Syne</em> &copy; Bonjour Monde &middot;
+      <em>DM&nbsp;Sans</em> &copy; Colophon Foundry, Jonny Pinhorn und Mitwirkende &middot;
+      <em>JetBrains&nbsp;Mono</em> &copy; JetBrains s.r.o. &middot;
+      <em>Cinzel</em> &copy; Natanael Gama.
+      Die Dateien stammen aus den Fontsource-Paketen (Version&nbsp;5.3.0) und sind unverändert.</p>
     <p>Die Porträts der Philosophen stammen überwiegend von Wikimedia&nbsp;Commons. Viele ältere Werke (Gemälde, Stiche, Büsten) sind gemeinfrei (Public&nbsp;Domain). Wo Bilder unter einer Creative-Commons-Lizenz stehen, sind Urheber, Lizenz und Quelle nachstehend genannt; der Link führt jeweils zur Originalseite mit den vollständigen Lizenzangaben. Die Bilder wurden für die Darstellung zugeschnitten und in der Größe angepasst.</p>
 
     <div class="lic-controls">

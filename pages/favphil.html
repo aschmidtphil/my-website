@@ -45,7 +45,7 @@
   display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,var(--surface),var(--bg2));
   font-family:var(--fh);font-size:6rem;font-weight:800;
-  opacity:.4;color:var(--accent);
+  opacity:.4;color:var(--accent-text);
 }
 
 /* Info column right */
@@ -88,7 +88,7 @@
   width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.9rem;
   transition:all .2s;display:flex;align-items:center;justify-content:center;
 }
-.fpb-btn:hover{border-color:var(--accent);color:var(--accent);}
+@media (hover: hover){ .fpb-btn:hover{border-color:var(--accent);color:var(--accent-text);} }
 
 .fpb-dots{
   position:absolute;left:0;right:0;bottom:.7rem;z-index:5;
@@ -326,7 +326,7 @@ window.buildFavphilBanner = function(){
     <div class="page-hero-glow"></div>
     <p class="hero-tag">Persönliche Auswahl</p>
     <h1 class="page-title">Lieblingsphilosophen<span>.</span></h1>
-    <p class="page-desc">31 Denker*innen, die mein philosophisches Denken geprägt haben.</p>
+    <p class="page-desc"><span data-zahl="favphil">31</span> Denker*innen, die mein philosophisches Denken geprägt haben.</p>
   </div>
   <div class="sec">
     <div class="favphil-grid" id="favphil-grid"></div>

@@ -5,17 +5,17 @@
 <style>
 /* ── Forschungsinteressen-Bar ─────────────────────────────────── */
 .forschung-bar{padding:1.8rem 3rem 0;}
-.forschung-label{font-family:var(--fm);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
+.forschung-label{font-family:var(--fm);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem;}
 .forschung-label::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);}
 .forschung-chips{display:flex;flex-wrap:wrap;gap:.5rem;}
 .forschung-chip{font-family:var(--fh);font-size:.88rem;font-weight:500;padding:.4rem .9rem;background:var(--surface);border:1px solid var(--border);border-radius:20px;color:var(--text);transition:all .15s;cursor:default;}
-.forschung-chip:hover{border-color:var(--accent2);color:var(--accent2);transform:translateY(-1px);}
+@media (hover: hover){ .forschung-chip:hover{border-color:var(--accent2);color:var(--accent2-text);transform:translateY(-1px);} }
 
 /* ── Hero ──────────────────────────────────────────────────────── */
 .phe-hero{padding:3.5rem 3.5rem 2.2rem;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
 .phe-hero-glow{position:absolute;right:-100px;top:-50px;width:450px;height:450px;background:radial-gradient(circle,var(--glow-accent2) 0%,transparent 70%);pointer-events:none;}
 .phe-hero h1{font-family:var(--fh);font-size:clamp(2rem,4.5vw,3rem);font-weight:800;letter-spacing:-.035em;color:var(--text);line-height:1.05;margin:.3rem 0 .9rem;}
-.phe-hero h1 .accent{color:var(--accent2);}
+.phe-hero h1 .accent{color:var(--accent2-text);}
 .phe-hero .lead{color:var(--text2);max-width:720px;line-height:1.75;font-size:.95rem;font-style:italic;border-left:3px solid var(--accent);padding-left:1rem;}
 
 /* ── Kapitel-Navigation (sticky, ersetzt TOC mit kaputten Ankern) ── */
@@ -32,7 +32,7 @@
   background:transparent;border:1px solid var(--border);color:var(--text2);
   transition:all .15s;white-space:nowrap;
 }
-.phe-chap-btn:hover{border-color:var(--accent);color:var(--accent);}
+@media (hover: hover){ .phe-chap-btn:hover{border-color:var(--accent);color:var(--accent-text);} }
 .phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 .phe-chap-btn .num{font-size:.65rem;opacity:.7;}
 .phe-nav-group{
@@ -64,7 +64,7 @@
 }
 .phe-margin-stat{
   font-family:var(--fh);font-size:2.6rem;font-weight:800;
-  letter-spacing:-.04em;line-height:.95;color:var(--accent2);
+  letter-spacing:-.04em;line-height:.95;color:var(--accent2-text);
 }
 .phe-margin-stat-label{
   font-family:var(--fm);font-size:.65rem;letter-spacing:.14em;
@@ -76,7 +76,7 @@
 }
 .phe-margin-key-label{
   font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--accent);margin-bottom:.45rem;
+  text-transform:uppercase;color:var(--accent-text);margin-bottom:.45rem;
 }
 .phe-margin-key-text{
   font-family:var(--fh);font-size:.85rem;line-height:1.6;color:var(--text);
@@ -86,7 +86,7 @@
 .phe-main{grid-column:2;min-width:0;}
 .phe-ch-num{
   font-family:var(--fm);font-size:.72rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--accent);font-weight:600;
+  text-transform:uppercase;color:var(--accent-text);font-weight:600;
   margin-bottom:.3rem;
 }
 .phe-ch-title{
@@ -97,6 +97,17 @@
   font-family:var(--fh);font-style:italic;color:var(--text3);
   font-size:1rem;margin-bottom:1.5rem;line-height:1.5;
 }
+/* Zwischenüberschrift innerhalb eines Kapitels. Bisher kam die Seite ohne
+   aus, weil jedes Kapitel einen durchlaufenden Gedankengang hatte. Kapitel 07
+   führt zwei benannte Einwände vor und braucht deshalb eine Gliederungsstufe
+   unterhalb von h2 — bewusst zurückgenommen, damit sie den Kapiteltitel
+   nicht überstimmt. */
+.phe-sub{
+  font-family:var(--fh);font-weight:700;font-size:1.05rem;
+  color:var(--text);letter-spacing:-.01em;
+  margin:2.2rem 0 .9rem;padding-top:.9rem;
+  border-top:1px solid var(--border);
+}
 .phe-main p{
   font-family:var(--fh);font-size:1.04rem;line-height:1.78;
   color:var(--text);margin-bottom:1.1rem;
@@ -104,9 +115,9 @@
 .phe-main p:first-of-type::first-letter{
   font-family:var(--fh);font-size:3.6rem;font-weight:800;
   float:left;line-height:.85;padding:.3rem .55rem 0 0;
-  color:var(--accent2);
+  color:var(--accent2-text);
 }
-.phe-main strong{color:var(--accent2);font-weight:600;}
+.phe-main strong{color:var(--accent2-text);font-weight:600;}
 .phe-main em{font-style:italic;color:var(--text);}
 
 .phe-pullquote{
@@ -148,7 +159,7 @@
 }
 .phe-refs-label{
   font-family:var(--fm);font-size:.58rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--accent);margin-bottom:.55rem;font-weight:700;
+  text-transform:uppercase;color:var(--accent-text);margin-bottom:.55rem;font-weight:700;
 }
 .phe-refs-list{
   font-family:var(--fh);font-size:.82rem;color:var(--text2);line-height:1.65;
@@ -166,11 +177,11 @@
 }
 .phe-coda::before{
   content:'∞';position:absolute;top:-18px;left:32px;
-  background:var(--bg);padding:0 .6rem;font-size:1.8rem;color:var(--accent);
+  background:var(--bg);padding:0 .6rem;font-size:1.8rem;color:var(--accent-text);
 }
 .phe-coda-label{
   font-family:var(--fm);font-size:.65rem;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--accent);margin-bottom:.9rem;
+  text-transform:uppercase;color:var(--accent-text);margin-bottom:.9rem;
 }
 .phe-coda-text{
   font-family:var(--fh);font-size:1.15rem;line-height:1.75;
@@ -187,7 +198,7 @@
 }
 .phe-downloads-label{
   font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.6rem;font-weight:700;
+  color:var(--accent-text);margin-bottom:.6rem;font-weight:700;
 }
 .phe-downloads-hint{
   font-size:.85rem;color:var(--text3);font-style:italic;line-height:1.6;
@@ -246,10 +257,11 @@
   <button class="phe-chap-btn" data-ch="4"><span class="num">04</span> Metaphysik</button>
   <button class="phe-chap-btn" data-ch="5"><span class="num">05</span> Wissenschaft</button>
   <button class="phe-chap-btn" data-ch="6"><span class="num">06</span> Wissen &amp; Meinung</button>
+  <button class="phe-chap-btn" data-ch="7"><span class="num">07</span> Idealität</button>
   <span class="phe-nav-group">III · Bejahung</span>
-  <button class="phe-chap-btn" data-ch="7"><span class="num">07</span> Freiheit &amp; Moral</button>
-  <button class="phe-chap-btn" data-ch="8"><span class="num">08</span> Individuum</button>
-  <button class="phe-chap-btn" data-ch="9"><span class="num">09</span> Biografie</button>
+  <button class="phe-chap-btn" data-ch="8"><span class="num">08</span> Freiheit &amp; Moral</button>
+  <button class="phe-chap-btn" data-ch="9"><span class="num">09</span> Individuum</button>
+  <button class="phe-chap-btn" data-ch="10"><span class="num">10</span> Biografie</button>
   <span class="phe-nav-group">Ende</span>
   <button class="phe-chap-btn" data-ch="coda"><span class="num">∞</span> Schluss</button>
 </nav>
@@ -540,12 +552,77 @@
         <div class="phe-margin-stat-label">Siebter Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
+        <div class="phe-margin-key-label">Spannung</div>
+        <div class="phe-margin-key-text">Idealitäten sind <strong>notwendig und objektiv</strong> — daraus folgt aber nicht, dass sie zeitlos sind.</div>
+      </div>
+    </aside>
+    <main class="phe-main">
+      <div class="phe-ch-num">Kapitel 07</div>
+      <h2 class="phe-ch-title">Idealität, Zeit und die Grenze der Abstraktion</h2>
+      <div class="phe-ch-subtitle">Warum aus der Stabilität einer Wahrheit nicht ihre Unabhängigkeit von aller Geschichte folgt.</div>
+
+      <p>Alles, was uns zugänglich ist, steht in Zeit und Veränderung. Das gilt nicht nur für Dinge und Ereignisse, sondern auch für Erkenntnis, Begriffe, Sprache und für die Formen, in denen wir überhaupt bestimmen, was als wahr gilt. Auch sie sind Vollzüge endlicher, geschichtlicher Wesen. Deshalb halte ich es für fraglich, ob ein Begriff von Wahrheit oder Idealität den Phänomenen gerecht wird, der vollständig von Zeitlichkeit und Endlichkeit gereinigt ist.</p>
+
+      <p>Mathematische und logische Systeme können außerordentlich stabil sein, über Personen und Kulturen hinweg zugänglich und innerhalb ihrer Voraussetzungen zwingend. Das bestreite ich nicht — es ist der Ausgangspunkt. Aber daraus folgt noch nicht, dass ihre Wahrheit schlechthin zeitlos ist und unabhängig von jeder Form des Denkens, Verstehens und Interpretierens. Denn auch Axiome, Definitionen, Bedeutungen und die Unterscheidung dessen, was als logisch oder mathematisch notwendig gilt, sind uns nur innerhalb geschichtlicher Formen des Verstehens zugänglich.</p>
+
+      <div class="phe-pullquote">Die Abstraktion kann von konkreten Bedingungen absehen — aber nicht von den Bedingungen ihres eigenen Vollzugs.</div>
+
+      <p>Genau hier liegt die Grenze. Abstraktion ist ein Verfahren: Sie sieht ab, sie lässt weg, sie hält fest. Aber sie ist selbst etwas, das getan wird, von jemandem, in einer Sprache, unter Voraussetzungen, die nicht mit abstrahiert werden. In jeder Idealität könnte deshalb ein Rest von Zeitlichkeit erhalten bleiben — und zwar gerade das, was die Idealität als reine, zeitlose Idealität auszublenden versucht.</p>
+
+      <p>Das bedeutet nicht, dass Wahrheit bloß subjektiv oder beliebig wäre. Diese Folgerung wäre voreilig und würde die Sache verfehlen. Es bedeutet vielmehr, dass Objektivität und Notwendigkeit nicht ohne Weiteres mit absoluter Zeitlosigkeit gleichzusetzen sind. Eine Wahrheit kann innerhalb eines begrifflichen Horizonts notwendig und objektiv gelten, ohne deshalb eine schlechthin unveränderliche Wahrheit „an sich" zu sein.</p>
+
+      <p>Die Kritik richtet sich also nicht gegen mathematische Wahrheit. Sie richtet sich gegen einen einzigen Schritt: den Schluss von der Stabilität und Notwendigkeit einer Idealität auf ihre behauptete absolute Unabhängigkeit von Zeit, Geschichte und endlichem Denken. Dieser Schritt ist metaphysisch, nicht mathematisch — und er wird selten als solcher ausgewiesen.</p>
+
+      <h3 class="phe-sub">Der Einwand Husserls</h3>
+
+      <p>Husserl ist hier der interessanteste Gegner, weil er die Idealität gerade retten will und dafür eine genaue Unterscheidung einführt: die zwischen dem realen psychischen Vollzug und dem idealen Sinn. Wenn zwei Menschen denselben mathematischen Satz verstehen, sind ihre Erlebnisse verschieden — und doch erfassen sie denselben Sinn. Diese Identität will Husserl erklären, und sie ist erklärungsbedürftig.</p>
+
+      <p>Meine Gegenfrage lautet nicht, ob es diese Identität gibt, sondern was aus ihr folgt: Warum muss die Identität des Sinnes eine <em>absolut zeitlose</em> Identität sein? Vielleicht ist ein Sinn über viele verschiedene Vollzüge hinweg identifizierbar, ohne deshalb außerhalb jeder Geschichte zu bestehen. Wiedererkennbarkeit ist nicht dasselbe wie Überzeitlichkeit. Husserl selbst hat in der Spätphilosophie mit der Rückfrage nach der Urstiftung einen Weg eröffnet, auf dem Idealitäten eine Geschichte haben — eine Geschichte ihrer Stiftung.</p>
+
+      <h3 class="phe-sub">Der stärkste Einwand: Der Sinn hat sich doch gar nicht verändert</h3>
+
+      <p>Hier wäre Frege am stärksten. Er könnte sagen: Du verwechselst schlicht verschiedene Theorien miteinander. Der Sinn des euklidischen Lehrsatzes ist derselbe geblieben; wir haben später nur andere Geometrien entdeckt. Das ist ein ernstzunehmender Einwand, und er trifft eine schwache Fassung meiner Position — die, die behaupten würde, mathematische Sätze änderten im Lauf der Zeit ihren Wahrheitswert. Das behaupte ich nicht.</p>
+
+      <p>Meine Antwort setzt eine Stufe höher an. Wir können eine Definition fixieren: „Unter einem euklidischen Dreieck verstehen wir …" Dann lässt sich zeigen, dass innerhalb dieses Systems der Satz gilt, gestern wie heute. Aber die Frage lautet dann: Was berechtigt uns, diese Identität des Sinnes als <em>ontologisch</em> zeitlos zu deuten? Vielleicht ist sie eine ausgezeichnete Rekonstruktion innerhalb unseres gegenwärtigen begrifflichen Rahmens — stabil, überprüfbar, verlässlich. Das ist viel. Aber es ist noch kein Blick auf eine außergeschichtliche Idealität an sich.</p>
+
+      <div class="phe-pullquote">Dass ein Sinn sich nicht verändert hat, zeigt seine Stabilität. Es zeigt nicht, dass er außerhalb der Zeit steht.</div>
+
+      <h3 class="phe-sub">Kein Dogmatismus</h3>
+
+      <p>Diese Position darf sich nicht selbst ausnehmen, sonst wiederholt sie den Fehler, den sie kritisiert. Auch der Satz, dass alles sich verändert, steht in Veränderung. Auch unsere Bestimmung dessen, was Veränderung, Zeit und Geschichte heißen, ist geschichtlich. Das ist kein Einwand gegen die Position, sondern ihre konsequente Anwendung auf sich selbst: Sie behauptet keine zeitlose Wahrheit über die Zeitlichkeit aller Wahrheit.</p>
+
+      <p>Was bleibt, ist bescheidener und darum haltbarer: Wir können als endliche, zeitliche Wesen keine zeitlose Wahrheitsperspektive einnehmen. Wir erkennen deshalb sehr wohl notwendige und objektive Idealitäten — aber wir haben keinen zureichenden Grund, ihre Geltung als schlechthin unabhängig von Zeitlichkeit, Geschichte und den Bedingungen ihres Verstehens zu bestimmen.</p>
+    </main>
+    <aside class="phe-margin-right">
+      <div class="phe-glosse">
+        <span class="phe-glosse-tag">Randbemerkung</span>
+        Die Position ist keine Bestreitung der Mathematik, sondern eine Bestreitung einer Zugabe: dass zur Notwendigkeit eines Satzes noch die Ewigkeit seiner Geltung hinzukommen müsse.
+      </div>
+      <div class="phe-refs">
+        <div class="phe-refs-label">Im Hintergrund</div>
+        <div class="phe-refs-list">
+          <span>Husserl · Ideale Gegenstände</span>
+          <span>Frege · Der Gedanke</span>
+          <span>Urstiftung und Sedimentierung</span>
+          <span>Historische Erkenntnistheorie</span>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="phe-chapter" data-ch="8">
+    <aside class="phe-margin-left">
+      <div>
+        <div class="phe-margin-stat">08</div>
+        <div class="phe-margin-stat-label">Achter Grundgedanke</div>
+      </div>
+      <div class="phe-margin-key">
         <div class="phe-margin-key-label">These</div>
         <div class="phe-margin-key-text">Freiheit ist <strong>gelebte Erfahrung</strong>, nicht theoretische Schlussfolgerung.</div>
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 07</div>
+      <div class="phe-ch-num">Kapitel 08</div>
       <h2 class="phe-ch-title">Freiheit, Verantwortung und die Entstehung von Moral</h2>
       <div class="phe-ch-subtitle">Moral entsteht im Leben; Theorien klären sie, erzeugen sie nicht.</div>
 
@@ -579,11 +656,11 @@
   </section>
 
   <!-- 08 (vormals Kapitel 7) -->
-  <section class="phe-chapter" data-ch="8">
+  <section class="phe-chapter" data-ch="9">
     <aside class="phe-margin-left">
       <div>
-        <div class="phe-margin-stat">08</div>
-        <div class="phe-margin-stat-label">Achter Grundgedanke</div>
+        <div class="phe-margin-stat">09</div>
+        <div class="phe-margin-stat-label">Neunter Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
         <div class="phe-margin-key-label">Paradox</div>
@@ -591,7 +668,7 @@
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 08</div>
+      <div class="phe-ch-num">Kapitel 09</div>
       <h2 class="phe-ch-title">Individuum, Sprache und das Unverfügbare</h2>
       <div class="phe-ch-subtitle">Was sich nicht restlos begreifen lässt, ist gerade darum unersetzlich.</div>
 
@@ -625,11 +702,11 @@
   </section>
 
   <!-- 09 (vormals Kapitel 8) -->
-  <section class="phe-chapter" data-ch="9">
+  <section class="phe-chapter" data-ch="10">
     <aside class="phe-margin-left">
       <div>
-        <div class="phe-margin-stat">09</div>
-        <div class="phe-margin-stat-label">Neunter Grundgedanke</div>
+        <div class="phe-margin-stat">10</div>
+        <div class="phe-margin-stat-label">Zehnter Grundgedanke</div>
       </div>
       <div class="phe-margin-key">
         <div class="phe-margin-key-label">Doppelhorizont</div>
@@ -637,7 +714,7 @@
       </div>
     </aside>
     <main class="phe-main">
-      <div class="phe-ch-num">Kapitel 09</div>
+      <div class="phe-ch-num">Kapitel 10</div>
       <h2 class="phe-ch-title">Denken, Biografie und Wahrheit</h2>
       <div class="phe-ch-subtitle">Kein Gedanke ist biografielos — und das macht ihn nicht beliebig.</div>
 
