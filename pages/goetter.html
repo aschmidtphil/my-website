@@ -67,6 +67,9 @@
   background-position:calc(100% - 1.15rem) 55%, calc(100% - .85rem) 55%;
   background-size:5px 5px, 5px 5px; background-repeat:no-repeat; }
 @media (hover: hover){ .gods-select:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); } }
+/* Das Vollfeld auf dem Telefon: eine Zeile statt elf Kategorien. */
+.gods-select-alle{ width:100%; margin:.2rem 0 .4rem; font-size:.88rem;
+  padding-top:.6rem; padding-bottom:.6rem; }
 .gods-select.active{ color:#0c0d18; background-color:var(--pan-color,#c9b876);
   border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
 .gods-select:focus-visible{ outline:2px solid var(--gx-star); outline-offset:2px; }
@@ -141,6 +144,31 @@
 
 /* ── Card-Ansicht: Kosmos <-> Karten ── */
 .gx-viewbar{ display:flex; gap:.4rem; margin:.4rem 0 .6rem; }
+/* Auswahlleiste des Entsprechungs-Atlas. */
+.gx-atlas-wahl{ display:flex; flex-direction:column; gap:.4rem;
+  padding:.6rem .2rem .8rem; }
+.gx-aw-reihe{ display:flex; flex-wrap:wrap; align-items:center; gap:.35rem; }
+.gx-aw-lab{ font-family:var(--fm); font-size:.58rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--gx-ink3,#8a8fa8); margin-right:.3rem; }
+.gx-aw-set, .gx-aw-pan{ font-family:var(--fm); font-size:.66rem;
+  padding:.3rem .6rem; border-radius:6px; cursor:pointer;
+  background:transparent; border:1px solid var(--gx-line); color:var(--gx-ink2); }
+.gx-aw-set.an{ background:var(--gx-ink2); color:#0c0d18; border-color:var(--gx-ink2); }
+.gx-aw-pan.an{ border-color:var(--pan-color,var(--gx-star));
+  color:var(--gx-ink); box-shadow:inset 0 0 0 1px var(--pan-color,transparent); }
+@media (hover: hover){
+  .gx-aw-set:hover, .gx-aw-pan:hover{ color:var(--gx-ink); }
+}
+@media (pointer: coarse){
+  .gx-aw-set, .gx-aw-pan{ min-height:38px; padding:.4rem .7rem; }
+}
+@media (max-width: 900px){
+  /* Auf dem Telefon je eine schiebbare Zeile statt Umbruch. */
+  .gx-aw-reihe{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    padding-bottom:.2rem; }
+  .gx-aw-reihe::-webkit-scrollbar{ display:none; }
+  .gx-aw-reihe > *{ flex:0 0 auto; }
+}
 .gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
   font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
   border-radius:999px; cursor:pointer; transition:all .15s; }
@@ -277,6 +305,32 @@
   color:var(--gx-ink2); font-size:1.05rem; line-height:1; padding:.4rem .6rem; border-radius:3px;
   cursor:pointer; transition:all .2s; }
 @media (hover: hover){ .gx-lb-close:hover{ color:var(--gx-ink); border-color:var(--gx-star); } }
+
+/* ── Schliessen auf dem Telefon ──────────────────────────────────────
+   Beide Schliessknöpfe waren mit 29×29 bzw. 35×32 px unter dem Fingermaß
+   und zudem blass — auf dem Gerät wirkte es, als gäbe es keinen Weg
+   zurück. Escape und ein Tipp neben das Bild schließen zwar schon, aber
+   das sieht man dem Bild nicht an. Hier also: größer, deutlicher, und
+   mit Abstand zur Statusleiste randloser Geräte.
+   Mit Maus bleibt alles wie bisher. */
+@media (pointer: coarse){
+  .gx-panel-close{
+    width:44px; height:44px; font-size:1.3rem;
+    top:.5rem; right:.5rem;
+    background:rgba(10,12,24,.85); border:1px solid var(--gx-line);
+  }
+  .gx-lb-close{
+    width:44px; height:44px; font-size:1.3rem;
+    top:calc(.6rem + env(safe-area-inset-top, 0px)); right:.9rem;
+    background:rgba(10,12,24,.85); color:var(--gx-ink);
+    border:1px solid var(--gx-line); border-radius:8px;
+  }
+  /* Der Tipp neben das Bild schließt bereits — nur wusste das niemand. */
+  .gx-lb-hinweis{ display:block; }
+}
+.gx-lb-hinweis{ display:none; margin-top:.9rem; text-align:center;
+  font-family:var(--fm); font-size:.62rem; letter-spacing:.06em;
+  color:var(--gx-ink3, #8a8fa8); }
 @media (prefers-reduced-motion: reduce){ .gx-lightbox, .gx-lightbox img{ transition:none; } }
 
 /* ── Permalink im Detail-Panel ── */
@@ -514,6 +568,7 @@
     <div class="gx-lb-name" id="gx-lb-name"></div>
     <div class="gx-lb-meta" id="gx-lb-meta"></div>
     <div class="gx-lb-credit" id="gx-lb-credit"></div>
+    <div class="gx-lb-hinweis">Zum Schließen daneben tippen</div>
   </div>
 </div>
 
@@ -525,6 +580,24 @@
   let selPan=null;           // Pantheon der angeklickten Figur (für Permalink & Lightbox)
   let _pos={}, _godsShown=[]; // aktuelles Layout (für Hover ohne Re-Render)
   let compareMode=false, cmpA='griechisch', cmpB='roemisch';
+
+  /* ── Auswahl für den Entsprechungs-Atlas ───────────────────────────
+     Der Atlas zeigte alle Kosmen, die irgendwo in DATA.equiv vorkommen —
+     zuletzt weit über zwanzig. Als Gesamtbild schön, aber es beantwortet
+     keine Frage. Interessant wird der Vergleich, wenn man ihn richtet.
+     Bewusst NICHT die Kosmen mit den meisten Entsprechungen als Vorgabe:
+     das wären Griechisch, Römisch, Nordisch, Mesopotamisch und Ägyptisch —
+     fünf, die einander ohnehin nahestehen, ohne Überraschung. Stattdessen
+     benannte Zusammenstellungen, die je eine These enthalten. */
+  const ATLAS_SETS = [
+    ['Indogermanisch',       ['griechisch','roemisch','nordisch','keltisch','hinduismus']],
+    ['Alter Orient',         ['mesopotamisch','aegyptisch','kanaanaeisch','zoroastrismus']],
+    ['Abrahamitisch',        ['judentum','christentum','islam']],
+    ['Mystische Traditionen',['gnosis','kabbala','manichaeismus','boehme']],
+    ['Ostasien',             ['chinesisch','shinto','buddhismus']],
+    ['Modern',               ['kapitalismus','kapitalismus-satire','lovecraft']],
+  ];
+  let atlasWahl = ATLAS_SETS[0][1].slice();
   let gxJahr=null;   // null = keine Zeitbegrenzung; sonst Jahreszahl (negativ = v. Chr.)
   // War dieser Kosmos zum Zeitpunkt 'j' lebendig? Grundlage: belegte Datierung.
   function gxLebt(panKey,j){
@@ -565,7 +638,7 @@
     ["Ostasien",["shinto","chinesisch"]],
     ["Mesoamerika",["aztekisch"]],
     ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
-    ["Mystische Traditionen",["gnosis","kabbala"]],
+    ["Mystische Traditionen",["gnosis","kabbala","boehme"]],
     ["Moderne Kosmen",["kapitalismus","kapitalismus-satire"]],
     ["Literarische Kosmen",["lovecraft"]],
   ];
@@ -610,6 +683,36 @@
      waren — die Darstellung hängt allein an dieser Markierung. */
   function buildTabs(){
     const wrap=document.getElementById('gods-tabs'); wrap.innerHTML='';
+
+    /* Auf dem Telefon nahm die Auswahl 982 px ein — mehr als ein ganzer
+       Bildschirm, nur um einen Kosmos zu wählen. Dort deshalb ein einziges
+       Feld mit Gruppen statt elf Kategorien mit Knopfreihen. Der Kosmos ist
+       damit in zwei Tipps erreichbar statt nach langem Scrollen.
+       Ab 901 px bleibt alles wie bisher. */
+    if(window.matchMedia('(max-width:900px)').matches){
+      const sel=document.createElement('select');
+      sel.className='gods-select gods-select-alle active';
+      sel.setAttribute('aria-label','Kosmos wählen');
+      CATS.forEach(([catLabel,keys])=>{
+        const present=keys.filter(k=>DATA.panthea[k]);
+        if(!present.length)return;
+        const gr=document.createElement('optgroup'); gr.label=catLabel;
+        present.forEach(key=>{
+          const o=document.createElement('option');
+          o.value=key; o.textContent=DATA.panthea[key].label;
+          if(key===activePan) o.selected=true;
+          gr.appendChild(o);
+        });
+        sel.appendChild(gr);
+      });
+      const p=DATA.panthea[activePan];
+      if(p){ sel.style.setProperty('--pan-color',p.color);
+             sel.style.setProperty('--pan-glow',hexA(p.color,.4)); }
+      sel.onchange=()=>{ if(sel.value) waehlePan(sel.value); };
+      wrap.appendChild(sel);
+      return;
+    }
+
     CATS.forEach(([catLabel,keys,darstellung])=>{
       const present=keys.filter(k=>DATA.panthea[k]);
       if(!present.length)return;
@@ -651,6 +754,14 @@
     });
   }
   /* Ein Kosmoswechsel, egal ob über Knopf oder Auswahlfeld. */
+  /* Wird die Schwelle überquert (Drehen des Geräts, Fenstergröße), muss die
+     Auswahl neu gebaut werden — sonst bleibt die falsche Darstellung stehen. */
+  try{
+    window.matchMedia('(max-width:900px)').addEventListener('change',function(){
+      if(document.getElementById('gods-tabs')) buildTabs();
+    });
+  }catch(e){}
+
   function waehlePan(key){
     activePan=key; equivMode=true; selId=null;
     syncEquivBtn(); buildTabs(); applyPanColor(); gxClosePanel(); gxRender(); gxSyncHash();
@@ -815,6 +926,8 @@
     if(!DATA)return;
     gxSyncFilterBar();
     const tEl0=document.getElementById('gx-table'); if(tEl0) tEl0.hidden=true;
+    const awEl=document.getElementById('gx-atlas-wahl');
+    if(awEl&&gxView!=='atlas') awEl.hidden=true;
     if(gxView==='atlas'){ gxRenderAtlas(); return; }
     if(gxView==='zeit'){ gxRenderZeit(); return; }
     if(gxView==='tabelle'){ gxRenderTabelle(); return; }
@@ -1148,6 +1261,60 @@
   // zum Knoten, jede Entsprechung zur Sehne quer durch den Kreis. Hover hebt
   // die ganze Gruppe hervor, Klick öffnet das Detail-Panel der Figur.
   function _esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  /* Zeichnet die Auswahlleiste über dem Atlas: erst die Zusammenstellungen,
+     darunter jeder beteiligte Kosmos einzeln zum Hinzufügen und Entfernen.
+     Die Leiste steht nur in dieser Ansicht und wird bei jedem Zeichnen neu
+     aufgebaut, damit sie den Zustand nie überholt. */
+  function gxAtlasLeiste(perPan){
+    let box=document.getElementById('gx-atlas-wahl');
+    if(!box){
+      box=document.createElement('div'); box.id='gx-atlas-wahl'; box.className='gx-atlas-wahl';
+      const stage=document.getElementById('gods-stage-wrap');
+      if(stage&&stage.parentNode) stage.parentNode.insertBefore(box,stage);
+      else return;
+    }
+    box.hidden=false; box.innerHTML='';
+
+    const reihe1=document.createElement('div'); reihe1.className='gx-aw-reihe';
+    const lab=document.createElement('span'); lab.className='gx-aw-lab';
+    lab.textContent='Zusammenstellung'; reihe1.appendChild(lab);
+    ATLAS_SETS.forEach(([name,keys])=>{
+      const vorhanden=keys.filter(k=>perPan.has(k));
+      if(vorhanden.length<2) return;
+      const b=document.createElement('button'); b.type='button';
+      const gleich = vorhanden.length===atlasWahl.length &&
+                     vorhanden.every(k=>atlasWahl.indexOf(k)>=0);
+      b.className='gx-aw-set'+(gleich?' an':''); b.textContent=name;
+      b.onclick=()=>{ atlasWahl=vorhanden.slice(); gxRender(); };
+      reihe1.appendChild(b);
+    });
+    box.appendChild(reihe1);
+
+    const reihe2=document.createElement('div'); reihe2.className='gx-aw-reihe';
+    const lab2=document.createElement('span'); lab2.className='gx-aw-lab';
+    lab2.textContent='einzeln'; reihe2.appendChild(lab2);
+    const beteiligt=[];
+    CATS.forEach(([,keys])=>keys.forEach(k=>{ if(perPan.has(k)) beteiligt.push(k); }));
+    perPan.forEach((_,k)=>{ if(beteiligt.indexOf(k)<0) beteiligt.push(k); });
+    beteiligt.forEach(k=>{
+      const P=DATA.panthea[k]; if(!P) return;
+      const an=atlasWahl.indexOf(k)>=0;
+      const b=document.createElement('button'); b.type='button';
+      b.className='gx-aw-pan'+(an?' an':'');
+      b.textContent=P.label+' '+perPan.get(k).size;
+      b.setAttribute('aria-pressed', an?'true':'false');
+      if(an){ b.style.setProperty('--pan-color',P.color); }
+      b.onclick=()=>{
+        const i=atlasWahl.indexOf(k);
+        if(i>=0){ if(atlasWahl.length<=2) return; atlasWahl.splice(i,1); }
+        else atlasWahl.push(k);
+        gxRender();
+      };
+      reihe2.appendChild(b);
+    });
+    box.appendChild(reihe2);
+  }
+
   function gxRenderAtlas(){
     const cEl=document.getElementById('gx-cards'); if(cEl) cEl.hidden=true;
     const wEl=document.getElementById('gods-stage-wrap'); if(wEl) wEl.hidden=false;
@@ -1169,6 +1336,12 @@
     const panOrder=[];
     CATS.forEach(([,keys])=>keys.forEach(k=>{ if(perPan.has(k)) panOrder.push(k); }));
     perPan.forEach((_,k)=>{ if(panOrder.indexOf(k)<0) panOrder.push(k); });
+    /* Nur die gewählten Kosmen zeichnen. Fällt die Auswahl leer aus — etwa
+       weil ein Kosmos keine Entsprechungen hat —, wird alles gezeigt statt
+       einer leeren Bühne. */
+    const gewaehlt=panOrder.filter(k=>atlasWahl.indexOf(k)>=0);
+    if(gewaehlt.length>=2) panOrder.length=0, gewaehlt.forEach(k=>panOrder.push(k));
+    gxAtlasLeiste(perPan);
     const nFig=[...perPan.values()].reduce((a,m)=>a+m.size,0);
 
     // 2) Kreis-Layout
@@ -1628,7 +1801,7 @@
     im.src=imgPath; im.alt=g.name;
     document.getElementById('gx-lb-name').textContent=g.name;
     document.getElementById('gx-lb-meta').textContent=p.label+(p.tiers&&p.tiers[g.tier]?' · '+p.tiers[g.tier]:'');
-    // Bildnachweis aus dem Medaillon-Manifest (assets/bildnachweise-goetter.js), falls vorhanden
+    // Bildnachweis aus dem Medaillon-Manifest (js/bildnachweise-goetter.js), falls vorhanden
     const cr=(window.GX_CREDITS||{})[panKey+'/'+g.id];
     const cEl=document.getElementById('gx-lb-credit');
     if(cr){

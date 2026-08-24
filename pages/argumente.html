@@ -46,6 +46,8 @@
         anerkennen. <b>Der Kampfplatz dieser endlosen Streitigkeiten heißt nun
         Metaphysik.</b></p>
     </blockquote>
+    <button class="arg-motto-mehr" type="button"
+      onclick="this.closest('.arg-motto').classList.toggle('offen');this.textContent=this.closest('.arg-motto').classList.contains('offen')?'weniger anzeigen':'vollständig lesen'">vollständig lesen</button>
     <figcaption>Immanuel Kant · <cite>Kritik der reinen Vernunft</cite>, Vorrede zur
       ersten Auflage, A VII–VIII · 1781</figcaption>
   </figure>
@@ -150,7 +152,7 @@
   border:1px solid var(--border);color:var(--text2);border-radius:100px;
   padding:.34rem .8rem;transition:border-color .18s,color .18s,background .18s}
 @media (hover: hover){ .arg-knopf:hover{border-color:var(--accent);color:var(--accent-text)} }
-.arg-knopf[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.arg-knopf[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 
 .arg-kopf{border-left:4px solid var(--accent);padding-left:1rem;margin-bottom:1.2rem;position:relative}
 .arg-jahr{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;color:var(--accent-text);

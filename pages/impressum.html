@@ -11,7 +11,7 @@
 .legal-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:1rem;}
 .legal-tab{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.8rem;transition:all .15s;}
 @media (hover: hover){ .legal-tab:hover{border-color:var(--accent);} }
-.legal-tab.active{background:var(--accent);color:#fff;border-color:transparent;}
+.legal-tab.active{background:var(--accent);color:var(--auf-accent,#fff);border-color:transparent;}
 
 .legal-section{display:none;animation:legalFade .3s ease;}
 .legal-section.active{display:block;}
@@ -202,7 +202,7 @@ window.legalShow = function(sec, btn){
 };
 
 /* ── Bild-Lizenzen laden ──
-   Erwartet eine Datei  assets/bildnachweise.json  mit Einträgen:
+   Erwartet eine Datei  daten/bildnachweise.json  mit Einträgen:
    { "slug": {"name","author","license","license_url","source_url"} }
    Wird vom Fetch-Skript automatisch erzeugt. Fehlt sie, zeigt die Seite
    einen allgemeinen Hinweis. */
@@ -249,7 +249,7 @@ function renderLic(filter){
   if (!list) return;
   if (!_licData){
     list.innerHTML = '<div class="lic-empty">Es ist noch keine Bildnachweis-Datei vorhanden '
-      + '(<code>assets/bildnachweise.json</code> bzw. <code>js/bildnachweise.js</code>).<br>Sie wird beim Bilder-Download automatisch erzeugt. '
+      + '(<code>daten/bildnachweise.json</code> bzw. <code>js/bildnachweise.js</code>).<br>Sie wird beim Bilder-Download automatisch erzeugt. '
       + 'Bis dahin gilt: Alle Porträts stammen von Wikimedia&nbsp;Commons und sind dort mit '
       + 'Urheber und Lizenz dokumentiert.</div>';
     if (count) count.textContent = '';
@@ -330,9 +330,9 @@ function loadLicenses(){
   var merged={};
   if (typeof window.BILDNACHWEISE !== 'undefined' && window.BILDNACHWEISE) Object.assign(merged, _norm(window.BILDNACHWEISE,'Philosophen'));
   if (typeof window.GX_CREDITS !== 'undefined' && window.GX_CREDITS) Object.assign(merged, _norm(window.GX_CREDITS,'Götter'));
-  var _srcs=[['assets/bildnachweise.json','Philosophen'],
-             ['assets/bildnachweise-goetter.json','Götter'],
-             ['assets/bildnachweise-vignetten.json','Vignetten']];
+  var _srcs=[['daten/bildnachweise.json','Philosophen'],
+             ['js/bildnachweise-goetter.json','Götter'],
+             ['daten/bildnachweise-vignetten.json','Vignetten']];
   Promise.all(_srcs.map(function(f){
     return fetch(f[0]).then(function(r){ return r.ok?r.json():{}; }).catch(function(){ return {}; })
       .then(function(d){ Object.assign(merged, _norm(d, f[1])); });

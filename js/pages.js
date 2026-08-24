@@ -703,7 +703,7 @@ function buildFachFilter(){
 /* Kurse, zu denen eine eigene Hausarbeit existiert. Klein und von Hand gepflegt
    (nur 4 Einträge), unabhängig von kurseData/documents.json. Steuert, ob das
    kleine Verweis-Badge in der Kursliste erscheint. Die Zuordnung selbst (welches
-   Dokument zu welchem Kurs gehört) lebt in assets/documents-meta.json — hier
+   Dokument zu welchem Kurs gehört) lebt in daten/documents-meta.json — hier
    wird nur gewusst, WELCHE Kursnamen einen Treffer haben. */
 const KURS_HAS_WORK = new Set([
   'Theorien des objektiven Geistes',

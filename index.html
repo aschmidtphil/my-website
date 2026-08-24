@@ -106,7 +106,7 @@
   --surface2: #e4e4f0;
 
   /* Accent colours */
-  --accent:  #5b52e8;
+  --accent:  #5b52e8; --auf-accent: #ffffff;
   --accent2: #e8527a;
   --accent3: #22c55e;
   --accent4: #f59e0b;
@@ -151,7 +151,7 @@
   --surface:  #22223a;
   --surface2: #2a2a40;
 
-  --accent:  #7c73ff;
+  --accent:  #7c73ff; --auf-accent: #0c0d18;
   --accent2: #ff6584;
   --accent3: #43e97b;
   --accent4: #f7971e;
@@ -303,7 +303,7 @@ body > nav {
 @media (hover: hover){ .card:hover{ transform: translateY(-3px); border-color: var(--border2); box-shadow: 0 6px 24px rgba(0,0,0,.1); } }
 
 .btn         { padding: .6rem 1.4rem; border-radius: 8px; font-family: var(--fh); font-weight: 600; font-size: .85rem; cursor: pointer; border: none; transition: all .2s; }
-.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary { background: var(--accent); color:var(--auf-accent,#fff); }
 @media (hover: hover){ .btn-primary:hover{ opacity: .85; transform: translateY(-1px); } }
 .btn-ghost   { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
 @media (hover: hover){ .btn-ghost:hover{ border-color: var(--accent); color: var(--accent-text); } }
@@ -598,7 +598,7 @@ footer {
 
 .zitat-filter { display: flex; gap: .4rem; flex-wrap: wrap; padding: 1.25rem 3rem 0; }
 .zf-btn       { background: var(--surface); border: 1px solid var(--border); color: var(--text2); padding: .3rem .8rem; border-radius: 20px; cursor: pointer; font-size: .76rem; font-family: var(--fm); transition: all .15s; }
-.zf-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.zf-btn.active { background: var(--accent); border-color: var(--accent); color:var(--auf-accent,#fff); }
 
 .zitat-masonry { columns: 2; column-gap: 1.5rem; padding: 2rem 3rem 4rem; }
 @media(max-width:700px) { .zitat-masonry { columns: 1; } }
@@ -648,7 +648,7 @@ footer {
 .phil-modal-overlay.open { display: flex; }
 .phil-modal-box    { background: var(--card); border: 1px solid var(--border2); border-radius: 18px; padding: 2rem 2.25rem; max-width: 560px; width: 100%; max-height: 82vh; overflow-y: auto; position: relative; box-shadow: 0 24px 64px rgba(0,0,0,.22); }
 .phil-modal-close  { position: absolute; top: 1rem; right: 1rem; background: var(--surface); border: none; color: var(--text2); width: 30px; height: 30px; border-radius: 50%; cursor: pointer; transition: all .2s; font-size: .9rem; }
-@media (hover: hover){ .phil-modal-close:hover{ background: var(--accent); color: #fff; } }
+@media (hover: hover){ .phil-modal-close:hover{ background: var(--accent); color:var(--auf-accent,#fff); } }
 .phil-modal-epoch  { font-family: var(--fm); font-size: .7rem; letter-spacing: .1em; margin-bottom: .35rem; }
 .phil-modal-name   { font-family: var(--fh); font-size: 1.85rem; font-weight: 800; letter-spacing: -.03em; color: var(--text); margin-bottom: .15rem; }
 .phil-modal-dates  { font-family: var(--fm); font-size: .75rem; color: var(--text3); margin-bottom: 1.1rem; }
@@ -663,7 +663,7 @@ footer {
 .diss-hero-glow { position: absolute; right: -60px; top: -80px; width: 360px; height: 360px; background: radial-gradient(circle,rgba(91,82,232,.12),transparent 70%); pointer-events: none; }
 .diss-meta-row  { display: flex; gap: .45rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
 .diss-meta-badge { background: var(--surface); border: 1px solid var(--border2); color: var(--text2); padding: .28rem .7rem; border-radius: 6px; font-family: var(--fm); font-size: .7rem; }
-.diss-meta-badge.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+.diss-meta-badge.accent { background: var(--accent); border-color: var(--accent); color:var(--auf-accent,#fff); }
 .diss-stats-row  { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 1.4rem; }
 .diss-stat       { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: .9rem 1.4rem; text-align: center; }
 .diss-stat-num   { font-family: var(--fh); font-size: 1.5rem; font-weight: 800; color: var(--accent-text); display: block; }
@@ -794,7 +794,7 @@ footer {
   position: sticky; top: 56px; z-index: 90;
 }
 .sort-btn { background: var(--surface); border: 1px solid var(--border); color: var(--text2); padding: .28rem .65rem; border-radius: 5px; cursor: pointer; font-size: .7rem; font-family: var(--fm); transition: all .15s; }
-.sort-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.sort-btn.active { background: var(--accent); border-color: var(--accent); color:var(--auf-accent,#fff); }
 
 .books-table-wrap { overflow-x: auto; padding-bottom: 3rem; }
 .books-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
@@ -840,7 +840,7 @@ footer {
 .g-tabs { display: flex; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin: .65rem 3rem .5rem; width: fit-content; flex-wrap: wrap; }
 .gtab   { padding: .55rem 1rem; background: transparent; border: none; color: var(--text2); cursor: pointer; font-family: var(--fh); font-size: .76rem; font-weight: 600; transition: all .2s; border-right: 1px solid var(--border); white-space: nowrap; }
 .gtab:last-child { border-right: none; }
-.gtab.active { background: var(--accent); color: #fff; }
+.gtab.active { background: var(--accent); color:var(--auf-accent,#fff); }
 @media (hover: hover){ .gtab:hover:not(.active){ background: var(--bg3); color: var(--text); } }
 
 .g-section        { display: none; padding: 1.75rem 3rem 3rem; }
@@ -977,7 +977,7 @@ html[data-style="neon-noir"] {
   --surface2: #36406a;
 
   /* ── Neon accents (etwas gedämpfter im Light-Mode) */
-  --accent:   #f5c842;
+  --accent:   #f5c842; --auf-accent: #0c0d18;
   --accent2:  #e84aaa;
   --accent3:  #3dd8b8;
   --accent4:  #9f7af5;
@@ -1035,7 +1035,7 @@ html[data-style="neon-noir"][data-theme="dark"] {
   --surface:  #0d1020;
   --surface2: #141929;
 
-  --accent:   #ffd040;
+  --accent:   #ffd040; --auf-accent: #0c0d18;
   --accent2:  #ff40b0;
   --accent3:  #40ffcc;
   --accent4:  #b090ff;
@@ -1958,7 +1958,7 @@ html[data-style="brutalist"] {
   --surface:  #e4e4dc;
   --surface2: #d5d5cc;
 
-  --accent:   #d42b2b;   /* signal red    */
+  --accent:   #d42b2b; --auf-accent: #ffffff;   /* signal red    */
   --accent2:  #1a1a1a;   /* near-black    */
   --accent3:  #d42b2b;
   --accent4:  #d42b2b;
@@ -2010,7 +2010,7 @@ html[data-style="brutalist"][data-theme="dark"] {
   --surface:  #1a1a18;
   --surface2: #222220;
 
-  --accent:   #ff3333;
+  --accent:   #ff3333; --auf-accent: #0c0d18;
   --accent2:  #f0ede8;
   --accent3:  #ff3333;
   --accent4:  #ff3333;
@@ -2143,7 +2143,7 @@ html[data-style="brutalist"] .btn {
 }
 html[data-style="brutalist"] .btn-primary {
   background: var(--accent);
-  color: #fff;
+  color:var(--auf-accent,#fff);
   box-shadow: 3px 3px 0 var(--text);
 }
 @media (hover: hover){ html[data-style="brutalist"] .btn-primary:hover{
@@ -2498,7 +2498,7 @@ html[data-style="elegant"] {
   --surface:  #ede8de;
   --surface2: #e0d9cc;
 
-  --accent:   #b8943f;
+  --accent:   #b8943f; --auf-accent: #0c0d18;
   --accent2:  #8a6820;
   --accent3:  #c8a855;
   --accent4:  #6b4f1a;
@@ -2550,7 +2550,7 @@ html[data-style="elegant"][data-theme="dark"] {
   --surface:  #2e2a26;
   --surface2: #383430;
 
-  --accent:   #d4a84a;
+  --accent:   #d4a84a; --auf-accent: #0c0d18;
   --accent2:  #f0c870;
   --accent3:  #b8943f;
   --accent4:  #e8b855;
@@ -2762,7 +2762,7 @@ html[data-style="terminal"] {
   --surface:  #001500;
   --surface2: #002200;
 
-  --accent:   #00e040;
+  --accent:   #00e040; --auf-accent: #0c0d18;
   --accent2:  #00ff55;
   --accent3:  #00c030;
   --accent4:  #80ff98;
@@ -2815,7 +2815,7 @@ html[data-style="terminal"][data-theme="dark"] {
   --surface:  #1a1100;
   --surface2: #221800;
 
-  --accent:   #ff9500;
+  --accent:   #ff9500; --auf-accent: #0c0d18;
   --accent2:  #ffb830;
   --accent3:  #cc7800;
   --accent4:  #ffd080;
@@ -3095,7 +3095,7 @@ html[data-style="glass"] {
   --surface:  rgba(255,255,255,.55);
   --surface2: rgba(255,255,255,.65);
 
-  --accent:   #6c3ef5;
+  --accent:   #6c3ef5; --auf-accent: #ffffff;
   --accent2:  #c040e8;
   --accent3:  #3b9ef0;
   --accent4:  #f03090;
@@ -3147,7 +3147,7 @@ html[data-style="glass"][data-theme="dark"] {
   --surface:  rgba(255,255,255,.06);
   --surface2: rgba(255,255,255,.10);
 
-  --accent:   #8060ff;
+  --accent:   #8060ff; --auf-accent: #0c0d18;
   --accent2:  #d060f8;
   --accent3:  #40b0ff;
   --accent4:  #ff4090;
@@ -3472,7 +3472,7 @@ html[data-style="glass"] .game-lb img { border-radius: 16px; box-shadow: 0 24px 
 .skip-link{
   position:fixed; top:0; left:0; z-index:900;
   transform:translateY(-140%);
-  background:var(--accent); color:#fff; text-decoration:none;
+  background:var(--accent); color:var(--auf-accent,#fff); text-decoration:none;
   font-family:var(--fm); font-size:.78rem;
   padding:.7rem 1.2rem; border-radius:0 0 var(--r) 0;
   box-shadow:0 4px 18px rgba(0,0,0,.25);
@@ -3586,6 +3586,203 @@ summary:focus-visible,
   /* Genug Fläche zum Treffen mit dem Daumen */
   .theme-btn{ width:38px; height:38px; }
   .nav-burger{ width:38px; height:38px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   TELEFON — Werkzeugblatt und Maßstab
+   Alles hier steht unter max-width:900px. Oberhalb ändert sich nichts;
+   das ist pixelgenau nachgemessen.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px){
+
+  /* ── 1 · Die Werkzeuge als Blatt am unteren Rand ──────────────────
+     Gemessen waren auf 390 px nur 5 von 15 Bedienelementen ohne Scrollen
+     erreichbar, und die Zeitachse selbst war nach oben weggedrückt.
+     Die Reiterleiste sitzt jetzt fest am unteren Rand wie in einer
+     Kartenanwendung; ein Fach zieht darüber auf und nimmt höchstens die
+     halbe Höhe ein. Die Zeitachse behält damit den Bildschirm. */
+  .tlk{
+    position:fixed; left:0; right:0; bottom:0; z-index:400;
+    margin:0; background:var(--bg);
+    border-top:1px solid var(--border);
+    box-shadow:0 -8px 28px rgba(0,0,0,.16);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Griff: macht sichtbar, dass hier etwas aufzieht. */
+  .tlk::before{
+    content:""; display:block; width:34px; height:3px; margin:.45rem auto .1rem;
+    border-radius:2px; background:var(--border2, var(--border));
+  }
+
+  /* Reiter: eine Zeile, seitwärts schiebbar statt umbrechend. */
+  /* `.tlk .tlk-faecher` statt `.tlk-faecher`: die Basisregel mit
+     flex-wrap:wrap steht weiter unten im Dokument und gewinnt sonst bei
+     gleicher Spezifität. Ohne diesen Zusatz brachen die Reiter weiter um
+     und das Blatt wurde 314 px hoch — gemessen, nicht vermutet. */
+  .tlk .tlk-faecher{
+    display:flex; flex-wrap:nowrap; overflow-x:auto; gap:.4rem;
+    padding:.35rem .8rem .5rem; min-width:0; width:100%;
+    border-bottom:0;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .tlk .tlk-faecher::-webkit-scrollbar{ display:none; }
+  .tlk .tlk-faecher > *{ flex:0 0 auto; }
+  .tlk-tab{ min-height:40px; }
+  .tlk-tab-reset{ margin-left:0; }
+
+  /* Die Hauptzeile (Zoom, Zähler) wandert unter die Reiter und bleibt
+     schmal — sie wird selten gebraucht. */
+  .tlk .tlk-haupt{
+    order:2; padding:.25rem .8rem .45rem; gap:.35rem;
+    border-top:1px solid var(--border);
+    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+  }
+  .tlk .tlk-haupt::-webkit-scrollbar{ display:none; }
+  .tlk .tlk-haupt > *{ flex:0 0 auto; }
+  .tlk{ display:flex; flex-direction:column; }
+  .tlk .tlk-faecher{ order:1; }
+  .tlk-fach{ order:0; }
+
+  /* Ein aufgezogenes Fach: über den Reitern, gedeckelt und scrollbar. */
+  .tlk-fach{
+    padding:.8rem .9rem; margin:0;
+    max-height:48vh; overflow-y:auto; overscroll-behavior:contain;
+    border-bottom:0; border-top:1px solid var(--border);
+    background:var(--bg);
+  }
+  .tlk-zeile{ gap:.45rem; margin-bottom:.5rem; }
+
+  /* Platz für das Blatt, damit es nichts verdeckt. Die Höhe ist
+     grosszügig geschätzt: Reiterzeile plus Hauptzeile plus Griff. */
+  .phil-wrap, .tl-wrap, .karte-wrap{ padding-bottom:132px; }
+}
+
+/* ── Zeitleisten-Fächer auf Fingermaß ────────────────────────────────
+   Gemessen bei 390 px: Die Fächer im Werkzeugblatt sind mit 165–374 px
+   hoch angemessen — aber 20 von 22 Bedienelementen darin waren unter
+   32 px hoch. Filterknöpfe, Kulturkreise, Kästchen: alles Desktop-Maße
+   in einem Blatt, das man mit dem Daumen bedient.
+   Mit Maus unverändert. */
+@media (pointer: coarse){
+  .tlk-fach button,
+  .tlk-fach select,
+  .tlk-fach label{ min-height:40px; }
+  .tlk-fach button{ padding-top:.45rem; padding-bottom:.45rem; }
+
+  /* Kästchen: die Trefferfläche wächst über das Etikett, nicht über das
+     Kästchen selbst — sonst wird aus dem Häkchen ein Klotz. */
+  .tlk-fach input[type="checkbox"]{ width:20px; height:20px; }
+  .tlk-fach label{ display:inline-flex; align-items:center; gap:.5rem;
+    padding:.25rem .1rem; }
+
+  /* Etwas mehr Luft zwischen den Reihen, sonst trifft man den Nachbarn. */
+  .tlk-fach .tlk-zeile{ gap:.55rem; row-gap:.55rem; }
+}
+
+/* ── Argumente-Seite auf dem Telefon ─────────────────────────────────
+   Gemessen bei 390 px: 5818 px Seitenlänge. Nicht die Prämissenkarten sind
+   schuld — deren Nummernspalte steht längst auf 26 px und nichts ragt über
+   den Rand. Es sind zwei andere Stücke:
+     · „Wo die Einwände ansetzen" mit 2508 px (43 % der Seite): achtzehn
+       Diagrammkarten, die auf einer Spalte untereinander stehen.
+     · der Kopfbereich mit 1299 px, überwiegend das Kant-Motto.
+   Die Übersicht wird deshalb zu einem seitwärts schiebbaren Band; das Kant-
+   Motto bekommt eine Höhengrenze mit weichem Auslauf. Beides bleibt
+   vollständig erreichbar, nimmt aber nicht mehr die halbe Seite.
+   Ab 901 px unverändert. */
+@media (min-width: 901px){ .arg-motto-mehr{ display:none; } }
+@media (max-width: 900px){
+  .arg-uebersicht{
+    grid-auto-flow:column; grid-auto-columns:74%;
+    grid-template-columns:none;
+    overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    padding-bottom:.5rem; scrollbar-width:none;
+  }
+  .arg-uebersicht::-webkit-scrollbar{ display:none; }
+  .arg-uebersicht > *{ scroll-snap-align:start; }
+
+  /* Das Motto: zwei Absätze Kant sind auf dem Telefon eine halbe Seite.
+     Gekürzt auf Anlesehöhe, per Tipp auf voller Länge. */
+  .arg-motto blockquote{
+    max-height:15.5em; overflow:hidden; position:relative;
+    transition:max-height .3s ease;
+  }
+  .arg-motto blockquote::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:3.2em;
+    background:linear-gradient(to bottom, transparent, var(--bg));
+    pointer-events:none;
+  }
+  .arg-motto.offen blockquote{ max-height:none; }
+  .arg-motto.offen blockquote::after{ display:none; }
+  /* `.arg-motto .arg-motto-mehr`: die Ausblendregel fuer den Desktop steht
+     weiter unten im Dokument und gewann sonst — der Knopf blieb unsichtbar
+     und das Motto damit abgeschnitten ohne Weg zum Aufklappen. */
+  .arg-motto .arg-motto-mehr{ display:block; margin-top:.5rem; background:none;
+    border:0; padding:.35rem 0; cursor:pointer;
+    font-family:var(--fm); font-size:.66rem; letter-spacing:.06em;
+    color:var(--accent-text); }
+}
+
+/* ── Weltkarte auf dem Telefon ───────────────────────────────────────
+   Gemessen bei 390 px: Die Karte war 352 × 560 px und begann erst bei
+   y = 852 — man musste scrollen, um sie überhaupt zu sehen. Darunter
+   hingen 644 px Legende und Ortsliste, die Seite war 2270 px hoch.
+   Jetzt: Kopf schlank, Karte hoch und gleich im Bild, Legende auf ein
+   Drittel begrenzt und intern scrollbar. Ab 901 px unverändert. */
+@media (max-width: 900px){
+  .karte-kopf{ padding:.5rem .8rem; gap:.4rem; }
+  .karte-kopf h2, .karte-kopf .karte-etikett{ font-size:.9rem; }
+  .karte-modus{ font-size:.68rem; }
+
+  /* Kartenhöhe: `min-height`, nicht `height`.
+     Ein erster Versuch mit `height:64dvh` hat die Karte von 560 auf 499 px
+     VERKLEINERT. Der Grund war nicht Leaflet, wie ich zuerst annahm, sondern
+     Rechnen: 64 % von 780 px Ansichtshöhe sind eben 499. Mit min-height kann
+     die Regel nur vergrössern, nie verkleinern — was auch immer die Vorlage
+     schon vorgibt, bleibt die Untergrenze. */
+  .leaflet-container{ min-height:78dvh; }
+
+  /* Legende und Ortsliste: begrenzt statt endlos. */
+  .karte-fuss{ max-height:34vh; overflow-y:auto; overscroll-behavior:contain;
+    padding:.6rem .8rem; }
+  .karte-liste{ font-size:.78rem; }
+
+  /* Leaflets eigene Bedienelemente auf Fingermaß. */
+  .leaflet-control-zoom a{ width:38px !important; height:38px !important;
+    line-height:38px !important; font-size:1.2rem !important; }
+  .leaflet-control-attribution{ font-size:.55rem; }
+}
+
+/* ── 2 · Maßstab auf dem Telefon ────────────────────────────────────
+   „Alles ist sehr groß" — die Seite ist für den Desktop entworfen und
+   bringt dessen Schriftgrade unverändert mit. Hier ein durchgehender,
+   maßvoller Rückgang: Überschriften deutlich, Fließtext kaum, damit die
+   Lesbarkeit nicht leidet. Trefferflächen bleiben unangetastet. */
+@media (max-width: 900px){
+  .page-title{ font-size:clamp(1.9rem, 8.5vw, 2.6rem); line-height:1.05; }
+  .hero-tag{ font-size:.62rem; }
+  .page-desc{ font-size:.88rem; line-height:1.55; }
+  .phil-meta{ font-size:.66rem; }
+  h1{ line-height:1.08; }
+  h2{ font-size:1.32rem; line-height:1.2; }
+  h3{ font-size:1.06rem; }
+  .phe-ch-title{ font-size:1.6rem; line-height:1.12; }
+  .phe-ch-subtitle{ font-size:.9rem; }
+  .phe-pullquote{ font-size:1rem; line-height:1.45; }
+  .arg-hero h1{ font-size:clamp(1.9rem, 8.5vw, 2.4rem); }
+  .arg-motto blockquote p{ font-size:.85rem; line-height:1.65; }
+  .hm-titel{ font-size:1.02rem; }
+  .hm-unter{ font-size:.82rem; }
+}
+@media (max-width: 900px){
+  /* Abstände: der grösste Hebel gegen das Gefühl von Weitläufigkeit. */
+  .page-hero{ padding-top:2rem; padding-bottom:1.2rem; }
+  .arg-hero{ padding-top:2rem; padding-bottom:.8rem; }
+  section.hm-abschnitt, .hm-abschnitt{ margin-bottom:2rem; }
+  .hm-reihe{ gap:.8rem; }
+  .phe-chapter{ padding-top:1.2rem; }
 }
 
 /* Schmale Geräte: Logo darf schrumpfen, nichts läuft mehr raus.
@@ -4687,7 +4884,7 @@ window.buildFavphilBanner = function(){
 .zitat-filter-label{font-family:var(--fm);font-size:.65rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-right:.5rem;}
 .zitat-filter-btn{background:transparent;border:1px solid var(--border);color:var(--text2);padding:.35rem .8rem;border-radius:20px;font-size:.75rem;cursor:pointer;font-family:inherit;transition:all .15s;}
 @media (hover: hover){ .zitat-filter-btn:hover{border-color:var(--accent);color:var(--accent-text);} }
-.zitat-filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.zitat-filter-btn.active{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff);}
 .zitat-filter-btn .ct{margin-left:.4rem;opacity:.7;font-size:.66rem;}
 .zitat-count{margin-left:auto;font-family:var(--fm);font-size:.72rem;color:var(--text3);letter-spacing:.05em;}
 
@@ -4773,7 +4970,7 @@ window.buildFavphilBanner = function(){
   border:1px solid var(--border);border-radius:6px;cursor:pointer;
   transition:all .15s;
 }
-@media (hover: hover){ .zc-toggle:hover{background:var(--accent);color:#fff;border-color:var(--accent);} }
+@media (hover: hover){ .zc-toggle:hover{background:var(--accent);color:var(--auf-accent,#fff);border-color:var(--accent);} }
 
 .zc-foot{
   padding:.7rem 1.5rem .85rem;
@@ -8083,6 +8280,9 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   background-position:calc(100% - 1.15rem) 55%, calc(100% - .85rem) 55%;
   background-size:5px 5px, 5px 5px; background-repeat:no-repeat; }
 @media (hover: hover){ .gods-select:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); } }
+/* Das Vollfeld auf dem Telefon: eine Zeile statt elf Kategorien. */
+.gods-select-alle{ width:100%; margin:.2rem 0 .4rem; font-size:.88rem;
+  padding-top:.6rem; padding-bottom:.6rem; }
 .gods-select.active{ color:#0c0d18; background-color:var(--pan-color,#c9b876);
   border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
 .gods-select:focus-visible{ outline:2px solid var(--gx-star); outline-offset:2px; }
@@ -8157,6 +8357,31 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 
 /* ── Card-Ansicht: Kosmos <-> Karten ── */
 .gx-viewbar{ display:flex; gap:.4rem; margin:.4rem 0 .6rem; }
+/* Auswahlleiste des Entsprechungs-Atlas. */
+.gx-atlas-wahl{ display:flex; flex-direction:column; gap:.4rem;
+  padding:.6rem .2rem .8rem; }
+.gx-aw-reihe{ display:flex; flex-wrap:wrap; align-items:center; gap:.35rem; }
+.gx-aw-lab{ font-family:var(--fm); font-size:.58rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--gx-ink3,#8a8fa8); margin-right:.3rem; }
+.gx-aw-set, .gx-aw-pan{ font-family:var(--fm); font-size:.66rem;
+  padding:.3rem .6rem; border-radius:6px; cursor:pointer;
+  background:transparent; border:1px solid var(--gx-line); color:var(--gx-ink2); }
+.gx-aw-set.an{ background:var(--gx-ink2); color:#0c0d18; border-color:var(--gx-ink2); }
+.gx-aw-pan.an{ border-color:var(--pan-color,var(--gx-star));
+  color:var(--gx-ink); box-shadow:inset 0 0 0 1px var(--pan-color,transparent); }
+@media (hover: hover){
+  .gx-aw-set:hover, .gx-aw-pan:hover{ color:var(--gx-ink); }
+}
+@media (pointer: coarse){
+  .gx-aw-set, .gx-aw-pan{ min-height:38px; padding:.4rem .7rem; }
+}
+@media (max-width: 900px){
+  /* Auf dem Telefon je eine schiebbare Zeile statt Umbruch. */
+  .gx-aw-reihe{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    padding-bottom:.2rem; }
+  .gx-aw-reihe::-webkit-scrollbar{ display:none; }
+  .gx-aw-reihe > *{ flex:0 0 auto; }
+}
 .gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
   font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
   border-radius:999px; cursor:pointer; transition:all .15s; }
@@ -8293,6 +8518,32 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   color:var(--gx-ink2); font-size:1.05rem; line-height:1; padding:.4rem .6rem; border-radius:3px;
   cursor:pointer; transition:all .2s; }
 @media (hover: hover){ .gx-lb-close:hover{ color:var(--gx-ink); border-color:var(--gx-star); } }
+
+/* ── Schliessen auf dem Telefon ──────────────────────────────────────
+   Beide Schliessknöpfe waren mit 29×29 bzw. 35×32 px unter dem Fingermaß
+   und zudem blass — auf dem Gerät wirkte es, als gäbe es keinen Weg
+   zurück. Escape und ein Tipp neben das Bild schließen zwar schon, aber
+   das sieht man dem Bild nicht an. Hier also: größer, deutlicher, und
+   mit Abstand zur Statusleiste randloser Geräte.
+   Mit Maus bleibt alles wie bisher. */
+@media (pointer: coarse){
+  .gx-panel-close{
+    width:44px; height:44px; font-size:1.3rem;
+    top:.5rem; right:.5rem;
+    background:rgba(10,12,24,.85); border:1px solid var(--gx-line);
+  }
+  .gx-lb-close{
+    width:44px; height:44px; font-size:1.3rem;
+    top:calc(.6rem + env(safe-area-inset-top, 0px)); right:.9rem;
+    background:rgba(10,12,24,.85); color:var(--gx-ink);
+    border:1px solid var(--gx-line); border-radius:8px;
+  }
+  /* Der Tipp neben das Bild schließt bereits — nur wusste das niemand. */
+  .gx-lb-hinweis{ display:block; }
+}
+.gx-lb-hinweis{ display:none; margin-top:.9rem; text-align:center;
+  font-family:var(--fm); font-size:.62rem; letter-spacing:.06em;
+  color:var(--gx-ink3, #8a8fa8); }
 @media (prefers-reduced-motion: reduce){ .gx-lightbox, .gx-lightbox img{ transition:none; } }
 
 /* ── Permalink im Detail-Panel ── */
@@ -8530,6 +8781,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     <div class="gx-lb-name" id="gx-lb-name"></div>
     <div class="gx-lb-meta" id="gx-lb-meta"></div>
     <div class="gx-lb-credit" id="gx-lb-credit"></div>
+    <div class="gx-lb-hinweis">Zum Schließen daneben tippen</div>
   </div>
 </div>
 
@@ -8541,6 +8793,24 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   let selPan=null;           // Pantheon der angeklickten Figur (für Permalink & Lightbox)
   let _pos={}, _godsShown=[]; // aktuelles Layout (für Hover ohne Re-Render)
   let compareMode=false, cmpA='griechisch', cmpB='roemisch';
+
+  /* ── Auswahl für den Entsprechungs-Atlas ───────────────────────────
+     Der Atlas zeigte alle Kosmen, die irgendwo in DATA.equiv vorkommen —
+     zuletzt weit über zwanzig. Als Gesamtbild schön, aber es beantwortet
+     keine Frage. Interessant wird der Vergleich, wenn man ihn richtet.
+     Bewusst NICHT die Kosmen mit den meisten Entsprechungen als Vorgabe:
+     das wären Griechisch, Römisch, Nordisch, Mesopotamisch und Ägyptisch —
+     fünf, die einander ohnehin nahestehen, ohne Überraschung. Stattdessen
+     benannte Zusammenstellungen, die je eine These enthalten. */
+  const ATLAS_SETS = [
+    ['Indogermanisch',       ['griechisch','roemisch','nordisch','keltisch','hinduismus']],
+    ['Alter Orient',         ['mesopotamisch','aegyptisch','kanaanaeisch','zoroastrismus']],
+    ['Abrahamitisch',        ['judentum','christentum','islam']],
+    ['Mystische Traditionen',['gnosis','kabbala','manichaeismus','boehme']],
+    ['Ostasien',             ['chinesisch','shinto','buddhismus']],
+    ['Modern',               ['kapitalismus','kapitalismus-satire','lovecraft']],
+  ];
+  let atlasWahl = ATLAS_SETS[0][1].slice();
   let gxJahr=null;   // null = keine Zeitbegrenzung; sonst Jahreszahl (negativ = v. Chr.)
   // War dieser Kosmos zum Zeitpunkt 'j' lebendig? Grundlage: belegte Datierung.
   function gxLebt(panKey,j){
@@ -8581,7 +8851,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     ["Ostasien",["shinto","chinesisch"]],
     ["Mesoamerika",["aztekisch"]],
     ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
-    ["Mystische Traditionen",["gnosis","kabbala"]],
+    ["Mystische Traditionen",["gnosis","kabbala","boehme"]],
     ["Moderne Kosmen",["kapitalismus","kapitalismus-satire"]],
     ["Literarische Kosmen",["lovecraft"]],
   ];
@@ -8626,6 +8896,36 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
      waren — die Darstellung hängt allein an dieser Markierung. */
   function buildTabs(){
     const wrap=document.getElementById('gods-tabs'); wrap.innerHTML='';
+
+    /* Auf dem Telefon nahm die Auswahl 982 px ein — mehr als ein ganzer
+       Bildschirm, nur um einen Kosmos zu wählen. Dort deshalb ein einziges
+       Feld mit Gruppen statt elf Kategorien mit Knopfreihen. Der Kosmos ist
+       damit in zwei Tipps erreichbar statt nach langem Scrollen.
+       Ab 901 px bleibt alles wie bisher. */
+    if(window.matchMedia('(max-width:900px)').matches){
+      const sel=document.createElement('select');
+      sel.className='gods-select gods-select-alle active';
+      sel.setAttribute('aria-label','Kosmos wählen');
+      CATS.forEach(([catLabel,keys])=>{
+        const present=keys.filter(k=>DATA.panthea[k]);
+        if(!present.length)return;
+        const gr=document.createElement('optgroup'); gr.label=catLabel;
+        present.forEach(key=>{
+          const o=document.createElement('option');
+          o.value=key; o.textContent=DATA.panthea[key].label;
+          if(key===activePan) o.selected=true;
+          gr.appendChild(o);
+        });
+        sel.appendChild(gr);
+      });
+      const p=DATA.panthea[activePan];
+      if(p){ sel.style.setProperty('--pan-color',p.color);
+             sel.style.setProperty('--pan-glow',hexA(p.color,.4)); }
+      sel.onchange=()=>{ if(sel.value) waehlePan(sel.value); };
+      wrap.appendChild(sel);
+      return;
+    }
+
     CATS.forEach(([catLabel,keys,darstellung])=>{
       const present=keys.filter(k=>DATA.panthea[k]);
       if(!present.length)return;
@@ -8667,6 +8967,14 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     });
   }
   /* Ein Kosmoswechsel, egal ob über Knopf oder Auswahlfeld. */
+  /* Wird die Schwelle überquert (Drehen des Geräts, Fenstergröße), muss die
+     Auswahl neu gebaut werden — sonst bleibt die falsche Darstellung stehen. */
+  try{
+    window.matchMedia('(max-width:900px)').addEventListener('change',function(){
+      if(document.getElementById('gods-tabs')) buildTabs();
+    });
+  }catch(e){}
+
   function waehlePan(key){
     activePan=key; equivMode=true; selId=null;
     syncEquivBtn(); buildTabs(); applyPanColor(); gxClosePanel(); gxRender(); gxSyncHash();
@@ -8831,6 +9139,8 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     if(!DATA)return;
     gxSyncFilterBar();
     const tEl0=document.getElementById('gx-table'); if(tEl0) tEl0.hidden=true;
+    const awEl=document.getElementById('gx-atlas-wahl');
+    if(awEl&&gxView!=='atlas') awEl.hidden=true;
     if(gxView==='atlas'){ gxRenderAtlas(); return; }
     if(gxView==='zeit'){ gxRenderZeit(); return; }
     if(gxView==='tabelle'){ gxRenderTabelle(); return; }
@@ -9164,6 +9474,60 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   // zum Knoten, jede Entsprechung zur Sehne quer durch den Kreis. Hover hebt
   // die ganze Gruppe hervor, Klick öffnet das Detail-Panel der Figur.
   function _esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  /* Zeichnet die Auswahlleiste über dem Atlas: erst die Zusammenstellungen,
+     darunter jeder beteiligte Kosmos einzeln zum Hinzufügen und Entfernen.
+     Die Leiste steht nur in dieser Ansicht und wird bei jedem Zeichnen neu
+     aufgebaut, damit sie den Zustand nie überholt. */
+  function gxAtlasLeiste(perPan){
+    let box=document.getElementById('gx-atlas-wahl');
+    if(!box){
+      box=document.createElement('div'); box.id='gx-atlas-wahl'; box.className='gx-atlas-wahl';
+      const stage=document.getElementById('gods-stage-wrap');
+      if(stage&&stage.parentNode) stage.parentNode.insertBefore(box,stage);
+      else return;
+    }
+    box.hidden=false; box.innerHTML='';
+
+    const reihe1=document.createElement('div'); reihe1.className='gx-aw-reihe';
+    const lab=document.createElement('span'); lab.className='gx-aw-lab';
+    lab.textContent='Zusammenstellung'; reihe1.appendChild(lab);
+    ATLAS_SETS.forEach(([name,keys])=>{
+      const vorhanden=keys.filter(k=>perPan.has(k));
+      if(vorhanden.length<2) return;
+      const b=document.createElement('button'); b.type='button';
+      const gleich = vorhanden.length===atlasWahl.length &&
+                     vorhanden.every(k=>atlasWahl.indexOf(k)>=0);
+      b.className='gx-aw-set'+(gleich?' an':''); b.textContent=name;
+      b.onclick=()=>{ atlasWahl=vorhanden.slice(); gxRender(); };
+      reihe1.appendChild(b);
+    });
+    box.appendChild(reihe1);
+
+    const reihe2=document.createElement('div'); reihe2.className='gx-aw-reihe';
+    const lab2=document.createElement('span'); lab2.className='gx-aw-lab';
+    lab2.textContent='einzeln'; reihe2.appendChild(lab2);
+    const beteiligt=[];
+    CATS.forEach(([,keys])=>keys.forEach(k=>{ if(perPan.has(k)) beteiligt.push(k); }));
+    perPan.forEach((_,k)=>{ if(beteiligt.indexOf(k)<0) beteiligt.push(k); });
+    beteiligt.forEach(k=>{
+      const P=DATA.panthea[k]; if(!P) return;
+      const an=atlasWahl.indexOf(k)>=0;
+      const b=document.createElement('button'); b.type='button';
+      b.className='gx-aw-pan'+(an?' an':'');
+      b.textContent=P.label+' '+perPan.get(k).size;
+      b.setAttribute('aria-pressed', an?'true':'false');
+      if(an){ b.style.setProperty('--pan-color',P.color); }
+      b.onclick=()=>{
+        const i=atlasWahl.indexOf(k);
+        if(i>=0){ if(atlasWahl.length<=2) return; atlasWahl.splice(i,1); }
+        else atlasWahl.push(k);
+        gxRender();
+      };
+      reihe2.appendChild(b);
+    });
+    box.appendChild(reihe2);
+  }
+
   function gxRenderAtlas(){
     const cEl=document.getElementById('gx-cards'); if(cEl) cEl.hidden=true;
     const wEl=document.getElementById('gods-stage-wrap'); if(wEl) wEl.hidden=false;
@@ -9185,6 +9549,12 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     const panOrder=[];
     CATS.forEach(([,keys])=>keys.forEach(k=>{ if(perPan.has(k)) panOrder.push(k); }));
     perPan.forEach((_,k)=>{ if(panOrder.indexOf(k)<0) panOrder.push(k); });
+    /* Nur die gewählten Kosmen zeichnen. Fällt die Auswahl leer aus — etwa
+       weil ein Kosmos keine Entsprechungen hat —, wird alles gezeigt statt
+       einer leeren Bühne. */
+    const gewaehlt=panOrder.filter(k=>atlasWahl.indexOf(k)>=0);
+    if(gewaehlt.length>=2) panOrder.length=0, gewaehlt.forEach(k=>panOrder.push(k));
+    gxAtlasLeiste(perPan);
     const nFig=[...perPan.values()].reduce((a,m)=>a+m.size,0);
 
     // 2) Kreis-Layout
@@ -9644,7 +10014,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     im.src=imgPath; im.alt=g.name;
     document.getElementById('gx-lb-name').textContent=g.name;
     document.getElementById('gx-lb-meta').textContent=p.label+(p.tiers&&p.tiers[g.tier]?' · '+p.tiers[g.tier]:'');
-    // Bildnachweis aus dem Medaillon-Manifest (assets/bildnachweise-goetter.js), falls vorhanden
+    // Bildnachweis aus dem Medaillon-Manifest (js/bildnachweise-goetter.js), falls vorhanden
     const cr=(window.GX_CREDITS||{})[panKey+'/'+g.id];
     const cEl=document.getElementById('gx-lb-credit');
     if(cr){
@@ -10141,7 +10511,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   background:var(--card);color:var(--text);font-size:.85rem;cursor:pointer;line-height:1;
   display:flex;align-items:center;justify-content:center}
 @media (hover: hover){ .kz-play:hover{border-color:var(--accent);color:var(--accent-text)} }
-.kz-play[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.kz-play[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 .kz-alle{flex:0 0 auto;white-space:nowrap}
 .kz.zeit-an .kz-alle{opacity:.6}
 .kz.zeit-an .kz-alle.active{opacity:1}
@@ -10168,7 +10538,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .km-btn{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border:0;
   border-radius:6px;background:transparent;color:var(--text3);cursor:pointer;white-space:nowrap}
 @media (hover: hover){ .km-btn:hover{color:var(--accent-text)} }
-.km-btn.active{background:var(--accent);color:#fff}
+.km-btn.active{background:var(--accent);color:var(--auf-accent,#fff)}
 .karte-osm{display:block;height:560px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
 /* Gegenort und Spur beim Ueberfahren */
 .osm-gegenort{width:26px;height:26px;border-radius:50%;border:2px solid;background:rgba(12,14,26,.92);
@@ -10201,7 +10571,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tlk-tab.auf .tlk-caret{transform:rotate(90deg)}
 .tlk-caret{display:inline-block;transition:transform .15s;font-size:.6rem;opacity:.7}
 .tlk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:1.05rem;height:1.05rem;
-  border-radius:999px;background:var(--accent);color:#fff;font-size:.58rem;font-weight:700;padding:0 .25rem}
+  border-radius:999px;background:var(--accent);color:var(--auf-accent,#fff);font-size:.58rem;font-weight:700;padding:0 .25rem}
 .tlk-tab-reset{margin-left:auto;font-style:italic;opacity:.8}
 .tlk-fach{padding:.9rem 0 .3rem;border-bottom:1px solid var(--border);animation:tlkAuf .16s ease}
 @keyframes tlkAuf{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
@@ -10220,7 +10590,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tl-kreis{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border-radius:14px;
   cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--text3);transition:all .15s}
 @media (hover: hover){ .tl-kreis:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tl-kreis.an{background:var(--accent);border-color:var(--accent);color:#fff}
+.tl-kreis.an{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 .tl-kreis i{font-style:normal;opacity:.65;font-size:.58rem;margin-left:.25rem}
 .tl-kreis-haken{display:inline-block;width:.75rem;margin-right:.25rem;font-size:.62rem}
 .tl-kreis-alle{margin-left:.35rem;font-style:italic;opacity:.85}
@@ -10231,7 +10601,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.66rem;
   font-family:var(--fm);color:var(--text2);transition:all .15s;white-space:nowrap}
 @media (hover: hover){ .tlk-zeile-leg .epoch-leg-item:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:#fff}
+.tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:var(--auf-accent,#fff)}
 .tlk-zeile-leg .epoch-leg-swatch{width:.6rem;height:.6rem;border-radius:50%;flex-shrink:0}
 #female-btn.active{background:var(--accent2,#c0559a);color:#fff;border-color:transparent}
 .tl-hilfe{display:flex;align-items:center;gap:.8rem;margin:.1rem 0 .5rem;padding:.5rem .85rem;
@@ -10258,7 +10628,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .phil-controls { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.85rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
 .phil-zoom-group { display:flex; gap:.2rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .pzb           { background:transparent; border:none; color:var(--text2); width:30px; height:30px; border-radius:6px; cursor:pointer; font-size:.95rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
-@media (hover: hover){ .pzb:hover{ background:var(--accent); color:#fff; } }
+@media (hover: hover){ .pzb:hover{ background:var(--accent); color:var(--auf-accent,#fff); } }
 .zoom-label    { font-family:var(--fm); font-size:.72rem; color:var(--text3); padding:0 .4rem; min-width:42px; text-align:center; }
 .phil-search-wrap { position:relative; flex-shrink:0; }
 .phil-search   { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.42rem .75rem .42rem 1.95rem; border-radius:7px; font-family:var(--fb); font-size:.8rem; outline:none; width:190px; height:34px; }
@@ -10302,7 +10672,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .view-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .vs-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .8rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .vs-btn:hover{ color:var(--text); } }
-.vs-btn.active { background:var(--accent); color:#fff; }
+.vs-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
 
 /* Die vier Ansichtsknöpfe brauchen zusammen 464 px und schoben die
    Rand auf dem Telefon um 74 px, der letzte war unlesbar. Ab hier dürfen sie
@@ -10329,9 +10699,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tl-epoch-pill { display:inline-block; font-family:var(--fm); font-size:.7rem; padding:.14rem .55rem; border-radius:6px; border:1px solid; white-space:nowrap; font-weight:600; }
 .tl-table-meta-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.7rem; }
 .tl-export-btn { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.38rem .85rem; border-radius:7px; cursor:pointer; font-family:var(--fm); font-size:.72rem; transition:all .15s; white-space:nowrap; }
-@media (hover: hover){ .tl-export-btn:hover{ background:var(--accent); border-color:var(--accent); color:#fff; } }
+@media (hover: hover){ .tl-export-btn:hover{ background:var(--accent); border-color:var(--accent); color:var(--auf-accent,#fff); } }
 .tl-badge { display:inline-block; font-family:var(--fm); font-size:.64rem; background:var(--surface); border:1px solid var(--border2); color:var(--text2); border-radius:5px; padding:.1rem .42rem; margin:.1rem .18rem .1rem 0; white-space:nowrap; }
-.tl-badge.hl { background:var(--accent); border-color:var(--accent); color:#fff; }
+.tl-badge.hl { background:var(--accent); border-color:var(--accent); color:var(--auf-accent,#fff); }
 @media (max-width:900px){ .tl-table-wrap{ padding:1rem 1.2rem 2.5rem; } .tl-table .opt-col{ display:none; } }
 
 .infl-toggles  { display:flex; gap:.25rem; flex-wrap:wrap; }
@@ -10345,11 +10715,11 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .era-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
 .era-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .era-btn:hover{ color:var(--text); } }
-.era-btn.active { background:var(--accent); color:#fff; }
+.era-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
 .filter-mode-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
 .fm-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .fm-btn:hover{ color:var(--text); } }
-.fm-btn.active { background:var(--accent); color:#fff; }
+.fm-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
 .epoch-dd-wrap { display:inline-flex; align-items:center; gap:.5rem; margin-left:1rem; }
 .epoch-dd-label { font-size:.72rem; font-family:var(--fm); color:var(--text3); }
 .epoch-dd { background:var(--surface); border:1px solid var(--border); color:var(--text); padding:.45rem .8rem; border-radius:8px; font-size:.76rem; font-family:var(--fm); cursor:pointer; outline:none; min-width:280px; max-width:360px; }
@@ -10404,7 +10774,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .pmodal-overlay.open { display:flex; }
 .pmodal-box    { background:var(--card); border:1px solid var(--border2); border-radius:18px; padding:2rem 2.25rem; max-width:620px; width:100%; max-height:86vh; overflow-y:auto; position:relative; box-shadow:0 24px 72px rgba(0,0,0,.3); }
 .pmodal-close  { position:absolute; top:1rem; right:1rem; background:var(--surface); border:none; color:var(--text2); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:.95rem; transition:all .2s; }
-@media (hover: hover){ .pmodal-close:hover{ background:var(--accent); color:#fff; } }
+@media (hover: hover){ .pmodal-close:hover{ background:var(--accent); color:var(--auf-accent,#fff); } }
 
 .pmodal-header { display:flex; gap:1.2rem; align-items:flex-start; margin-bottom:1.2rem; }
 .pmodal-portrait { width:90px; height:120px; flex-shrink:0; border-radius:10px; overflow:hidden; background:var(--surface); border:2px solid var(--accent); box-shadow:0 6px 20px rgba(0,0,0,.15); }
@@ -14863,6 +15233,8 @@ init();
         anerkennen. <b>Der Kampfplatz dieser endlosen Streitigkeiten heißt nun
         Metaphysik.</b></p>
     </blockquote>
+    <button class="arg-motto-mehr" type="button"
+      onclick="this.closest('.arg-motto').classList.toggle('offen');this.textContent=this.closest('.arg-motto').classList.contains('offen')?'weniger anzeigen':'vollständig lesen'">vollständig lesen</button>
     <figcaption>Immanuel Kant · <cite>Kritik der reinen Vernunft</cite>, Vorrede zur
       ersten Auflage, A VII–VIII · 1781</figcaption>
   </figure>
@@ -14967,7 +15339,7 @@ init();
   border:1px solid var(--border);color:var(--text2);border-radius:100px;
   padding:.34rem .8rem;transition:border-color .18s,color .18s,background .18s}
 @media (hover: hover){ .arg-knopf:hover{border-color:var(--accent);color:var(--accent-text)} }
-.arg-knopf[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.arg-knopf[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 
 .arg-kopf{border-left:4px solid var(--accent);padding-left:1rem;margin-bottom:1.2rem;position:relative}
 .arg-jahr{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;color:var(--accent-text);
@@ -16299,7 +16671,7 @@ document.addEventListener('wheel', function(e){
   transition:all .15s;white-space:nowrap;
 }
 @media (hover: hover){ .phe-chap-btn:hover{border-color:var(--accent);color:var(--accent-text);} }
-.phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff);}
 .phe-chap-btn .num{font-size:.65rem;opacity:.7;}
 .phe-nav-group{
   flex-shrink:0;display:flex;align-items:center;padding:0 .2rem 0 .7rem;
@@ -16409,7 +16781,7 @@ document.addEventListener('wheel', function(e){
 }
 .phe-glosse::before{
   content:'※';position:absolute;top:.8rem;left:-.5rem;
-  background:var(--accent);color:#fff;
+  background:var(--accent);color:var(--auf-accent,#fff);
   width:22px;height:22px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-style:normal;font-size:.7rem;font-weight:700;
@@ -17086,7 +17458,7 @@ document.addEventListener('wheel', function(e){
 <template id="page-arbeiten">
 <!-- ═══════════════════════════════════════════════════════════════
      EIGENE ARBEITEN — eigenständige Seite (vormals Sektion auf "Meine Philosophie")
-     Lädt assets/documents.json (Datei-Metadaten) + assets/documents-meta.json
+     Lädt daten/documents.json (Datei-Metadaten) + daten/documents-meta.json
      (redaktionelle Einordnung: Typ/Reihenfolge/Kurs) und führt beides zusammen.
      Trägt komplett "pub-hide-github": die ganze Seite (inkl. Nav-Eintrag und
      direkter Hash-Navigation, siehe showPage()-Guard in index.html) verschwindet
@@ -17152,7 +17524,7 @@ document.addEventListener('wheel', function(e){
   background:var(--surface);color:var(--text3);
   font-family:var(--fm);font-size:.58rem;letter-spacing:.02em;white-space:nowrap;
 }
-.pdoc-group-featured .pdoc-row-badge{ background:var(--accent);color:#fff; }
+.pdoc-group-featured .pdoc-row-badge{ background:var(--accent);color:var(--auf-accent,#fff); }
 
 .pdoc-row-meta{
   display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem;
@@ -17209,7 +17581,7 @@ document.addEventListener('wheel', function(e){
   <div class="pdoc-head">
     <h2 class="pdoc-visually-hidden" id="pdoc-heading">Aufsätze &amp; Arbeiten</h2>
     <p class="pdoc-intro">Zum freien Lesen und Herunterladen. Wird automatisch aus
-      <code>assets/documents.json</code> geladen.</p>
+      <code>daten/documents.json</code> geladen.</p>
   </div>
 
   <!-- aria-live: nur für Screenreader (Lade-/Fehlerstatus) -->
@@ -17221,8 +17593,8 @@ document.addEventListener('wheel', function(e){
   <p class="pdoc-empty pdoc-hidden" id="pdoc-empty">Aktuell sind hier keine Dokumente hinterlegt.</p>
 
   <div class="pdoc-error pdoc-hidden" id="pdoc-error">
-    Die Übersicht konnte nicht geladen werden — weder über <code>assets/documents.json</code> /
-    <code>assets/documents-meta.json</code> noch über die lokalen Ausweich-Dateien. Prüfe, ob alle
+    Die Übersicht konnte nicht geladen werden — weder über <code>daten/documents.json</code> /
+    <code>daten/documents-meta.json</code> noch über die lokalen Ausweich-Dateien. Prüfe, ob alle
     vier Dateien vorhanden und syntaktisch korrekt sind.
   </div>
 </section>
@@ -17232,10 +17604,10 @@ document.addEventListener('wheel', function(e){
    EIGENE ARBEITEN — dynamische PDF-Übersicht
    ────────────────────────────────────────────────────────────────
    Zwei Datenquellen, bewusst getrennt:
-   - assets/documents.json       → Datei-Metadaten (Titel, Seiten, Größe…),
+   - daten/documents.json       → Datei-Metadaten (Titel, Seiten, Größe…),
                                     automatisch von Alexanders eigenem Skript
                                     erzeugt, wird bei neuen Dokumenten überschrieben.
-   - assets/documents-meta.json  → redaktionelle Einordnung (Typ, Reihenfolge,
+   - daten/documents-meta.json  → redaktionelle Einordnung (Typ, Reihenfolge,
                                     zugehöriger Kurs), von Hand gepflegt, bleibt
                                     beim Neuerzeugen der ersten Datei unangetastet.
    Beide werden client-seitig über "filename" zusammengeführt.
@@ -17437,8 +17809,8 @@ document.addEventListener('wheel', function(e){
   }
 
   Promise.all([
-    loadJsonOrFallback('assets/documents.json', 'DOCUMENTS_DATA'),
-    loadJsonOrFallback('assets/documents-meta.json', 'DOCUMENTS_META'),
+    loadJsonOrFallback('daten/documents.json', 'DOCUMENTS_DATA'),
+    loadJsonOrFallback('daten/documents-meta.json', 'DOCUMENTS_META'),
   ]).then(function (results) {
     const docs = results[0], meta = results[1];
     if (!Array.isArray(docs)) throw new Error('documents.json: unerwartetes Format');
@@ -17516,7 +17888,7 @@ document.addEventListener('wheel', function(e){
 .pod-section-hdr::after{content:'';flex:1;height:1px;background:var(--border);}
 .pod-cat-nav{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem;}
 .pod-cat-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.3rem .8rem;border-radius:20px;cursor:pointer;font-size:.76rem;font-family:var(--fm);transition:all .15s;}
-.pod-cat-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.pod-cat-btn.active{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff);}
 .pod-grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(280px, 100%), 1fr));gap:1.2rem;margin-bottom:2rem;}
 .pod-card2{padding:1.25rem;display:flex;gap:.85rem;align-items:start;background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);transition:all .25s;}
 @media (hover: hover){ .pod-card2:hover{transform:translateY(-2px);border-color:var(--border2);} }
@@ -18478,7 +18850,7 @@ renderGameCards();
 .g-subtab{background:var(--surface);border:1px solid var(--border);color:var(--text2);
   padding:.45rem .95rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.78rem;transition:all .15s;}
 @media (hover: hover){ .g-subtab:hover{border-color:var(--accent);} }
-.g-subtab.active{background:var(--accent);color:#fff;border-color:transparent;}
+.g-subtab.active{background:var(--accent);color:var(--auf-accent,#fff);border-color:transparent;}
 .g-subtab2{background:transparent;border:1px solid var(--border2);color:var(--text3);padding:.35rem .8rem;border-radius:6px;cursor:pointer;font-family:var(--fm);font-size:.72rem;transition:all .15s;}
 @media (hover: hover){ .g-subtab2:hover{border-color:var(--accent);color:var(--text2);} }
 .g-subtab2.active{background:var(--accent2,var(--accent));color:#fff;border-color:transparent;}
@@ -19118,7 +19490,7 @@ renderGameCards();
   padding:.42rem .85rem;border-radius:16px;cursor:pointer;background:transparent;
   border:1px solid var(--border);color:var(--text2);transition:all .15s;white-space:nowrap}
 @media (hover: hover){ .sh-chip:hover{border-color:var(--accent);color:var(--accent-text)} }
-.sh-chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.sh-chip.on{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 .sh-count{margin-left:auto;font-family:var(--fm);font-size:.68rem;color:var(--text3)}
 
 .sh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(310px, 100%), 1fr));gap:1.5rem}
@@ -19367,7 +19739,7 @@ renderGameCards();
 .legal-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:1rem;}
 .legal-tab{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-family:var(--fm);font-size:.8rem;transition:all .15s;}
 @media (hover: hover){ .legal-tab:hover{border-color:var(--accent);} }
-.legal-tab.active{background:var(--accent);color:#fff;border-color:transparent;}
+.legal-tab.active{background:var(--accent);color:var(--auf-accent,#fff);border-color:transparent;}
 
 .legal-section{display:none;animation:legalFade .3s ease;}
 .legal-section.active{display:block;}
@@ -19558,7 +19930,7 @@ window.legalShow = function(sec, btn){
 };
 
 /* ── Bild-Lizenzen laden ──
-   Erwartet eine Datei  assets/bildnachweise.json  mit Einträgen:
+   Erwartet eine Datei  daten/bildnachweise.json  mit Einträgen:
    { "slug": {"name","author","license","license_url","source_url"} }
    Wird vom Fetch-Skript automatisch erzeugt. Fehlt sie, zeigt die Seite
    einen allgemeinen Hinweis. */
@@ -19605,7 +19977,7 @@ function renderLic(filter){
   if (!list) return;
   if (!_licData){
     list.innerHTML = '<div class="lic-empty">Es ist noch keine Bildnachweis-Datei vorhanden '
-      + '(<code>assets/bildnachweise.json</code> bzw. <code>js/bildnachweise.js</code>).<br>Sie wird beim Bilder-Download automatisch erzeugt. '
+      + '(<code>daten/bildnachweise.json</code> bzw. <code>js/bildnachweise.js</code>).<br>Sie wird beim Bilder-Download automatisch erzeugt. '
       + 'Bis dahin gilt: Alle Porträts stammen von Wikimedia&nbsp;Commons und sind dort mit '
       + 'Urheber und Lizenz dokumentiert.</div>';
     if (count) count.textContent = '';
@@ -19686,9 +20058,9 @@ function loadLicenses(){
   var merged={};
   if (typeof window.BILDNACHWEISE !== 'undefined' && window.BILDNACHWEISE) Object.assign(merged, _norm(window.BILDNACHWEISE,'Philosophen'));
   if (typeof window.GX_CREDITS !== 'undefined' && window.GX_CREDITS) Object.assign(merged, _norm(window.GX_CREDITS,'Götter'));
-  var _srcs=[['assets/bildnachweise.json','Philosophen'],
-             ['assets/bildnachweise-goetter.json','Götter'],
-             ['assets/bildnachweise-vignetten.json','Vignetten']];
+  var _srcs=[['daten/bildnachweise.json','Philosophen'],
+             ['js/bildnachweise-goetter.json','Götter'],
+             ['daten/bildnachweise-vignetten.json','Vignetten']];
   Promise.all(_srcs.map(function(f){
     return fetch(f[0]).then(function(r){ return r.ok?r.json():{}; }).catch(function(){ return {}; })
       .then(function(d){ Object.assign(merged, _norm(d, f[1])); });
@@ -23412,7 +23784,7 @@ function buildFachFilter(){
 /* Kurse, zu denen eine eigene Hausarbeit existiert. Klein und von Hand gepflegt
    (nur 4 Einträge), unabhängig von kurseData/documents.json. Steuert, ob das
    kleine Verweis-Badge in der Kursliste erscheint. Die Zuordnung selbst (welches
-   Dokument zu welchem Kurs gehört) lebt in assets/documents-meta.json — hier
+   Dokument zu welchem Kurs gehört) lebt in daten/documents-meta.json — hier
    wird nur gewusst, WELCHE Kursnamen einen Treffer haben. */
 const KURS_HAS_WORK = new Set([
   'Theorien des objektiven Geistes',
@@ -23573,7 +23945,7 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
 <script src="js/leaflet/leaflet.js" onerror="console.log('leaflet.js nicht geladen')"></script>
 <script src="js/geo-data.js" onerror="console.log('geo-data.js nicht geladen')"></script>
 <script src="js/goetter-data.js" onerror="console.log('goetter-data.js nicht geladen')"></script>
-<script src="assets/bildnachweise-goetter.js" onerror="console.log('bildnachweise-goetter.js nicht geladen (optional — Medaillon-Manifest)')"></script>
+<script src="js/bildnachweise-goetter.js" onerror="console.log('bildnachweise-goetter.js nicht geladen (optional — Medaillon-Manifest)')"></script>
 <script src="js/documents-data.js" onerror="console.log('documents-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
 <script src="js/documents-meta-data.js" onerror="console.log('documents-meta-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
 </body></html>

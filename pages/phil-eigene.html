@@ -33,7 +33,7 @@
   transition:all .15s;white-space:nowrap;
 }
 @media (hover: hover){ .phe-chap-btn:hover{border-color:var(--accent);color:var(--accent-text);} }
-.phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.phe-chap-btn.active{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff);}
 .phe-chap-btn .num{font-size:.65rem;opacity:.7;}
 .phe-nav-group{
   flex-shrink:0;display:flex;align-items:center;padding:0 .2rem 0 .7rem;
@@ -143,7 +143,7 @@
 }
 .phe-glosse::before{
   content:'※';position:absolute;top:.8rem;left:-.5rem;
-  background:var(--accent);color:#fff;
+  background:var(--accent);color:var(--auf-accent,#fff);
   width:22px;height:22px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-style:normal;font-size:.7rem;font-weight:700;

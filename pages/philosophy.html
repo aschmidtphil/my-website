@@ -125,7 +125,7 @@
   background:var(--card);color:var(--text);font-size:.85rem;cursor:pointer;line-height:1;
   display:flex;align-items:center;justify-content:center}
 @media (hover: hover){ .kz-play:hover{border-color:var(--accent);color:var(--accent-text)} }
-.kz-play[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.kz-play[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 .kz-alle{flex:0 0 auto;white-space:nowrap}
 .kz.zeit-an .kz-alle{opacity:.6}
 .kz.zeit-an .kz-alle.active{opacity:1}
@@ -152,7 +152,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .km-btn{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border:0;
   border-radius:6px;background:transparent;color:var(--text3);cursor:pointer;white-space:nowrap}
 @media (hover: hover){ .km-btn:hover{color:var(--accent-text)} }
-.km-btn.active{background:var(--accent);color:#fff}
+.km-btn.active{background:var(--accent);color:var(--auf-accent,#fff)}
 .karte-osm{display:block;height:560px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
 /* Gegenort und Spur beim Ueberfahren */
 .osm-gegenort{width:26px;height:26px;border-radius:50%;border:2px solid;background:rgba(12,14,26,.92);
@@ -185,7 +185,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tlk-tab.auf .tlk-caret{transform:rotate(90deg)}
 .tlk-caret{display:inline-block;transition:transform .15s;font-size:.6rem;opacity:.7}
 .tlk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:1.05rem;height:1.05rem;
-  border-radius:999px;background:var(--accent);color:#fff;font-size:.58rem;font-weight:700;padding:0 .25rem}
+  border-radius:999px;background:var(--accent);color:var(--auf-accent,#fff);font-size:.58rem;font-weight:700;padding:0 .25rem}
 .tlk-tab-reset{margin-left:auto;font-style:italic;opacity:.8}
 .tlk-fach{padding:.9rem 0 .3rem;border-bottom:1px solid var(--border);animation:tlkAuf .16s ease}
 @keyframes tlkAuf{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
@@ -204,7 +204,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tl-kreis{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border-radius:14px;
   cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--text3);transition:all .15s}
 @media (hover: hover){ .tl-kreis:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tl-kreis.an{background:var(--accent);border-color:var(--accent);color:#fff}
+.tl-kreis.an{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
 .tl-kreis i{font-style:normal;opacity:.65;font-size:.58rem;margin-left:.25rem}
 .tl-kreis-haken{display:inline-block;width:.75rem;margin-right:.25rem;font-size:.62rem}
 .tl-kreis-alle{margin-left:.35rem;font-style:italic;opacity:.85}
@@ -215,7 +215,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.66rem;
   font-family:var(--fm);color:var(--text2);transition:all .15s;white-space:nowrap}
 @media (hover: hover){ .tlk-zeile-leg .epoch-leg-item:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:#fff}
+.tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:var(--auf-accent,#fff)}
 .tlk-zeile-leg .epoch-leg-swatch{width:.6rem;height:.6rem;border-radius:50%;flex-shrink:0}
 #female-btn.active{background:var(--accent2,#c0559a);color:#fff;border-color:transparent}
 .tl-hilfe{display:flex;align-items:center;gap:.8rem;margin:.1rem 0 .5rem;padding:.5rem .85rem;
@@ -242,7 +242,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .phil-controls { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.85rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
 .phil-zoom-group { display:flex; gap:.2rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .pzb           { background:transparent; border:none; color:var(--text2); width:30px; height:30px; border-radius:6px; cursor:pointer; font-size:.95rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
-@media (hover: hover){ .pzb:hover{ background:var(--accent); color:#fff; } }
+@media (hover: hover){ .pzb:hover{ background:var(--accent); color:var(--auf-accent,#fff); } }
 .zoom-label    { font-family:var(--fm); font-size:.72rem; color:var(--text3); padding:0 .4rem; min-width:42px; text-align:center; }
 .phil-search-wrap { position:relative; flex-shrink:0; }
 .phil-search   { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.42rem .75rem .42rem 1.95rem; border-radius:7px; font-family:var(--fb); font-size:.8rem; outline:none; width:190px; height:34px; }
@@ -286,7 +286,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .view-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
 .vs-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .8rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .vs-btn:hover{ color:var(--text); } }
-.vs-btn.active { background:var(--accent); color:#fff; }
+.vs-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
 
 /* Die vier Ansichtsknöpfe brauchen zusammen 464 px und schoben die
    Rand auf dem Telefon um 74 px, der letzte war unlesbar. Ab hier dürfen sie
@@ -313,9 +313,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tl-epoch-pill { display:inline-block; font-family:var(--fm); font-size:.7rem; padding:.14rem .55rem; border-radius:6px; border:1px solid; white-space:nowrap; font-weight:600; }
 .tl-table-meta-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.7rem; }
 .tl-export-btn { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.38rem .85rem; border-radius:7px; cursor:pointer; font-family:var(--fm); font-size:.72rem; transition:all .15s; white-space:nowrap; }
-@media (hover: hover){ .tl-export-btn:hover{ background:var(--accent); border-color:var(--accent); color:#fff; } }
+@media (hover: hover){ .tl-export-btn:hover{ background:var(--accent); border-color:var(--accent); color:var(--auf-accent,#fff); } }
 .tl-badge { display:inline-block; font-family:var(--fm); font-size:.64rem; background:var(--surface); border:1px solid var(--border2); color:var(--text2); border-radius:5px; padding:.1rem .42rem; margin:.1rem .18rem .1rem 0; white-space:nowrap; }
-.tl-badge.hl { background:var(--accent); border-color:var(--accent); color:#fff; }
+.tl-badge.hl { background:var(--accent); border-color:var(--accent); color:var(--auf-accent,#fff); }
 @media (max-width:900px){ .tl-table-wrap{ padding:1rem 1.2rem 2.5rem; } .tl-table .opt-col{ display:none; } }
 
 .infl-toggles  { display:flex; gap:.25rem; flex-wrap:wrap; }
@@ -329,11 +329,11 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .era-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
 .era-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .era-btn:hover{ color:var(--text); } }
-.era-btn.active { background:var(--accent); color:#fff; }
+.era-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
 .filter-mode-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
 .fm-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .fm-btn:hover{ color:var(--text); } }
-.fm-btn.active { background:var(--accent); color:#fff; }
+.fm-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
 .epoch-dd-wrap { display:inline-flex; align-items:center; gap:.5rem; margin-left:1rem; }
 .epoch-dd-label { font-size:.72rem; font-family:var(--fm); color:var(--text3); }
 .epoch-dd { background:var(--surface); border:1px solid var(--border); color:var(--text); padding:.45rem .8rem; border-radius:8px; font-size:.76rem; font-family:var(--fm); cursor:pointer; outline:none; min-width:280px; max-width:360px; }
@@ -388,7 +388,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .pmodal-overlay.open { display:flex; }
 .pmodal-box    { background:var(--card); border:1px solid var(--border2); border-radius:18px; padding:2rem 2.25rem; max-width:620px; width:100%; max-height:86vh; overflow-y:auto; position:relative; box-shadow:0 24px 72px rgba(0,0,0,.3); }
 .pmodal-close  { position:absolute; top:1rem; right:1rem; background:var(--surface); border:none; color:var(--text2); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:.95rem; transition:all .2s; }
-@media (hover: hover){ .pmodal-close:hover{ background:var(--accent); color:#fff; } }
+@media (hover: hover){ .pmodal-close:hover{ background:var(--accent); color:var(--auf-accent,#fff); } }
 
 .pmodal-header { display:flex; gap:1.2rem; align-items:flex-start; margin-bottom:1.2rem; }
 .pmodal-portrait { width:90px; height:120px; flex-shrink:0; border-radius:10px; overflow:hidden; background:var(--surface); border:2px solid var(--accent); box-shadow:0 6px 20px rgba(0,0,0,.15); }

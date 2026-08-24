@@ -1,6 +1,6 @@
 <!-- ═══════════════════════════════════════════════════════════════
      EIGENE ARBEITEN — eigenständige Seite (vormals Sektion auf "Meine Philosophie")
-     Lädt assets/documents.json (Datei-Metadaten) + assets/documents-meta.json
+     Lädt daten/documents.json (Datei-Metadaten) + daten/documents-meta.json
      (redaktionelle Einordnung: Typ/Reihenfolge/Kurs) und führt beides zusammen.
      Trägt komplett "pub-hide-github": die ganze Seite (inkl. Nav-Eintrag und
      direkter Hash-Navigation, siehe showPage()-Guard in index.html) verschwindet
@@ -66,7 +66,7 @@
   background:var(--surface);color:var(--text3);
   font-family:var(--fm);font-size:.58rem;letter-spacing:.02em;white-space:nowrap;
 }
-.pdoc-group-featured .pdoc-row-badge{ background:var(--accent);color:#fff; }
+.pdoc-group-featured .pdoc-row-badge{ background:var(--accent);color:var(--auf-accent,#fff); }
 
 .pdoc-row-meta{
   display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem;
@@ -123,7 +123,7 @@
   <div class="pdoc-head">
     <h2 class="pdoc-visually-hidden" id="pdoc-heading">Aufsätze &amp; Arbeiten</h2>
     <p class="pdoc-intro">Zum freien Lesen und Herunterladen. Wird automatisch aus
-      <code>assets/documents.json</code> geladen.</p>
+      <code>daten/documents.json</code> geladen.</p>
   </div>
 
   <!-- aria-live: nur für Screenreader (Lade-/Fehlerstatus) -->
@@ -135,8 +135,8 @@
   <p class="pdoc-empty pdoc-hidden" id="pdoc-empty">Aktuell sind hier keine Dokumente hinterlegt.</p>
 
   <div class="pdoc-error pdoc-hidden" id="pdoc-error">
-    Die Übersicht konnte nicht geladen werden — weder über <code>assets/documents.json</code> /
-    <code>assets/documents-meta.json</code> noch über die lokalen Ausweich-Dateien. Prüfe, ob alle
+    Die Übersicht konnte nicht geladen werden — weder über <code>daten/documents.json</code> /
+    <code>daten/documents-meta.json</code> noch über die lokalen Ausweich-Dateien. Prüfe, ob alle
     vier Dateien vorhanden und syntaktisch korrekt sind.
   </div>
 </section>
@@ -146,10 +146,10 @@
    EIGENE ARBEITEN — dynamische PDF-Übersicht
    ────────────────────────────────────────────────────────────────
    Zwei Datenquellen, bewusst getrennt:
-   - assets/documents.json       → Datei-Metadaten (Titel, Seiten, Größe…),
+   - daten/documents.json       → Datei-Metadaten (Titel, Seiten, Größe…),
                                     automatisch von Alexanders eigenem Skript
                                     erzeugt, wird bei neuen Dokumenten überschrieben.
-   - assets/documents-meta.json  → redaktionelle Einordnung (Typ, Reihenfolge,
+   - daten/documents-meta.json  → redaktionelle Einordnung (Typ, Reihenfolge,
                                     zugehöriger Kurs), von Hand gepflegt, bleibt
                                     beim Neuerzeugen der ersten Datei unangetastet.
    Beide werden client-seitig über "filename" zusammengeführt.
@@ -351,8 +351,8 @@
   }
 
   Promise.all([
-    loadJsonOrFallback('assets/documents.json', 'DOCUMENTS_DATA'),
-    loadJsonOrFallback('assets/documents-meta.json', 'DOCUMENTS_META'),
+    loadJsonOrFallback('daten/documents.json', 'DOCUMENTS_DATA'),
+    loadJsonOrFallback('daten/documents-meta.json', 'DOCUMENTS_META'),
   ]).then(function (results) {
     const docs = results[0], meta = results[1];
     if (!Array.isArray(docs)) throw new Error('documents.json: unerwartetes Format');
