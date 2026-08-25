@@ -274,9 +274,7 @@ async function showPage(id, sub) {
   /* Falls versehentlich ein voller Pfad übergeben wird ('goetter/griechisch') */
   if (id && id.indexOf('/') >= 0) { const p = parseHash('#' + id); id = p.page; sub = sub || p.sub; }
   /* GitHub-Veröffentlichung: Dissertation/Eigene Arbeiten nicht erreichbar → auf Home umleiten */
-  if ((id === 'diss' || id === 'arbeiten') && document.documentElement.getAttribute('data-publish') === 'github') {
-    id = 'home'; sub = null;
-  }
+  if (NICHT_OEFFENTLICH.indexOf(id) >= 0) { id = 'home'; sub = null; }
   _busy = true;
   // Sub-Route für die Seite hinterlegen; Seiten-Handler der vorigen Seite löschen
   window._routeSub = (sub && sub.length) ? sub.slice() : [];
@@ -495,10 +493,10 @@ function buildNav() {
 
       const dd = document.createElement('div');
       dd.className = 'nav-dropdown'; dd.id = ddId;
-      const _ghPublish = document.documentElement.getAttribute('data-publish') === 'github';
+      const _versteckt = NICHT_OEFFENTLICH;
       (item.items||[]).forEach(it => {
         if (it.divider) { dd.appendChild(Object.assign(document.createElement('div'), {className:'nav-dropdown-divider'})); return; }
-        if (it.pubGithubHide && _ghPublish) return;   /* in der GitHub-Version verbergen */
+        if (_versteckt.indexOf(it.id) >= 0) return;   /* nicht veröffentlicht */
         const a = document.createElement('a');
         a.className = 'nav-dropdown-item';
         a.href = navHash(it.id, it.sub);

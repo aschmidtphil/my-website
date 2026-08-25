@@ -1,5 +1,45 @@
 <!DOCTYPE html>
 <html lang="de" data-theme="light"><head>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   WAS SOLL VERÖFFENTLICHT WERDEN?
+
+   Hier die Seiten eintragen, die NICHT öffentlich sein sollen.
+   Leere Liste = alles ist öffentlich.
+
+       const NICHT_OEFFENTLICH = ['diss', 'arbeiten'];
+       const NICHT_OEFFENTLICH = [];
+
+   Gültige Namen: home · favphil · zitate · goetter · philosophy ·
+   argumente · diss · phil-eigene · arbeiten · studium · buecher ·
+   podcasts · gaming · nature · chor · shirts · unendlichkeit ·
+   kontakt · impressum
+
+   Was das tut: Der Menüeintrag verschwindet, der direkte Aufruf
+   (#diss) leitet auf die Startseite um, und Verweise von anderen
+   Seiten werden ausgeblendet.
+
+   ─── WICHTIG, damit keine Täuschung entsteht ───────────────────────
+   Das ist KEIN Zugangsschutz. Der Inhalt bleibt im Quelltext und ist
+   über „Seitenquelltext anzeigen" lesbar. Wer bei `git add .` den
+   ganzen Ordner hochlädt, veröffentlicht auch die Dateien, die diese
+   Liste nur ausblendet — insbesondere `daten/documents.json` mit den
+   Titeln deiner Arbeiten und alles in `assets/documents/`.
+
+   Wenn etwas wirklich nicht ins Netz soll, gehört es in .gitignore
+   und nicht in diese Liste. Beides zusammen ist die vollständige
+   Lösung: .gitignore hält die Dateien zurück, diese Liste räumt die
+   Verweise darauf weg, damit keine toten Links entstehen.
+   ═══════════════════════════════════════════════════════════════════ */
+const NICHT_OEFFENTLICH = [];
+
+/* Setzt je Eintrag eine Klasse auf <html>, damit CSS Verweise ausblenden
+   kann (z. B. `.nur-diss` auf der Startseitenkarte). Läuft sofort, damit
+   nichts kurz aufblitzt, bevor es verschwindet. */
+NICHT_OEFFENTLICH.forEach(function(id){
+  document.documentElement.classList.add('nv-' + id);
+});
+</script>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alexander Schmidt</title>
 <!-- ── Vorschau beim Teilen, Favicon, Farbschema ─────────────────────────
@@ -331,8 +371,11 @@ body > nav {
 .page-title span { color: var(--accent-text); }
 .page-desc       { color: var(--text2); max-width: 600px; line-height: 1.75; margin-top: .6rem; font-size: .9rem; }
 .page-stats      { display: flex; gap: 2rem; margin-top: 1.4rem; flex-wrap: wrap; }
-/* ── Veröffentlichungs-Profil GitHub Pages (greift nur bei <html data-publish="github">) ── */
-html[data-publish="github"] .pub-hide-github { display: none !important; }
+/* ── Nicht veröffentlichte Seiten ──────────────────────────────────
+   Gesteuert über die Liste NICHT_OEFFENTLICH weiter unten. Die Klasse
+   wird von dort auf <html> gesetzt, je Seite eine eigene. */
+html.nv-diss     .nur-diss,
+html.nv-arbeiten .nur-arbeiten { display: none !important; }
 .pstat-num       { font-family: var(--fh); font-size: 1.75rem; font-weight: 800; color: var(--accent-text); display: block; }
 .pstat-lbl       { font-family: var(--fm); font-size: .63rem; color: var(--text3); letter-spacing: .08em; }
 
@@ -772,7 +815,7 @@ footer {
 .no-results    { text-align: center; color: var(--text3); font-family: var(--fm); font-size: .8rem; padding: 2.5rem; }
 
 /* Verknüpfung Studium ↔ Eigene Arbeiten: kleines PDF-Badge bei Kursen, zu denen
-   eine eigene Hausarbeit existiert. Trägt "pub-hide-github" wie die Dokumente-
+   eine eigene Hausarbeit existiert. Trägt "nur-arbeiten" wie die Dokumente-
    Sektion selbst — verschwindet also automatisch mit, falls diese unveröffentlicht bleibt. */
 .kurs-pdf-link{
   display:inline-flex;align-items:center;gap:.3rem;
@@ -3588,203 +3631,6 @@ summary:focus-visible,
   .nav-burger{ width:38px; height:38px; }
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   TELEFON — Werkzeugblatt und Maßstab
-   Alles hier steht unter max-width:900px. Oberhalb ändert sich nichts;
-   das ist pixelgenau nachgemessen.
-   ═══════════════════════════════════════════════════════════════════ */
-@media (max-width: 900px){
-
-  /* ── 1 · Die Werkzeuge als Blatt am unteren Rand ──────────────────
-     Gemessen waren auf 390 px nur 5 von 15 Bedienelementen ohne Scrollen
-     erreichbar, und die Zeitachse selbst war nach oben weggedrückt.
-     Die Reiterleiste sitzt jetzt fest am unteren Rand wie in einer
-     Kartenanwendung; ein Fach zieht darüber auf und nimmt höchstens die
-     halbe Höhe ein. Die Zeitachse behält damit den Bildschirm. */
-  .tlk{
-    position:fixed; left:0; right:0; bottom:0; z-index:400;
-    margin:0; background:var(--bg);
-    border-top:1px solid var(--border);
-    box-shadow:0 -8px 28px rgba(0,0,0,.16);
-    padding-bottom:env(safe-area-inset-bottom, 0px);
-  }
-
-  /* Griff: macht sichtbar, dass hier etwas aufzieht. */
-  .tlk::before{
-    content:""; display:block; width:34px; height:3px; margin:.45rem auto .1rem;
-    border-radius:2px; background:var(--border2, var(--border));
-  }
-
-  /* Reiter: eine Zeile, seitwärts schiebbar statt umbrechend. */
-  /* `.tlk .tlk-faecher` statt `.tlk-faecher`: die Basisregel mit
-     flex-wrap:wrap steht weiter unten im Dokument und gewinnt sonst bei
-     gleicher Spezifität. Ohne diesen Zusatz brachen die Reiter weiter um
-     und das Blatt wurde 314 px hoch — gemessen, nicht vermutet. */
-  .tlk .tlk-faecher{
-    display:flex; flex-wrap:nowrap; overflow-x:auto; gap:.4rem;
-    padding:.35rem .8rem .5rem; min-width:0; width:100%;
-    border-bottom:0;
-    -webkit-overflow-scrolling:touch; scrollbar-width:none;
-  }
-  .tlk .tlk-faecher::-webkit-scrollbar{ display:none; }
-  .tlk .tlk-faecher > *{ flex:0 0 auto; }
-  .tlk-tab{ min-height:40px; }
-  .tlk-tab-reset{ margin-left:0; }
-
-  /* Die Hauptzeile (Zoom, Zähler) wandert unter die Reiter und bleibt
-     schmal — sie wird selten gebraucht. */
-  .tlk .tlk-haupt{
-    order:2; padding:.25rem .8rem .45rem; gap:.35rem;
-    border-top:1px solid var(--border);
-    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
-  }
-  .tlk .tlk-haupt::-webkit-scrollbar{ display:none; }
-  .tlk .tlk-haupt > *{ flex:0 0 auto; }
-  .tlk{ display:flex; flex-direction:column; }
-  .tlk .tlk-faecher{ order:1; }
-  .tlk-fach{ order:0; }
-
-  /* Ein aufgezogenes Fach: über den Reitern, gedeckelt und scrollbar. */
-  .tlk-fach{
-    padding:.8rem .9rem; margin:0;
-    max-height:48vh; overflow-y:auto; overscroll-behavior:contain;
-    border-bottom:0; border-top:1px solid var(--border);
-    background:var(--bg);
-  }
-  .tlk-zeile{ gap:.45rem; margin-bottom:.5rem; }
-
-  /* Platz für das Blatt, damit es nichts verdeckt. Die Höhe ist
-     grosszügig geschätzt: Reiterzeile plus Hauptzeile plus Griff. */
-  .phil-wrap, .tl-wrap, .karte-wrap{ padding-bottom:132px; }
-}
-
-/* ── Zeitleisten-Fächer auf Fingermaß ────────────────────────────────
-   Gemessen bei 390 px: Die Fächer im Werkzeugblatt sind mit 165–374 px
-   hoch angemessen — aber 20 von 22 Bedienelementen darin waren unter
-   32 px hoch. Filterknöpfe, Kulturkreise, Kästchen: alles Desktop-Maße
-   in einem Blatt, das man mit dem Daumen bedient.
-   Mit Maus unverändert. */
-@media (pointer: coarse){
-  .tlk-fach button,
-  .tlk-fach select,
-  .tlk-fach label{ min-height:40px; }
-  .tlk-fach button{ padding-top:.45rem; padding-bottom:.45rem; }
-
-  /* Kästchen: die Trefferfläche wächst über das Etikett, nicht über das
-     Kästchen selbst — sonst wird aus dem Häkchen ein Klotz. */
-  .tlk-fach input[type="checkbox"]{ width:20px; height:20px; }
-  .tlk-fach label{ display:inline-flex; align-items:center; gap:.5rem;
-    padding:.25rem .1rem; }
-
-  /* Etwas mehr Luft zwischen den Reihen, sonst trifft man den Nachbarn. */
-  .tlk-fach .tlk-zeile{ gap:.55rem; row-gap:.55rem; }
-}
-
-/* ── Argumente-Seite auf dem Telefon ─────────────────────────────────
-   Gemessen bei 390 px: 5818 px Seitenlänge. Nicht die Prämissenkarten sind
-   schuld — deren Nummernspalte steht längst auf 26 px und nichts ragt über
-   den Rand. Es sind zwei andere Stücke:
-     · „Wo die Einwände ansetzen" mit 2508 px (43 % der Seite): achtzehn
-       Diagrammkarten, die auf einer Spalte untereinander stehen.
-     · der Kopfbereich mit 1299 px, überwiegend das Kant-Motto.
-   Die Übersicht wird deshalb zu einem seitwärts schiebbaren Band; das Kant-
-   Motto bekommt eine Höhengrenze mit weichem Auslauf. Beides bleibt
-   vollständig erreichbar, nimmt aber nicht mehr die halbe Seite.
-   Ab 901 px unverändert. */
-@media (min-width: 901px){ .arg-motto-mehr{ display:none; } }
-@media (max-width: 900px){
-  .arg-uebersicht{
-    grid-auto-flow:column; grid-auto-columns:74%;
-    grid-template-columns:none;
-    overflow-x:auto; overscroll-behavior-x:contain;
-    scroll-snap-type:x proximity;
-    padding-bottom:.5rem; scrollbar-width:none;
-  }
-  .arg-uebersicht::-webkit-scrollbar{ display:none; }
-  .arg-uebersicht > *{ scroll-snap-align:start; }
-
-  /* Das Motto: zwei Absätze Kant sind auf dem Telefon eine halbe Seite.
-     Gekürzt auf Anlesehöhe, per Tipp auf voller Länge. */
-  .arg-motto blockquote{
-    max-height:15.5em; overflow:hidden; position:relative;
-    transition:max-height .3s ease;
-  }
-  .arg-motto blockquote::after{
-    content:""; position:absolute; left:0; right:0; bottom:0; height:3.2em;
-    background:linear-gradient(to bottom, transparent, var(--bg));
-    pointer-events:none;
-  }
-  .arg-motto.offen blockquote{ max-height:none; }
-  .arg-motto.offen blockquote::after{ display:none; }
-  /* `.arg-motto .arg-motto-mehr`: die Ausblendregel fuer den Desktop steht
-     weiter unten im Dokument und gewann sonst — der Knopf blieb unsichtbar
-     und das Motto damit abgeschnitten ohne Weg zum Aufklappen. */
-  .arg-motto .arg-motto-mehr{ display:block; margin-top:.5rem; background:none;
-    border:0; padding:.35rem 0; cursor:pointer;
-    font-family:var(--fm); font-size:.66rem; letter-spacing:.06em;
-    color:var(--accent-text); }
-}
-
-/* ── Weltkarte auf dem Telefon ───────────────────────────────────────
-   Gemessen bei 390 px: Die Karte war 352 × 560 px und begann erst bei
-   y = 852 — man musste scrollen, um sie überhaupt zu sehen. Darunter
-   hingen 644 px Legende und Ortsliste, die Seite war 2270 px hoch.
-   Jetzt: Kopf schlank, Karte hoch und gleich im Bild, Legende auf ein
-   Drittel begrenzt und intern scrollbar. Ab 901 px unverändert. */
-@media (max-width: 900px){
-  .karte-kopf{ padding:.5rem .8rem; gap:.4rem; }
-  .karte-kopf h2, .karte-kopf .karte-etikett{ font-size:.9rem; }
-  .karte-modus{ font-size:.68rem; }
-
-  /* Kartenhöhe: `min-height`, nicht `height`.
-     Ein erster Versuch mit `height:64dvh` hat die Karte von 560 auf 499 px
-     VERKLEINERT. Der Grund war nicht Leaflet, wie ich zuerst annahm, sondern
-     Rechnen: 64 % von 780 px Ansichtshöhe sind eben 499. Mit min-height kann
-     die Regel nur vergrössern, nie verkleinern — was auch immer die Vorlage
-     schon vorgibt, bleibt die Untergrenze. */
-  .leaflet-container{ min-height:78dvh; }
-
-  /* Legende und Ortsliste: begrenzt statt endlos. */
-  .karte-fuss{ max-height:34vh; overflow-y:auto; overscroll-behavior:contain;
-    padding:.6rem .8rem; }
-  .karte-liste{ font-size:.78rem; }
-
-  /* Leaflets eigene Bedienelemente auf Fingermaß. */
-  .leaflet-control-zoom a{ width:38px !important; height:38px !important;
-    line-height:38px !important; font-size:1.2rem !important; }
-  .leaflet-control-attribution{ font-size:.55rem; }
-}
-
-/* ── 2 · Maßstab auf dem Telefon ────────────────────────────────────
-   „Alles ist sehr groß" — die Seite ist für den Desktop entworfen und
-   bringt dessen Schriftgrade unverändert mit. Hier ein durchgehender,
-   maßvoller Rückgang: Überschriften deutlich, Fließtext kaum, damit die
-   Lesbarkeit nicht leidet. Trefferflächen bleiben unangetastet. */
-@media (max-width: 900px){
-  .page-title{ font-size:clamp(1.9rem, 8.5vw, 2.6rem); line-height:1.05; }
-  .hero-tag{ font-size:.62rem; }
-  .page-desc{ font-size:.88rem; line-height:1.55; }
-  .phil-meta{ font-size:.66rem; }
-  h1{ line-height:1.08; }
-  h2{ font-size:1.32rem; line-height:1.2; }
-  h3{ font-size:1.06rem; }
-  .phe-ch-title{ font-size:1.6rem; line-height:1.12; }
-  .phe-ch-subtitle{ font-size:.9rem; }
-  .phe-pullquote{ font-size:1rem; line-height:1.45; }
-  .arg-hero h1{ font-size:clamp(1.9rem, 8.5vw, 2.4rem); }
-  .arg-motto blockquote p{ font-size:.85rem; line-height:1.65; }
-  .hm-titel{ font-size:1.02rem; }
-  .hm-unter{ font-size:.82rem; }
-}
-@media (max-width: 900px){
-  /* Abstände: der grösste Hebel gegen das Gefühl von Weitläufigkeit. */
-  .page-hero{ padding-top:2rem; padding-bottom:1.2rem; }
-  .arg-hero{ padding-top:2rem; padding-bottom:.8rem; }
-  section.hm-abschnitt, .hm-abschnitt{ margin-bottom:2rem; }
-  .hm-reihe{ gap:.8rem; }
-  .phe-chapter{ padding-top:1.2rem; }
-}
-
 /* Schmale Geräte: Logo darf schrumpfen, nichts läuft mehr raus.
    Die Schwellen sind nachgemessen, nicht geschätzt. Sie lagen einmal bei
    420 bzw. 400 px — damals nahm der DE/EN-Schalter noch 43 bis 56 px in
@@ -4048,7 +3894,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
       <span class="n2">Schmidt<span class="cursor">_</span></span>
     </h1>
     <p class="hero-subtitle fade-up d2">
-      <span class="pub-hide-github">Dr.&thinsp;phil. &middot; </span>Data Scientist &middot; Entwickler
+      <span class="nur-diss">Dr.&thinsp;phil. &middot; </span>Data Scientist &middot; Entwickler
     </p>
     <p class="hero-desc fade-up d2" id="t-hero-desc">
       Ich verbinde <em style="font-style:normal;color:var(--accent3-text)">Datenwissenschaft</em>,
@@ -4057,7 +3903,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
     </p>
     <div class="hero-cta fade-up d3">
       <button class="btn btn-primary" onclick="open('https://github.com/aschmidtphil','_blank')">GitHub</button>
-      <button class="btn btn-ghost pub-hide-github" onclick="showPage('diss')">Dissertation</button>
+      <button class="btn btn-ghost nur-diss" onclick="showPage('diss')">Dissertation</button>
       <button class="btn btn-ghost" onclick="showPage('kontakt')">Kontakt</button>
     </div>
   </div>
@@ -4072,7 +3918,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
   </div>
   <div class="hm-reihe zwei">
 
-    <a class="hm-karte pub-hide-github" href="#diss">
+    <a class="hm-karte nur-diss" href="#diss">
       <div class="hm-buch" aria-hidden="true">
         <div class="hm-buch-koerper">
           <div class="hm-buch-titel">Schellings<br>Zeittheorie</div>
@@ -4177,7 +4023,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
     <a href="#buecher">Bücher</a>
     <a href="#studium">Studium</a>
     <a href="#podcasts">Podcasts</a>
-    <a href="#arbeiten" class="pub-hide-github">Eigene Arbeiten</a>
+    <a href="#arbeiten" class="nur-arbeiten">Eigene Arbeiten</a>
     <a href="#chor">Chor im Loch</a>
     <a href="#shirts">Philosophen-Shirts</a>
     <a href="#nature">Natur</a>
@@ -17460,7 +17306,7 @@ document.addEventListener('wheel', function(e){
      EIGENE ARBEITEN — eigenständige Seite (vormals Sektion auf "Meine Philosophie")
      Lädt daten/documents.json (Datei-Metadaten) + daten/documents-meta.json
      (redaktionelle Einordnung: Typ/Reihenfolge/Kurs) und führt beides zusammen.
-     Trägt komplett "pub-hide-github": die ganze Seite (inkl. Nav-Eintrag und
+     Trägt komplett "nur-arbeiten": die ganze Seite (inkl. Nav-Eintrag und
      direkter Hash-Navigation, siehe showPage()-Guard in index.html) verschwindet
      aus der öffentlichen GitHub-Pages-Version, solange das nicht gewünscht ist.
 ═══════════════════════════════════════════════════════════════════ -->
@@ -18076,9 +17922,21 @@ function renderPods(){
       : '';
     const officialDesc = (p.offdesc && p.offdesc.length>10)
       ? '<div class="pod-offdesc"><span class="pod-offlabel">Offiziell:</span> '+p.offdesc+'</div>' : '';
+    /* Aufklapper nur, wenn es etwas aufzuklappen gibt. stopPropagation ist
+       hier nicht schmückend: der ganze Eintrag traegt einen onclick, der den
+       Podcast oeffnet — ohne das wuerde jeder Tipp auf den Knopf Apple
+       Podcasts starten. Ab 901 px ist der Knopf per CSS ausgeblendet. */
+    const mehr = officialDesc
+      ? '<button type="button" class="pod-mehr" onclick="event.stopPropagation();'
+        + 'var c=this.closest(\'.pod-eintrag\')||this.parentNode.parentNode;'
+        + 'c.classList.toggle(\'offen\');'
+        + 'this.textContent=c.classList.contains(\'offen\')?\'weniger\':\'Beschreibung\';">'
+        + 'Beschreibung</button>'
+      : '';
     d.innerHTML = cover + '<div class="pod-body2"><div class="pod-name2">'+p.name+linkIcon+'</div>'
                 + '<span class="pod-badge">'+p.cat+'</span>'
-                + '<div class="pod-desc2">'+p.desc+'</div>' + officialDesc + '</div>';
+                + '<div class="pod-desc2">'+p.desc+'</div>' + officialDesc + mehr + '</div>';
+    d.classList.add('pod-eintrag');
     if (p.url) { d.style.cursor='pointer'; d.onclick=function(e){ if(e.target.tagName!=='A') window.open(p.url,'_blank','noopener'); }; }
     g.appendChild(d);
   });
@@ -22527,9 +22385,7 @@ async function showPage(id, sub) {
   /* Falls versehentlich ein voller Pfad übergeben wird ('goetter/griechisch') */
   if (id && id.indexOf('/') >= 0) { const p = parseHash('#' + id); id = p.page; sub = sub || p.sub; }
   /* GitHub-Veröffentlichung: Dissertation/Eigene Arbeiten nicht erreichbar → auf Home umleiten */
-  if ((id === 'diss' || id === 'arbeiten') && document.documentElement.getAttribute('data-publish') === 'github') {
-    id = 'home'; sub = null;
-  }
+  if (NICHT_OEFFENTLICH.indexOf(id) >= 0) { id = 'home'; sub = null; }
   _busy = true;
   // Sub-Route für die Seite hinterlegen; Seiten-Handler der vorigen Seite löschen
   window._routeSub = (sub && sub.length) ? sub.slice() : [];
@@ -22748,10 +22604,10 @@ function buildNav() {
 
       const dd = document.createElement('div');
       dd.className = 'nav-dropdown'; dd.id = ddId;
-      const _ghPublish = document.documentElement.getAttribute('data-publish') === 'github';
+      const _versteckt = NICHT_OEFFENTLICH;
       (item.items||[]).forEach(it => {
         if (it.divider) { dd.appendChild(Object.assign(document.createElement('div'), {className:'nav-dropdown-divider'})); return; }
-        if (it.pubGithubHide && _ghPublish) return;   /* in der GitHub-Version verbergen */
+        if (_versteckt.indexOf(it.id) >= 0) return;   /* nicht veröffentlicht */
         const a = document.createElement('a');
         a.className = 'nav-dropdown-item';
         a.href = navHash(it.id, it.sub);
@@ -23494,6 +23350,13 @@ window.renderFavphil = function(){
       +'<div class="favphil-why-label">// WARUM DIESER DENKER</div>'
       +'<div class="favphil-why-text">'+(p.why||'')+'</div>'
       +'</div>'
+      /* Auf dem Telefon klappen Leitgedanken und Begründung ein — 31 Karten
+         à 861 px Text sind sonst 47 Bildschirme. Der Knopf ist ab 901 px
+         ausgeblendet, die Karte dort unverändert vollständig. */
+      +'<button type="button" class="favphil-mehr" '
+      +'onclick="var c=this.closest(\'.favphil-card\');c.classList.toggle(\'offen\');'
+      +'this.textContent=c.classList.contains(\'offen\')?\'weniger\':\'mehr lesen\';">'
+      +'mehr lesen</button>'
       +'</div>';
     grid.appendChild(card);
   });
@@ -23872,7 +23735,7 @@ function renderKurse(){
     g.kurse.forEach(function(k){
       var tr=document.createElement('tr');
       tr.innerHTML='<td><span class="fach-dot '+fachCls(k.fach)+'"></span>'+k.fach+'</td>'
-        +'<td>'+k.name+(KURS_HAS_WORK.has(k.name)?' <button type="button" class="kurs-pdf-link pub-hide-github" onclick="jumpToDoc(\''+k.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" title="Eigene Hausarbeit zu diesem Kurs ansehen">📄 Hausarbeit</button>':'')+'</td>'
+        +'<td>'+k.name+(KURS_HAS_WORK.has(k.name)?' <button type="button" class="kurs-pdf-link nur-arbeiten" onclick="jumpToDoc(\''+k.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" title="Eigene Hausarbeit zu diesem Kurs ansehen">📄 Hausarbeit</button>':'')+'</td>'
         +'<td>'+(k.art?'<span class="veranst-badge">'+k.art+'</span>':'')+'</td>'
         +'<td class="dozent-cell">'+(k.dozent||'')+'</td>';
       tbody.appendChild(tr);
@@ -23948,4 +23811,411 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
 <script src="js/bildnachweise-goetter.js" onerror="console.log('bildnachweise-goetter.js nicht geladen (optional — Medaillon-Manifest)')"></script>
 <script src="js/documents-data.js" onerror="console.log('documents-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
 <script src="js/documents-meta-data.js" onerror="console.log('documents-meta-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
+<!-- Telefon-Regeln bewusst ganz am Ende: Sie standen zuvor oben, die
+     Seitenstile aber weiter unten — bei gleicher Spezifität gewann
+     dadurch immer der Seitenstil. Fünfmal ist mir deshalb eine Regel
+     ins Leere gelaufen (Suchknopf, Shirts-Template, Werkzeugreiter,
+     Motto-Knopf, Shirt-Foto). Von hier aus greifen sie von selbst. -->
+<style>
+/* ── Kopfmenü auf dem Telefon lesbarer ───────────────────────────────
+   Gemessen: Menüeinträge 14,7 px, Logo 17,6 px. Wer die Seite zum
+   Überblick herauszoomt, sieht davon fast nichts mehr — die Kopfleiste
+   ist `position:fixed` und wird beim Aufziehen mitverkleinert.
+
+   Dagegen hilft nur absolute Vergrösserung: Was in Normalgrösse deutlich
+   ist, bleibt auch verkleinert lesbar. Einträge auf 17 px, Logo auf
+   19,2 px, Leiste 56 → 60 px. Die Zeilenhöhe im Fach steigt mit, was den
+   Einträgen zugleich mehr Trefferfläche gibt.
+
+   Was hier NICHT steht: eine Sperre des Aufziehens (`user-scalable=no`).
+   Sie würde das Symptom beseitigen und die Seite für alle unbrauchbar
+   machen, die auf Vergrösserung angewiesen sind. */
+@media (max-width: 900px){
+  body > nav{ height:60px; }
+  main#page-root{ padding-top:60px; }
+  .nav-logo{ font-size:1.2rem; }
+
+  #nav-groups .nav-direct,
+  #nav-groups .nav-group-btn{
+    font-size:1.06rem; padding-top:.7rem; padding-bottom:.7rem;
+  }
+  #nav-groups .nav-dropdown a{ font-size:.98rem; padding-top:.55rem; padding-bottom:.55rem; }
+
+  /* Das Fach beginnt unter der nun höheren Leiste. */
+  body > nav.offen .nav-groups{ top:60px; }
+}
+@media (max-width: 340px){
+  /* Auf sehr schmalen Geräten bleibt das Logo kleiner, sonst wird es eng. */
+  .nav-logo{ font-size:1rem; }
+}
+</style>
+
+<style>
+/* ── Trefferflächen: die letzten Schalter ────────────────────────────
+   Restposten aus der Gesamtmessung, verteilt über home, phil-eigene,
+   goetter, diss, studium, philosophy, nature und buecher.
+
+   NICHT enthalten: die 21 einfachen `<a>` ohne Klasse. Das sind Links im
+   Fliesstext, und die nimmt WCAG 2.5.8 ausdrücklich aus („inline
+   exception") — sie auf 40 px zu bringen hiesse, den Zeilenfall zu
+   zerreissen, um eine Regel zu erfüllen, die für sie nicht gilt.
+
+   `gx-panel-permalink` ist mit dabei, aber nur in der Höhe: er sitzt
+   dicht neben dem Schliesskreuz des Panels, ein breiterer Bereich würde
+   dort überlappen. */
+@media (pointer: coarse){
+  .phe-chap-btn,
+  .ff-btn,
+  .vs-btn,
+  .nature-cat-btn,
+  .pzb,
+  .sort-btn,
+  .gods-ctrl-btn{
+    min-height:38px; padding-top:.4rem; padding-bottom:.4rem;
+  }
+  .gx-panel-permalink{ min-height:34px; display:inline-flex; align-items:center; }
+
+  /* Kästchen im Götterkosmos: die Fläche wächst über das Etikett,
+     das Häkchen bleibt klein. */
+  .gods-ctrl{ display:inline-flex; align-items:center; gap:.45rem;
+    min-height:38px; padding:.2rem .1rem; }
+  .gods-ctrl input[type="checkbox"]{ width:18px; height:18px; }
+}
+</style>
+
+<style>
+/* ── Trefferflächen: Arbeiten, Argumente, Gaming ─────────────────────
+   Gemessen bei 390 px, was unter 32 px hoch war:
+     arbeiten   pdoc-row-title 8× · pdoc-dl-icon 8× · pdoc-course-link 4×
+     argumente  arg-knopf 19× · arg-motto-mehr 1× · za-pkt 6×
+     gaming     gtab 11× · btab 4×
+   Die Fläche wächst über den Innenabstand, die Schrift bleibt — sonst
+   verschöbe sich das Satzbild. Mit Maus unverändert.
+
+   AUSGENOMMEN: `za-pkt`, die Punkte der Angriffsgeschichte. Sie sind
+   10 × 10 px und stehen absichtlich dicht beieinander auf einer Bahn.
+   Ein grösserer Tippbereich würde die Nachbarn überlappen — man träfe
+   dann zuverlässig den falschen. Wer die Punkte auf dem Telefon
+   brauchbar machen will, muss die Bahn auseinanderziehen, nicht die
+   Punkte vergrössern. Das ist ein eigener Entwurf, keine Regelzeile. */
+@media (pointer: coarse){
+  /* Eigene Arbeiten */
+  .pdoc-row-title{ display:inline-flex; align-items:center; min-height:40px;
+    padding:.2rem .1rem; }
+  .pdoc-dl-icon{ width:40px; height:40px; }
+  .pdoc-course-link{ display:inline-flex; align-items:center; min-height:40px;
+    padding:.25rem .1rem; text-align:left; }
+
+  /* Argumente — auch der Motto-Knopf von neulich, den ich damals
+     ohne Mindesthöhe gebaut hatte. */
+  .arg-knopf{ min-height:38px; padding-top:.4rem; padding-bottom:.4rem; }
+  .arg-motto-mehr{ min-height:40px; }
+
+  /* Gaming */
+  .gtab, .btab{ min-height:38px; padding-top:.4rem; padding-bottom:.4rem; }
+}
+</style>
+
+<style>
+/* ── Zitate auf dem Telefon ──────────────────────────────────────────
+   Gemessen bei 390 px: 9204 px. Die Karten klappen bereits ein — der
+   Mechanismus ist da und funktioniert; eine zweite Einklappung wäre
+   überflüssig. Das Problem sind die Ziele: 26 unter 32 px, darunter
+   ausgerechnet `zc-toggle` mit 10 px — der Knopf, mit dem man die
+   Karte aufklappt. Wer den nicht trifft, kommt an den Mechanismus nicht
+   heran, den es schon gibt.
+   Mit Maus unverändert. */
+@media (pointer: coarse){
+  .zc-toggle{ display:inline-flex; align-items:center; min-height:40px;
+    padding:.35rem .2rem; }
+  .zc-source-link{ display:inline-flex; align-items:center; min-height:40px;
+    padding:.2rem .1rem; }
+  .zitat-filter-btn{ min-height:40px; padding-top:.45rem; padding-bottom:.45rem; }
+}
+</style>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   TELEFON — Werkzeugblatt und Maßstab
+   Alles hier steht unter max-width:900px. Oberhalb ändert sich nichts;
+   das ist pixelgenau nachgemessen.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px){
+
+  /* ── 1 · Die Werkzeuge als Blatt am unteren Rand ──────────────────
+     Gemessen waren auf 390 px nur 5 von 15 Bedienelementen ohne Scrollen
+     erreichbar, und die Zeitachse selbst war nach oben weggedrückt.
+     Die Reiterleiste sitzt jetzt fest am unteren Rand wie in einer
+     Kartenanwendung; ein Fach zieht darüber auf und nimmt höchstens die
+     halbe Höhe ein. Die Zeitachse behält damit den Bildschirm. */
+  .tlk{
+    position:fixed; left:0; right:0; bottom:0; z-index:400;
+    margin:0; background:var(--bg);
+    border-top:1px solid var(--border);
+    box-shadow:0 -8px 28px rgba(0,0,0,.16);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Griff: macht sichtbar, dass hier etwas aufzieht. */
+  .tlk::before{
+    content:""; display:block; width:34px; height:3px; margin:.45rem auto .1rem;
+    border-radius:2px; background:var(--border2, var(--border));
+  }
+
+  /* Reiter: eine Zeile, seitwärts schiebbar statt umbrechend. */
+  /* `.tlk .tlk-faecher` statt `.tlk-faecher`: die Basisregel mit
+     flex-wrap:wrap steht weiter unten im Dokument und gewinnt sonst bei
+     gleicher Spezifität. Ohne diesen Zusatz brachen die Reiter weiter um
+     und das Blatt wurde 314 px hoch — gemessen, nicht vermutet. */
+  .tlk .tlk-faecher{
+    display:flex; flex-wrap:nowrap; overflow-x:auto; gap:.4rem;
+    padding:.35rem .8rem .5rem; min-width:0; width:100%;
+    border-bottom:0;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .tlk .tlk-faecher::-webkit-scrollbar{ display:none; }
+  .tlk .tlk-faecher > *{ flex:0 0 auto; }
+  .tlk-tab{ min-height:40px; }
+  .tlk-tab-reset{ margin-left:0; }
+
+  /* Die Hauptzeile (Zoom, Zähler) wandert unter die Reiter und bleibt
+     schmal — sie wird selten gebraucht. */
+  .tlk .tlk-haupt{
+    order:2; padding:.25rem .8rem .45rem; gap:.35rem;
+    border-top:1px solid var(--border);
+    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+  }
+  .tlk .tlk-haupt::-webkit-scrollbar{ display:none; }
+  .tlk .tlk-haupt > *{ flex:0 0 auto; }
+  .tlk{ display:flex; flex-direction:column; }
+  .tlk .tlk-faecher{ order:1; }
+  .tlk-fach{ order:0; }
+
+  /* Ein aufgezogenes Fach: über den Reitern, gedeckelt und scrollbar. */
+  .tlk-fach{
+    padding:.8rem .9rem; margin:0;
+    max-height:48vh; overflow-y:auto; overscroll-behavior:contain;
+    border-bottom:0; border-top:1px solid var(--border);
+    background:var(--bg);
+  }
+  .tlk-zeile{ gap:.45rem; margin-bottom:.5rem; }
+
+  /* Platz für das Blatt, damit es nichts verdeckt. Die Höhe ist
+     grosszügig geschätzt: Reiterzeile plus Hauptzeile plus Griff. */
+  .phil-wrap, .tl-wrap, .karte-wrap{ padding-bottom:132px; }
+}
+
+/* ── Philosophen-Shirts auf dem Telefon ──────────────────────────────
+   Gemessen bei 390 px: 14 657 px — neunzehn Bildschirme. 18 Karten à
+   781 px, und der grössere Teil ist das Foto: 437 px bei `aspect-ratio:4/5`.
+   Auf einer Spalte ist Hochformat teuer. 4/3 statt 4/5 nimmt rund 170 px
+   je Karte; `object-fit:cover` liegt ohnehin an, es wird also beschnitten
+   und nicht verzerrt. Das Motiv sitzt bei Shirts mittig — der Zuschnitt
+   trifft es.
+   Dazu die Trefferflächen: `sh-shop` (17×) war 13 px hoch, `sh-chip` 6×
+   unter 32. Beides auf Daumenmass.
+   Ab 901 px unverändert. */
+@media (max-width: 900px){
+  /* `.sh-grid .sh-foto`, nicht `.sh-foto`: die Basisregel mit aspect-ratio:4/5
+     steht bei Zeile ~19574, dieser Block bei ~3650 — die spätere gewinnt sonst.
+     Fünftes Mal derselbe Fehler in diesem Projekt; er entsteht dadurch, dass
+     die Mobilregeln gesammelt oben stehen, die Seitenstile aber unten. */
+  .sh-grid .sh-foto{ aspect-ratio:4/3; }
+}
+@media (pointer: coarse){
+  .sh-shop{ display:inline-flex; align-items:center; min-height:40px;
+    padding:.2rem .1rem; }
+  .sh-chip{ min-height:38px; padding-top:.4rem; padding-bottom:.4rem; }
+}
+
+/* ── Podcasts auf dem Telefon ────────────────────────────────────────
+   Gemessen bei 390 px: 11 917 px — fünfzehn Bildschirme. 25 Einträge à
+   309 px, davon 267 px Textrumpf bei 64 px Cover. Der längste Teil ist
+   `pod-offdesc` mit 134 px, mehr als Name, Etikett und Kurzbeschreibung
+   zusammen. Die klappt ein; Name, Etikett und Kurzbeschreibung bleiben —
+   sie sagen, worum es geht.
+   Dazu die Trefferflächen: `pod-link2` war 15 px hoch, die Kategorie-
+   knöpfe 28. Beides unter dem Daumenmass.
+   Ab 901 px unverändert. */
+@media (max-width: 900px){
+  .pod-offdesc{
+    max-height:0; overflow:hidden; margin-top:0; padding-top:0;
+    transition:max-height .26s ease;
+  }
+  .pod-grid2 > .offen .pod-offdesc{ max-height:none; margin-top:revert; padding-top:revert; }
+  .pod-mehr{
+    display:inline-block; margin-top:.4rem; background:none; border:0;
+    padding:.4rem .1rem; min-height:40px; cursor:pointer;
+    font-family:var(--fm); font-size:.62rem; letter-spacing:.06em;
+    color:var(--accent-text); text-align:left;
+  }
+}
+@media (min-width: 901px){ .pod-mehr{ display:none; } }
+@media (pointer: coarse){
+  /* Links und Kategorieknöpfe auf Daumenmass — die Fläche wächst über den
+     Innenabstand, die Schriftgrösse bleibt. */
+  .pod-link2{ display:inline-flex; align-items:center; min-height:40px;
+    padding:.2rem .1rem; }
+  .pod-cat-btn{ min-height:40px; padding-top:.45rem; padding-bottom:.45rem; }
+}
+
+/* ── Lieblingsphilosophen auf dem Telefon ────────────────────────────
+   Gemessen bei 390 px: 36 571 px Seitenlänge — 47 Bildschirme. 31 Karten
+   à 1065 px, und der Rumpf jeder Karte trägt 861 px Text: Zitat,
+   Beschreibung, Leitgedanken und Begründung übereinander.
+   Zum Blättern durch 31 Denker ist das zu viel; wer einen sucht, scrollt
+   an dreissig vorbei. Deshalb: Zitat und Beschreibung bleiben sichtbar —
+   sie sagen, wer es ist —, Leitgedanken und Begründung klappen auf.
+   Ab 901 px unverändert. */
+@media (max-width: 900px){
+  .favphil-ideas, .favphil-why{
+    max-height:0; overflow:hidden; padding-top:0; padding-bottom:0;
+    margin-top:0; margin-bottom:0; border-width:0;
+    transition:max-height .28s ease;
+  }
+  .favphil-card.offen .favphil-ideas,
+  .favphil-card.offen .favphil-why{
+    max-height:none; padding-top:revert; padding-bottom:revert;
+    margin-top:revert; margin-bottom:revert; border-width:revert;
+  }
+  .favphil-mehr{
+    display:block; width:100%; margin-top:.6rem;
+    background:none; border:1px solid var(--border); border-radius:8px;
+    padding:.55rem; min-height:40px; cursor:pointer;
+    font-family:var(--fm); font-size:.66rem; letter-spacing:.06em;
+    color:var(--accent-text);
+  }
+  .favphil-desc{ max-height:7.5em; overflow:hidden; }
+  .favphil-card.offen .favphil-desc{ max-height:none; }
+}
+@media (min-width: 901px){ .favphil-mehr{ display:none; } }
+
+/* ── Zeitleisten-Fächer auf Fingermaß ────────────────────────────────
+   Gemessen bei 390 px: Die Fächer im Werkzeugblatt sind mit 165–374 px
+   hoch angemessen — aber 20 von 22 Bedienelementen darin waren unter
+   32 px hoch. Filterknöpfe, Kulturkreise, Kästchen: alles Desktop-Maße
+   in einem Blatt, das man mit dem Daumen bedient.
+   Mit Maus unverändert. */
+@media (pointer: coarse){
+  .tlk-fach button,
+  .tlk-fach select,
+  .tlk-fach label{ min-height:40px; }
+  .tlk-fach button{ padding-top:.45rem; padding-bottom:.45rem; }
+
+  /* Kästchen: die Trefferfläche wächst über das Etikett, nicht über das
+     Kästchen selbst — sonst wird aus dem Häkchen ein Klotz. */
+  .tlk-fach input[type="checkbox"]{ width:20px; height:20px; }
+  .tlk-fach label{ display:inline-flex; align-items:center; gap:.5rem;
+    padding:.25rem .1rem; }
+
+  /* Etwas mehr Luft zwischen den Reihen, sonst trifft man den Nachbarn. */
+  .tlk-fach .tlk-zeile{ gap:.55rem; row-gap:.55rem; }
+}
+
+/* ── Argumente-Seite auf dem Telefon ─────────────────────────────────
+   Gemessen bei 390 px: 5818 px Seitenlänge. Nicht die Prämissenkarten sind
+   schuld — deren Nummernspalte steht längst auf 26 px und nichts ragt über
+   den Rand. Es sind zwei andere Stücke:
+     · „Wo die Einwände ansetzen" mit 2508 px (43 % der Seite): achtzehn
+       Diagrammkarten, die auf einer Spalte untereinander stehen.
+     · der Kopfbereich mit 1299 px, überwiegend das Kant-Motto.
+   Die Übersicht wird deshalb zu einem seitwärts schiebbaren Band; das Kant-
+   Motto bekommt eine Höhengrenze mit weichem Auslauf. Beides bleibt
+   vollständig erreichbar, nimmt aber nicht mehr die halbe Seite.
+   Ab 901 px unverändert. */
+@media (min-width: 901px){ .arg-motto-mehr{ display:none; } }
+@media (max-width: 900px){
+  .arg-uebersicht{
+    grid-auto-flow:column; grid-auto-columns:74%;
+    grid-template-columns:none;
+    overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;
+    padding-bottom:.5rem; scrollbar-width:none;
+  }
+  .arg-uebersicht::-webkit-scrollbar{ display:none; }
+  .arg-uebersicht > *{ scroll-snap-align:start; }
+
+  /* Das Motto: zwei Absätze Kant sind auf dem Telefon eine halbe Seite.
+     Gekürzt auf Anlesehöhe, per Tipp auf voller Länge. */
+  .arg-motto blockquote{
+    max-height:15.5em; overflow:hidden; position:relative;
+    transition:max-height .3s ease;
+  }
+  .arg-motto blockquote::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:3.2em;
+    background:linear-gradient(to bottom, transparent, var(--bg));
+    pointer-events:none;
+  }
+  .arg-motto.offen blockquote{ max-height:none; }
+  .arg-motto.offen blockquote::after{ display:none; }
+  /* `.arg-motto .arg-motto-mehr`: die Ausblendregel fuer den Desktop steht
+     weiter unten im Dokument und gewann sonst — der Knopf blieb unsichtbar
+     und das Motto damit abgeschnitten ohne Weg zum Aufklappen. */
+  .arg-motto .arg-motto-mehr{ display:block; margin-top:.5rem; background:none;
+    border:0; padding:.35rem 0; cursor:pointer;
+    font-family:var(--fm); font-size:.66rem; letter-spacing:.06em;
+    color:var(--accent-text); }
+}
+
+/* ── Weltkarte auf dem Telefon ───────────────────────────────────────
+   Gemessen bei 390 px: Die Karte war 352 × 560 px und begann erst bei
+   y = 852 — man musste scrollen, um sie überhaupt zu sehen. Darunter
+   hingen 644 px Legende und Ortsliste, die Seite war 2270 px hoch.
+   Jetzt: Kopf schlank, Karte hoch und gleich im Bild, Legende auf ein
+   Drittel begrenzt und intern scrollbar. Ab 901 px unverändert. */
+@media (max-width: 900px){
+  .karte-kopf{ padding:.5rem .8rem; gap:.4rem; }
+  .karte-kopf h2, .karte-kopf .karte-etikett{ font-size:.9rem; }
+  .karte-modus{ font-size:.68rem; }
+
+  /* Kartenhöhe: `min-height`, nicht `height`.
+     Ein erster Versuch mit `height:64dvh` hat die Karte von 560 auf 499 px
+     VERKLEINERT. Der Grund war nicht Leaflet, wie ich zuerst annahm, sondern
+     Rechnen: 64 % von 780 px Ansichtshöhe sind eben 499. Mit min-height kann
+     die Regel nur vergrössern, nie verkleinern — was auch immer die Vorlage
+     schon vorgibt, bleibt die Untergrenze. */
+  .leaflet-container{ min-height:78dvh; }
+
+  /* Legende und Ortsliste: begrenzt statt endlos. */
+  .karte-fuss{ max-height:34vh; overflow-y:auto; overscroll-behavior:contain;
+    padding:.6rem .8rem; }
+  .karte-liste{ font-size:.78rem; }
+
+  /* Leaflets eigene Bedienelemente auf Fingermaß. */
+  .leaflet-control-zoom a{ width:38px !important; height:38px !important;
+    line-height:38px !important; font-size:1.2rem !important; }
+  .leaflet-control-attribution{ font-size:.55rem; }
+}
+
+/* ── 2 · Maßstab auf dem Telefon ────────────────────────────────────
+   „Alles ist sehr groß" — die Seite ist für den Desktop entworfen und
+   bringt dessen Schriftgrade unverändert mit. Hier ein durchgehender,
+   maßvoller Rückgang: Überschriften deutlich, Fließtext kaum, damit die
+   Lesbarkeit nicht leidet. Trefferflächen bleiben unangetastet. */
+@media (max-width: 900px){
+  .page-title{ font-size:clamp(1.9rem, 8.5vw, 2.6rem); line-height:1.05; }
+  .hero-tag{ font-size:.62rem; }
+  .page-desc{ font-size:.88rem; line-height:1.55; }
+  .phil-meta{ font-size:.66rem; }
+  h1{ line-height:1.08; }
+  h2{ font-size:1.32rem; line-height:1.2; }
+  h3{ font-size:1.06rem; }
+  .phe-ch-title{ font-size:1.6rem; line-height:1.12; }
+  .phe-ch-subtitle{ font-size:.9rem; }
+  .phe-pullquote{ font-size:1rem; line-height:1.45; }
+  .arg-hero h1{ font-size:clamp(1.9rem, 8.5vw, 2.4rem); }
+  .arg-motto blockquote p{ font-size:.85rem; line-height:1.65; }
+  .hm-titel{ font-size:1.02rem; }
+  .hm-unter{ font-size:.82rem; }
+}
+@media (max-width: 900px){
+  /* Abstände: der grösste Hebel gegen das Gefühl von Weitläufigkeit. */
+  .page-hero{ padding-top:2rem; padding-bottom:1.2rem; }
+  .arg-hero{ padding-top:2rem; padding-bottom:.8rem; }
+  section.hm-abschnitt, .hm-abschnitt{ margin-bottom:2rem; }
+  .hm-reihe{ gap:.8rem; }
+  .phe-chapter{ padding-top:1.2rem; }
+}
+</style>
+
 </body></html>

@@ -191,9 +191,21 @@ function renderPods(){
       : '';
     const officialDesc = (p.offdesc && p.offdesc.length>10)
       ? '<div class="pod-offdesc"><span class="pod-offlabel">Offiziell:</span> '+p.offdesc+'</div>' : '';
+    /* Aufklapper nur, wenn es etwas aufzuklappen gibt. stopPropagation ist
+       hier nicht schmückend: der ganze Eintrag traegt einen onclick, der den
+       Podcast oeffnet — ohne das wuerde jeder Tipp auf den Knopf Apple
+       Podcasts starten. Ab 901 px ist der Knopf per CSS ausgeblendet. */
+    const mehr = officialDesc
+      ? '<button type="button" class="pod-mehr" onclick="event.stopPropagation();'
+        + 'var c=this.closest(\'.pod-eintrag\')||this.parentNode.parentNode;'
+        + 'c.classList.toggle(\'offen\');'
+        + 'this.textContent=c.classList.contains(\'offen\')?\'weniger\':\'Beschreibung\';">'
+        + 'Beschreibung</button>'
+      : '';
     d.innerHTML = cover + '<div class="pod-body2"><div class="pod-name2">'+p.name+linkIcon+'</div>'
                 + '<span class="pod-badge">'+p.cat+'</span>'
-                + '<div class="pod-desc2">'+p.desc+'</div>' + officialDesc + '</div>';
+                + '<div class="pod-desc2">'+p.desc+'</div>' + officialDesc + mehr + '</div>';
+    d.classList.add('pod-eintrag');
     if (p.url) { d.style.cursor='pointer'; d.onclick=function(e){ if(e.target.tagName!=='A') window.open(p.url,'_blank','noopener'); }; }
     g.appendChild(d);
   });

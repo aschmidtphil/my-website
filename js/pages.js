@@ -413,6 +413,13 @@ window.renderFavphil = function(){
       +'<div class="favphil-why-label">// WARUM DIESER DENKER</div>'
       +'<div class="favphil-why-text">'+(p.why||'')+'</div>'
       +'</div>'
+      /* Auf dem Telefon klappen Leitgedanken und Begründung ein — 31 Karten
+         à 861 px Text sind sonst 47 Bildschirme. Der Knopf ist ab 901 px
+         ausgeblendet, die Karte dort unverändert vollständig. */
+      +'<button type="button" class="favphil-mehr" '
+      +'onclick="var c=this.closest(\'.favphil-card\');c.classList.toggle(\'offen\');'
+      +'this.textContent=c.classList.contains(\'offen\')?\'weniger\':\'mehr lesen\';">'
+      +'mehr lesen</button>'
       +'</div>';
     grid.appendChild(card);
   });
@@ -791,7 +798,7 @@ function renderKurse(){
     g.kurse.forEach(function(k){
       var tr=document.createElement('tr');
       tr.innerHTML='<td><span class="fach-dot '+fachCls(k.fach)+'"></span>'+k.fach+'</td>'
-        +'<td>'+k.name+(KURS_HAS_WORK.has(k.name)?' <button type="button" class="kurs-pdf-link pub-hide-github" onclick="jumpToDoc(\''+k.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" title="Eigene Hausarbeit zu diesem Kurs ansehen">📄 Hausarbeit</button>':'')+'</td>'
+        +'<td>'+k.name+(KURS_HAS_WORK.has(k.name)?' <button type="button" class="kurs-pdf-link nur-arbeiten" onclick="jumpToDoc(\''+k.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')" title="Eigene Hausarbeit zu diesem Kurs ansehen">📄 Hausarbeit</button>':'')+'</td>'
         +'<td>'+(k.art?'<span class="veranst-badge">'+k.art+'</span>':'')+'</td>'
         +'<td class="dozent-cell">'+(k.dozent||'')+'</td>';
       tbody.appendChild(tr);
