@@ -76,12 +76,17 @@
       <div class="val">Alexander Schmidt</div>
     </div>
 
-    <!-- ANSCHRIFT — bei Bedarf aktivieren (DDG verlangt ladungsfähige Anschrift):
-    <div class="legal-card">
-      <div class="label">Anschrift</div>
-      <div class="val">Musterstraße 12<br>32756 Detmold</div>
-    </div>
-    -->
+    <!-- ANSCHRIFT — bewusst leer.
+         Hier stand eine erfundene Beispieladresse samt echter
+         Postleitzahl. Auskommentiert war sie auf der Seite unsichtbar,
+         im Quelltext aber lesbar: Die PLZ verriet die Stadt, und ein
+         Impressum mit erkennbarer Musteradresse wirkt schlechter als
+         gar keins.
+         Falls eine ladungsfaehige Anschrift noetig ist (§ 18 MStV greift
+         auch bei nicht ausschliesslich privaten Angeboten), gehoert hier
+         die ECHTE hin — keine erfundene. Wer die eigene Wohnanschrift
+         nicht veroeffentlichen will, nutzt ueblicherweise eine
+         Ladungsfaehige-Anschrift-Dienstleistung. -->
 
     <div class="legal-card">
       <div class="label">Kontakt</div>
@@ -137,9 +142,7 @@
       Sie die betreffende Seite öffnen, und nicht beim übrigen Besuch:</p>
     <ul style="margin:.4rem 0 1rem 1.2rem;line-height:1.7">
       <li><em>Weltkarte der Denker</em> — Kartenkacheln von OpenStreetMap (siehe Abschnitt oben)</li>
-      <li><em>Gaming</em> — Titelbilder von <a href="https://rawg.io/" target="_blank" rel="noopener">RAWG</a>
-        sowie Abbildungen und Daten aus der offenen <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokéAPI</a>
-        (ausgeliefert über GitHub)</li>
+      <li><em>Gaming</em> — Titelbilder von <a href="https://rawg.io/" target="_blank" rel="noopener">RAWG</a></li>
       <li><em>Bücher</em> — Buchcover und Suchergebnisse der
         <a href="https://openlibrary.org/" target="_blank" rel="noopener">Open Library</a> des Internet Archive</li>
     </ul>
@@ -276,6 +279,8 @@ function renderLic(filter){
     count.textContent = _showPD
       ? (shown.length + ' / ' + entries.length + ' Bilder')
       : (shown.length + ' nachweispflichtig · ' + pdCount + ' gemeinfrei ausgeblendet');
+    /* Hinweis: gezählt werden Verwendungen, angezeigt werden Quellen —
+       die Liste kann darum kürzer sein als die Zahl. */
   }
 
   if (!shown.length){
@@ -283,7 +288,24 @@ function renderLic(filter){
     return;
   }
 
-  list.innerHTML = shown.sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))
+  /* Gleiche Quelle nur einmal aufführen.
+     Bei Sammelwerken teilen sich mehrere Figuren ein Bild — im Lovecraft-
+     Kosmos etwa fünf Gestalten dieselbe Rankin-Illustration. Die Liste
+     zeigte daraus fünf gleichlautende Einträge hintereinander, was wie ein
+     Fehler aussieht und den Nachweis unübersichtlich macht. Zusammengefasst
+     wird nur, was in Name, Urheber, Lizenz UND Quelle übereinstimmt; die
+     Zahl der Verwendungen steht daneben, damit nichts verschwiegen wird. */
+  const _key = d => [d.name||'', d.author||'', d.license||'', d.source_url||''].join('\u0001');
+  const _gruppen = new Map();
+  shown.forEach(([slug, d]) => {
+    const k = _key(d);
+    if (!_gruppen.has(k)) _gruppen.set(k, { slug: slug, d: d, n: 0 });
+    _gruppen.get(k).n++;
+  });
+  const _zusammengefasst = [..._gruppen.values()]
+    .map(g => [g.slug, Object.assign({}, g.d, { _mehrfach: g.n })]);
+
+  list.innerHTML = _zusammengefasst.sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))
     .map(([slug, d]) => {
       const thumb = (d.group==='Vignetten')
         ? 'assets/images/goetter/vignetten/' + slug + '.jpg'
@@ -300,7 +322,9 @@ function renderLic(filter){
         + '<img class="lic-thumb" src="'+thumb+'" alt="'+(d.name||'')+'" loading="lazy" '
         +   'onerror="this.style.visibility=\'hidden\'">'
         + '<div class="lic-info">'
-        +   '<div class="lic-name">'+(d.name||slug)+'</div>'
+        +   '<div class="lic-name">'+(d.name||slug)
+        +     (d._mehrfach>1 ? ' <span style="opacity:.55;font-weight:400">('+d._mehrfach+' Verwendungen)</span>' : '')
+        +   '</div>'
         +   '<div class="lic-meta">'+licenseBadge(d.license)+author
         +     (src ? ' · '+src : '')
         +   '</div>'

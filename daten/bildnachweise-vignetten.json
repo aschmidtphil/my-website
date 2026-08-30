@@ -7,6 +7,15 @@
   "urheber": "Photographed by the British Museum; original artist unknown",
   "werk": "Papyrus of Ani"
  },
+ "anaximander": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:Anaximander_world_map-de.svg",
+  "hinweis": "Rekonstruktion der Erdkarte Anaximanders — die erste bekannte Weltkarte der griechischen Tradition",
+  "lizenz": "Public domain",
+  "lizenz_url": "",
+  "quelle_artikel": "",
+  "urheber": "Bibi Saint-Pol",
+  "werk": "Anaximander — Vignette"
+ },
  "aristoteles": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Aristotle_Altemps_Inv8575.jpg",
   "lizenz": "Public domain",
@@ -22,6 +31,15 @@
   "quelle_artikel": "https://de.wikipedia.org/wiki/Book_of_Kells",
   "urheber": "",
   "werk": "Book of Kells"
+ },
+ "cioran": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:Paris_-_Rooftops_in_Paris_-_3052.jpg",
+  "hinweis": "Paris — Ciorans Wohnort ab 1937",
+  "lizenz": "CC BY-SA 3.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "quelle_artikel": "",
+  "urheber": "Jorge Royan",
+  "werk": "Emil Cioran — Vignette"
  },
  "gnosis": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:El_Evangelio_de_Tom%C3%A1s-Gospel_of_Thomas-_Codex_II_Manuscritos_de_Nag_Hammadi-The_Nag_Hammadi_manuscripts.png",
@@ -47,6 +65,15 @@
   "urheber": "Christian Haugen",
   "werk": "Elephanta Caves"
  },
+ "husserl": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:Freiburg_Schlossbergturm_Panorama_2010.jpg",
+  "hinweis": "Freiburg — Husserls letzte Wirkungsstätte",
+  "lizenz": "CC BY-SA 3.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "quelle_artikel": "",
+  "urheber": "Armin Hornung",
+  "werk": "Edmund Husserl — Vignette"
+ },
  "islam": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Folio_Blue_Quran_Met_2004.88.jpg",
   "lizenz": "CC BY 2.5",
@@ -54,6 +81,15 @@
   "quelle_artikel": "https://en.wikipedia.org/wiki/Blue_Quran",
   "urheber": "Unknown author Unknown author",
   "werk": "Blue Quran"
+ },
+ "jacobi": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:D%C3%BCsseldorf,_Nordrhein-Westfalen_-_Stadtansicht_(Zeno_Ansichtskarten).jpg",
+  "hinweis": "Düsseldorf — Jacobis Pempelfort",
+  "lizenz": "Public domain",
+  "lizenz_url": "",
+  "quelle_artikel": "",
+  "urheber": "Unknown author Unknown author",
+  "werk": "F. H. Jacobi — Vignette"
  },
  "judentum": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Temple_Scroll.png",
@@ -102,6 +138,15 @@
   "quelle_artikel": "https://de.wikipedia.org/wiki/Plotin",
   "urheber": "Unknown author Unknown author",
   "werk": "Plotin"
+ },
+ "parmenides": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:Elea-velia-villa.JPG",
+  "hinweis": "Elea/Velia — die Stadt des Parmenides",
+  "lizenz": "CC BY-SA 3.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "quelle_artikel": "",
+  "urheber": "Mboesch",
+  "werk": "Parmenides — Vignette"
  },
  "platon": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:La_scuola_di_Atene.jpg",

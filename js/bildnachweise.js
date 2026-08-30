@@ -1586,7 +1586,7 @@ window.BILDNACHWEISE = {
   "license": "siehe Wikimedia Commons",
   "license_url": "",
   "source_url": "https://commons.wikimedia.org/wiki/File:Photo_Schnell.png",
-  "name": "Martin Schnell"
+  "name": "Alexander Schnell"
  },
  "scholem": {
   "author": "Unknown authorUnknown author",

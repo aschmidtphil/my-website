@@ -31,7 +31,22 @@
    Lösung: .gitignore hält die Dateien zurück, diese Liste räumt die
    Verweise darauf weg, damit keine toten Links entstehen.
    ═══════════════════════════════════════════════════════════════════ */
-const NICHT_OEFFENTLICH = [];
+const NICHT_OEFFENTLICH = [
+  /* Eigene Arbeiten: bleiben draussen, bis die Titelblaetter der PDFs
+     bereinigt sind. Auf jedem stehen Matrikelnummer und die davon
+     abgeleitete Uni-Mailadresse. Wichtig: Diese Liste raeumt nur die
+     Verweise weg. Die Dateien unter assets/documents/ und ihre Titel in
+     daten/documents.json bleiben abrufbar, solange sie im Repository
+     liegen — dafuer ist .gitignore zustaendig, nicht diese Liste. */
+  'arbeiten',
+  'buecher',
+  'podcasts',
+  /* Interessen */
+  'gaming',
+  'chor',
+  'shirts',
+  'nature',
+];
 
 /* Setzt je Eintrag eine Klasse auf <html>, damit CSS Verweise ausblenden
    kann (z. B. `.nur-diss` auf der Startseitenkarte). Läuft sofort, damit
@@ -374,8 +389,22 @@ body > nav {
 /* ── Nicht veröffentlichte Seiten ──────────────────────────────────
    Gesteuert über die Liste NICHT_OEFFENTLICH weiter unten. Die Klasse
    wird von dort auf <html> gesetzt, je Seite eine eigene. */
-html.nv-diss     .nur-diss,
-html.nv-arbeiten .nur-arbeiten { display: none !important; }
+html.nv-diss        .nur-diss,
+html.nv-arbeiten    .nur-arbeiten,
+html.nv-buecher     .nur-buecher,
+html.nv-podcasts    .nur-podcasts,
+html.nv-gaming      .nur-gaming,
+html.nv-chor        .nur-chor,
+html.nv-shirts      .nur-shirts,
+html.nv-nature      .nur-nature,
+html.nv-favphil     .nur-favphil,
+html.nv-zitate      .nur-zitate,
+html.nv-studium     .nur-studium,
+html.nv-argumente   .nur-argumente,
+html.nv-phil-eigene .nur-phil-eigene,
+html.nv-goetter     .nur-goetter,
+html.nv-philosophy  .nur-philosophy,
+html.nv-unendlichkeit .nur-unendlichkeit { display: none !important; }
 .pstat-num       { font-family: var(--fh); font-size: 1.75rem; font-weight: 800; color: var(--accent-text); display: block; }
 .pstat-lbl       { font-family: var(--fm); font-size: .63rem; color: var(--text3); letter-spacing: .08em; }
 
@@ -926,7 +955,6 @@ footer {
 
 /* Pokémon */
 .poke-controls   { display: flex; gap: .7rem; flex-wrap: wrap; margin-bottom: 1.6rem; align-items: center; }
-.poke-grid       { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(145px, 100%), 1fr)); gap: .85rem; }
 .poke-card       { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: .9rem; text-align: center; cursor: pointer; transition: all .25s; box-shadow: var(--shadow); }
 @media (hover: hover){ .poke-card:hover{ transform: translateY(-5px); border-color: var(--accent); } }
 .poke-card img   { width: 70px; height: 70px; image-rendering: pixelated; }
@@ -1892,7 +1920,6 @@ html[data-style="neon-noir"] .gb-pw {background:rgba(255,170,60,.2);color:#ffaa4
 html[data-style="neon-noir"] .gb-mmbn {background:rgba(40,220,255,.2);color:#44ddff}
 html[data-style="neon-noir"] /* Pokémon styles */
 .poke-controls {display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1.6rem;align-items:center;}
-html[data-style="neon-noir"] .poke-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(min(148px, 100%), 1fr));gap:.88rem;}
 html[data-style="neon-noir"] .poke-card {background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:.9rem;text-align:center;cursor:pointer;transition:all .28s;box-shadow:var(--shadow);backdrop-filter:blur(8px);}
 @media (hover: hover){ html[data-style="neon-noir"] .poke-card:hover{transform:translateY(-5px);border-color:rgba(240,192,64,.35);box-shadow:0 8px 24px rgba(0,0,0,.4),0 0 20px var(--glow-accent);} }
 html[data-style="neon-noir"] .poke-card img {width:70px;height:70px;image-rendering:pixelated;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));}
@@ -2504,19 +2531,6 @@ html[data-style="brutalist"] .game-lb img { border-radius: 0; box-shadow: 8px 8p
 /* ── WC LIGHTBOX ──────────────────────────────────────── */
 html[data-style="brutalist"] .wc-lb img { border-radius: 0; }
 html[data-style="brutalist"] .wc-thumb-wrap { border-radius: 0; }
-
-/* ── POKE CARDS ───────────────────────────────────────── */
-html[data-style="brutalist"] .poke-card {
-  border-radius: 0;
-  border: 2px solid var(--text);
-  box-shadow: 3px 3px 0 var(--text);
-}
-@media (hover: hover){ html[data-style="brutalist"] .poke-card:hover{
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 var(--accent);
-  border-color: var(--accent);
-} }
-html[data-style="brutalist"] .poke-detail-area { border-radius: 0; border: 2px solid var(--text); }
 
 /* ── HERO-TAG for pages ───────────────────────────────── */
 html[data-style="brutalist"] .page-hero-glow { display: none; }
@@ -4017,17 +4031,17 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
     <span class="rule"></span>
   </div>
   <nav class="hm-mehr" aria-label="Weitere Bereiche">
-    <a href="#argumente">Bibliothek der Argumente</a>
-    <a href="#favphil">Lieblingsphilosophen</a>
-    <a href="#zitate">Lieblingszitate</a>
-    <a href="#buecher">Bücher</a>
-    <a href="#studium">Studium</a>
-    <a href="#podcasts">Podcasts</a>
+    <a href="#argumente" class="nur-argumente">Bibliothek der Argumente</a>
+    <a href="#favphil" class="nur-favphil">Lieblingsphilosophen</a>
+    <a href="#zitate" class="nur-zitate">Lieblingszitate</a>
+    <a href="#buecher" class="nur-buecher">Bücher</a>
+    <a href="#studium" class="nur-studium">Studium</a>
+    <a href="#podcasts" class="nur-podcasts">Podcasts</a>
     <a href="#arbeiten" class="nur-arbeiten">Eigene Arbeiten</a>
-    <a href="#chor">Chor im Loch</a>
-    <a href="#shirts">Philosophen-Shirts</a>
-    <a href="#nature">Natur</a>
-    <a href="#gaming">Gaming</a>
+    <a href="#chor" class="nur-chor">Chor im Loch</a>
+    <a href="#shirts" class="nur-shirts">Philosophen-Shirts</a>
+    <a href="#nature" class="nur-nature">Natur</a>
+    <a href="#gaming" class="nur-gaming">Gaming</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
 </section>
@@ -8103,6 +8117,9 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 /* Kategorie-Trenner über den Tabs */
 .gods-cat-label{ font-family:var(--fm); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase;
   color:var(--gx-ink2); opacity:.6; width:100%; text-align:center; margin:.6rem 0 .1rem; }
+/* Der methodische Rahmen: leiser als der Untertitel, aber lesbar. */
+.gx-rahmen{ font-size:.78rem; line-height:1.6; opacity:.72; max-width:62ch;
+  margin-top:.9rem; border-left:2px solid var(--gx-line,#3a3f46); padding-left:.9rem; }
 .gods-tabs{ position:relative; z-index:2; display:flex; gap:.45rem; justify-content:center;
   flex-wrap:wrap; padding:1.2rem 1rem .3rem; }
 .gods-tab{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem; letter-spacing:.04em;
@@ -8227,6 +8244,33 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     padding-bottom:.2rem; }
   .gx-aw-reihe::-webkit-scrollbar{ display:none; }
   .gx-aw-reihe > *{ flex:0 0 auto; }
+
+  /* Dasselbe Muster fuer Ansichtsleiste und Werkzeugfach: waagerecht
+     schieben statt umbrechen. Die fuenf Ansichtsknoepfe brachen sonst auf
+     zwei Zeilen um, die vier Werkzeuge auf zwei bis drei — zusammen vier
+     Zeilen Bedienung ueber einer Buehne, die selbst kaum noch Platz hatte. */
+  .gx-viewbar, .gods-controls{
+    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .gx-viewbar::-webkit-scrollbar,
+  .gods-controls::-webkit-scrollbar{ display:none; }
+  .gx-viewbar > *, .gods-controls > *{ flex:0 0 auto; }
+  .gx-viewbar{ margin-left:1.5rem; margin-right:1.5rem; }
+  /* Die Werkzeugbank hatte 2rem Innenabstand — sie war eine eigene Bank,
+     obwohl sie drei Kaestchen enthielt. Eingeklappt faellt sie ohnehin weg;
+     aufgeklappt reicht die Haelfte. */
+  .gods-controls{ gap:.9rem; padding:.5rem 1.5rem .7rem; justify-content:flex-start; }
+
+  /* Das Suchfeld verlangte 220 px Mindestbreite und zwang die Zeile damit
+     auf schmalen Schirmen zum Umbruch. Es darf jetzt schrumpfen. */
+  .gx-findbar{ margin-left:1.5rem; margin-right:1.5rem; flex-wrap:nowrap; }
+  .gx-findbar input{ min-width:0; flex:1 1 auto; }
+  .gx-findbar > button{ flex:0 0 auto; }
+
+  /* Fingerkuppengroesse fuer alles, was in diesen Zeilen angetippt wird. */
+  .gx-viewbtn, .gods-ctrl-btn, .gx-fb-reset{ min-height:40px; }
+  .gods-ctrl{ min-height:40px; }
 }
 .gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
   font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
@@ -8536,15 +8580,45 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     <h1 class="gods-title">Götter<span class="accent">kosmos</span></h1>
     <p class="gods-sub">Wer zeugte wen, wer steht über wem — und welche Gottheiten einander entsprechen.
       Von den olympischen Göttern bis zu den abrahamitischen Religionen.</p>
+    <!-- Methodischer Rahmen. Die Seite stellt Mythologien, monotheistische
+         Religionen, Begriffsarchitekturen und Literatur in EINER Darstellungs-
+         form nebeneinander. Ohne einen Satz dazu liest sich die gemeinsame Form
+         als Gleichsetzung des Wirklichkeitsanspruchs — gerade bei Judentum,
+         Christentum und Islam, die kein Pantheon kennen. Der Text steht in
+         goetter-data.js unter meta.rahmen, damit er nicht doppelt gepflegt wird. -->
+    <p class="gods-sub gx-rahmen" id="gx-rahmen"></p>
   </div>
 
+  <!-- ══ BEDIENUNG — dieselben drei Zonen wie auf der Philosophie-Seite ═══
+       Zone 1  Welchen Kosmos?  gods-tabs
+       Zone 2  Wie dargestellt? gx-viewbar + Suche
+       Zone 3  Was greift?      gx-filterbar (Zustandsstreifen)
+       darunter: Werkzeuge, eingeklappt
+
+       Bisher stand zwischen Titel und Buehne ein fester Stapel aus vier
+       Zeilen: Kosmos-Auswahl, gods-controls (Vergleichen + zwei Kaestchen,
+       mit 2rem Innenabstand eine eigene Bank), Ansichtsleiste, Suchzeile —
+       und die Suchzeile brach auf schmalen Schirmen zusaetzlich um, weil das
+       Eingabefeld 220 px Mindestbreite verlangt. Auf dem Telefon war der
+       Bildschirm damit voll, bevor eine einzige Figur zu sehen war.
+
+       Die drei Werkzeuge in gods-controls sind seltener noetig als Kosmos,
+       Ansicht und Suche — sie sind darum jetzt eingeklappt. Der Kosmos
+       bleibt oben, weil er die eine Entscheidung ist, die diese Seite traegt. -->
   <div class="gods-tabs" id="gods-tabs"></div>
-
-  <div class="gods-controls">
-    <button class="gods-ctrl-btn" id="gx-compare-btn" onclick="gxToggleCompare()" title="Zwei Pantheen direkt gegenüberstellen — zeigt echte Verbindungslinien zwischen entsprechenden Figuren">⇄ Pantheen vergleichen</button>
-    <label class="gods-ctrl"><input type="checkbox" id="gx-minor" checked onchange="gxRender()"> Nebenfiguren</label>
-    <label class="gods-ctrl"><input type="checkbox" id="gx-domains" checked onchange="gxRender()"> Wirkungsbereiche</label>
-  </div>
+  <script>
+  /* Rahmen aus den Daten ziehen — nie in den Text schreiben. */
+  (function(){
+    function setzen(){
+      var el=document.getElementById('gx-rahmen');
+      var D=window.GODS_DATA;
+      if(!el) return true;
+      if(!(D&&D.meta&&D.meta.rahmen)) return false;
+      el.textContent=D.meta.rahmen; return true;
+    }
+    if(!setzen()){ var n=0, t=setInterval(function(){ if(setzen()||++n>60) clearInterval(t); },100); }
+  })();
+  </script>
 
   <!-- Zeitregler: blendet aus, was zu einem gewaehlten Zeitpunkt nicht lebendig war.
        Grundlage sind die belegten Datierungen (zeit.von / zeit.bis) aller Kosmen. -->
@@ -8584,12 +8658,31 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
   <div class="gx-findbar">
     <input id="gx-q" type="search" placeholder="Figur suchen — Name, Domäne, Mythos …"
       autocomplete="off" aria-label="Suche über alle Figuren">
-    <select id="gx-motiv" aria-label="Motiv-Filter">
-      <option value="">Motiv wählen …</option>
-    </select>
+    <button type="button" class="gx-viewbtn" id="gx-werkzeug-btn" onclick="gxWerkzeuge()"
+      aria-expanded="false" aria-controls="gods-controls"
+      title="Vergleichen, Nebenfiguren, Wirkungsbereiche und Motive">⚙ Werkzeuge</button>
+  </div>
+
+  <!-- Zustandsstreifen. Er sagt, warum gerade diese Figuren zu sehen sind,
+       und bietet den einen Weg zurueck. Bisher erschien er nur, wenn eines
+       der beiden Kaestchen aus war — Suche, Motiv und Zeitregler blieben
+       stumm, obwohl gerade sie am staerksten einschraenken. -->
+  <div class="gx-filterbar" id="gx-filterbar" hidden></div>
+
+  <!-- Werkzeuge: eingeklappt. gxSyncAtlasChrome() blendet die einzelnen
+       Elemente je nach Ansicht weiterhin selbst aus — das bleibt unberuehrt,
+       weil hier nur der Behaelter zusaetzlich zu- und aufgeht. -->
+  <div class="gods-controls gods-hidden" id="gods-controls">
+    <button class="gods-ctrl-btn" id="gx-compare-btn" onclick="gxToggleCompare()" title="Zwei Pantheen direkt gegenüberstellen — zeigt echte Verbindungslinien zwischen entsprechenden Figuren">⇄ Pantheen vergleichen</button>
+    <label class="gods-ctrl"><input type="checkbox" id="gx-minor" checked onchange="gxRender()"> Nebenfiguren</label>
+    <label class="gods-ctrl"><input type="checkbox" id="gx-domains" checked onchange="gxRender()"> Wirkungsbereiche</label>
+    <label class="gods-ctrl" for="gx-motiv">Motiv
+      <select id="gx-motiv" aria-label="Motiv-Filter">
+        <option value="">alle</option>
+      </select>
+    </label>
   </div>
   <div class="gx-results" id="gx-results" hidden></div>
-  <div class="gx-filterbar" id="gx-filterbar" hidden></div>
   <div class="gods-stage-wrap" id="gods-stage-wrap">
     <div class="gods-stage" id="gods-stage"><svg id="gods-svg"></svg></div>
   </div>
@@ -8696,7 +8789,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     ["Indische Religionen",["buddhismus"]],
     ["Ostasien",["shinto","chinesisch"]],
     ["Mesoamerika",["aztekisch"]],
-    ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
+    ["Philosophische Kosmen",["anaximander","heraklit","parmenides","platon","aristoteles","neuplatonismus","thomas","spinoza","kant","jacobi","kierkegaard","schelling","hegel","schopenhauer","nietzsche","cioran","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
     ["Mystische Traditionen",["gnosis","kabbala","boehme"]],
     ["Moderne Kosmen",["kapitalismus","kapitalismus-satire"]],
     ["Literarische Kosmen",["lovecraft"]],
@@ -8910,18 +9003,39 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     gxRender(); gxSyncHash(); };
   // Statusleiste für die Figur-Ansichten: macht sichtbar, wenn „Nebenfiguren" oder
   // „Wirkungsbereiche" etwas ausblenden — samt Zähler und „Alles anzeigen".
+  /* Zustandsstreifen. Meldete bisher nur die beiden Kaestchen und nur in
+     den Figur-Ansichten. Suche, Motivfilter und Zeitregler schraenken aber
+     staerker ein als beides — und blieben stumm: Wer nach „Sonne“ suchte und
+     die Seite liegen liess, sah spaeter eine halbleere Buehne ohne Hinweis,
+     warum. Jetzt nennt der Streifen jede wirksame Einschraenkung, in jeder
+     Ansicht, und der Knopf raeumt alle zugleich weg. */
   function gxSyncFilterBar(){
     const bar=document.getElementById('gx-filterbar'); if(!bar) return;
     const figView=((gxView==='hybrid'||gxView==='stars') && !compareMode);
     const dM=document.getElementById('gx-minor'), dD=document.getElementById('gx-domains');
     const minorOff=dM&&!dM.checked, domOff=dD&&!dD.checked;
-    if(!figView || (!minorOff && !domOff)){ bar.hidden=true; bar.innerHTML=''; return; }
     const parts=[];
-    if(minorOff){
+    if(figView && minorOff){
       const total=pan().gods.length, shown=pan().gods.filter(g=>g.rank==='major').length;
       parts.push('Nur Hauptfiguren — <b>'+shown+'</b> von '+total+' sichtbar');
     }
-    if(domOff) parts.push('Wirkungsbereiche ausgeblendet');
+    if(figView && domOff) parts.push('Wirkungsbereiche ausgeblendet');
+    try{
+      const q=document.getElementById('gx-q');
+      if(q && q.value.trim()) parts.push('Suche <b>\u201e'+q.value.trim()+'\u201c</b>');
+    }catch(e){}
+    try{
+      const mv=document.getElementById('gx-motiv');
+      if(mv && mv.value){
+        const o=mv.options[mv.selectedIndex];
+        parts.push('Motiv <b>'+((o&&o.textContent)||mv.value)+'</b>');
+      }
+    }catch(e){}
+    try{
+      if(gxJahr!==null && gxJahr!==undefined)
+        parts.push('Zeitpunkt <b>'+(gxJahr<0?(-gxJahr)+' v. Chr.':gxJahr+' n. Chr.')+'</b>');
+    }catch(e){}
+    if(!parts.length){ bar.hidden=true; bar.innerHTML=''; return; }
     bar.innerHTML='<span>'+parts.join(' · ')+'</span>'
       +'<button type="button" class="gx-fb-reset" onclick="gxResetFilters()">Alles anzeigen</button>';
     bar.hidden=false;
@@ -8932,7 +9046,24 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     const q=document.getElementById('gx-q'); if(q) q.value='';
     const mv=document.getElementById('gx-motiv'); if(mv) mv.value='';
     const rz=document.getElementById('gx-results'); if(rz){ rz.hidden=true; rz.innerHTML=''; }
+    /* Der Zeitregler blieb beim Zuruecksetzen stehen — „Alles anzeigen“ zeigte
+       danach immer noch nur, was im eingestellten Jahr lebendig war. */
+    try{ if(typeof gxJahrSetzen==='function' && gxJahr!==null) gxJahrSetzen(null); }catch(e){}
     gxRender();
+  };
+
+  /* Werkzeugfach auf- und zuklappen. Der Behaelter traegt gods-hidden; die
+     einzelnen Elemente darin steuert gxSyncAtlasChrome() unabhaengig weiter. */
+  window.gxWerkzeuge=function(){
+    const box=document.getElementById('gods-controls');
+    const btn=document.getElementById('gx-werkzeug-btn');
+    if(!box) return;
+    const auf=box.classList.contains('gods-hidden');
+    box.classList.toggle('gods-hidden', !auf);
+    if(btn){
+      btn.classList.toggle('on', auf);
+      btn.setAttribute('aria-expanded', auf?'true':'false');
+    }
   };
   window.gxLeaveCards=function(){            // Compare: Karten-Grid schliessen, SVG-Buehne zeigen (View bleibt)
     const w=document.getElementById('gods-stage-wrap'), c=document.getElementById('gx-cards');
@@ -9401,9 +9532,21 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     const gewaehlt=panOrder.filter(k=>atlasWahl.indexOf(k)>=0);
     if(gewaehlt.length>=2) panOrder.length=0, gewaehlt.forEach(k=>panOrder.push(k));
     gxAtlasLeiste(perPan);
-    const nFig=[...perPan.values()].reduce((a,m)=>a+m.size,0);
+    /* nFig NACH der Filterung zählen — perPan enthält alle Kosmen, nicht
+       nur die gewählten. Zuerst hatte ich hier über perPan summiert; dann
+       stand nFig immer auf 212 und der Massstab bewegte sich nie. */
+    const nFig=panOrder.reduce((a,k)=>a+(perPan.get(k)?perPan.get(k).size:0),0);
 
     // 2) Kreis-Layout
+    /* Der Kreis füllt immer 360°, egal wie viele Kosmen gewählt sind —
+       das leistet `step` weiter unten. Was fehlte: Bei wenigen Kosmen
+       blieben Punkte und Schrift so klein wie bei allen, der Kreis wirkte
+       leer und die Sehnen waren nicht besser zu verfolgen als vorher.
+       Deshalb ein Massstab, der an der Zahl der gezeichneten Figuren hängt:
+       wenige Figuren → grössere Knoten, grössere Namen, kräftigere Linien.
+       Bei 250+ Figuren bleibt alles wie bisher (Faktor 1), bei 40 wird
+       es rund doppelt so gross. */
+    const SKAL = Math.max(1, Math.min(2.2, Math.sqrt(230 / Math.max(24, nFig))));
     const W=1010, HH=1010, C=505, R=352, GAPU=2.2;
     svg.setAttribute('width',W); svg.setAttribute('height',HH); stage.style.width=W+'px';
     svg.setAttribute('role','img');
@@ -9449,7 +9592,10 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
         // Inline-Stil statt Attribut: die CSS-Regel .gxa-edge setzt stroke und
         // wuerde ein Praesentationsattribut sonst ueberstimmen.
         const _kt=gxKantenTyp(grp,refs[i2],refs[j2]);
-        let _st='stroke:'+_ti.farbe;
+        /* Linienstärke mitskalieren: Bei wenigen Kosmen sind die Sehnen
+           sonst genauso dünn wie im vollen Atlas — gerade sie will man
+           bei kleiner Auswahl besser verfolgen können. */
+        let _st='stroke:'+_ti.farbe+';stroke-width:'+(0.9*Math.min(SKAL,1.9)).toFixed(2);
         if(_kt==='analogie')      _st+=';stroke-dasharray:5 4';
         if(_kt==='gegenstellung') _st+=';stroke-dasharray:1.5 3.5';
         const _lebt=gxLebt(nodePos[refs[i2]].pan,gxJahr) && gxLebt(nodePos[refs[j2]].pan,gxJahr);
@@ -9463,10 +9609,19 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     Object.keys(nodePos).forEach(ref=>{
       const nd=nodePos[ref], P=DATA.panthea[nd.pan];
       const grpEl=el('g',{class:'gxa-node'+(gxLebt(nd.pan,gxJahr)?'':' gxa-off'),'data-ref':ref});
-      grpEl.appendChild(el('circle',{cx:nd.x.toFixed(1),cy:nd.y.toFixed(1),r:3.6,fill:P.color,stroke:'#0c0d18','stroke-width':1}));
+      grpEl.appendChild(el('circle',{cx:nd.x.toFixed(1),cy:nd.y.toFixed(1),
+        r:(3.6*SKAL).toFixed(2),fill:P.color,stroke:'#0c0d18','stroke-width':(1*Math.min(SKAL,1.6)).toFixed(2)}));
       const deg=nd.ang*180/Math.PI, left=(Math.cos(nd.ang)<0);
-      const lx=C+(R+10)*Math.cos(nd.ang), ly=C+(R+10)*Math.sin(nd.ang);
-      grpEl.appendChild(el('text',{class:'gxa-name',x:lx.toFixed(1),y:(ly+2.8).toFixed(1),
+      /* Beschriftung AUSSERHALB des Farbbands. Das Band liegt bei R+13,
+         die Namen begannen bei R+10 — der erste Buchstabe rechts und der
+         letzte links ragten also ins Band und waren schwer zu lesen. Mit
+         grösserer Schrift bei kleiner Auswahl wurde es schlimmer, weil die
+         Buchstaben höher sind. Jetzt hinter dem Band, mit einem Abstand,
+         der wie die Schrift mitwächst. */
+      const RTXT = R + 21 + 3*SKAL;
+      const lx=C+RTXT*Math.cos(nd.ang), ly=C+RTXT*Math.sin(nd.ang);
+      grpEl.appendChild(el('text',{class:'gxa-name',x:lx.toFixed(1),y:(ly+2.8*SKAL).toFixed(1),
+        'font-size':(9.5*SKAL).toFixed(1),
         'text-anchor':left?'end':'start',
         transform:'rotate('+(left?deg+180:deg).toFixed(1)+' '+lx.toFixed(1)+' '+ly.toFixed(1)+')'},nd.g.name));
       grpEl.addEventListener('mouseenter',()=>atlasHighlight(ref));
@@ -9476,7 +9631,15 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     });
 
     // 5) Mitte: Zähler / Hover-Info
-    const nGrp=DATA.equiv.length, nPan=panOrder.length;
+    /* Nur die Gruppen zählen, die im Kreis auch vorkommen. Zuvor stand hier
+       DATA.equiv.length — die Mitte meldete 114 Entsprechungen, während im
+       Bild drei Kosmen mit einer Handvoll Sehnen zu sehen waren. */
+    const _sichtbar=new Set();
+    DATA.equiv.forEach((grp,gi)=>{
+      const drin=grp.filter(r=>panOrder.indexOf(String(r).split(':')[0])>=0);
+      if(drin.length>=2) _sichtbar.add(gi);
+    });
+    const nGrp=_sichtbar.size, nPan=panOrder.length;
     const centerG=el('g',{id:'gxa-center'});
     centerG.appendChild(el('text',{class:'gxa-center',x:C,y:C-16,'font-size':'40','font-weight':'700',
       fill:'var(--gx-star)',style:'paint-order:stroke;stroke:#0c0d18;stroke-width:6'},String(nGrp)));
@@ -10667,104 +10830,155 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   </p>
 </div>
 
-<!-- ══ BEDIENUNG — drei Ebenen ══════════════════════════════════════
-     Zeile 1: Was sehe ich? (Ansicht) + Suche + Zoom  — immer sichtbar
-     Zeile 2: Aufklappbare Faecher fuer Filter und Darstellung
-     So steht oben nur, was man staendig braucht; alles Uebrige ist
-     einen Klick entfernt, aber nicht verschwunden. -->
+<!-- ══ BEDIENUNG — drei Zonen ═══════════════════════════════════════
+     Die Reihenfolge folgt den Fragen, die ein Erstnutzer stellt:
+
+       Zone 1  Was sehe ich?    Ansicht · Suche · Werkzeug DIESER Ansicht
+       Zone 2  Wen sehe ich?    Zustandsstreifen: Zahl · aktive Filter · Reset
+       Zone 3  Wen will ich?    Faecher, benannt nach dem, WORAN sie filtern
+
+     Zone 2 lag bis hierher als .ks-Leiste INNERHALB von #karte-wrap und war
+     damit in der am seltensten geoeffneten Ansicht eingesperrt. Sie ist die
+     einzige Stelle, die „warum sehe ich gerade das?" beantwortet — sie
+     gehoert ueber alle vier Ansichten, nicht nur ueber die Karte.
+
+     Die Faecher hiessen „Filter | Kulturkreis | Darstellung | Einflusslinien".
+     Das trennte nichts: der Kulturkreis IST ein Filter. Jetzt trennt das
+     Kriterium — Merkmale der Person | Herkunft | Darstellung. Einflusslinien
+     sind eine Darstellungsfrage und stehen dort. -->
 <div class="tlk">
 
   <div class="tlk-haupt">
-    <div class="view-switch" id="view-switch">
-      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" title="Denker auf der Zeitachse">⏳ Zeitachse</button>
-      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" title="Sortierbare Tabelle mit CSV-Export">📊 Tabelle</button>
-      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" title="Wer hat wen beeinflusst">🕸️ Einflussnetz</button>
-      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" title="Geburts- und Sterbeorte auf der Weltkarte">🌍 Weltkarte</button>
+    <div class="view-switch" id="view-switch" role="group" aria-label="Ansicht wählen">
+      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" aria-pressed="true" title="Denker auf der Zeitachse">⏳ Zeitachse</button>
+      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" aria-pressed="false" title="Sortierbare Tabelle mit CSV-Export">📊 Tabelle</button>
+      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" aria-pressed="false" title="Wer hat wen beeinflusst">🕸️ Einflussnetz</button>
+      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" aria-pressed="false" title="Geburts- und Sterbeorte auf der Weltkarte">🌍 Weltkarte</button>
     </div>
 
     <div class="phil-search-wrap">
-      <span class="phil-search-icon">⌕</span>
-      <input class="phil-search" id="phil-search" type="text"
-        placeholder="Philosoph suchen…" oninput="tlSearch(this.value)">
+      <span class="phil-search-icon" aria-hidden="true">⌕</span>
+      <input class="phil-search" id="phil-search" type="search"
+        placeholder="Philosoph suchen…" aria-label="Philosoph suchen"
+        oninput="tlSearch(this.value)">
     </div>
 
-    <div class="phil-zoom-group" id="zoom-group">
-      <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen">−</button>
+    <!-- Werkzeug der Ansicht. Der Zoom stand bisher immer da, wirkte aber nur
+         auf der Zeitachse — in Tabelle, Netz und Karte war er ein Knopf ohne
+         Folge. tlSetView() blendet ihn jetzt mit der Ansicht ein und aus.
+         Der frühere vierte Knopf „Reset" hat Zoom UND Filter zurueckgesetzt,
+         aber weder Kulturkreis noch Herkunft — ein halbes Zuruecksetzen neben
+         zwei weiteren Reset-Knoepfen. Zuruecksetzen liegt jetzt allein im
+         Zustandsstreifen; den Zoom loest ein Doppelklick auf die freie
+         Flaeche der Zeitachse. -->
+    <div class="phil-zoom-group" id="zoom-group" role="group" aria-label="Zoom der Zeitachse">
+      <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen" aria-label="Herauszoomen">−</button>
       <span class="zoom-label" id="zoom-lbl">×1.0</span>
-      <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen">+</button>
-      <button class="pzb pzb-w" onclick="tlReset()" title="Zoom und Filter zuruecksetzen">Reset</button>
+      <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen" aria-label="Hineinzoomen">+</button>
     </div>
-
-    <span class="tlk-zahl" id="vis-count-2">—</span>
   </div>
 
-  <div class="tlk-faecher">
-    <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🔍 Filter <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
-    <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🌐 Kulturkreis <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
-    <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🎨 Darstellung</button>
-    <button class="tlk-tab" id="tlk-tab-linien" onclick="tlkFach('linien')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🕸️ Einflusslinien</button>
-    <button class="tlk-tab tlk-tab-reset" onclick="tlkAllesZuruecksetzen()" title="Alle Filter aufheben">alles zeigen</button>
+  <!-- ── Zone 2: Zustand ────────────────────────────────────────────
+       Beantwortet an EINER Stelle: wie viele sehe ich, welche Filter
+       greifen gerade, wie komme ich zurueck. Die Chips nennen jeden
+       wirksamen Filter im Klartext; der Reset erscheint nur, wenn es
+       etwas zurueckzunehmen gibt — ein Knopf, der nichts taete, waere
+       ein Angebot, das ins Leere fuehrt.
+       role=status + aria-live: Wer mit Screenreader filtert, hoert die
+       neue Trefferzahl, statt sie suchen zu muessen. -->
+  <div class="ks" id="ks-leiste" role="status" aria-live="polite">
+    <span class="ks-zahl" id="vis-count-2">—</span>
+    <span class="ks-teile" id="ks-teile"></span>
+    <button type="button" class="km-btn ks-reset" id="ks-reset" hidden
+            title="Alle Filter aufheben und in den Ausgangszustand zurück">↺ Alles zurücksetzen</button>
   </div>
 
-  <!-- Fach: Filter -->
-  <div class="tlk-fach" id="tlk-fach-filter" hidden>
+  <div class="tlk-faecher" role="group" aria-label="Filter und Darstellung">
+    <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')"
+            aria-expanded="false" aria-controls="tlk-fach-filter">
+      <span class="tlk-caret" aria-hidden="true">▸</span> 🔍 Merkmale <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
+    <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')"
+            aria-expanded="false" aria-controls="tlk-fach-kreis">
+      <span class="tlk-caret" aria-hidden="true">▸</span> 🌐 Herkunft <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
+    <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')"
+            aria-expanded="false" aria-controls="tlk-fach-ansicht">
+      <span class="tlk-caret" aria-hidden="true">▸</span> 🎨 Darstellung</button>
+  </div>
+
+  <!-- Fach: Merkmale der Person -->
+  <div class="tlk-fach" id="tlk-fach-filter" hidden role="region" aria-labelledby="tlk-tab-filter">
+    <!-- EIN Slot, nicht fuenf. tlSetMode() loescht beim Wechsel alle uebrigen
+         Werte („damit sich Modi nicht ueberlagern“) — es kann also immer nur
+         ein Merkmal greifen. Fuenf gleichrangige Chips nebeneinander haben das
+         Gegenteil versprochen: Wer Epoche und Disziplin kombinieren wollte,
+         verlor die Epoche stillschweigend. Merkmal und Wert stehen deshalb
+         jetzt in EINER Zeile mit Pfeil dazwischen — sichtbar ein Paar, nicht
+         zwei unabhaengige Angebote. -->
     <div class="tlk-zeile">
-      <span class="tlk-lab">Filtern nach</span>
-      <div class="filter-mode-switch" id="filter-mode-switch">
-        <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)">Epoche</button>
-        <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)">Disziplin</button>
-        <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)">Strömung</button>
-        <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)">Grundposition</button>
-        <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)">Thema</button>
+      <span class="tlk-lab" id="lab-merkmal">Merkmal</span>
+      <div class="filter-mode-switch" id="filter-mode-switch" role="group" aria-labelledby="lab-merkmal">
+        <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)" aria-pressed="true">Epoche</button>
+        <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)" aria-pressed="false">Disziplin</button>
+        <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)" aria-pressed="false">Strömung</button>
+        <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)" aria-pressed="false">Grundposition</button>
+        <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)" aria-pressed="false">Thema</button>
       </div>
-    </div>
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Auswahl</span>
+      <span class="tlk-lab" aria-hidden="true">→</span>
       <div class="epoch-dd-wrap">
-        <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"></select>
+        <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"
+                aria-label="Wert des gewählten Merkmals"></select>
       </div>
-      <button class="itbtn" id="female-btn" onclick="tlToggleFemale()"
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Zusätzlich</span>
+      <button class="itbtn" id="female-btn" onclick="tlToggleFemale()" aria-pressed="false"
         title="Zeigt nur die Philosophinnen des Datensatzes">♀ Nur Philosophinnen</button>
     </div>
-    <!-- Herkunft: Kontinent oder Region des Geburtsorts -->
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Herkunft</span>
-      <div class="epoch-dd-wrap">
-        <select class="epoch-dd" id="herkunft-dd" onchange="tlSetHerkunft(this.value)"
-          title="Nach Geburtsort filtern"></select>
-      </div>
-      <span class="tlk-hilfe" style="margin:0">Geburtsort nach heutiger Geografie — die Region ist
-        meist aussagekräftiger als der Kontinent.</span>
-    </div>
-    <!-- Die Farbtafel IST der Epochenfilter: ein Klick waehlt, ein zweiter hebt auf.
-         Sie stand vorher zusaetzlich ganz oben — dasselbe zweimal. -->
     <div class="tlk-zeile tlk-zeile-leg">
       <span class="tlk-lab">Epochen</span>
       <div class="epoch-legend-grid" id="epoch-legend-grid"></div>
     </div>
-    <p class="tlk-hilfe">Ein Klick auf eine Epochenfarbe filtert danach, ein zweiter hebt den Filter
-      wieder auf — dasselbe wie über die Auswahl darüber. Die Farben entsprechen denen der Zeitachse.</p>
+    <p class="tlk-hilfe">Es greift immer nur <b>ein</b> Merkmal: Der Wechsel von Epoche auf
+      Disziplin hebt eine gewählte Epoche auf. Kombinieren lässt es sich dagegen mit Herkunft,
+      Suche und „Nur Philosophinnen“ — was gerade zusammen greift, steht oben im Streifen.
+      Die Farbtafel ist derselbe Epochenfilter: ein Klick wählt, ein zweiter hebt auf.</p>
   </div>
 
-  <!-- Fach: Kulturkreis -->
-  <div class="tlk-fach" id="tlk-fach-kreis" hidden>
-    <div class="tl-kreise" id="tl-kreise"></div>
-    <p class="tlk-hilfe">Klick blendet einen Kreis ein oder aus, Doppelklick zeigt nur diesen.
-      Voreingestellt sind Europa und die islamische Welt — der Strang, in dem der Begriff
-      „Philosophie“ entstanden ist. Die Grenze ist teils künstlich; sie lässt sich jederzeit aufheben.</p>
+  <!-- Fach: Herkunft — Kulturkreis und Region beantworten dieselbe Frage
+       (woher stammt jemand) und standen doch in zwei verschiedenen Faechern:
+       der Kreis in einem eigenen, die Region unter „Filter“. -->
+  <div class="tlk-fach" id="tlk-fach-kreis" hidden role="region" aria-labelledby="tlk-tab-kreis">
+    <div class="tlk-zeile">
+      <span class="tlk-lab" id="lab-kreis">Kulturkreis</span>
+      <div class="tl-kreise" id="tl-kreise" role="group" aria-labelledby="lab-kreis"></div>
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Region</span>
+      <div class="epoch-dd-wrap">
+        <select class="epoch-dd" id="herkunft-dd" onchange="tlSetHerkunft(this.value)"
+          aria-label="Nach Geburtsort filtern"></select>
+      </div>
+    </div>
+    <p class="tlk-hilfe">Beides betrifft die Herkunft, aber nicht dasselbe: Der <b>Kulturkreis</b>
+      ordnet die Denktradition zu, die <b>Region</b> den Geburtsort nach heutiger Geografie —
+      Augustinus steht als Kulturkreis unter Europa, als Region unter Nordafrika. Klick blendet
+      einen Kreis ein oder aus, Doppelklick zeigt nur diesen. Voreingestellt sind Europa und die
+      islamische Welt — der Strang, in dem der Begriff „Philosophie“ entstanden ist. Die Grenze
+      ist teils künstlich; sie lässt sich jederzeit aufheben.</p>
   </div>
 
-  <!-- Fach: Darstellung -->
-  <div class="tlk-fach" id="tlk-fach-ansicht" hidden>
+  <!-- Fach: Darstellung — was die Ansicht zeigt, nicht wen sie zeigt.
+       Die Einflusslinien hatten ein eigenes Fach, sind aber genau das:
+       eine Darstellungsentscheidung. -->
+  <div class="tlk-fach" id="tlk-fach-ansicht" hidden role="region" aria-labelledby="tlk-tab-ansicht">
     <div class="tlk-zeile">
       <span class="tlk-lab">Karten</span>
-      <button class="itbtn" id="card-size-btn" onclick="tlToggleCardSize()" title="Zwischen großen und kleinen Karten wechseln">◰ Mini</button>
-      <span class="tlk-lab" style="margin-left:1rem">Farben</span>
-      <button class="itbtn" onclick="toggleEpochLegend()" title="Die Epochenfarben stehen im Fach Filter">Epochen-Farbtafel →</button>
+      <button class="itbtn" id="card-size-btn" onclick="tlToggleCardSize()" aria-pressed="false"
+              title="Zwischen großen und kleinen Karten wechseln">◰ Mini</button>
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab" id="lab-linien">Einflusslinien</span>
+      <div class="infl-toggles" id="infl-toggles" role="group" aria-labelledby="lab-linien"></div>
     </div>
     <div class="tier-legend">
       <div class="tier-item"><div class="tier-pip" style="background:#f5b50a;box-shadow:0 0 0 2px #f5b50a44"></div>T1 — Giganten</div>
@@ -10773,16 +10987,11 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
       <div class="tier-item"><div class="tier-pip" style="background:#9b7cff"></div>T4 — Schüler &amp; Randfiguren</div>
       <div class="vis-count" id="vis-count">—</div>
     </div>
-    <p class="tlk-hilfe">Je weiter du hineinzoomst, desto mehr Ebenen erscheinen: bei geringem Zoom
-      nur die Giganten, danach kommen die übrigen hinzu.</p>
-  </div>
-
-  <!-- Fach: Einflusslinien -->
-  <div class="tlk-fach" id="tlk-fach-linien" hidden>
-    <div class="infl-toggles" id="infl-toggles"></div>
-    <p class="tlk-hilfe">Die Linien zeigen belegte Beziehungen zwischen Denkern. Einzelne Arten
-      lassen sich ausblenden. Wer wen über mehrere Schritte beeinflusst hat, zeigt die
-      Verbindungssuche in der Ansicht „Einflussnetz“.</p>
+    <p class="tlk-hilfe">Der <b>Rang</b> ist keine Wertung, sondern ein Dichtemaß: Je weiter du in
+      die Zeitachse hineinzoomst, desto mehr Ränge erscheinen — bei geringem Zoom nur die Giganten.
+      Die <b>Einflusslinien</b> zeigen belegte Beziehungen; einzelne Arten lassen sich ausblenden.
+      Wer wen über mehrere Schritte beeinflusst hat, zeigt die Verbindungssuche in der Ansicht
+      „Einflussnetz“.</p>
   </div>
 </div>
 
@@ -10805,14 +11014,28 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 <!-- Weltkarte: Geburtsorte der Philosophen. Eigene SVG-Karte, keine Kacheln
      von fremden Servern — die Seite bleibt ohne externe Abhaengigkeiten. -->
 <div class="karte-wrap" id="karte-wrap">
-  <div class="karte-kopf">
-    <div class="karte-modus">
+  <!-- Diese Leiste enthaelt NUR, was die Karte allein betrifft. Dass die
+       Filter oben zusaetzlich wirken, stand bisher ausschliesslich im
+       Fliesstext UNTER der Karte — also dort, wo es niemand liest, der
+       gerade oben einen Knopf sucht. Das erste Etikett sagt es jetzt an
+       der Stelle, an der die Frage entsteht; was global greift, steht im
+       Zustandsstreifen ueber der Karte. -->
+  <div class="karte-kopf" role="group" aria-label="Darstellung der Weltkarte">
+    <span class="karte-etikett">Nur für diese Karte</span>
+    <span class="karte-trenn" aria-hidden="true"></span>
+    <span class="karte-etikett" id="lab-ortart">Ort</span>
+    <div class="karte-modus" role="group" aria-labelledby="lab-ortart">
       <button type="button" class="km-btn active" id="ko-geburt" onclick="kaOrtart('geburt')"
-        title="Wo die Denker geboren wurden">🎂 Geburtsort</button>
+        aria-pressed="true" title="Wo die Denker geboren wurden">🎂 Geburtsort</button>
       <button type="button" class="km-btn" id="ko-tod" onclick="kaOrtart('tod')"
-        title="Wo sie gestorben sind — zeigt Wanderung und Exil">🪦 Sterbeort</button>
+        aria-pressed="false" title="Wo sie gestorben sind — zeigt Wanderung und Exil">🪦 Sterbeort</button>
     </div>
     <span class="karte-trenn" aria-hidden="true"></span>
+    <span class="karte-etikett">Rang</span>
+    <button type="button" class="km-btn active" id="ko-tier" onclick="kaTierUm()"
+            title="Rang 3 und 4 dazuschalten — sonst wird die Karte sehr dicht"
+            aria-pressed="true">◆ Rang 1–2</button>
+
     <span class="karte-etikett">Ebenen</span>
     <button type="button" class="km-btn active" id="ko-lehr" onclick="kaLehrUm()"
             title="Schulen, Bibliotheken, Universitäten und Zirkel ein- und ausblenden"
@@ -10821,10 +11044,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
     <button type="button" class="km-btn" id="ko-funde" onclick="kaFundeUm()"
             title="Wo die Quellen des Götterkosmos gefunden wurden"
             aria-pressed="false">🏺 Fundorte</button>
-    <span class="karte-trenn" aria-hidden="true"></span>
     <button type="button" class="km-btn" id="ko-phil-aus" onclick="kaPhilAusUm()"
             title="Alle Denker-Punkte ausblenden — nützlich, um nur die Ebenen für sich zu sehen"
-            aria-pressed="false">🙈 Philosoph*innen ausblenden</button>
+            aria-pressed="false">🙈 Denker aus</button>
     <span class="karte-info" id="karte-info"></span>
   </div>
 
@@ -10863,15 +11085,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   </div>
   <!-- OpenStreetMap: echte Karte mit Staedten. Laedt Kacheln von fremden
        Servern — deshalb umschaltbar und nicht voreingestellt. -->
-  <!-- Statuszeile: beantwortet die Frage, warum man gerade das sieht, was
-       man sieht. Nennt jede wirksame Einstellung im Klartext und bietet
-       einen einzigen Weg zurück in den Ausgangszustand. -->
-  <div class="ks" id="ks-leiste">
-    <span class="ks-zahl" id="ks-zahl"></span>
-    <span class="ks-teile" id="ks-teile"></span>
-    <button type="button" class="km-btn ks-reset" id="ks-reset" hidden
-            title="Alle Einstellungen der Karte zurücknehmen">↺ Alles zurücksetzen</button>
-  </div>
+  <!-- Die Statuszeile stand hier und galt damit nur fuer die Karte.
+       Sie steht jetzt oben in der .tlk-Leiste und gilt fuer alle vier
+       Ansichten; osmZeichne() meldet seine Zahlen weiterhin dorthin. -->
   <div class="karte-osm an" id="karte-osm"></div>
   <div class="karte-liste" id="karte-liste"></div>
   <p class="karte-fuss">Ein <b>Klick auf einen Ort</b> fächert ihn in die einzelnen Denker auf;
@@ -11102,6 +11318,55 @@ function tlHerkunftFuellen(){
 var TL_KREISE = ['European','Islamic','India','China','Ostasien','Africana'];
 var TL_KREIS_LABEL = { European:'Europa', Islamic:'Islamische Welt', India:'Indien', China:'China', Ostasien:'Ostasien', Africana:'Africana' };
 var tlKreisAktiv = { European:true, Islamic:true, India:false, China:false, Ostasien:false, Africana:false };
+/* Die Voreinstellung an EINER Stelle. Marke und Zustandsstreifen fragten
+   bisher, ob ALLE Kreise an sind — im Ausgangszustand sind sie das nicht,
+   also meldeten beide dauerhaft eine Abweichung: Der Reset-Knopf stand von
+   der ersten Sekunde an auf „an“ und die Marke zeigte „1“, ohne dass der
+   Nutzer irgendetwas getan haette. Ein Reset, der immer angeboten wird,
+   sagt nichts mehr aus. Verglichen wird jetzt gegen die Voreinstellung. */
+var TL_KREIS_STD = { European:true, Islamic:true, India:false, China:false, Ostasien:false, Africana:false };
+function tlKreisStd(){
+  try{ return TL_KREISE.every(function(k){ return !!tlKreisAktiv[k] === !!TL_KREIS_STD[k]; }); }
+  catch(e){ return true; }
+}
+/* Rangfilter der Weltkarte.
+   Die Zeitleiste beschriftet Rangstufe 4 ohnehin nicht, die Karte setzte aber
+   jeden der 580 Denker als Marker — auf einer Weltkarte sind das zu viele
+   Punkte auf einmal. Voreinstellung ist Rang 1–2; Rang 3 und 4 lassen sich
+   ueber die Leiste gemeinsam dazuschalten.
+
+   Gemessen an PHILS_V2 (580 Denker, 575 mit Geodaten):
+     Rang 1–2    175 Denker /  153 Orte   (Vorwahl Europa+Islam: 154 / 132)
+     Rang 1–3    428 Denker /  345 Orte   (bis hierher war es die Voreinstellung)
+     Rang 1–4    575 Denker /  456 Orte
+   Rangverteilung: 31 / 144 / 255 / 150.
+
+   KA_TIER_STD ist die EINZIGE Stelle mit der Voreinstellung — Knopfbeschriftung,
+   Statuszeile und Ruecksetzen leiten sie ab. Wer die Stufe aendert, aendert
+   nur diese Zahl.
+
+   Wirkt NUR auf der Karte: kaTierPasst wird in phils() nicht geprueft,
+   sondern erst in osmZeichne(). Zeitleiste, Tabelle und Netz bleiben
+   unveraendert. */
+var KA_TIER_STD = 2;
+var kaTierMax = KA_TIER_STD;
+function kaTierPasst(p){ return (p.tier || 4) <= kaTierMax; }
+
+/* Beschriftung aus dem Zustand ableiten, nicht ins Markup schreiben. */
+function kaTierKnopf(){
+  var b = document.getElementById('ko-tier');
+  if (!b) return;
+  var std = (kaTierMax === KA_TIER_STD);
+  b.classList.toggle('active', std);
+  b.setAttribute('aria-pressed', std ? 'true' : 'false');
+  b.textContent = std ? ('◆ Rang 1–' + KA_TIER_STD) : '◆ alle Ränge';
+}
+window.kaTierUm = function(){
+  kaTierMax = (kaTierMax === KA_TIER_STD) ? 4 : KA_TIER_STD;
+  kaTierKnopf();
+  osmZeichne();
+};
+
 function phils() {
   var L = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2 : [];
   return L.filter(function(p){
@@ -11123,7 +11388,7 @@ window.tlkFach = function(name){
     var b = document.getElementById('tl-kreise');
     if (b && !b.childElementCount) { try{ tlKreisLeiste(); }catch(e){} }
   }
-  ['filter','kreis','ansicht','linien'].forEach(function(n){
+  ['filter','kreis','ansicht'].forEach(function(n){
     var fach = document.getElementById('tlk-fach-'+n);
     var tab  = document.getElementById('tlk-tab-'+n);
     var auf  = (n === name && tlkOffen !== name);
@@ -11134,14 +11399,21 @@ window.tlkFach = function(name){
 };
 /* Kleine Marke am Reiter, wenn dort ein Filter aktiv ist — so sieht man
    auch bei zugeklapptem Fach, dass etwas eingeschraenkt ist. */
+/* Die Marken zaehlten posFilter, themaFilter und tlHerkunft NICHT mit:
+   Wer nach Grundposition, Thema oder Region filterte, sah bei zugeklapptem
+   Fach nirgends, dass ueberhaupt gefiltert wird. Drei von sieben Filtern
+   waren damit unsichtbar. Jetzt zaehlt jedes Fach genau die Filter, die es
+   selbst enthaelt — die Marke steht fuer „hier drin ist etwas gesetzt“. */
 window.tlkMarken = function(){
   var bf = document.getElementById('tlk-badge-filter');
   if (bf){
     var an = [];
-    try{ if (epoch) an.push(epoch); }catch(e){}
-    try{ if (typeof discFilter!=='undefined' && discFilter) an.push(discFilter); }catch(e){}
-    try{ if (typeof movFilter!=='undefined'  && movFilter)  an.push(movFilter); }catch(e){}
-    try{ if (typeof femaleOnly!=='undefined' && femaleOnly) an.push('nur Philosophinnen'); }catch(e){}
+    try{ if (epoch) an.push('Epoche: ' + epoch); }catch(e){}
+    try{ if (typeof discFilter!=='undefined'  && discFilter)  an.push('Disziplin: ' + discFilter); }catch(e){}
+    try{ if (typeof movFilter!=='undefined'   && movFilter)   an.push('Strömung: ' + movFilter); }catch(e){}
+    try{ if (typeof posFilter!=='undefined'   && posFilter)   an.push('Grundposition: ' + posFilter); }catch(e){}
+    try{ if (typeof themaFilter!=='undefined' && themaFilter) an.push('Thema: ' + themaFilter); }catch(e){}
+    try{ if (typeof femaleOnly!=='undefined'  && femaleOnly)  an.push('nur Philosophinnen'); }catch(e){}
     bf.textContent = an.length ? an.length : '';
     bf.hidden = !an.length;
     bf.title = an.join(' \u00b7 ');
@@ -11149,13 +11421,20 @@ window.tlkMarken = function(){
   var bk = document.getElementById('tlk-badge-kreis');
   if (bk){
     try{
-      var aus = TL_KREISE.filter(function(k){ return !tlKreisAktiv[k]; }).length;
-      bk.textContent = aus ? TL_KREISE.length - aus : '';
-      bk.hidden = !aus;
-      bk.title = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; })
-                          .map(function(k){ return TL_KREIS_LABEL[k]; }).join(', ');
+      var an2 = [];
+      var anK = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+      if (!tlKreisStd())
+        an2.push('Kulturkreis: ' + (anK.length
+          ? anK.map(function(k){ return TL_KREIS_LABEL[k]||k; }).join(', ')
+          : 'keiner'));
+      if (typeof tlHerkunft!=='undefined' && tlHerkunft)
+        an2.push('Region: ' + String(tlHerkunft).split(':').pop());
+      bk.textContent = an2.length ? an2.length : '';
+      bk.hidden = !an2.length;
+      bk.title = an2.join(' \u00b7 ');
     }catch(e){ bk.hidden = true; }
   }
+  try{ ksAuffrischen(); }catch(e){}
 };
 window.tlkAllesZuruecksetzen = function(){
   try{ epoch=''; window._currentEra=''; }catch(e){}
@@ -11167,6 +11446,22 @@ window.tlkAllesZuruecksetzen = function(){
   try{ TL_KREISE.forEach(function(k){ tlKreisAktiv[k] = (k==='European'||k==='Islamic'); }); tlKreisLeiste(); }catch(e){}
   try{ var s2=document.getElementById('phil-search'); if(s2){ s2.value=''; tlSearch(''); } }catch(e){}
   try{ var dd=document.getElementById('epoch-dd'); if(dd) dd.value=''; }catch(e){}
+  /* Die Herkunft ueberlebte „alles zeigen“ — der Filter blieb gesetzt,
+     waehrend der Knopf das Gegenteil versprach. */
+  try{ tlHerkunft=''; var hd=document.getElementById('herkunft-dd'); if(hd) hd.value=''; }catch(e){}
+  /* Merkmal zurueck auf Epoche, sonst steht der Modus-Schalter auf einem
+     Merkmal, dessen Wert gerade geloescht wurde. */
+  try{
+    document.querySelectorAll('.fm-btn').forEach(function(b){
+      var std = (b.getAttribute('data-mode')==='epoch');
+      b.classList.toggle('active', std);
+      b.setAttribute('aria-pressed', std?'true':'false');
+    });
+    filterMode='epoch';
+    if (window._fillEpochDropdown) window._fillEpochDropdown();
+  }catch(e){}
+  try{ if (typeof kaTierMax!=='undefined' && kaTierMax!==KA_TIER_STD){
+         kaTierMax=KA_TIER_STD; kaTierKnopf(); } }catch(e){}
   tlNeuzeichnen();
   try{ kaAuffrischen(); }catch(e){}
 };
@@ -11181,8 +11476,16 @@ function tlNeuzeichnen(){
     osmZeichne();
   } }catch(e){}
   try{ tlkMarken(); }catch(e){}
-  try{ var a=document.getElementById('vis-count'), b=document.getElementById('vis-count-2');
-       if(a&&b) b.textContent=a.textContent; }catch(e){}
+  /* Die Karte zaehlt anders als die Zeitachse (nur Denker mit Geodaten, dazu
+     der Rangfilter). Wenn sie offen ist, liefert osmZeichne() die Zahl —
+     diese Kopie wuerde sie sonst mit der Zeitachsenzahl ueberschreiben. */
+  try{
+    var kw=document.getElementById('karte-wrap');
+    if (!(kw && kw.classList.contains('active'))){
+      var a=document.getElementById('vis-count'), b=document.getElementById('vis-count-2');
+      if(a&&b) b.textContent=a.textContent;
+    }
+  }catch(e){}
 }
 window.tlKreisUm = function(k){
   /* Auch alles abwählen ist erlaubt — die leere Karte ist eine gültige
@@ -13730,56 +14033,84 @@ function exZeigen(p, index){
 function ksTeil(text, stumm){
   return '<span class="ks-teil' + (stumm ? ' stumm' : '') + '">' + text + '</span>';
 }
+/* Zustandsstreifen. Stand als Statuszeile der Karte in #karte-wrap und
+   galt damit nur dort; er liegt jetzt in der .tlk-Leiste und beschreibt
+   jede der vier Ansichten.
+
+   Zwei Aufrufwege:
+     ksAuffrischen(n, orte)  aus osmZeichne() — die Karte kennt ihre Zahl
+     ksAuffrischen()         aus tlkMarken()  — Zahl bleibt, wie sie ist
+   Die kartenspezifischen Angaben (Ortsart, Ebenen, Rang, Weg) erscheinen
+   nur, wenn die Karte offen ist — in der Zeitachse waeren sie eine Aussage
+   ueber etwas, das gerade niemand sieht. */
 function ksAuffrischen(anzahl, orte){
-  var zEl = document.getElementById('ks-zahl');
+  var zEl = document.getElementById('vis-count-2');
   var tEl = document.getElementById('ks-teile');
   var rEl = document.getElementById('ks-reset');
-  if (!zEl || !tEl) return;
+  if (!tEl) return;
+  var kw = document.getElementById('karte-wrap');
+  var karteAuf = !!(kw && kw.classList.contains('active'));
 
   var teile = [], wirksam = false;
 
   /* Einzelansicht überschreibt alles andere */
-  if (kfAktiv()){
-    zEl.textContent = '';
+  if (karteAuf && kfAktiv()){
+    if (zEl) zEl.textContent = '';
     tEl.innerHTML = '<span class="ks-leer">' + kfStandText() +
       ' — alle übrigen Denker sind ausgeblendet.</span>';
     if (rEl) rEl.hidden = false;
     return;
   }
 
-  /* Wie viele von wie vielen? */
+  /* Wie viele von wie vielen? Nur die Karte liefert eine eigene Zahl; sonst
+     steht dort, was render() ueber tlNeuzeichnen() eingetragen hat. */
   var gesamt = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2.length : 0;
-  if (anzahl === 0){
-    zEl.textContent = 'Kein Denker sichtbar';
-  } else {
-    zEl.textContent = anzahl + (gesamt && anzahl < gesamt ? ' von ' + gesamt : '') +
-      ' Denker' + (orte ? ' an ' + orte + ' Orten' : '');
+  if (zEl && anzahl !== undefined){
+    if (anzahl === 0){
+      zEl.textContent = 'Kein Denker sichtbar';
+    } else {
+      zEl.textContent = anzahl + (gesamt && anzahl < gesamt ? ' von ' + gesamt : '') +
+        ' Denker' + (orte ? ' an ' + orte + ' Orten' : '');
+    }
   }
 
-  teile.push(ksTeil(kaOrtart === 'tod' ? '🪦 Sterbeorte' : '🎂 Geburtsorte', true));
-  if (kaPhilAus){ teile.push(ksTeil('🙈 Denker ausgeblendet')); wirksam = true; }
+  /* Alles Kartenspezifische in EINEM Block: Ortsart, Ebenen, Zeitregler und
+     Rang beschreiben Zustaende, die es nur auf der Karte gibt. In der
+     Zeitachse waeren sie eine Aussage ueber etwas, das gerade niemand sieht.
+     Der Rangfilter blendet in der Voreinstellung rund 400 der 580 Denker aus;
+     stumm gesetzt und NICHT wirksam, weil es der Ausgangszustand ist. */
+  if (karteAuf){
+    teile.push(ksTeil(kaOrtart === 'tod' ? '🪦 Sterbeorte' : '🎂 Geburtsorte', true));
+    if (kaPhilAus){ teile.push(ksTeil('🙈 Denker ausgeblendet')); wirksam = true; }
+    if (kaJahr !== null){ teile.push(ksTeil('⏳ Jahr ' + kaJahrText(kaJahr))); wirksam = true; }
+    if (kaLehr)  teile.push(ksTeil('🏛️ Orte der Lehre', true));
+    if (kaFunde) teile.push(ksTeil('🏺 Fundorte', true));
+    if (kaTierMax === KA_TIER_STD) teile.push(ksTeil('◆ Rang 1–' + KA_TIER_STD, true));
+  }
 
   /* Kulturkreise, sofern nicht alle an sind */
   try{
-    var ausK = TL_KREISE.filter(function(k){ return !tlKreisAktiv[k]; });
-    var anK  = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+    var anK = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+    var std = tlKreisStd();
     if (!anK.length){ teile.push(ksTeil('🌐 kein Kulturkreis gewählt')); wirksam = true; }
-    else if (ausK.length){
-      teile.push(ksTeil('🌐 ' + anK.map(function(k){ return TL_KREIS_LABEL[k] || k; }).join(', ')));
-      wirksam = true;
+    else {
+      /* Der Chip erscheint immer — er erklärt, warum indische und
+         chinesische Denker fehlen, und das ist im Ausgangszustand die
+         häufigste stille Ueberraschung. Aber nur eine ABWEICHUNG von der
+         Voreinstellung macht ihn wirksam und blendet den Reset ein. */
+      teile.push(ksTeil('🌐 ' + anK.map(function(k){ return TL_KREIS_LABEL[k] || k; }).join(', '), std));
+      if (!std) wirksam = true;
     }
   }catch(e){}
 
-  /* Zeitfilter */
-  if (kaJahr !== null){ teile.push(ksTeil('⏳ Jahr ' + kaJahrText(kaJahr))); wirksam = true; }
-
-  /* Ebenen */
-  if (kaLehr) teile.push(ksTeil('🏛️ Orte der Lehre', true));
-  if (kaFunde) teile.push(ksTeil('🏺 Fundorte', true));
 
   /* Übrige Filter der Seite, sofern sie greifen. Die Variablen gehören
      der Zeitleiste; sie wirken auch auf die Karte. */
   var weitere = [];
+  /* Die Herkunftsregion fehlte hier — sie war der einzige Filter, den weder
+     Marke noch Streifen je erwaehnt haben. */
+  try{ if (typeof tlHerkunft!=='undefined' && tlHerkunft)
+         weitere.push('Region ' + String(tlHerkunft).split(':').pop()); }catch(e){}
   try{ if (epoch) weitere.push('Epoche ' + epoch); }catch(e){}
   try{ if (discFilter) weitere.push(discFilter); }catch(e){}
   try{ if (movFilter) weitere.push(movFilter); }catch(e){}
@@ -13801,6 +14132,7 @@ function ksZuruecksetzen(){
   try{ if (kfAktiv()) kfSetzen(''); }catch(e){}
   try{ if (kaJahr !== null) kzSetzen(null, true); }catch(e){}
   try{ if (kaPhilAus) kaPhilAusUm(); }catch(e){}
+  try{ if (kaTierMax !== KA_TIER_STD){ kaTierMax = KA_TIER_STD; kaTierKnopf(); } }catch(e){}
   /* Setzt Epoche, Disziplin, Suche, Kulturkreise usw. gemeinsam zurück —
      dieselbe Funktion, die auch die Zeitleiste benutzt. */
   try{ if (typeof tlkAllesZuruecksetzen === 'function') tlkAllesZuruecksetzen(); }catch(e){}
@@ -14542,6 +14874,7 @@ window.kaAuffrischen = function(){
   try{ kzBinden(); }catch(e){ console.warn('Zeitregler:', e); }
   try{ kfListeBauen(); }catch(e){ console.warn('Einzelansicht:', e); }
   try{ ksBinden(); }catch(e){ console.warn('Statuszeile:', e); }
+  try{ kaTierKnopf(); }catch(e){}
   try{ osmZeichne(); }catch(e){ console.warn('Weltkarte:', e); }
 };
 
@@ -14630,7 +14963,7 @@ function osmZeichne(){
   /* Bei Einzelansicht treten die Geburtsorte ganz zurück: Ein Weg mit
      acht Stationen ist zwischen 353 Punkten nicht zu erkennen. */
   var LP = (kfAktiv() || kaPhilAus) ? []
-         : phils().filter(function(p){ return !dimmed(p) && kaZeitPasst(p) && kaOrtVon(p); });
+         : phils().filter(function(p){ return !dimmed(p) && kaTierPasst(p) && kaZeitPasst(p) && kaOrtVon(p); });
   var orte = {};
   LP.forEach(function(p){
     var w = kaOrtVon(p);
@@ -14729,6 +15062,16 @@ window.tlSetView = function(mode) {
   document.getElementById('vs-table')?.classList.toggle('active', mode === 'table');
   document.getElementById('vs-netz')?.classList.toggle('active', mode === 'netz');
   document.getElementById('vs-karte')?.classList.toggle('active', mode === 'karte');
+  /* aria-pressed am Ansichtsschalter mitfuehren: Ein Screenreader liest
+     sonst vier gleichwertige Knoepfe ohne erkennbaren Zustand. */
+  ['timeline','table','netz','karte'].forEach(function(m){
+    var b = document.getElementById('vs-' + (m==='timeline'?'timeline':m));
+    if (b) b.setAttribute('aria-pressed', mode === m ? 'true' : 'false');
+  });
+  /* Der Zoom wirkt nur auf der Zeitachse. Er stand bisher auch in Tabelle,
+     Netz und Karte — sichtbar, anklickbar, folgenlos. */
+  var zg = document.getElementById('zoom-group');
+  if (zg) zg.style.display = (mode === 'timeline') ? '' : 'none';
   const kwrap = document.getElementById('karte-wrap');
   if (twrap) twrap.classList.remove('active');
   if (nwrap) nwrap.classList.remove('active');
@@ -14752,6 +15095,9 @@ window.tlSetView = function(mode) {
     if (outer) outer.style.display = '';
     if (legend) legend.style.display = '';
   }
+  /* Der Streifen nennt kartenspezifische Angaben nur bei offener Karte —
+     nach jedem Ansichtswechsel muss er darum neu geschrieben werden. */
+  try{ ksAuffrischen(); }catch(e){}
 };
 
 window.tlSetFilter = function(value) {
@@ -14792,6 +15138,7 @@ window.kaAuffrischen = function(){
   try{ kzBinden(); }catch(e){ console.warn('Zeitregler:', e); }
   try{ kfListeBauen(); }catch(e){ console.warn('Einzelansicht:', e); }
   try{ ksBinden(); }catch(e){ console.warn('Statuszeile:', e); }
+  try{ kaTierKnopf(); }catch(e){}
   try{ osmZeichne(); }catch(e){}
 };
 
@@ -16820,6 +17167,8 @@ document.addEventListener('wheel', function(e){
 
       <p>Das sogenannte <em>Unendliche</em> erscheint mir daher nicht als positiv gegebene Wirklichkeit, sondern als Grenzbegriff des endlichen Denkens. Der menschliche Geist kann Regeln der unbegrenzten Fortsetzung formulieren — etwa im Zählen oder in formalen Systemen — doch er erreicht niemals eine tatsächlich gegebene Totalität. Selbst wenn jede mögliche Fortsetzung gedacht wird, bleibt sie im Modus des Endlichen.</p>
 
+      <p>Kant nennt das die sukzessive Synthesis des Verstandes gegenüber der Forderung der absoluten Totalität der Vernunft und formuliert vier berühmte Antinomien, die zeigen, dass das Endliche und das Unendliche inkommensurabel sind und die Vernunft sich in unvermeidliche Widersprüche verstrickt, wenn sie Grundsätze, die nur aus der Erfahrung und aus dem Endlichen stammen, auf unendliche Reihen anwendet.</p>
+
       <div class="phe-pullquote">Das Unendliche ist dem endlichen Leben inkommensurabel.</div>
 
       <p>Gleichzeitig gilt: Jede Vorstellung von Ewigkeit, Wahrheit oder Absolutheit setzt bereits ein endliches Bewusstsein voraus, das überhaupt erst fähig ist, solche Begriffe zu bilden. <strong>Die Sehnsucht nach dem Unendlichen ist selbst ein Ausdruck der Endlichkeit.</strong></p>
@@ -18068,7 +18417,6 @@ window.renderPodcasts = function(){};
   <button class="gtab"         onclick="showGTab('sg',7)">Steins;Gate</button>
   <button class="gtab"         onclick="showGTab('pw',8)">Phoenix Wright</button>
   <button class="gtab"         onclick="showGTab('mmbn',9)">Mega Man BN</button>
-  <button class="gtab"         onclick="showGTab('pokemon',10)">Pok&eacute;mon</button>
 </div>
 
 
@@ -18173,33 +18521,6 @@ window.renderPodcasts = function(){};
 </div>
 </div>
 
-<div class="g-section" id="gs-pokemon">
-  <div class="game-grid" id="pokemon-grid" style="margin-bottom:2rem;"></div>
-  <div class="poke-detail-area" id="poke-detail"></div>
-  <div class="poke-controls">
-    <input class="ctrl-input" type="text" id="poke-search"
-      placeholder="Pok&eacute;mon suchen&hellip;" oninput="filterPoke()" style="width:195px">
-    <select class="ctrl-select" id="type-filter" onchange="filterPoke()">
-      <option value="">Alle Typen</option>
-      <option>fire</option><option>water</option><option>grass</option><option>electric</option>
-      <option>psychic</option><option>ice</option><option>dragon</option><option>dark</option>
-      <option>fairy</option><option>fighting</option><option>poison</option><option>ground</option>
-      <option>flying</option><option>bug</option><option>rock</option><option>ghost</option>
-      <option>steel</option><option>normal</option>
-    </select>
-    <select class="ctrl-select" id="gen-filter" onchange="filterPoke()">
-      <option value="">Alle Gen</option>
-      <option value="1">Gen I (1&ndash;151)</option>
-      <option value="2">Gen II (152&ndash;251)</option>
-      <option value="3">Gen III (252&ndash;386)</option>
-      <option value="4">Gen IV (387&ndash;493)</option>
-    </select>
-  </div>
-  <div class="poke-grid" id="poke-grid">
-    <div class="poke-loading-msg">Pok&eacute;mon werden geladen &#10024;</div>
-  </div>
-  <button class="load-more-btn" id="poke-more" style="display:none" onclick="loadMorePoke()">Mehr laden</button>
-</div>
 
 <!-- Audio toast -->
 <div id="_as_toast" style="position:fixed;bottom:1.5rem;right:1.5rem;background:var(--card);
@@ -18334,7 +18655,6 @@ window.showGTab = function(name, idx) {
     }, 400);
   }
 
-  if (name === 'pokemon') { if (!pokeLoaded) loadPoke(); }
 };
 
 /* ── Blizzard sub-tab switching ─────────────────────── */
@@ -18448,115 +18768,8 @@ function renderGameCards() {
 }
 
 /* ─── Pokémon ───────────────────────────────────────────────────── */
-var pokeLoaded = false, allPoke = [], filtPoke = [], pokeOff = 0, typeCache = {};
 var BATCH = 24;
 
-function loadPoke() {
-  if (pokeLoaded) return;
-  pokeLoaded = true;
-  fetch('https://pokeapi.co/api/v2/pokemon?limit=493')
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      allPoke = d.results.map(function(p,i){ return {name:p.name, id:i+1}; });
-      filtPoke = allPoke.slice();
-      renderPokeGrid();
-    })
-    .catch(function(){
-      var g = document.getElementById('poke-grid');
-      if (g) g.innerHTML = '<div class="poke-loading-msg">PokeAPI nicht erreichbar.</div>';
-    });
-}
-
-function renderPokeGrid() {
-  var grid = document.getElementById('poke-grid');
-  if (!grid) return;
-  if (pokeOff === 0) grid.innerHTML = '';
-  filtPoke.slice(pokeOff, pokeOff + BATCH).forEach(function(p){
-    grid.appendChild(makePokeCard(p));
-  });
-  pokeOff += BATCH;
-  var more = document.getElementById('poke-more');
-  if (more) more.style.display = pokeOff < filtPoke.length ? 'block' : 'none';
-}
-
-function makePokeCard(p) {
-  var c = document.createElement('div');
-  c.className = 'poke-card';
-  c.innerHTML =
-    '<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/' + p.id + '.png" alt="' + p.name + '" loading="lazy">' +
-    '<div class="poke-name">' + p.name + '</div>' +
-    '<div class="poke-num">#' + String(p.id).padStart(3,'0') + '</div>' +
-    '<div class="poke-types" id="pt-' + p.id + '"><span class="type-badge type-normal">?</span></div>';
-  c.onclick = function(){ showPokeDet(p.id); };
-  loadPokeTypes(p.id);
-  return c;
-}
-
-function loadPokeTypes(id) {
-  if (typeCache[id]) return;
-  fetch('https://pokeapi.co/api/v2/pokemon/' + id)
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      typeCache[id] = d;
-      var el = document.getElementById('pt-' + id);
-      if (el) el.innerHTML = d.types.map(function(t){
-        return '<span class="type-badge type-' + t.type.name + '">' + t.type.name + '</span>';
-      }).join('');
-    })
-    .catch(function(){});
-}
-
-function showPokeDet(id) {
-  var det = document.getElementById('poke-detail');
-  if (!det) return;
-  det.innerHTML = '<div style="color:var(--text3);font-family:var(--fm);padding:1rem">Lade\u2026</div>';
-  det.classList.add('show');
-  var d = typeCache[id];
-  if (d) { renderPokeDet(det, d); return; }
-  fetch('https://pokeapi.co/api/v2/pokemon/' + id)
-    .then(function(r){ return r.json(); })
-    .then(function(d){ typeCache[id] = d; renderPokeDet(det, d); })
-    .catch(function(){ det.innerHTML = '<div style="color:var(--accent2-text);padding:1rem">Fehler beim Laden.</div>'; });
-}
-
-function renderPokeDet(det, d) {
-  var sc = {hp:'#ff6b35',attack:'#f7c948',defense:'#5aa0e8','special-attack':'#e85878','special-defense':'#3ba844',speed:'#a890f0'};
-  det.innerHTML =
-    '<img class="poke-big-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + d.id + '.png" alt="' + d.name + '">' +
-    '<div style="flex:1;min-width:200px">' +
-    '<div class="poke-big-name">' + d.name + '</div>' +
-    '<div style="display:flex;gap:.4rem;margin-bottom:.85rem">' + d.types.map(function(t){ return '<span class="type-badge type-' + t.type.name + '">' + t.type.name + '</span>'; }).join('') + '</div>' +
-    '<div style="display:flex;gap:1.25rem;margin-bottom:.85rem;flex-wrap:wrap">' +
-    '<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">H\u00d6HE</div><div style="font-weight:500">' + (d.height/10) + 'm</div></div>' +
-    '<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">GEWICHT</div><div style="font-weight:500">' + (d.weight/10) + 'kg</div></div>' +
-    '</div>' +
-    d.stats.map(function(s){
-      return '<div class="stat-bar"><span class="stat-label-sm">' + s.stat.name.replace('special-','sp.') + '</span>' +
-             '<span class="stat-val">' + s.base_stat + '</span>' +
-             '<div class="stat-track"><div class="stat-fill" style="width:' + Math.min(100, s.base_stat/255*100) + '%;background:' + (sc[s.stat.name]||'var(--accent)') + '"></div></div></div>';
-    }).join('') +
-    '</div>';
-  det.scrollIntoView({behavior:'smooth', block:'nearest'});
-}
-
-window.filterPoke = function() {
-  var q    = (document.getElementById('poke-search') || {value:''}).value.toLowerCase();
-  var type = (document.getElementById('type-filter') || {value:''}).value;
-  var gen  = parseInt((document.getElementById('gen-filter') || {value:''}).value) || 0;
-  var gens = [[1,151],[152,251],[252,386],[387,493]];
-  filtPoke = allPoke.filter(function(p) {
-    if (q && p.name.indexOf(q) < 0) return false;
-    if (gen) { var mm = gens[gen-1]; if (p.id < mm[0] || p.id > mm[1]) return false; }
-    if (type && typeCache[p.id]) {
-      var has = typeCache[p.id].types.some(function(t){ return t.type.name === type; });
-      if (!has) return false;
-    }
-    return true;
-  });
-  pokeOff = 0;
-  renderPokeGrid();
-};
-window.loadMorePoke = function() { renderPokeGrid(); };
 
 /* ─── Init ──────────────────────────────────────────────────────── */
 renderGameCards();
@@ -19186,7 +19399,13 @@ renderGameCards();
     <aside class="chor-card">
       <h3>Steckbrief</h3>
       <dl>
-        <div class="chor-row"><dt>Wo</dt><dd>LOCH<br>Plateniusstr. 35<br>42105 Wuppertal</dd></div>
+        <!-- Strasse und Hausnummer entfernt. Nicht wegen des Ortes — der steht
+             ohnehin auf der verlinkten Seite des LOCH —, sondern wegen der
+             Kombination: Klarname im Impressum, fester Wochentag, feste
+             Uhrzeit, „seit anderthalb Jahren regelmaessig dort“. Das ergibt
+             eine woechentlich vorhersagbare Anwesenheit an einer genauen
+             Adresse. Der Link unten fuehrt zu allen Angaben. -->
+        <div class="chor-row"><dt>Wo</dt><dd>LOCH<br>Wuppertal</dd></div>
         <div class="chor-row"><dt>Wann</dt><dd>Dienstags — ab 19:00 Theke,<br>19:30 bis 21:00 wird gesungen</dd></div>
         <div class="chor-row"><dt>Leitung</dt><dd>Hanna Ehnes, Noemi Collings,<br>Sandra &amp; Nathan Mohr</dd></div>
         <div class="chor-row"><dt>Zugang</dt><dd>Ohne Anmeldung, ohne Noten,<br>ohne geübte Stimme</dd></div>
@@ -19662,12 +19881,17 @@ renderGameCards();
       <div class="val">Alexander Schmidt</div>
     </div>
 
-    <!-- ANSCHRIFT — bei Bedarf aktivieren (DDG verlangt ladungsfähige Anschrift):
-    <div class="legal-card">
-      <div class="label">Anschrift</div>
-      <div class="val">Musterstraße 12<br>32756 Detmold</div>
-    </div>
-    -->
+    <!-- ANSCHRIFT — bewusst leer.
+         Hier stand eine erfundene Beispieladresse samt echter
+         Postleitzahl. Auskommentiert war sie auf der Seite unsichtbar,
+         im Quelltext aber lesbar: Die PLZ verriet die Stadt, und ein
+         Impressum mit erkennbarer Musteradresse wirkt schlechter als
+         gar keins.
+         Falls eine ladungsfaehige Anschrift noetig ist (§ 18 MStV greift
+         auch bei nicht ausschliesslich privaten Angeboten), gehoert hier
+         die ECHTE hin — keine erfundene. Wer die eigene Wohnanschrift
+         nicht veroeffentlichen will, nutzt ueblicherweise eine
+         Ladungsfaehige-Anschrift-Dienstleistung. -->
 
     <div class="legal-card">
       <div class="label">Kontakt</div>
@@ -19723,9 +19947,7 @@ renderGameCards();
       Sie die betreffende Seite öffnen, und nicht beim übrigen Besuch:</p>
     <ul style="margin:.4rem 0 1rem 1.2rem;line-height:1.7">
       <li><em>Weltkarte der Denker</em> — Kartenkacheln von OpenStreetMap (siehe Abschnitt oben)</li>
-      <li><em>Gaming</em> — Titelbilder von <a href="https://rawg.io/" target="_blank" rel="noopener">RAWG</a>
-        sowie Abbildungen und Daten aus der offenen <a href="https://pokeapi.co/" target="_blank" rel="noopener">PokéAPI</a>
-        (ausgeliefert über GitHub)</li>
+      <li><em>Gaming</em> — Titelbilder von <a href="https://rawg.io/" target="_blank" rel="noopener">RAWG</a></li>
       <li><em>Bücher</em> — Buchcover und Suchergebnisse der
         <a href="https://openlibrary.org/" target="_blank" rel="noopener">Open Library</a> des Internet Archive</li>
     </ul>
@@ -19862,6 +20084,8 @@ function renderLic(filter){
     count.textContent = _showPD
       ? (shown.length + ' / ' + entries.length + ' Bilder')
       : (shown.length + ' nachweispflichtig · ' + pdCount + ' gemeinfrei ausgeblendet');
+    /* Hinweis: gezählt werden Verwendungen, angezeigt werden Quellen —
+       die Liste kann darum kürzer sein als die Zahl. */
   }
 
   if (!shown.length){
@@ -19869,7 +20093,24 @@ function renderLic(filter){
     return;
   }
 
-  list.innerHTML = shown.sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))
+  /* Gleiche Quelle nur einmal aufführen.
+     Bei Sammelwerken teilen sich mehrere Figuren ein Bild — im Lovecraft-
+     Kosmos etwa fünf Gestalten dieselbe Rankin-Illustration. Die Liste
+     zeigte daraus fünf gleichlautende Einträge hintereinander, was wie ein
+     Fehler aussieht und den Nachweis unübersichtlich macht. Zusammengefasst
+     wird nur, was in Name, Urheber, Lizenz UND Quelle übereinstimmt; die
+     Zahl der Verwendungen steht daneben, damit nichts verschwiegen wird. */
+  const _key = d => [d.name||'', d.author||'', d.license||'', d.source_url||''].join('\u0001');
+  const _gruppen = new Map();
+  shown.forEach(([slug, d]) => {
+    const k = _key(d);
+    if (!_gruppen.has(k)) _gruppen.set(k, { slug: slug, d: d, n: 0 });
+    _gruppen.get(k).n++;
+  });
+  const _zusammengefasst = [..._gruppen.values()]
+    .map(g => [g.slug, Object.assign({}, g.d, { _mehrfach: g.n })]);
+
+  list.innerHTML = _zusammengefasst.sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))
     .map(([slug, d]) => {
       const thumb = (d.group==='Vignetten')
         ? 'assets/images/goetter/vignetten/' + slug + '.jpg'
@@ -19886,7 +20127,9 @@ function renderLic(filter){
         + '<img class="lic-thumb" src="'+thumb+'" alt="'+(d.name||'')+'" loading="lazy" '
         +   'onerror="this.style.visibility=\'hidden\'">'
         + '<div class="lic-info">'
-        +   '<div class="lic-name">'+(d.name||slug)+'</div>'
+        +   '<div class="lic-name">'+(d.name||slug)
+        +     (d._mehrfach>1 ? ' <span style="opacity:.55;font-weight:400">('+d._mehrfach+' Verwendungen)</span>' : '')
+        +   '</div>'
         +   '<div class="lic-meta">'+licenseBadge(d.license)+author
         +     (src ? ' · '+src : '')
         +   '</div>'
@@ -19990,10 +20233,10 @@ let buecher=[
   {jahr:'2021',autor:'Trawny, Peter',titel:'Krise der Wahrheit',erschj:'2021',bereich:'Philosophie',status:'gelesen',notes:''},
   {jahr:'2022',autor:'Schelling, F. W. J.',titel:'Die Weltalter – Dritter Druck',erschj:'1815',bereich:'Philosophie',status:'intensiv gelesen',notes:'Dissertation – finale Fassung'},
   {jahr:'2023',autor:'Schmidt, Alexander',titel:'Schellings Zeittheorie. Das verborgene System hinter der Weltalterphilosophie.',erschj:'2023',bereich:'Philosophie',status:'intensiv gelesen',notes:'Eigene Dissertation'},
-  {jahr:'2024',autor:'Biernat / Wilson',titel:'Play Nice! (Avicii-Biographie)',erschj:'2024',bereich:'Biographie',status:'gelesen',notes:'Auch Audible'},
+  {jahr:'2024',autor:'Schreier, Jason',titel:'Play Nice: The Rise, Fall, and Future of Blizzard Entertainment',erschj:'2024',bereich:'Sachbuch',status:'gelesen',notes:'Auch Audible'},
   {jahr:'2024',autor:'Montaigne, Michel de',titel:'Essais',erschj:'1580',bereich:'Literatur',status:'gelesen',notes:''},
   {jahr:'2024',autor:'Bakewell, Sarah',titel:'Wie soll ich leben? Das Leben Montaignes',erschj:'2010',bereich:'Biographie',status:'gelesen',notes:''},
-  {jahr:'2024',autor:'Antognazza, Maria Rosa',titel:'Die beste aller möglichen Welten: Leibniz',erschj:'2009',bereich:'Biographie',status:'gelesen',notes:''},
+  {jahr:'2024',autor:'Kempper, Michael',titel:'Die beste aller möglichen Welten: Leibniz',erschj:'2009',bereich:'Biographie',status:'gelesen',notes:''},
   {jahr:'2024',autor:'Aurel, Marc',titel:'Selbstbetrachtungen',erschj:'ca. 170',bereich:'Philosophie',status:'gelesen',notes:'Erneute Lektüre'},
   {jahr:'2025',autor:'Ahrens, Sven',titel:'Den Netten beißen die Hunde',erschj:'2023',bereich:'Selbstentwicklung',status:'gelesen',notes:''},
   {jahr:'2025',autor:'Stahl, Stefanie',titel:'Das Kind in dir muss Heimat finden',erschj:'2015',bereich:'Selbstentwicklung',status:'gelesen',notes:''},
@@ -22790,13 +23033,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }catch(x){}
 
     try{                                            // Shirts
-      (window.SHIRTS||[]).forEach(function(s){
+      if(veroeffentlicht('shirts')) (window.SHIRTS||[]).forEach(function(s){
         add({grp:'Shirts',sym:'👕',t:s.t,u:s.denker+' · '+s.kat,geh:function(){nav('shirts');}});
       });
     }catch(x){}
 
     try{                                            // Dokumente
-      (window.DOCUMENTS_DATA||[]).forEach(function(d){
+      if(veroeffentlicht('arbeiten')) (window.DOCUMENTS_DATA||[]).forEach(function(d){
         add({grp:'Dokumente',sym:'📄',t:d.title||d.filename,
              u:(d.pages? d.pages+' Seiten':'')+(d.sizeMB? ' · '+d.sizeMB+' MB':''),
              geh:function(){nav('arbeiten');}});
@@ -22808,6 +23051,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function nav(id){ zu(); if(typeof showPage==='function') showPage(id);
     else if(window.showPage) window.showPage(id); }
+  /* Der Suchindex fuehrte Shirts und Dokumente weiter auf, auch wenn die
+     Seiten nicht veroeffentlicht sind — ein Treffer dort haette auf die
+     Startseite umgeleitet und die Existenz der Seite trotzdem verraten.
+     Titel von Hausarbeiten sind genau das, was verborgen bleiben soll. */
+  function veroeffentlicht(id){
+    try{ return NICHT_OEFFENTLICH.indexOf(id) < 0; }catch(e){ return true; }
+  }
   function spaeter(fn){                              // wartet, bis die Seite bereit ist
     var n=0; (function tick(){ n++;
       try{ if(fn()!==false) return; }catch(x){}
@@ -22989,79 +23239,11 @@ function showGTab(name,idx){
   var sec=document.getElementById('gs-'+name);
   if(sec)sec.classList.add('active');
   document.querySelectorAll('.gtab')[idx].classList.add('active');
-  if(name==='pokemon'&&!pokeLoaded)loadPoke();
-  else renderGameCards();
+  /* Der Pokemon-Zweig stand hier ("if(name==='pokemon')...else renderGameCards()").
+     Ohne ihn bleibt nur der Normalfall. */
+  renderGameCards();
 }
 
-// ════════════════════════════════════════════════
-// POKÉMON
-// ════════════════════════════════════════════════
-var pokeLoaded=false,allPoke=[],filtPoke=[],pokeOff=0,typeCache={},BATCH=24;
-async function loadPoke(){
-  if(pokeLoaded)return;pokeLoaded=true;
-  try{
-    var r=await fetch('https://pokeapi.co/api/v2/pokemon?limit=493');
-    var d=await r.json();
-    allPoke=d.results.map(function(p,i){return{name:p.name,id:i+1};});
-    filtPoke=allPoke.slice();renderPokeGrid();
-  }catch(e){document.getElementById('poke-grid').innerHTML='<div class="poke-loading-msg">PokeAPI nicht erreichbar.</div>';}
-}
-function renderPokeGrid(){
-  var grid=document.getElementById('poke-grid');
-  if(pokeOff===0)grid.innerHTML='';
-  filtPoke.slice(pokeOff,pokeOff+BATCH).forEach(function(p){grid.appendChild(makePokeCard(p));});
-  pokeOff+=BATCH;
-  var more=document.getElementById('poke-more');
-  if(more)more.style.display=pokeOff<filtPoke.length?'block':'none';
-}
-function makePokeCard(p){
-  var c=document.createElement('div');c.className='poke-card';
-  c.innerHTML='<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+p.id+'.png" alt="'+p.name+'" loading="lazy">'
-    +'<div class="poke-name">'+p.name+'</div>'
-    +'<div class="poke-num">#'+String(p.id).padStart(3,'0')+'</div>'
-    +'<div class="poke-types" id="pt-'+p.id+'"><span class="type-badge type-normal">?</span></div>';
-  c.onclick=function(){showPokeDet(p.id);};
-  loadPokeTypes(p.id);return c;
-}
-async function loadPokeTypes(id){
-  if(typeCache[id])return;
-  try{var r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);var d=await r.json();typeCache[id]=d;
-  var el=document.getElementById('pt-'+id);
-  if(el)el.innerHTML=d.types.map(function(t){return'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>';}).join('');}catch(e){}
-}
-async function showPokeDet(id){
-  var det=document.getElementById('poke-detail');
-  det.innerHTML='<div style="color:var(--text3);font-family:var(--fm);padding:1rem">Lade…</div>';
-  det.classList.add('show');
-  try{
-    var d=typeCache[id];
-    if(!d){var r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);d=await r.json();typeCache[id]=d;}
-    var sc={hp:'#ff6b35',attack:'#f7c948',defense:'#5aa0e8','special-attack':'#e85878','special-defense':'#3ba844',speed:'#a890f0'};
-    det.innerHTML='<img class="poke-big-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+id+'.png" alt="'+d.name+'">'
-      +'<div style="flex:1;min-width:200px"><div class="poke-big-name">'+d.name+'</div>'
-      +'<div style="display:flex;gap:.4rem;margin-bottom:.85rem">'+d.types.map(function(t){return'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>';}).join('')+'</div>'
-      +'<div style="display:flex;gap:1.25rem;margin-bottom:.85rem;flex-wrap:wrap">'
-      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">HÖHE</div><div style="font-weight:500">'+d.height/10+'m</div></div>'
-      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">GEWICHT</div><div style="font-weight:500">'+d.weight/10+'kg</div></div>'
-      +'</div>'
-      +d.stats.map(function(s){return'<div class="stat-bar"><span class="stat-label-sm">'+s.stat.name.replace('special-','sp.')+'</span><span class="stat-val">'+s.base_stat+'</span><div class="stat-track"><div class="stat-fill" style="width:'+Math.min(100,s.base_stat/255*100)+'%;background:'+(sc[s.stat.name]||'var(--accent)')+'"></div></div></div>';}).join('')
-      +'</div>';
-    det.scrollIntoView({behavior:'smooth',block:'nearest'});
-  }catch(e){det.innerHTML='<div style="color:var(--accent2-text);padding:1rem">Fehler.</div>';}
-}
-function filterPoke(){
-  var q=document.getElementById('poke-search').value.toLowerCase();
-  var type=document.getElementById('type-filter').value;
-  var gen=parseInt(document.getElementById('gen-filter').value)||0;
-  filtPoke=allPoke.filter(function(p){
-    if(q&&p.name.indexOf(q)<0)return false;
-    if(gen){var r=[[1,151],[152,251],[252,386],[387,493]];var mm=r[gen-1];if(p.id<mm[0]||p.id>mm[1])return false;}
-    if(type&&typeCache[p.id]&&typeCache[p.id].types.map(function(t){return t.type.name;}).indexOf(type)<0)return false;
-    return true;
-  });
-  pokeOff=0;renderPokeGrid();
-}
-function loadMorePoke(){renderPokeGrid();}
 
 // ════════════════════════════════════════════════
 // PODCASTS
@@ -23990,6 +24172,27 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
   .tlk{ display:flex; flex-direction:column; }
   .tlk .tlk-faecher{ order:1; }
   .tlk-fach{ order:0; }
+
+  /* Der Zustandsstreifen im aufziehbaren Blatt. Zwei Entscheidungen:
+
+     order:3 — er sitzt unten im Blatt, also am Daumen und unmittelbar ueber
+     der Karte bzw. Zeitachse, die er beschreibt. Ohne eigenen order-Wert
+     waere er bei 0 gelandet und damit ueber die Faecher gerutscht.
+
+     nowrap + overflow-x — bei drei aktiven Filtern braeche die Chipzeile
+     sonst auf zwei bis drei Zeilen um, und das FIXIERTE Blatt waechst nach
+     oben in die Karte hinein. Waagerecht scrollen statt umbrechen ist
+     dasselbe Muster, das .tlk-faecher und .tlk-haupt hier schon benutzen. */
+  .tlk .ks{
+    order:3; width:100%; min-width:0; gap:.4rem;
+    padding:.3rem .8rem calc(.45rem + env(safe-area-inset-bottom, 0px));
+    flex-wrap:nowrap; overflow-x:auto;
+    -webkit-overflow-scrolling:touch; scrollbar-width:none;
+  }
+  .tlk .ks::-webkit-scrollbar{ display:none; }
+  .tlk .ks > *{ flex:0 0 auto; }
+  .tlk .ks-teile{ flex-wrap:nowrap; }
+  .tlk .ks-reset{ min-height:40px; }
 
   /* Ein aufgezogenes Fach: über den Reitern, gedeckelt und scrollbar. */
   .tlk-fach{

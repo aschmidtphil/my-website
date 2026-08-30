@@ -429,7 +429,7 @@
   "lizenz_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "name": "Padmasambhava",
   "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Padmasambhava_Sani_Lake_Zanskar_Jun24_A7CR_00793.jpg",
-  "urheber": "This Photo  was taken by    Timothy A. Gonsalves   .  Feel free to use my photos, but please mention me as the author.  I would much appreciate if you send me an email  tagooty@yahoo.com  or write on  my talk page , for my information.  Please contact me before commercial use.\n    \n \n         \n   Please do not upload an edited image here without consulting me.  I would like to make corrections only at my own source to ensure that the changes improve the image and are preserved. Otherwise you may upload an edited image with a new name. Please use one of the templates  derivative  or  extract ."
+  "urheber": "Timothy A. Gonsalves"
  },
  "buddhismus/samantabhadra": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Tang_Stone_Statue_of_Samantabhadra_(15884648639).jpg",
@@ -2154,11 +2154,13 @@
   "urheber": "William Holbrook Beard"
  },
  "kapitalismus/der_moloch": {
-  "author": "Unknown authorUnknown author",
-  "license": "Public domain",
-  "license_url": "",
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:Moloch_the_god.gif",
+  "hinweis": "",
+  "lizenz": "Public domain",
+  "lizenz_url": "",
   "name": "Der Moloch",
-  "source_url": "https://commons.wikimedia.org/wiki/File:Moloch_the_god.gif"
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Moloch_the_god.gif",
+  "urheber": "Unknown authorUnknown author"
  },
  "kapitalismus/der_profit": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Gold_bullion_bars.jpg",
@@ -2197,11 +2199,13 @@
   "urheber": "Scott Beale"
  },
  "kapitalismus/der_suendenbock": {
-  "author": "William Holman Hunt",
-  "license": "Public domain",
-  "license_url": "",
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:William_Holman_Hunt_-_The_Scapegoat.jpg",
+  "hinweis": "",
+  "lizenz": "Public domain",
+  "lizenz_url": "",
   "name": "Der Sündenbock",
-  "source_url": "https://commons.wikimedia.org/wiki/File:William_Holman_Hunt_-_The_Scapegoat.jpg"
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:William_Holman_Hunt_-_The_Scapegoat.jpg",
+  "urheber": "William Holman Hunt"
  },
  "kapitalismus/der_zins": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Quentin_Massys_by_Sandrart.jpg",
@@ -2400,7 +2404,7 @@
   "lizenz_url": "",
   "name": "Morrígan",
   "quelle_artikel": "https://en.wikipedia.org/wiki/The_Morr%C3%ADgan",
-  "urheber": "Artist \tJoseph Christian Leyendecker (1874 - 1951). Cropped and colours adjusted by CorbieVreccan 2 July 2016.\nOriginal at  https://commons.wikimedia.org/wiki/File:Cuinbattle.jpg \nDate \t1911\nInscriptions \tSignature bottom left: JCLeyendecker.\nSource/Photographer \t1. T. W. Rolleston, Myths and Legends of the Celtic Race\n2. Unknown\n \n3. conceptart.org"
+  "urheber": "Joseph Christian Leyendecker (1911), Bearbeitung: CorbieVreccan"
  },
  "keltisch/nuada": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Nuadanua.jpg",
@@ -2421,7 +2425,7 @@
  "lovecraft/cthulhu": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Cthulhu3.jpg",
   "group": "Götter",
-  "hinweis": "sofern gemeinfrei aufgelöst (z. B. Lovecrafts eigene Skizze)",
+  "hinweis": "Zeichnung H. P. Lovecrafts zu seiner eigenen Figur — gemeinfrei, da vor 1930 veröffentlicht bzw. Rechte erloschen",
   "lizenz": "Public domain",
   "lizenz_url": "",
   "name": "Cthulhu",
@@ -2433,7 +2437,7 @@
   "lizenz": "CC BY-SA 3.0",
   "lizenz_url": "http://creativecommons.org/licenses/by-sa/3.0/",
   "name": "Dagon",
-  "quelle_artikel": "Dagon.jpg",
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Dagon.jpg",
   "urheber": "Dominique Signoret"
  },
  "lovecraft/die_alten_dinge": {
@@ -2467,7 +2471,7 @@
   "lizenz": "CC BY-SA 4.0",
   "lizenz_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "name": "Hastur",
-  "quelle_artikel": "Hastur-the-Unspeakable-Robert-M-Price.gif",
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Hastur-the-Unspeakable-Robert-M-Price.gif",
   "urheber": "Robert M. Price"
  },
  "lovecraft/hydra": {
@@ -2542,7 +2546,7 @@
   "lizenz": "CC BY 3.0",
   "lizenz_url": "https://creativecommons.org/licenses/by/3.0",
   "name": "Tsathoggua",
-  "quelle_artikel": "Tsathoggua.jpg",
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Tsathoggua.jpg",
   "urheber": "Dagonweb"
  },
  "lovecraft/yig": {

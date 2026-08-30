@@ -435,104 +435,155 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   </p>
 </div>
 
-<!-- ══ BEDIENUNG — drei Ebenen ══════════════════════════════════════
-     Zeile 1: Was sehe ich? (Ansicht) + Suche + Zoom  — immer sichtbar
-     Zeile 2: Aufklappbare Faecher fuer Filter und Darstellung
-     So steht oben nur, was man staendig braucht; alles Uebrige ist
-     einen Klick entfernt, aber nicht verschwunden. -->
+<!-- ══ BEDIENUNG — drei Zonen ═══════════════════════════════════════
+     Die Reihenfolge folgt den Fragen, die ein Erstnutzer stellt:
+
+       Zone 1  Was sehe ich?    Ansicht · Suche · Werkzeug DIESER Ansicht
+       Zone 2  Wen sehe ich?    Zustandsstreifen: Zahl · aktive Filter · Reset
+       Zone 3  Wen will ich?    Faecher, benannt nach dem, WORAN sie filtern
+
+     Zone 2 lag bis hierher als .ks-Leiste INNERHALB von #karte-wrap und war
+     damit in der am seltensten geoeffneten Ansicht eingesperrt. Sie ist die
+     einzige Stelle, die „warum sehe ich gerade das?" beantwortet — sie
+     gehoert ueber alle vier Ansichten, nicht nur ueber die Karte.
+
+     Die Faecher hiessen „Filter | Kulturkreis | Darstellung | Einflusslinien".
+     Das trennte nichts: der Kulturkreis IST ein Filter. Jetzt trennt das
+     Kriterium — Merkmale der Person | Herkunft | Darstellung. Einflusslinien
+     sind eine Darstellungsfrage und stehen dort. -->
 <div class="tlk">
 
   <div class="tlk-haupt">
-    <div class="view-switch" id="view-switch">
-      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" title="Denker auf der Zeitachse">⏳ Zeitachse</button>
-      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" title="Sortierbare Tabelle mit CSV-Export">📊 Tabelle</button>
-      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" title="Wer hat wen beeinflusst">🕸️ Einflussnetz</button>
-      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" title="Geburts- und Sterbeorte auf der Weltkarte">🌍 Weltkarte</button>
+    <div class="view-switch" id="view-switch" role="group" aria-label="Ansicht wählen">
+      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" aria-pressed="true" title="Denker auf der Zeitachse">⏳ Zeitachse</button>
+      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" aria-pressed="false" title="Sortierbare Tabelle mit CSV-Export">📊 Tabelle</button>
+      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" aria-pressed="false" title="Wer hat wen beeinflusst">🕸️ Einflussnetz</button>
+      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" aria-pressed="false" title="Geburts- und Sterbeorte auf der Weltkarte">🌍 Weltkarte</button>
     </div>
 
     <div class="phil-search-wrap">
-      <span class="phil-search-icon">⌕</span>
-      <input class="phil-search" id="phil-search" type="text"
-        placeholder="Philosoph suchen…" oninput="tlSearch(this.value)">
+      <span class="phil-search-icon" aria-hidden="true">⌕</span>
+      <input class="phil-search" id="phil-search" type="search"
+        placeholder="Philosoph suchen…" aria-label="Philosoph suchen"
+        oninput="tlSearch(this.value)">
     </div>
 
-    <div class="phil-zoom-group" id="zoom-group">
-      <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen">−</button>
+    <!-- Werkzeug der Ansicht. Der Zoom stand bisher immer da, wirkte aber nur
+         auf der Zeitachse — in Tabelle, Netz und Karte war er ein Knopf ohne
+         Folge. tlSetView() blendet ihn jetzt mit der Ansicht ein und aus.
+         Der frühere vierte Knopf „Reset" hat Zoom UND Filter zurueckgesetzt,
+         aber weder Kulturkreis noch Herkunft — ein halbes Zuruecksetzen neben
+         zwei weiteren Reset-Knoepfen. Zuruecksetzen liegt jetzt allein im
+         Zustandsstreifen; den Zoom loest ein Doppelklick auf die freie
+         Flaeche der Zeitachse. -->
+    <div class="phil-zoom-group" id="zoom-group" role="group" aria-label="Zoom der Zeitachse">
+      <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen" aria-label="Herauszoomen">−</button>
       <span class="zoom-label" id="zoom-lbl">×1.0</span>
-      <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen">+</button>
-      <button class="pzb pzb-w" onclick="tlReset()" title="Zoom und Filter zuruecksetzen">Reset</button>
+      <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen" aria-label="Hineinzoomen">+</button>
     </div>
-
-    <span class="tlk-zahl" id="vis-count-2">—</span>
   </div>
 
-  <div class="tlk-faecher">
-    <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🔍 Filter <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
-    <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🌐 Kulturkreis <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
-    <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🎨 Darstellung</button>
-    <button class="tlk-tab" id="tlk-tab-linien" onclick="tlkFach('linien')" aria-expanded="false">
-      <span class="tlk-caret">▸</span> 🕸️ Einflusslinien</button>
-    <button class="tlk-tab tlk-tab-reset" onclick="tlkAllesZuruecksetzen()" title="Alle Filter aufheben">alles zeigen</button>
+  <!-- ── Zone 2: Zustand ────────────────────────────────────────────
+       Beantwortet an EINER Stelle: wie viele sehe ich, welche Filter
+       greifen gerade, wie komme ich zurueck. Die Chips nennen jeden
+       wirksamen Filter im Klartext; der Reset erscheint nur, wenn es
+       etwas zurueckzunehmen gibt — ein Knopf, der nichts taete, waere
+       ein Angebot, das ins Leere fuehrt.
+       role=status + aria-live: Wer mit Screenreader filtert, hoert die
+       neue Trefferzahl, statt sie suchen zu muessen. -->
+  <div class="ks" id="ks-leiste" role="status" aria-live="polite">
+    <span class="ks-zahl" id="vis-count-2">—</span>
+    <span class="ks-teile" id="ks-teile"></span>
+    <button type="button" class="km-btn ks-reset" id="ks-reset" hidden
+            title="Alle Filter aufheben und in den Ausgangszustand zurück">↺ Alles zurücksetzen</button>
   </div>
 
-  <!-- Fach: Filter -->
-  <div class="tlk-fach" id="tlk-fach-filter" hidden>
+  <div class="tlk-faecher" role="group" aria-label="Filter und Darstellung">
+    <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')"
+            aria-expanded="false" aria-controls="tlk-fach-filter">
+      <span class="tlk-caret" aria-hidden="true">▸</span> 🔍 Merkmale <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
+    <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')"
+            aria-expanded="false" aria-controls="tlk-fach-kreis">
+      <span class="tlk-caret" aria-hidden="true">▸</span> 🌐 Herkunft <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
+    <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')"
+            aria-expanded="false" aria-controls="tlk-fach-ansicht">
+      <span class="tlk-caret" aria-hidden="true">▸</span> 🎨 Darstellung</button>
+  </div>
+
+  <!-- Fach: Merkmale der Person -->
+  <div class="tlk-fach" id="tlk-fach-filter" hidden role="region" aria-labelledby="tlk-tab-filter">
+    <!-- EIN Slot, nicht fuenf. tlSetMode() loescht beim Wechsel alle uebrigen
+         Werte („damit sich Modi nicht ueberlagern“) — es kann also immer nur
+         ein Merkmal greifen. Fuenf gleichrangige Chips nebeneinander haben das
+         Gegenteil versprochen: Wer Epoche und Disziplin kombinieren wollte,
+         verlor die Epoche stillschweigend. Merkmal und Wert stehen deshalb
+         jetzt in EINER Zeile mit Pfeil dazwischen — sichtbar ein Paar, nicht
+         zwei unabhaengige Angebote. -->
     <div class="tlk-zeile">
-      <span class="tlk-lab">Filtern nach</span>
-      <div class="filter-mode-switch" id="filter-mode-switch">
-        <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)">Epoche</button>
-        <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)">Disziplin</button>
-        <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)">Strömung</button>
-        <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)">Grundposition</button>
-        <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)">Thema</button>
+      <span class="tlk-lab" id="lab-merkmal">Merkmal</span>
+      <div class="filter-mode-switch" id="filter-mode-switch" role="group" aria-labelledby="lab-merkmal">
+        <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)" aria-pressed="true">Epoche</button>
+        <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)" aria-pressed="false">Disziplin</button>
+        <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)" aria-pressed="false">Strömung</button>
+        <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)" aria-pressed="false">Grundposition</button>
+        <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)" aria-pressed="false">Thema</button>
       </div>
-    </div>
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Auswahl</span>
+      <span class="tlk-lab" aria-hidden="true">→</span>
       <div class="epoch-dd-wrap">
-        <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"></select>
+        <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"
+                aria-label="Wert des gewählten Merkmals"></select>
       </div>
-      <button class="itbtn" id="female-btn" onclick="tlToggleFemale()"
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Zusätzlich</span>
+      <button class="itbtn" id="female-btn" onclick="tlToggleFemale()" aria-pressed="false"
         title="Zeigt nur die Philosophinnen des Datensatzes">♀ Nur Philosophinnen</button>
     </div>
-    <!-- Herkunft: Kontinent oder Region des Geburtsorts -->
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Herkunft</span>
-      <div class="epoch-dd-wrap">
-        <select class="epoch-dd" id="herkunft-dd" onchange="tlSetHerkunft(this.value)"
-          title="Nach Geburtsort filtern"></select>
-      </div>
-      <span class="tlk-hilfe" style="margin:0">Geburtsort nach heutiger Geografie — die Region ist
-        meist aussagekräftiger als der Kontinent.</span>
-    </div>
-    <!-- Die Farbtafel IST der Epochenfilter: ein Klick waehlt, ein zweiter hebt auf.
-         Sie stand vorher zusaetzlich ganz oben — dasselbe zweimal. -->
     <div class="tlk-zeile tlk-zeile-leg">
       <span class="tlk-lab">Epochen</span>
       <div class="epoch-legend-grid" id="epoch-legend-grid"></div>
     </div>
-    <p class="tlk-hilfe">Ein Klick auf eine Epochenfarbe filtert danach, ein zweiter hebt den Filter
-      wieder auf — dasselbe wie über die Auswahl darüber. Die Farben entsprechen denen der Zeitachse.</p>
+    <p class="tlk-hilfe">Es greift immer nur <b>ein</b> Merkmal: Der Wechsel von Epoche auf
+      Disziplin hebt eine gewählte Epoche auf. Kombinieren lässt es sich dagegen mit Herkunft,
+      Suche und „Nur Philosophinnen“ — was gerade zusammen greift, steht oben im Streifen.
+      Die Farbtafel ist derselbe Epochenfilter: ein Klick wählt, ein zweiter hebt auf.</p>
   </div>
 
-  <!-- Fach: Kulturkreis -->
-  <div class="tlk-fach" id="tlk-fach-kreis" hidden>
-    <div class="tl-kreise" id="tl-kreise"></div>
-    <p class="tlk-hilfe">Klick blendet einen Kreis ein oder aus, Doppelklick zeigt nur diesen.
-      Voreingestellt sind Europa und die islamische Welt — der Strang, in dem der Begriff
-      „Philosophie“ entstanden ist. Die Grenze ist teils künstlich; sie lässt sich jederzeit aufheben.</p>
+  <!-- Fach: Herkunft — Kulturkreis und Region beantworten dieselbe Frage
+       (woher stammt jemand) und standen doch in zwei verschiedenen Faechern:
+       der Kreis in einem eigenen, die Region unter „Filter“. -->
+  <div class="tlk-fach" id="tlk-fach-kreis" hidden role="region" aria-labelledby="tlk-tab-kreis">
+    <div class="tlk-zeile">
+      <span class="tlk-lab" id="lab-kreis">Kulturkreis</span>
+      <div class="tl-kreise" id="tl-kreise" role="group" aria-labelledby="lab-kreis"></div>
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab">Region</span>
+      <div class="epoch-dd-wrap">
+        <select class="epoch-dd" id="herkunft-dd" onchange="tlSetHerkunft(this.value)"
+          aria-label="Nach Geburtsort filtern"></select>
+      </div>
+    </div>
+    <p class="tlk-hilfe">Beides betrifft die Herkunft, aber nicht dasselbe: Der <b>Kulturkreis</b>
+      ordnet die Denktradition zu, die <b>Region</b> den Geburtsort nach heutiger Geografie —
+      Augustinus steht als Kulturkreis unter Europa, als Region unter Nordafrika. Klick blendet
+      einen Kreis ein oder aus, Doppelklick zeigt nur diesen. Voreingestellt sind Europa und die
+      islamische Welt — der Strang, in dem der Begriff „Philosophie“ entstanden ist. Die Grenze
+      ist teils künstlich; sie lässt sich jederzeit aufheben.</p>
   </div>
 
-  <!-- Fach: Darstellung -->
-  <div class="tlk-fach" id="tlk-fach-ansicht" hidden>
+  <!-- Fach: Darstellung — was die Ansicht zeigt, nicht wen sie zeigt.
+       Die Einflusslinien hatten ein eigenes Fach, sind aber genau das:
+       eine Darstellungsentscheidung. -->
+  <div class="tlk-fach" id="tlk-fach-ansicht" hidden role="region" aria-labelledby="tlk-tab-ansicht">
     <div class="tlk-zeile">
       <span class="tlk-lab">Karten</span>
-      <button class="itbtn" id="card-size-btn" onclick="tlToggleCardSize()" title="Zwischen großen und kleinen Karten wechseln">◰ Mini</button>
-      <span class="tlk-lab" style="margin-left:1rem">Farben</span>
-      <button class="itbtn" onclick="toggleEpochLegend()" title="Die Epochenfarben stehen im Fach Filter">Epochen-Farbtafel →</button>
+      <button class="itbtn" id="card-size-btn" onclick="tlToggleCardSize()" aria-pressed="false"
+              title="Zwischen großen und kleinen Karten wechseln">◰ Mini</button>
+    </div>
+    <div class="tlk-zeile">
+      <span class="tlk-lab" id="lab-linien">Einflusslinien</span>
+      <div class="infl-toggles" id="infl-toggles" role="group" aria-labelledby="lab-linien"></div>
     </div>
     <div class="tier-legend">
       <div class="tier-item"><div class="tier-pip" style="background:#f5b50a;box-shadow:0 0 0 2px #f5b50a44"></div>T1 — Giganten</div>
@@ -541,16 +592,11 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
       <div class="tier-item"><div class="tier-pip" style="background:#9b7cff"></div>T4 — Schüler &amp; Randfiguren</div>
       <div class="vis-count" id="vis-count">—</div>
     </div>
-    <p class="tlk-hilfe">Je weiter du hineinzoomst, desto mehr Ebenen erscheinen: bei geringem Zoom
-      nur die Giganten, danach kommen die übrigen hinzu.</p>
-  </div>
-
-  <!-- Fach: Einflusslinien -->
-  <div class="tlk-fach" id="tlk-fach-linien" hidden>
-    <div class="infl-toggles" id="infl-toggles"></div>
-    <p class="tlk-hilfe">Die Linien zeigen belegte Beziehungen zwischen Denkern. Einzelne Arten
-      lassen sich ausblenden. Wer wen über mehrere Schritte beeinflusst hat, zeigt die
-      Verbindungssuche in der Ansicht „Einflussnetz“.</p>
+    <p class="tlk-hilfe">Der <b>Rang</b> ist keine Wertung, sondern ein Dichtemaß: Je weiter du in
+      die Zeitachse hineinzoomst, desto mehr Ränge erscheinen — bei geringem Zoom nur die Giganten.
+      Die <b>Einflusslinien</b> zeigen belegte Beziehungen; einzelne Arten lassen sich ausblenden.
+      Wer wen über mehrere Schritte beeinflusst hat, zeigt die Verbindungssuche in der Ansicht
+      „Einflussnetz“.</p>
   </div>
 </div>
 
@@ -573,14 +619,28 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 <!-- Weltkarte: Geburtsorte der Philosophen. Eigene SVG-Karte, keine Kacheln
      von fremden Servern — die Seite bleibt ohne externe Abhaengigkeiten. -->
 <div class="karte-wrap" id="karte-wrap">
-  <div class="karte-kopf">
-    <div class="karte-modus">
+  <!-- Diese Leiste enthaelt NUR, was die Karte allein betrifft. Dass die
+       Filter oben zusaetzlich wirken, stand bisher ausschliesslich im
+       Fliesstext UNTER der Karte — also dort, wo es niemand liest, der
+       gerade oben einen Knopf sucht. Das erste Etikett sagt es jetzt an
+       der Stelle, an der die Frage entsteht; was global greift, steht im
+       Zustandsstreifen ueber der Karte. -->
+  <div class="karte-kopf" role="group" aria-label="Darstellung der Weltkarte">
+    <span class="karte-etikett">Nur für diese Karte</span>
+    <span class="karte-trenn" aria-hidden="true"></span>
+    <span class="karte-etikett" id="lab-ortart">Ort</span>
+    <div class="karte-modus" role="group" aria-labelledby="lab-ortart">
       <button type="button" class="km-btn active" id="ko-geburt" onclick="kaOrtart('geburt')"
-        title="Wo die Denker geboren wurden">🎂 Geburtsort</button>
+        aria-pressed="true" title="Wo die Denker geboren wurden">🎂 Geburtsort</button>
       <button type="button" class="km-btn" id="ko-tod" onclick="kaOrtart('tod')"
-        title="Wo sie gestorben sind — zeigt Wanderung und Exil">🪦 Sterbeort</button>
+        aria-pressed="false" title="Wo sie gestorben sind — zeigt Wanderung und Exil">🪦 Sterbeort</button>
     </div>
     <span class="karte-trenn" aria-hidden="true"></span>
+    <span class="karte-etikett">Rang</span>
+    <button type="button" class="km-btn active" id="ko-tier" onclick="kaTierUm()"
+            title="Rang 3 und 4 dazuschalten — sonst wird die Karte sehr dicht"
+            aria-pressed="true">◆ Rang 1–2</button>
+
     <span class="karte-etikett">Ebenen</span>
     <button type="button" class="km-btn active" id="ko-lehr" onclick="kaLehrUm()"
             title="Schulen, Bibliotheken, Universitäten und Zirkel ein- und ausblenden"
@@ -589,10 +649,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
     <button type="button" class="km-btn" id="ko-funde" onclick="kaFundeUm()"
             title="Wo die Quellen des Götterkosmos gefunden wurden"
             aria-pressed="false">🏺 Fundorte</button>
-    <span class="karte-trenn" aria-hidden="true"></span>
     <button type="button" class="km-btn" id="ko-phil-aus" onclick="kaPhilAusUm()"
             title="Alle Denker-Punkte ausblenden — nützlich, um nur die Ebenen für sich zu sehen"
-            aria-pressed="false">🙈 Philosoph*innen ausblenden</button>
+            aria-pressed="false">🙈 Denker aus</button>
     <span class="karte-info" id="karte-info"></span>
   </div>
 
@@ -631,15 +690,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   </div>
   <!-- OpenStreetMap: echte Karte mit Staedten. Laedt Kacheln von fremden
        Servern — deshalb umschaltbar und nicht voreingestellt. -->
-  <!-- Statuszeile: beantwortet die Frage, warum man gerade das sieht, was
-       man sieht. Nennt jede wirksame Einstellung im Klartext und bietet
-       einen einzigen Weg zurück in den Ausgangszustand. -->
-  <div class="ks" id="ks-leiste">
-    <span class="ks-zahl" id="ks-zahl"></span>
-    <span class="ks-teile" id="ks-teile"></span>
-    <button type="button" class="km-btn ks-reset" id="ks-reset" hidden
-            title="Alle Einstellungen der Karte zurücknehmen">↺ Alles zurücksetzen</button>
-  </div>
+  <!-- Die Statuszeile stand hier und galt damit nur fuer die Karte.
+       Sie steht jetzt oben in der .tlk-Leiste und gilt fuer alle vier
+       Ansichten; osmZeichne() meldet seine Zahlen weiterhin dorthin. -->
   <div class="karte-osm an" id="karte-osm"></div>
   <div class="karte-liste" id="karte-liste"></div>
   <p class="karte-fuss">Ein <b>Klick auf einen Ort</b> fächert ihn in die einzelnen Denker auf;
@@ -870,6 +923,55 @@ function tlHerkunftFuellen(){
 var TL_KREISE = ['European','Islamic','India','China','Ostasien','Africana'];
 var TL_KREIS_LABEL = { European:'Europa', Islamic:'Islamische Welt', India:'Indien', China:'China', Ostasien:'Ostasien', Africana:'Africana' };
 var tlKreisAktiv = { European:true, Islamic:true, India:false, China:false, Ostasien:false, Africana:false };
+/* Die Voreinstellung an EINER Stelle. Marke und Zustandsstreifen fragten
+   bisher, ob ALLE Kreise an sind — im Ausgangszustand sind sie das nicht,
+   also meldeten beide dauerhaft eine Abweichung: Der Reset-Knopf stand von
+   der ersten Sekunde an auf „an“ und die Marke zeigte „1“, ohne dass der
+   Nutzer irgendetwas getan haette. Ein Reset, der immer angeboten wird,
+   sagt nichts mehr aus. Verglichen wird jetzt gegen die Voreinstellung. */
+var TL_KREIS_STD = { European:true, Islamic:true, India:false, China:false, Ostasien:false, Africana:false };
+function tlKreisStd(){
+  try{ return TL_KREISE.every(function(k){ return !!tlKreisAktiv[k] === !!TL_KREIS_STD[k]; }); }
+  catch(e){ return true; }
+}
+/* Rangfilter der Weltkarte.
+   Die Zeitleiste beschriftet Rangstufe 4 ohnehin nicht, die Karte setzte aber
+   jeden der 580 Denker als Marker — auf einer Weltkarte sind das zu viele
+   Punkte auf einmal. Voreinstellung ist Rang 1–2; Rang 3 und 4 lassen sich
+   ueber die Leiste gemeinsam dazuschalten.
+
+   Gemessen an PHILS_V2 (580 Denker, 575 mit Geodaten):
+     Rang 1–2    175 Denker /  153 Orte   (Vorwahl Europa+Islam: 154 / 132)
+     Rang 1–3    428 Denker /  345 Orte   (bis hierher war es die Voreinstellung)
+     Rang 1–4    575 Denker /  456 Orte
+   Rangverteilung: 31 / 144 / 255 / 150.
+
+   KA_TIER_STD ist die EINZIGE Stelle mit der Voreinstellung — Knopfbeschriftung,
+   Statuszeile und Ruecksetzen leiten sie ab. Wer die Stufe aendert, aendert
+   nur diese Zahl.
+
+   Wirkt NUR auf der Karte: kaTierPasst wird in phils() nicht geprueft,
+   sondern erst in osmZeichne(). Zeitleiste, Tabelle und Netz bleiben
+   unveraendert. */
+var KA_TIER_STD = 2;
+var kaTierMax = KA_TIER_STD;
+function kaTierPasst(p){ return (p.tier || 4) <= kaTierMax; }
+
+/* Beschriftung aus dem Zustand ableiten, nicht ins Markup schreiben. */
+function kaTierKnopf(){
+  var b = document.getElementById('ko-tier');
+  if (!b) return;
+  var std = (kaTierMax === KA_TIER_STD);
+  b.classList.toggle('active', std);
+  b.setAttribute('aria-pressed', std ? 'true' : 'false');
+  b.textContent = std ? ('◆ Rang 1–' + KA_TIER_STD) : '◆ alle Ränge';
+}
+window.kaTierUm = function(){
+  kaTierMax = (kaTierMax === KA_TIER_STD) ? 4 : KA_TIER_STD;
+  kaTierKnopf();
+  osmZeichne();
+};
+
 function phils() {
   var L = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2 : [];
   return L.filter(function(p){
@@ -891,7 +993,7 @@ window.tlkFach = function(name){
     var b = document.getElementById('tl-kreise');
     if (b && !b.childElementCount) { try{ tlKreisLeiste(); }catch(e){} }
   }
-  ['filter','kreis','ansicht','linien'].forEach(function(n){
+  ['filter','kreis','ansicht'].forEach(function(n){
     var fach = document.getElementById('tlk-fach-'+n);
     var tab  = document.getElementById('tlk-tab-'+n);
     var auf  = (n === name && tlkOffen !== name);
@@ -902,14 +1004,21 @@ window.tlkFach = function(name){
 };
 /* Kleine Marke am Reiter, wenn dort ein Filter aktiv ist — so sieht man
    auch bei zugeklapptem Fach, dass etwas eingeschraenkt ist. */
+/* Die Marken zaehlten posFilter, themaFilter und tlHerkunft NICHT mit:
+   Wer nach Grundposition, Thema oder Region filterte, sah bei zugeklapptem
+   Fach nirgends, dass ueberhaupt gefiltert wird. Drei von sieben Filtern
+   waren damit unsichtbar. Jetzt zaehlt jedes Fach genau die Filter, die es
+   selbst enthaelt — die Marke steht fuer „hier drin ist etwas gesetzt“. */
 window.tlkMarken = function(){
   var bf = document.getElementById('tlk-badge-filter');
   if (bf){
     var an = [];
-    try{ if (epoch) an.push(epoch); }catch(e){}
-    try{ if (typeof discFilter!=='undefined' && discFilter) an.push(discFilter); }catch(e){}
-    try{ if (typeof movFilter!=='undefined'  && movFilter)  an.push(movFilter); }catch(e){}
-    try{ if (typeof femaleOnly!=='undefined' && femaleOnly) an.push('nur Philosophinnen'); }catch(e){}
+    try{ if (epoch) an.push('Epoche: ' + epoch); }catch(e){}
+    try{ if (typeof discFilter!=='undefined'  && discFilter)  an.push('Disziplin: ' + discFilter); }catch(e){}
+    try{ if (typeof movFilter!=='undefined'   && movFilter)   an.push('Strömung: ' + movFilter); }catch(e){}
+    try{ if (typeof posFilter!=='undefined'   && posFilter)   an.push('Grundposition: ' + posFilter); }catch(e){}
+    try{ if (typeof themaFilter!=='undefined' && themaFilter) an.push('Thema: ' + themaFilter); }catch(e){}
+    try{ if (typeof femaleOnly!=='undefined'  && femaleOnly)  an.push('nur Philosophinnen'); }catch(e){}
     bf.textContent = an.length ? an.length : '';
     bf.hidden = !an.length;
     bf.title = an.join(' \u00b7 ');
@@ -917,13 +1026,20 @@ window.tlkMarken = function(){
   var bk = document.getElementById('tlk-badge-kreis');
   if (bk){
     try{
-      var aus = TL_KREISE.filter(function(k){ return !tlKreisAktiv[k]; }).length;
-      bk.textContent = aus ? TL_KREISE.length - aus : '';
-      bk.hidden = !aus;
-      bk.title = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; })
-                          .map(function(k){ return TL_KREIS_LABEL[k]; }).join(', ');
+      var an2 = [];
+      var anK = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+      if (!tlKreisStd())
+        an2.push('Kulturkreis: ' + (anK.length
+          ? anK.map(function(k){ return TL_KREIS_LABEL[k]||k; }).join(', ')
+          : 'keiner'));
+      if (typeof tlHerkunft!=='undefined' && tlHerkunft)
+        an2.push('Region: ' + String(tlHerkunft).split(':').pop());
+      bk.textContent = an2.length ? an2.length : '';
+      bk.hidden = !an2.length;
+      bk.title = an2.join(' \u00b7 ');
     }catch(e){ bk.hidden = true; }
   }
+  try{ ksAuffrischen(); }catch(e){}
 };
 window.tlkAllesZuruecksetzen = function(){
   try{ epoch=''; window._currentEra=''; }catch(e){}
@@ -935,6 +1051,22 @@ window.tlkAllesZuruecksetzen = function(){
   try{ TL_KREISE.forEach(function(k){ tlKreisAktiv[k] = (k==='European'||k==='Islamic'); }); tlKreisLeiste(); }catch(e){}
   try{ var s2=document.getElementById('phil-search'); if(s2){ s2.value=''; tlSearch(''); } }catch(e){}
   try{ var dd=document.getElementById('epoch-dd'); if(dd) dd.value=''; }catch(e){}
+  /* Die Herkunft ueberlebte „alles zeigen“ — der Filter blieb gesetzt,
+     waehrend der Knopf das Gegenteil versprach. */
+  try{ tlHerkunft=''; var hd=document.getElementById('herkunft-dd'); if(hd) hd.value=''; }catch(e){}
+  /* Merkmal zurueck auf Epoche, sonst steht der Modus-Schalter auf einem
+     Merkmal, dessen Wert gerade geloescht wurde. */
+  try{
+    document.querySelectorAll('.fm-btn').forEach(function(b){
+      var std = (b.getAttribute('data-mode')==='epoch');
+      b.classList.toggle('active', std);
+      b.setAttribute('aria-pressed', std?'true':'false');
+    });
+    filterMode='epoch';
+    if (window._fillEpochDropdown) window._fillEpochDropdown();
+  }catch(e){}
+  try{ if (typeof kaTierMax!=='undefined' && kaTierMax!==KA_TIER_STD){
+         kaTierMax=KA_TIER_STD; kaTierKnopf(); } }catch(e){}
   tlNeuzeichnen();
   try{ kaAuffrischen(); }catch(e){}
 };
@@ -949,8 +1081,16 @@ function tlNeuzeichnen(){
     osmZeichne();
   } }catch(e){}
   try{ tlkMarken(); }catch(e){}
-  try{ var a=document.getElementById('vis-count'), b=document.getElementById('vis-count-2');
-       if(a&&b) b.textContent=a.textContent; }catch(e){}
+  /* Die Karte zaehlt anders als die Zeitachse (nur Denker mit Geodaten, dazu
+     der Rangfilter). Wenn sie offen ist, liefert osmZeichne() die Zahl —
+     diese Kopie wuerde sie sonst mit der Zeitachsenzahl ueberschreiben. */
+  try{
+    var kw=document.getElementById('karte-wrap');
+    if (!(kw && kw.classList.contains('active'))){
+      var a=document.getElementById('vis-count'), b=document.getElementById('vis-count-2');
+      if(a&&b) b.textContent=a.textContent;
+    }
+  }catch(e){}
 }
 window.tlKreisUm = function(k){
   /* Auch alles abwählen ist erlaubt — die leere Karte ist eine gültige
@@ -3498,56 +3638,84 @@ function exZeigen(p, index){
 function ksTeil(text, stumm){
   return '<span class="ks-teil' + (stumm ? ' stumm' : '') + '">' + text + '</span>';
 }
+/* Zustandsstreifen. Stand als Statuszeile der Karte in #karte-wrap und
+   galt damit nur dort; er liegt jetzt in der .tlk-Leiste und beschreibt
+   jede der vier Ansichten.
+
+   Zwei Aufrufwege:
+     ksAuffrischen(n, orte)  aus osmZeichne() — die Karte kennt ihre Zahl
+     ksAuffrischen()         aus tlkMarken()  — Zahl bleibt, wie sie ist
+   Die kartenspezifischen Angaben (Ortsart, Ebenen, Rang, Weg) erscheinen
+   nur, wenn die Karte offen ist — in der Zeitachse waeren sie eine Aussage
+   ueber etwas, das gerade niemand sieht. */
 function ksAuffrischen(anzahl, orte){
-  var zEl = document.getElementById('ks-zahl');
+  var zEl = document.getElementById('vis-count-2');
   var tEl = document.getElementById('ks-teile');
   var rEl = document.getElementById('ks-reset');
-  if (!zEl || !tEl) return;
+  if (!tEl) return;
+  var kw = document.getElementById('karte-wrap');
+  var karteAuf = !!(kw && kw.classList.contains('active'));
 
   var teile = [], wirksam = false;
 
   /* Einzelansicht überschreibt alles andere */
-  if (kfAktiv()){
-    zEl.textContent = '';
+  if (karteAuf && kfAktiv()){
+    if (zEl) zEl.textContent = '';
     tEl.innerHTML = '<span class="ks-leer">' + kfStandText() +
       ' — alle übrigen Denker sind ausgeblendet.</span>';
     if (rEl) rEl.hidden = false;
     return;
   }
 
-  /* Wie viele von wie vielen? */
+  /* Wie viele von wie vielen? Nur die Karte liefert eine eigene Zahl; sonst
+     steht dort, was render() ueber tlNeuzeichnen() eingetragen hat. */
   var gesamt = (typeof PHILS_V2 !== 'undefined') ? PHILS_V2.length : 0;
-  if (anzahl === 0){
-    zEl.textContent = 'Kein Denker sichtbar';
-  } else {
-    zEl.textContent = anzahl + (gesamt && anzahl < gesamt ? ' von ' + gesamt : '') +
-      ' Denker' + (orte ? ' an ' + orte + ' Orten' : '');
+  if (zEl && anzahl !== undefined){
+    if (anzahl === 0){
+      zEl.textContent = 'Kein Denker sichtbar';
+    } else {
+      zEl.textContent = anzahl + (gesamt && anzahl < gesamt ? ' von ' + gesamt : '') +
+        ' Denker' + (orte ? ' an ' + orte + ' Orten' : '');
+    }
   }
 
-  teile.push(ksTeil(kaOrtart === 'tod' ? '🪦 Sterbeorte' : '🎂 Geburtsorte', true));
-  if (kaPhilAus){ teile.push(ksTeil('🙈 Denker ausgeblendet')); wirksam = true; }
+  /* Alles Kartenspezifische in EINEM Block: Ortsart, Ebenen, Zeitregler und
+     Rang beschreiben Zustaende, die es nur auf der Karte gibt. In der
+     Zeitachse waeren sie eine Aussage ueber etwas, das gerade niemand sieht.
+     Der Rangfilter blendet in der Voreinstellung rund 400 der 580 Denker aus;
+     stumm gesetzt und NICHT wirksam, weil es der Ausgangszustand ist. */
+  if (karteAuf){
+    teile.push(ksTeil(kaOrtart === 'tod' ? '🪦 Sterbeorte' : '🎂 Geburtsorte', true));
+    if (kaPhilAus){ teile.push(ksTeil('🙈 Denker ausgeblendet')); wirksam = true; }
+    if (kaJahr !== null){ teile.push(ksTeil('⏳ Jahr ' + kaJahrText(kaJahr))); wirksam = true; }
+    if (kaLehr)  teile.push(ksTeil('🏛️ Orte der Lehre', true));
+    if (kaFunde) teile.push(ksTeil('🏺 Fundorte', true));
+    if (kaTierMax === KA_TIER_STD) teile.push(ksTeil('◆ Rang 1–' + KA_TIER_STD, true));
+  }
 
   /* Kulturkreise, sofern nicht alle an sind */
   try{
-    var ausK = TL_KREISE.filter(function(k){ return !tlKreisAktiv[k]; });
-    var anK  = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+    var anK = TL_KREISE.filter(function(k){ return tlKreisAktiv[k]; });
+    var std = tlKreisStd();
     if (!anK.length){ teile.push(ksTeil('🌐 kein Kulturkreis gewählt')); wirksam = true; }
-    else if (ausK.length){
-      teile.push(ksTeil('🌐 ' + anK.map(function(k){ return TL_KREIS_LABEL[k] || k; }).join(', ')));
-      wirksam = true;
+    else {
+      /* Der Chip erscheint immer — er erklärt, warum indische und
+         chinesische Denker fehlen, und das ist im Ausgangszustand die
+         häufigste stille Ueberraschung. Aber nur eine ABWEICHUNG von der
+         Voreinstellung macht ihn wirksam und blendet den Reset ein. */
+      teile.push(ksTeil('🌐 ' + anK.map(function(k){ return TL_KREIS_LABEL[k] || k; }).join(', '), std));
+      if (!std) wirksam = true;
     }
   }catch(e){}
 
-  /* Zeitfilter */
-  if (kaJahr !== null){ teile.push(ksTeil('⏳ Jahr ' + kaJahrText(kaJahr))); wirksam = true; }
-
-  /* Ebenen */
-  if (kaLehr) teile.push(ksTeil('🏛️ Orte der Lehre', true));
-  if (kaFunde) teile.push(ksTeil('🏺 Fundorte', true));
 
   /* Übrige Filter der Seite, sofern sie greifen. Die Variablen gehören
      der Zeitleiste; sie wirken auch auf die Karte. */
   var weitere = [];
+  /* Die Herkunftsregion fehlte hier — sie war der einzige Filter, den weder
+     Marke noch Streifen je erwaehnt haben. */
+  try{ if (typeof tlHerkunft!=='undefined' && tlHerkunft)
+         weitere.push('Region ' + String(tlHerkunft).split(':').pop()); }catch(e){}
   try{ if (epoch) weitere.push('Epoche ' + epoch); }catch(e){}
   try{ if (discFilter) weitere.push(discFilter); }catch(e){}
   try{ if (movFilter) weitere.push(movFilter); }catch(e){}
@@ -3569,6 +3737,7 @@ function ksZuruecksetzen(){
   try{ if (kfAktiv()) kfSetzen(''); }catch(e){}
   try{ if (kaJahr !== null) kzSetzen(null, true); }catch(e){}
   try{ if (kaPhilAus) kaPhilAusUm(); }catch(e){}
+  try{ if (kaTierMax !== KA_TIER_STD){ kaTierMax = KA_TIER_STD; kaTierKnopf(); } }catch(e){}
   /* Setzt Epoche, Disziplin, Suche, Kulturkreise usw. gemeinsam zurück —
      dieselbe Funktion, die auch die Zeitleiste benutzt. */
   try{ if (typeof tlkAllesZuruecksetzen === 'function') tlkAllesZuruecksetzen(); }catch(e){}
@@ -4310,6 +4479,7 @@ window.kaAuffrischen = function(){
   try{ kzBinden(); }catch(e){ console.warn('Zeitregler:', e); }
   try{ kfListeBauen(); }catch(e){ console.warn('Einzelansicht:', e); }
   try{ ksBinden(); }catch(e){ console.warn('Statuszeile:', e); }
+  try{ kaTierKnopf(); }catch(e){}
   try{ osmZeichne(); }catch(e){ console.warn('Weltkarte:', e); }
 };
 
@@ -4398,7 +4568,7 @@ function osmZeichne(){
   /* Bei Einzelansicht treten die Geburtsorte ganz zurück: Ein Weg mit
      acht Stationen ist zwischen 353 Punkten nicht zu erkennen. */
   var LP = (kfAktiv() || kaPhilAus) ? []
-         : phils().filter(function(p){ return !dimmed(p) && kaZeitPasst(p) && kaOrtVon(p); });
+         : phils().filter(function(p){ return !dimmed(p) && kaTierPasst(p) && kaZeitPasst(p) && kaOrtVon(p); });
   var orte = {};
   LP.forEach(function(p){
     var w = kaOrtVon(p);
@@ -4497,6 +4667,16 @@ window.tlSetView = function(mode) {
   document.getElementById('vs-table')?.classList.toggle('active', mode === 'table');
   document.getElementById('vs-netz')?.classList.toggle('active', mode === 'netz');
   document.getElementById('vs-karte')?.classList.toggle('active', mode === 'karte');
+  /* aria-pressed am Ansichtsschalter mitfuehren: Ein Screenreader liest
+     sonst vier gleichwertige Knoepfe ohne erkennbaren Zustand. */
+  ['timeline','table','netz','karte'].forEach(function(m){
+    var b = document.getElementById('vs-' + (m==='timeline'?'timeline':m));
+    if (b) b.setAttribute('aria-pressed', mode === m ? 'true' : 'false');
+  });
+  /* Der Zoom wirkt nur auf der Zeitachse. Er stand bisher auch in Tabelle,
+     Netz und Karte — sichtbar, anklickbar, folgenlos. */
+  var zg = document.getElementById('zoom-group');
+  if (zg) zg.style.display = (mode === 'timeline') ? '' : 'none';
   const kwrap = document.getElementById('karte-wrap');
   if (twrap) twrap.classList.remove('active');
   if (nwrap) nwrap.classList.remove('active');
@@ -4520,6 +4700,9 @@ window.tlSetView = function(mode) {
     if (outer) outer.style.display = '';
     if (legend) legend.style.display = '';
   }
+  /* Der Streifen nennt kartenspezifische Angaben nur bei offener Karte —
+     nach jedem Ansichtswechsel muss er darum neu geschrieben werden. */
+  try{ ksAuffrischen(); }catch(e){}
 };
 
 window.tlSetFilter = function(value) {
@@ -4560,6 +4743,7 @@ window.kaAuffrischen = function(){
   try{ kzBinden(); }catch(e){ console.warn('Zeitregler:', e); }
   try{ kfListeBauen(); }catch(e){ console.warn('Einzelansicht:', e); }
   try{ ksBinden(); }catch(e){ console.warn('Statuszeile:', e); }
+  try{ kaTierKnopf(); }catch(e){}
   try{ osmZeichne(); }catch(e){}
 };
 

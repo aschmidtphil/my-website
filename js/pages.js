@@ -52,79 +52,11 @@ function showGTab(name,idx){
   var sec=document.getElementById('gs-'+name);
   if(sec)sec.classList.add('active');
   document.querySelectorAll('.gtab')[idx].classList.add('active');
-  if(name==='pokemon'&&!pokeLoaded)loadPoke();
-  else renderGameCards();
+  /* Der Pokemon-Zweig stand hier ("if(name==='pokemon')...else renderGameCards()").
+     Ohne ihn bleibt nur der Normalfall. */
+  renderGameCards();
 }
 
-// ════════════════════════════════════════════════
-// POKÉMON
-// ════════════════════════════════════════════════
-var pokeLoaded=false,allPoke=[],filtPoke=[],pokeOff=0,typeCache={},BATCH=24;
-async function loadPoke(){
-  if(pokeLoaded)return;pokeLoaded=true;
-  try{
-    var r=await fetch('https://pokeapi.co/api/v2/pokemon?limit=493');
-    var d=await r.json();
-    allPoke=d.results.map(function(p,i){return{name:p.name,id:i+1};});
-    filtPoke=allPoke.slice();renderPokeGrid();
-  }catch(e){document.getElementById('poke-grid').innerHTML='<div class="poke-loading-msg">PokeAPI nicht erreichbar.</div>';}
-}
-function renderPokeGrid(){
-  var grid=document.getElementById('poke-grid');
-  if(pokeOff===0)grid.innerHTML='';
-  filtPoke.slice(pokeOff,pokeOff+BATCH).forEach(function(p){grid.appendChild(makePokeCard(p));});
-  pokeOff+=BATCH;
-  var more=document.getElementById('poke-more');
-  if(more)more.style.display=pokeOff<filtPoke.length?'block':'none';
-}
-function makePokeCard(p){
-  var c=document.createElement('div');c.className='poke-card';
-  c.innerHTML='<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+p.id+'.png" alt="'+p.name+'" loading="lazy">'
-    +'<div class="poke-name">'+p.name+'</div>'
-    +'<div class="poke-num">#'+String(p.id).padStart(3,'0')+'</div>'
-    +'<div class="poke-types" id="pt-'+p.id+'"><span class="type-badge type-normal">?</span></div>';
-  c.onclick=function(){showPokeDet(p.id);};
-  loadPokeTypes(p.id);return c;
-}
-async function loadPokeTypes(id){
-  if(typeCache[id])return;
-  try{var r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);var d=await r.json();typeCache[id]=d;
-  var el=document.getElementById('pt-'+id);
-  if(el)el.innerHTML=d.types.map(function(t){return'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>';}).join('');}catch(e){}
-}
-async function showPokeDet(id){
-  var det=document.getElementById('poke-detail');
-  det.innerHTML='<div style="color:var(--text3);font-family:var(--fm);padding:1rem">Lade…</div>';
-  det.classList.add('show');
-  try{
-    var d=typeCache[id];
-    if(!d){var r=await fetch('https://pokeapi.co/api/v2/pokemon/'+id);d=await r.json();typeCache[id]=d;}
-    var sc={hp:'#ff6b35',attack:'#f7c948',defense:'#5aa0e8','special-attack':'#e85878','special-defense':'#3ba844',speed:'#a890f0'};
-    det.innerHTML='<img class="poke-big-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/'+id+'.png" alt="'+d.name+'">'
-      +'<div style="flex:1;min-width:200px"><div class="poke-big-name">'+d.name+'</div>'
-      +'<div style="display:flex;gap:.4rem;margin-bottom:.85rem">'+d.types.map(function(t){return'<span class="type-badge type-'+t.type.name+'">'+t.type.name+'</span>';}).join('')+'</div>'
-      +'<div style="display:flex;gap:1.25rem;margin-bottom:.85rem;flex-wrap:wrap">'
-      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">HÖHE</div><div style="font-weight:500">'+d.height/10+'m</div></div>'
-      +'<div><div style="font-family:var(--fm);font-size:.65rem;color:var(--text3)">GEWICHT</div><div style="font-weight:500">'+d.weight/10+'kg</div></div>'
-      +'</div>'
-      +d.stats.map(function(s){return'<div class="stat-bar"><span class="stat-label-sm">'+s.stat.name.replace('special-','sp.')+'</span><span class="stat-val">'+s.base_stat+'</span><div class="stat-track"><div class="stat-fill" style="width:'+Math.min(100,s.base_stat/255*100)+'%;background:'+(sc[s.stat.name]||'var(--accent)')+'"></div></div></div>';}).join('')
-      +'</div>';
-    det.scrollIntoView({behavior:'smooth',block:'nearest'});
-  }catch(e){det.innerHTML='<div style="color:var(--accent2-text);padding:1rem">Fehler.</div>';}
-}
-function filterPoke(){
-  var q=document.getElementById('poke-search').value.toLowerCase();
-  var type=document.getElementById('type-filter').value;
-  var gen=parseInt(document.getElementById('gen-filter').value)||0;
-  filtPoke=allPoke.filter(function(p){
-    if(q&&p.name.indexOf(q)<0)return false;
-    if(gen){var r=[[1,151],[152,251],[252,386],[387,493]];var mm=r[gen-1];if(p.id<mm[0]||p.id>mm[1])return false;}
-    if(type&&typeCache[p.id]&&typeCache[p.id].types.map(function(t){return t.type.name;}).indexOf(type)<0)return false;
-    return true;
-  });
-  pokeOff=0;renderPokeGrid();
-}
-function loadMorePoke(){renderPokeGrid();}
 
 // ════════════════════════════════════════════════
 // PODCASTS

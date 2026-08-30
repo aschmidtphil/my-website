@@ -44,6 +44,9 @@
 /* Kategorie-Trenner über den Tabs */
 .gods-cat-label{ font-family:var(--fm); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase;
   color:var(--gx-ink2); opacity:.6; width:100%; text-align:center; margin:.6rem 0 .1rem; }
+/* Der methodische Rahmen: leiser als der Untertitel, aber lesbar. */
+.gx-rahmen{ font-size:.78rem; line-height:1.6; opacity:.72; max-width:62ch;
+  margin-top:.9rem; border-left:2px solid var(--gx-line,#3a3f46); padding-left:.9rem; }
 .gods-tabs{ position:relative; z-index:2; display:flex; gap:.45rem; justify-content:center;
   flex-wrap:wrap; padding:1.2rem 1rem .3rem; }
 .gods-tab{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem; letter-spacing:.04em;
@@ -168,6 +171,33 @@
     padding-bottom:.2rem; }
   .gx-aw-reihe::-webkit-scrollbar{ display:none; }
   .gx-aw-reihe > *{ flex:0 0 auto; }
+
+  /* Dasselbe Muster fuer Ansichtsleiste und Werkzeugfach: waagerecht
+     schieben statt umbrechen. Die fuenf Ansichtsknoepfe brachen sonst auf
+     zwei Zeilen um, die vier Werkzeuge auf zwei bis drei — zusammen vier
+     Zeilen Bedienung ueber einer Buehne, die selbst kaum noch Platz hatte. */
+  .gx-viewbar, .gods-controls{
+    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .gx-viewbar::-webkit-scrollbar,
+  .gods-controls::-webkit-scrollbar{ display:none; }
+  .gx-viewbar > *, .gods-controls > *{ flex:0 0 auto; }
+  .gx-viewbar{ margin-left:1.5rem; margin-right:1.5rem; }
+  /* Die Werkzeugbank hatte 2rem Innenabstand — sie war eine eigene Bank,
+     obwohl sie drei Kaestchen enthielt. Eingeklappt faellt sie ohnehin weg;
+     aufgeklappt reicht die Haelfte. */
+  .gods-controls{ gap:.9rem; padding:.5rem 1.5rem .7rem; justify-content:flex-start; }
+
+  /* Das Suchfeld verlangte 220 px Mindestbreite und zwang die Zeile damit
+     auf schmalen Schirmen zum Umbruch. Es darf jetzt schrumpfen. */
+  .gx-findbar{ margin-left:1.5rem; margin-right:1.5rem; flex-wrap:nowrap; }
+  .gx-findbar input{ min-width:0; flex:1 1 auto; }
+  .gx-findbar > button{ flex:0 0 auto; }
+
+  /* Fingerkuppengroesse fuer alles, was in diesen Zeilen angetippt wird. */
+  .gx-viewbtn, .gods-ctrl-btn, .gx-fb-reset{ min-height:40px; }
+  .gods-ctrl{ min-height:40px; }
 }
 .gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
   font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
@@ -477,15 +507,45 @@
     <h1 class="gods-title">Götter<span class="accent">kosmos</span></h1>
     <p class="gods-sub">Wer zeugte wen, wer steht über wem — und welche Gottheiten einander entsprechen.
       Von den olympischen Göttern bis zu den abrahamitischen Religionen.</p>
+    <!-- Methodischer Rahmen. Die Seite stellt Mythologien, monotheistische
+         Religionen, Begriffsarchitekturen und Literatur in EINER Darstellungs-
+         form nebeneinander. Ohne einen Satz dazu liest sich die gemeinsame Form
+         als Gleichsetzung des Wirklichkeitsanspruchs — gerade bei Judentum,
+         Christentum und Islam, die kein Pantheon kennen. Der Text steht in
+         goetter-data.js unter meta.rahmen, damit er nicht doppelt gepflegt wird. -->
+    <p class="gods-sub gx-rahmen" id="gx-rahmen"></p>
   </div>
 
+  <!-- ══ BEDIENUNG — dieselben drei Zonen wie auf der Philosophie-Seite ═══
+       Zone 1  Welchen Kosmos?  gods-tabs
+       Zone 2  Wie dargestellt? gx-viewbar + Suche
+       Zone 3  Was greift?      gx-filterbar (Zustandsstreifen)
+       darunter: Werkzeuge, eingeklappt
+
+       Bisher stand zwischen Titel und Buehne ein fester Stapel aus vier
+       Zeilen: Kosmos-Auswahl, gods-controls (Vergleichen + zwei Kaestchen,
+       mit 2rem Innenabstand eine eigene Bank), Ansichtsleiste, Suchzeile —
+       und die Suchzeile brach auf schmalen Schirmen zusaetzlich um, weil das
+       Eingabefeld 220 px Mindestbreite verlangt. Auf dem Telefon war der
+       Bildschirm damit voll, bevor eine einzige Figur zu sehen war.
+
+       Die drei Werkzeuge in gods-controls sind seltener noetig als Kosmos,
+       Ansicht und Suche — sie sind darum jetzt eingeklappt. Der Kosmos
+       bleibt oben, weil er die eine Entscheidung ist, die diese Seite traegt. -->
   <div class="gods-tabs" id="gods-tabs"></div>
-
-  <div class="gods-controls">
-    <button class="gods-ctrl-btn" id="gx-compare-btn" onclick="gxToggleCompare()" title="Zwei Pantheen direkt gegenüberstellen — zeigt echte Verbindungslinien zwischen entsprechenden Figuren">⇄ Pantheen vergleichen</button>
-    <label class="gods-ctrl"><input type="checkbox" id="gx-minor" checked onchange="gxRender()"> Nebenfiguren</label>
-    <label class="gods-ctrl"><input type="checkbox" id="gx-domains" checked onchange="gxRender()"> Wirkungsbereiche</label>
-  </div>
+  <script>
+  /* Rahmen aus den Daten ziehen — nie in den Text schreiben. */
+  (function(){
+    function setzen(){
+      var el=document.getElementById('gx-rahmen');
+      var D=window.GODS_DATA;
+      if(!el) return true;
+      if(!(D&&D.meta&&D.meta.rahmen)) return false;
+      el.textContent=D.meta.rahmen; return true;
+    }
+    if(!setzen()){ var n=0, t=setInterval(function(){ if(setzen()||++n>60) clearInterval(t); },100); }
+  })();
+  </script>
 
   <!-- Zeitregler: blendet aus, was zu einem gewaehlten Zeitpunkt nicht lebendig war.
        Grundlage sind die belegten Datierungen (zeit.von / zeit.bis) aller Kosmen. -->
@@ -525,12 +585,31 @@
   <div class="gx-findbar">
     <input id="gx-q" type="search" placeholder="Figur suchen — Name, Domäne, Mythos …"
       autocomplete="off" aria-label="Suche über alle Figuren">
-    <select id="gx-motiv" aria-label="Motiv-Filter">
-      <option value="">Motiv wählen …</option>
-    </select>
+    <button type="button" class="gx-viewbtn" id="gx-werkzeug-btn" onclick="gxWerkzeuge()"
+      aria-expanded="false" aria-controls="gods-controls"
+      title="Vergleichen, Nebenfiguren, Wirkungsbereiche und Motive">⚙ Werkzeuge</button>
+  </div>
+
+  <!-- Zustandsstreifen. Er sagt, warum gerade diese Figuren zu sehen sind,
+       und bietet den einen Weg zurueck. Bisher erschien er nur, wenn eines
+       der beiden Kaestchen aus war — Suche, Motiv und Zeitregler blieben
+       stumm, obwohl gerade sie am staerksten einschraenken. -->
+  <div class="gx-filterbar" id="gx-filterbar" hidden></div>
+
+  <!-- Werkzeuge: eingeklappt. gxSyncAtlasChrome() blendet die einzelnen
+       Elemente je nach Ansicht weiterhin selbst aus — das bleibt unberuehrt,
+       weil hier nur der Behaelter zusaetzlich zu- und aufgeht. -->
+  <div class="gods-controls gods-hidden" id="gods-controls">
+    <button class="gods-ctrl-btn" id="gx-compare-btn" onclick="gxToggleCompare()" title="Zwei Pantheen direkt gegenüberstellen — zeigt echte Verbindungslinien zwischen entsprechenden Figuren">⇄ Pantheen vergleichen</button>
+    <label class="gods-ctrl"><input type="checkbox" id="gx-minor" checked onchange="gxRender()"> Nebenfiguren</label>
+    <label class="gods-ctrl"><input type="checkbox" id="gx-domains" checked onchange="gxRender()"> Wirkungsbereiche</label>
+    <label class="gods-ctrl" for="gx-motiv">Motiv
+      <select id="gx-motiv" aria-label="Motiv-Filter">
+        <option value="">alle</option>
+      </select>
+    </label>
   </div>
   <div class="gx-results" id="gx-results" hidden></div>
-  <div class="gx-filterbar" id="gx-filterbar" hidden></div>
   <div class="gods-stage-wrap" id="gods-stage-wrap">
     <div class="gods-stage" id="gods-stage"><svg id="gods-svg"></svg></div>
   </div>
@@ -637,7 +716,7 @@
     ["Indische Religionen",["buddhismus"]],
     ["Ostasien",["shinto","chinesisch"]],
     ["Mesoamerika",["aztekisch"]],
-    ["Philosophische Kosmen",["platon","aristoteles","neuplatonismus","thomas","spinoza","kant","schelling","hegel","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
+    ["Philosophische Kosmen",["anaximander","heraklit","parmenides","platon","aristoteles","neuplatonismus","thomas","spinoza","kant","jacobi","kierkegaard","schelling","hegel","schopenhauer","nietzsche","cioran","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
     ["Mystische Traditionen",["gnosis","kabbala","boehme"]],
     ["Moderne Kosmen",["kapitalismus","kapitalismus-satire"]],
     ["Literarische Kosmen",["lovecraft"]],
@@ -851,18 +930,39 @@
     gxRender(); gxSyncHash(); };
   // Statusleiste für die Figur-Ansichten: macht sichtbar, wenn „Nebenfiguren" oder
   // „Wirkungsbereiche" etwas ausblenden — samt Zähler und „Alles anzeigen".
+  /* Zustandsstreifen. Meldete bisher nur die beiden Kaestchen und nur in
+     den Figur-Ansichten. Suche, Motivfilter und Zeitregler schraenken aber
+     staerker ein als beides — und blieben stumm: Wer nach „Sonne“ suchte und
+     die Seite liegen liess, sah spaeter eine halbleere Buehne ohne Hinweis,
+     warum. Jetzt nennt der Streifen jede wirksame Einschraenkung, in jeder
+     Ansicht, und der Knopf raeumt alle zugleich weg. */
   function gxSyncFilterBar(){
     const bar=document.getElementById('gx-filterbar'); if(!bar) return;
     const figView=((gxView==='hybrid'||gxView==='stars') && !compareMode);
     const dM=document.getElementById('gx-minor'), dD=document.getElementById('gx-domains');
     const minorOff=dM&&!dM.checked, domOff=dD&&!dD.checked;
-    if(!figView || (!minorOff && !domOff)){ bar.hidden=true; bar.innerHTML=''; return; }
     const parts=[];
-    if(minorOff){
+    if(figView && minorOff){
       const total=pan().gods.length, shown=pan().gods.filter(g=>g.rank==='major').length;
       parts.push('Nur Hauptfiguren — <b>'+shown+'</b> von '+total+' sichtbar');
     }
-    if(domOff) parts.push('Wirkungsbereiche ausgeblendet');
+    if(figView && domOff) parts.push('Wirkungsbereiche ausgeblendet');
+    try{
+      const q=document.getElementById('gx-q');
+      if(q && q.value.trim()) parts.push('Suche <b>\u201e'+q.value.trim()+'\u201c</b>');
+    }catch(e){}
+    try{
+      const mv=document.getElementById('gx-motiv');
+      if(mv && mv.value){
+        const o=mv.options[mv.selectedIndex];
+        parts.push('Motiv <b>'+((o&&o.textContent)||mv.value)+'</b>');
+      }
+    }catch(e){}
+    try{
+      if(gxJahr!==null && gxJahr!==undefined)
+        parts.push('Zeitpunkt <b>'+(gxJahr<0?(-gxJahr)+' v. Chr.':gxJahr+' n. Chr.')+'</b>');
+    }catch(e){}
+    if(!parts.length){ bar.hidden=true; bar.innerHTML=''; return; }
     bar.innerHTML='<span>'+parts.join(' · ')+'</span>'
       +'<button type="button" class="gx-fb-reset" onclick="gxResetFilters()">Alles anzeigen</button>';
     bar.hidden=false;
@@ -873,7 +973,24 @@
     const q=document.getElementById('gx-q'); if(q) q.value='';
     const mv=document.getElementById('gx-motiv'); if(mv) mv.value='';
     const rz=document.getElementById('gx-results'); if(rz){ rz.hidden=true; rz.innerHTML=''; }
+    /* Der Zeitregler blieb beim Zuruecksetzen stehen — „Alles anzeigen“ zeigte
+       danach immer noch nur, was im eingestellten Jahr lebendig war. */
+    try{ if(typeof gxJahrSetzen==='function' && gxJahr!==null) gxJahrSetzen(null); }catch(e){}
     gxRender();
+  };
+
+  /* Werkzeugfach auf- und zuklappen. Der Behaelter traegt gods-hidden; die
+     einzelnen Elemente darin steuert gxSyncAtlasChrome() unabhaengig weiter. */
+  window.gxWerkzeuge=function(){
+    const box=document.getElementById('gods-controls');
+    const btn=document.getElementById('gx-werkzeug-btn');
+    if(!box) return;
+    const auf=box.classList.contains('gods-hidden');
+    box.classList.toggle('gods-hidden', !auf);
+    if(btn){
+      btn.classList.toggle('on', auf);
+      btn.setAttribute('aria-expanded', auf?'true':'false');
+    }
   };
   window.gxLeaveCards=function(){            // Compare: Karten-Grid schliessen, SVG-Buehne zeigen (View bleibt)
     const w=document.getElementById('gods-stage-wrap'), c=document.getElementById('gx-cards');
@@ -1342,9 +1459,21 @@
     const gewaehlt=panOrder.filter(k=>atlasWahl.indexOf(k)>=0);
     if(gewaehlt.length>=2) panOrder.length=0, gewaehlt.forEach(k=>panOrder.push(k));
     gxAtlasLeiste(perPan);
-    const nFig=[...perPan.values()].reduce((a,m)=>a+m.size,0);
+    /* nFig NACH der Filterung zählen — perPan enthält alle Kosmen, nicht
+       nur die gewählten. Zuerst hatte ich hier über perPan summiert; dann
+       stand nFig immer auf 212 und der Massstab bewegte sich nie. */
+    const nFig=panOrder.reduce((a,k)=>a+(perPan.get(k)?perPan.get(k).size:0),0);
 
     // 2) Kreis-Layout
+    /* Der Kreis füllt immer 360°, egal wie viele Kosmen gewählt sind —
+       das leistet `step` weiter unten. Was fehlte: Bei wenigen Kosmen
+       blieben Punkte und Schrift so klein wie bei allen, der Kreis wirkte
+       leer und die Sehnen waren nicht besser zu verfolgen als vorher.
+       Deshalb ein Massstab, der an der Zahl der gezeichneten Figuren hängt:
+       wenige Figuren → grössere Knoten, grössere Namen, kräftigere Linien.
+       Bei 250+ Figuren bleibt alles wie bisher (Faktor 1), bei 40 wird
+       es rund doppelt so gross. */
+    const SKAL = Math.max(1, Math.min(2.2, Math.sqrt(230 / Math.max(24, nFig))));
     const W=1010, HH=1010, C=505, R=352, GAPU=2.2;
     svg.setAttribute('width',W); svg.setAttribute('height',HH); stage.style.width=W+'px';
     svg.setAttribute('role','img');
@@ -1390,7 +1519,10 @@
         // Inline-Stil statt Attribut: die CSS-Regel .gxa-edge setzt stroke und
         // wuerde ein Praesentationsattribut sonst ueberstimmen.
         const _kt=gxKantenTyp(grp,refs[i2],refs[j2]);
-        let _st='stroke:'+_ti.farbe;
+        /* Linienstärke mitskalieren: Bei wenigen Kosmen sind die Sehnen
+           sonst genauso dünn wie im vollen Atlas — gerade sie will man
+           bei kleiner Auswahl besser verfolgen können. */
+        let _st='stroke:'+_ti.farbe+';stroke-width:'+(0.9*Math.min(SKAL,1.9)).toFixed(2);
         if(_kt==='analogie')      _st+=';stroke-dasharray:5 4';
         if(_kt==='gegenstellung') _st+=';stroke-dasharray:1.5 3.5';
         const _lebt=gxLebt(nodePos[refs[i2]].pan,gxJahr) && gxLebt(nodePos[refs[j2]].pan,gxJahr);
@@ -1404,10 +1536,19 @@
     Object.keys(nodePos).forEach(ref=>{
       const nd=nodePos[ref], P=DATA.panthea[nd.pan];
       const grpEl=el('g',{class:'gxa-node'+(gxLebt(nd.pan,gxJahr)?'':' gxa-off'),'data-ref':ref});
-      grpEl.appendChild(el('circle',{cx:nd.x.toFixed(1),cy:nd.y.toFixed(1),r:3.6,fill:P.color,stroke:'#0c0d18','stroke-width':1}));
+      grpEl.appendChild(el('circle',{cx:nd.x.toFixed(1),cy:nd.y.toFixed(1),
+        r:(3.6*SKAL).toFixed(2),fill:P.color,stroke:'#0c0d18','stroke-width':(1*Math.min(SKAL,1.6)).toFixed(2)}));
       const deg=nd.ang*180/Math.PI, left=(Math.cos(nd.ang)<0);
-      const lx=C+(R+10)*Math.cos(nd.ang), ly=C+(R+10)*Math.sin(nd.ang);
-      grpEl.appendChild(el('text',{class:'gxa-name',x:lx.toFixed(1),y:(ly+2.8).toFixed(1),
+      /* Beschriftung AUSSERHALB des Farbbands. Das Band liegt bei R+13,
+         die Namen begannen bei R+10 — der erste Buchstabe rechts und der
+         letzte links ragten also ins Band und waren schwer zu lesen. Mit
+         grösserer Schrift bei kleiner Auswahl wurde es schlimmer, weil die
+         Buchstaben höher sind. Jetzt hinter dem Band, mit einem Abstand,
+         der wie die Schrift mitwächst. */
+      const RTXT = R + 21 + 3*SKAL;
+      const lx=C+RTXT*Math.cos(nd.ang), ly=C+RTXT*Math.sin(nd.ang);
+      grpEl.appendChild(el('text',{class:'gxa-name',x:lx.toFixed(1),y:(ly+2.8*SKAL).toFixed(1),
+        'font-size':(9.5*SKAL).toFixed(1),
         'text-anchor':left?'end':'start',
         transform:'rotate('+(left?deg+180:deg).toFixed(1)+' '+lx.toFixed(1)+' '+ly.toFixed(1)+')'},nd.g.name));
       grpEl.addEventListener('mouseenter',()=>atlasHighlight(ref));
@@ -1417,7 +1558,15 @@
     });
 
     // 5) Mitte: Zähler / Hover-Info
-    const nGrp=DATA.equiv.length, nPan=panOrder.length;
+    /* Nur die Gruppen zählen, die im Kreis auch vorkommen. Zuvor stand hier
+       DATA.equiv.length — die Mitte meldete 114 Entsprechungen, während im
+       Bild drei Kosmen mit einer Handvoll Sehnen zu sehen waren. */
+    const _sichtbar=new Set();
+    DATA.equiv.forEach((grp,gi)=>{
+      const drin=grp.filter(r=>panOrder.indexOf(String(r).split(':')[0])>=0);
+      if(drin.length>=2) _sichtbar.add(gi);
+    });
+    const nGrp=_sichtbar.size, nPan=panOrder.length;
     const centerG=el('g',{id:'gxa-center'});
     centerG.appendChild(el('text',{class:'gxa-center',x:C,y:C-16,'font-size':'40','font-weight':'700',
       fill:'var(--gx-star)',style:'paint-order:stroke;stroke:#0c0d18;stroke-width:6'},String(nGrp)));
