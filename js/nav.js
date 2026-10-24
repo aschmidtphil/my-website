@@ -196,7 +196,7 @@ const NAV = [
     {id:'gaming', icon:'🎮', label:'Gaming'},
     {id:'chor',   icon:'🎵', label:'Chor im Loch'},
     {id:'shirts', icon:'👕', label:'Philosophen-Shirts'},
-    {id:'nature', icon:'🌿', label:'Natur'},
+    {id:'nature', icon:'📸', label:'Momente'},
   ]},
   {type:'group', label:'Kontakt', items:[
     {id:'kontakt',   icon:'✉️', label:'Kontakt'},
@@ -284,6 +284,7 @@ async function showPage(id, sub) {
   const newHash = '#' + id + (window._routeSub.length ? '/' + window._routeSub.map(encodeURIComponent).join('/') : '');
   if (location.hash !== newHash) history.pushState({page:id}, '', newHash);
   _currentPage = id;
+  if (id !== 'nature' && window.stopMomente) window.stopMomente();
 
   const root = document.getElementById('page-root');
   if (!root) { _busy = false; return; }
@@ -679,13 +680,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }catch(x){}
 
     try{                                            // Shirts
-      (window.SHIRTS||[]).forEach(function(s){
+      if(veroeffentlicht('shirts')) (window.SHIRTS||[]).forEach(function(s){
         add({grp:'Shirts',sym:'👕',t:s.t,u:s.denker+' · '+s.kat,geh:function(){nav('shirts');}});
       });
     }catch(x){}
 
     try{                                            // Dokumente
-      (window.DOCUMENTS_DATA||[]).forEach(function(d){
+      if(veroeffentlicht('arbeiten')) (window.DOCUMENTS_DATA||[]).forEach(function(d){
         add({grp:'Dokumente',sym:'📄',t:d.title||d.filename,
              u:(d.pages? d.pages+' Seiten':'')+(d.sizeMB? ' · '+d.sizeMB+' MB':''),
              geh:function(){nav('arbeiten');}});
@@ -697,6 +698,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function nav(id){ zu(); if(typeof showPage==='function') showPage(id);
     else if(window.showPage) window.showPage(id); }
+  /* Der Suchindex fuehrte Shirts und Dokumente weiter auf, auch wenn die
+     Seiten nicht veroeffentlicht sind — ein Treffer dort haette auf die
+     Startseite umgeleitet und die Existenz der Seite trotzdem verraten.
+     Titel von Hausarbeiten sind genau das, was verborgen bleiben soll. */
+  function veroeffentlicht(id){
+    try{ return NICHT_OEFFENTLICH.indexOf(id) < 0; }catch(e){ return true; }
+  }
   function spaeter(fn){                              // wartet, bis die Seite bereit ist
     var n=0; (function tick(){ n++;
       try{ if(fn()!==false) return; }catch(x){}
@@ -822,4 +830,3 @@ document.addEventListener('DOMContentLoaded', () => {
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){css();knopf();});
   else { css(); knopf(); }
 })();
-

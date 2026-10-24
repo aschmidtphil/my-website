@@ -45,7 +45,6 @@ const NICHT_OEFFENTLICH = [
   'gaming',
   'chor',
   'shirts',
-  'nature',
   'phil-eigene'
 ];
 
@@ -3769,6 +3768,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
   background: var(--feld-bg);
 }
 </style>
+<link rel="stylesheet" href="css/momente.css">
 </head><body>
 <a class="skip-link" href="#page-root" onclick="navZumInhalt(event)">Zum Inhalt springen</a>
 <nav>
@@ -4041,7 +4041,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
     <a href="#arbeiten" class="nur-arbeiten">Eigene Arbeiten</a>
     <a href="#chor" class="nur-chor">Chor im Loch</a>
     <a href="#shirts" class="nur-shirts">Philosophen-Shirts</a>
-    <a href="#nature" class="nur-nature">Natur</a>
+    <a href="#nature" class="nur-nature">Momente</a>
     <a href="#gaming" class="nur-gaming">Gaming</a>
     <a href="#kontakt">Kontakt</a>
   </nav>
@@ -19281,15 +19281,15 @@ renderGameCards();
 </script>
 </template>
 <template id="page-nature">
-<div class="page-hero" style="background:linear-gradient(135deg,var(--bg2),var(--bg));padding-bottom:1.5rem">
-    <div class="page-hero-glow" style="background:radial-gradient(circle,rgba(34,197,94,.12),transparent 70%)"></div>
-    <p class="hero-tag" style="color:var(--accent3-text)">Eigene Aufnahmen</p>
-    <h1 class="page-title">Natur<span style="color:var(--accent3-text)">.</span></h1>
-    <p class="page-desc">Pers&ouml;nliche Naturfotos &mdash; geordnet nach Stimmung und Ort. Momente, die sich festgesetzt haben.</p>
+  <div class="page-hero" style="background:linear-gradient(135deg,var(--bg2),var(--bg));padding-bottom:1.5rem">
+    <p class="hero-tag" style="color:var(--accent3-text)">Statusarchiv</p>
+    <h1 class="page-title">Momente<span style="color:var(--accent3-text)">.</span></h1>
+    <p class="page-desc">Reisen, Alltag und Augenblicke – festgehalten in Bildern, Videos und Worten.</p>
   </div>
-  <div class="nature-cat-nav" id="nature-cat-nav"></div>
-  <div class="nature-cat-label" id="nature-cat-label"></div>
-  <div class="nature-grid" id="nature-grid"></div>
+  <div class="momente-wrap">
+    <p class="momente-hinweis" id="momente-state" role="status">Archiv wird geladen …</p>
+    <div class="momente-grid" id="momente-grid" aria-label="Archivierte Statusmeldungen"></div>
+  </div>
 </template>
 <template id="page-chor">
 <style>
@@ -22551,7 +22551,7 @@ const NAV = [
     {id:'gaming', icon:'🎮', label:'Gaming'},
     {id:'chor',   icon:'🎵', label:'Chor im Loch'},
     {id:'shirts', icon:'👕', label:'Philosophen-Shirts'},
-    {id:'nature', icon:'🌿', label:'Natur'},
+    {id:'nature', icon:'📸', label:'Momente'},
   ]},
   {type:'group', label:'Kontakt', items:[
     {id:'kontakt',   icon:'✉️', label:'Kontakt'},
@@ -22639,6 +22639,7 @@ async function showPage(id, sub) {
   const newHash = '#' + id + (window._routeSub.length ? '/' + window._routeSub.map(encodeURIComponent).join('/') : '');
   if (location.hash !== newHash) history.pushState({page:id}, '', newHash);
   _currentPage = id;
+  if (id !== 'nature' && window.stopMomente) window.stopMomente();
 
   const root = document.getElementById('page-root');
   if (!root) { _busy = false; return; }
@@ -23267,62 +23268,7 @@ function renderPodcasts(){
 // NATUR — categories
 // ════════════════════════════════════════════════
 
-var NATURE_CATS={
-  'Eigene Fotos':{desc:'Persönliche Aufnahmen — festgehaltene Momente.',items:[
-    {src:'assets/images/Natur/20250921_191313.webp',srcAvif:'assets/images/Natur/20250921_191313.avif',location:'September 2025',title:'Herbstlicht',desc:'Ein stiller Moment — Licht und Schatten kurz vor dem Abend.'},
-    {src:'assets/images/Natur/20250921_191315.webp',srcAvif:'assets/images/Natur/20250921_191315.avif',location:'September 2025',title:'Weite',desc:'Der Blick öffnet sich — Raum zum Atmen, Raum zum Denken.'},
-  ]},
-  'Meer & Küste':{desc:'Wasser, Horizont und das Gefühl der Weite.',items:[
-    {emoji:'🌊',bg:'linear-gradient(135deg,#0a4a6e,#1a8ab0)',location:'Nordsee',title:'Ebbe bei Sonnenuntergang',desc:'Wenn das Watt sich entblößt und der Horizont in Orange taucht.'},
-  ]},
-  'Wald & Gebirge':{desc:'Ruhe und Größe in der terrestrischen Natur.',items:[
-    {emoji:'🏔️',bg:'linear-gradient(135deg,#2d4a1e,#4a8030)',location:'Alpen, Österreich',title:'Morgennebel im Hochgebirge',desc:'Vor dem Aufstieg liegt die Welt noch unter Wolken.'},
-    {emoji:'🌲',bg:'linear-gradient(135deg,#1a3020,#2a5530)',location:'Schwarzwald',title:'Lichtstrahlen im alten Wald',desc:'Eine Kathedrale aus Licht und Grün.'},
-  ]},
-  'Nacht & Kosmos':{desc:'Dunkelheit als Bedingung des Lichts.',items:[
-    {emoji:'🌌',bg:'linear-gradient(135deg,#050510,#0a0a2a)',location:'Eifel, Deutschland',title:'Sternenhimmel',desc:'Hier draußen wird klar, wie weit das Universum reicht.'},
-  ]},
-};
-var activeCat='Eigene Fotos';
-function renderNature(){
-  var nav=document.getElementById('nature-cat-nav');
-  if(!nav)return;
-  if(!nav.children.length){
-    Object.keys(NATURE_CATS).forEach(function(cat){
-      var b=document.createElement('button');
-      b.className='nature-cat-btn'+(cat===activeCat?' active':'');
-      b.textContent=cat;
-      b.onclick=function(){
-        activeCat=cat;
-        document.querySelectorAll('.nature-cat-btn').forEach(function(x){x.classList.remove('active');});
-        b.classList.add('active');
-        renderNatureCat();
-      };
-      nav.appendChild(b);
-    });
-  }
-  renderNatureCat();
-}
-function renderNatureCat(){
-  var lbl=document.getElementById('nature-cat-label');
-  var grid=document.getElementById('nature-grid');
-  var data=NATURE_CATS[activeCat];
-  if(lbl)lbl.innerHTML='<h3>'+activeCat+'</h3><p>'+data.desc+'</p>';
-  grid.innerHTML='';
-  data.items.forEach(function(n){
-    var card=document.createElement('div');card.className='nature-card';
-    var imgHtml=n.src
-      ?'<div style="overflow:hidden;border-radius:14px 14px 0 0;line-height:0"><picture>'
-        +(n.srcAvif?'<source srcset="'+n.srcAvif+'" type="image/avif">':'')
-        +'<source srcset="'+n.src+'" type="image/webp">'
-        +'<img class="nature-card-img" src="'+n.src+'" alt="'+n.title+'" loading="lazy"></picture></div>'
-      :'<div class="nature-img-area" style="background:'+(n.bg||'#111')+'"><span style="font-size:3.5rem">'+(n.emoji||'')+'</span></div>';
-    card.innerHTML=imgHtml
-      +'<div class="nature-img-info"><div class="nature-loc">📍 '+n.location+'</div>'
-      +'<div class="nature-title">'+n.title+'</div><div class="nature-desc">'+n.desc+'</div></div>';
-    grid.appendChild(card);
-  });
-}
+// Momente: Renderer und Viewer in js/momente.js.
 
 // ════════════════════════════════════════════════
 // PHILOSOPHEN TIMELINE — with zoom
@@ -23994,6 +23940,9 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
 <script src="js/bildnachweise-goetter.js" onerror="console.log('bildnachweise-goetter.js nicht geladen (optional — Medaillon-Manifest)')"></script>
 <script src="js/documents-data.js" onerror="console.log('documents-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
 <script src="js/documents-meta-data.js" onerror="console.log('documents-meta-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
+<script src="js/momente-data.js"></script>
+<script src="js/momente-songs.js"></script>
+<script src="js/momente.js"></script>
 <!-- Telefon-Regeln bewusst ganz am Ende: Sie standen zuvor oben, die
      Seitenstile aber weiter unten — bei gleicher Spezifität gewann
      dadurch immer der Seitenstil. Fünfmal ist mir deshalb eine Regel
@@ -24422,4 +24371,27 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
 }
 </style>
 
+<style>
+/* Momente: Telefon-Regeln zuletzt, damit die Seitenstile sie nicht überdecken. */
+@media(max-width:900px){
+  .momente-wrap{padding:1rem 1.2rem 3rem}
+  .momente-grid{gap:1rem}
+  .momente-card img{height:220px}
+  .momente-shell{gap:8px;padding-left: max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+  .momente-toolbar{flex-wrap:nowrap;gap:4px}
+  .momente-heading{flex-basis:0;font-size:.9rem}
+  .momente-toolbar button{font-size:.85rem}
+  .momente-content{gap:10px}
+  .momente-caption{padding:12px 14px;font-size:1rem;max-height:100%}
+  #momente-music{padding:8px 10px}
+  #momente-music>div{gap:6px}
+  .momente-help{display:none}
+}
+@media(prefers-reduced-motion:reduce){.momente-card{transition:none}}
+@media(max-height:500px) and (min-width:600px){
+  .momente-content{grid-template-columns:minmax(0,1fr) 34%;grid-template-rows:minmax(0,1fr)}
+  .momente-caption{align-self:center}
+  .momente-heading{flex-basis:auto}
+}
+</style>
 </body></html>

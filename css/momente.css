@@ -1,0 +1,67 @@
+/* Die Galerie übernimmt die gewählte Website-Palette. */
+.momente-wrap{max-width:1200px;margin:auto;padding:1rem 3rem 4rem}
+.momente-hinweis{color:var(--text2);line-height:1.7;margin-bottom:1.5rem}
+.momente-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:1.5rem}
+.momente-card{font:inherit;text-align:left;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;box-shadow:var(--shadow)}
+.momente-card img{width:100%;height:240px;object-fit:contain;background:var(--bg2);display:block}
+.momente-card-body{display:grid;gap:.5rem;padding:1.2rem}
+.momente-card strong{font-family:var(--fh);font-size:1.25rem}
+.momente-card small{color:var(--text2)}
+.momente-card:focus-visible,.momente-viewer button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(hover:hover){.momente-card:hover{border-color:var(--accent)}}
+/* Konstante dunkle Medienbühne für gut lesbare Bedienung in allen Paletten. */
+.momente-viewer{position:fixed;inset:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;margin:0;border:0;padding:0;background:#101419;color:#fff;overflow:hidden}
+.momente-viewer::backdrop{background:#101419}
+.momente-shell{height:100%;display:flex;flex-direction:column;padding: max(12px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));gap:10px;box-sizing:border-box}
+.momente-progress{display:flex;gap:5px;flex-shrink:0}
+.momente-segment{height:4px;flex:1;background:#59616c;border-radius:4px;overflow:hidden}
+.momente-segment span{display:block;height:100%;width:0;background:#fff}
+.momente-toolbar{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.momente-heading{flex:1;min-width:0;font-size:1rem;line-height:1.4}
+.momente-heading small{display:block;color:#d4dbe4;font-size:.8rem}
+.momente-viewer button{min-width:44px;min-height:44px;border:1px solid #6e7886;border-radius:8px;background:#202832;color:#fff;font:inherit;cursor:pointer;padding:8px}
+.momente-content{flex:1;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) minmax(0,28%);gap:16px;width:100%;max-width:2100px;margin:0 auto}
+.momente-stage{position:relative;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.momente-media{width:100%;height:100%;object-fit:contain;min-height:0}
+.momente-link-preview{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;width:min(720px,calc(100% - 100px));min-height:min(420px,65vh);padding:clamp(2rem,6vw,5rem);box-sizing:border-box;border:1px solid #ff716c;border-radius:18px;background:linear-gradient(145deg,#25191b,#6f1d1b);color:#fff;text-align:center;text-decoration:none;box-shadow:0 24px 70px rgba(0,0,0,.38)}
+.momente-link-preview-icon{display:grid;place-items:center;width:96px;height:68px;padding-left:7px;border-radius:20px;background:#ff0033;font-size:2.3rem;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.momente-link-preview strong{font-size:clamp(1.5rem,3vw,2.6rem)}
+.momente-link-preview small{color:#e8cfd2;font-size:1rem}
+.momente-link-preview:focus-visible{outline:4px solid #fff;outline-offset:6px}
+@media(hover:hover){.momente-link-preview:hover{background:linear-gradient(145deg,#321d20,#91231f);transform:translateY(-2px)}}
+.momente-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;opacity:.9}
+.momente-prev{left:0}.momente-next{right:0}
+.momente-caption{line-height:1.65;white-space:pre-wrap;overflow:auto;max-height:100%;min-width:0;min-height:0;overscroll-behavior:contain;padding:20px 24px;background:#202832;border:1px solid #485565;border-left:4px solid #cdb78e;border-radius:8px;flex-shrink:0;font-size:clamp(1.1rem,1.1vw,1.6rem);box-sizing:border-box}
+.momente-caption:empty{visibility:hidden}
+.momente-external-link{display:block;width:max-content;max-width:100%;margin-top:1rem;padding:.8rem 1.1rem;border:1px solid #ff6b6b;border-radius:8px;background:#c4302b;color:#fff;font-weight:700;text-decoration:none;box-sizing:border-box}
+.momente-external-link:only-child{margin-top:0}
+.momente-external-link:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(hover:hover){.momente-external-link:hover{background:#e03b35}}
+.momente-flag{display:inline-block;width:1.42em;height:.94em;margin:0 .08em;vertical-align:-.11em;overflow:hidden;text-indent:-9999px;border:1px solid rgba(0,0,0,.22);border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.momente-flag-jp{background:radial-gradient(circle at center,#bc002d 0 28%,transparent 29%),#fff}
+/* Auf breiten Monitoren bleibt die Lesespalte neben dem Motiv auf Blickhöhe. */
+@media(min-width:1100px) and (min-height:600px){
+  .momente-content{grid-template-columns:minmax(0,1fr) clamp(320px,27vw,560px);grid-template-rows:minmax(0,1fr);gap:clamp(20px,2vw,48px)}
+  .momente-caption{align-self:center;max-height:100%;padding:clamp(24px,2vw,40px);font-size:clamp(1.2rem,1.1vw,1.65rem)}
+}
+.momente-meta{color:#d4dbe4;font-size:.8rem;flex-shrink:0;height:1.5em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.momente-message{position:absolute;background:#202832;padding:1rem;border-radius:8px;max-width:75%;text-align:center}
+.momente-help{font-size:.75rem;color:#d4dbe4;flex-shrink:0}
+/* Feste Steuerleiste; das Musikmenü überlagert den Inhalt nur nach bewusstem Öffnen. */
+#momente-controls{position:relative;flex-shrink:0;display:grid;grid-template-columns:44px 44px minmax(0,1fr) 44px;gap:8px;width:100%;max-width:2100px;height:44px;margin:0 auto}
+#momente-controls>[data-action="pause"]{grid-column:1}
+#momente-controls>[data-action="sound"]{grid-column:2}
+#music-toggle{grid-column:4;font-size:1.35rem}
+#momente-music{position:absolute;right:0;bottom:calc(100% + 10px);z-index:4;display:grid;gap:10px;width:min(480px,calc(100vw - 32px));max-height:calc(100dvh - 160px);overflow:auto;overscroll-behavior:contain;box-sizing:border-box;background:#202832;color:#fff;border:1px solid #6e7886;border-radius:12px;padding:16px;font-size:.9rem;line-height:1.5;min-width:0;box-shadow:0 12px 40px #0008;--bg2:#101419;--border:#6e7886;--text2:#d4dbe4;--accent:#cdb78e}
+#momente-music[hidden]{display:none}
+#momente-music>div{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
+#momente-music>div strong{flex:1}
+#music-current{flex:1;min-width:120px;overflow-wrap:anywhere;color:var(--text2)}
+#momente-music button,#momente-music select{font:inherit;color:inherit;background:var(--bg2);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:6px 10px;max-width:100%;cursor:pointer}
+#momente-music button:disabled,#momente-music select:disabled{opacity:.55;cursor:default}
+#momente-music label{display:inline-flex;align-items:center;gap:8px}
+#music-select{flex:1;min-width:100px;width:180px}
+#music-volume{max-width:130px;accent-color:var(--accent)}
+#music-state{display:block;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.5em}
+#momente-music :is(button,select,input,summary):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.momente-viewer #momente-music small{font-size:.75rem}

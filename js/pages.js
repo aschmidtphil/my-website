@@ -79,62 +79,7 @@ function renderPodcasts(){
 // NATUR — categories
 // ════════════════════════════════════════════════
 
-var NATURE_CATS={
-  'Eigene Fotos':{desc:'Persönliche Aufnahmen — festgehaltene Momente.',items:[
-    {src:'assets/images/Natur/20250921_191313.webp',srcAvif:'assets/images/Natur/20250921_191313.avif',location:'September 2025',title:'Herbstlicht',desc:'Ein stiller Moment — Licht und Schatten kurz vor dem Abend.'},
-    {src:'assets/images/Natur/20250921_191315.webp',srcAvif:'assets/images/Natur/20250921_191315.avif',location:'September 2025',title:'Weite',desc:'Der Blick öffnet sich — Raum zum Atmen, Raum zum Denken.'},
-  ]},
-  'Meer & Küste':{desc:'Wasser, Horizont und das Gefühl der Weite.',items:[
-    {emoji:'🌊',bg:'linear-gradient(135deg,#0a4a6e,#1a8ab0)',location:'Nordsee',title:'Ebbe bei Sonnenuntergang',desc:'Wenn das Watt sich entblößt und der Horizont in Orange taucht.'},
-  ]},
-  'Wald & Gebirge':{desc:'Ruhe und Größe in der terrestrischen Natur.',items:[
-    {emoji:'🏔️',bg:'linear-gradient(135deg,#2d4a1e,#4a8030)',location:'Alpen, Österreich',title:'Morgennebel im Hochgebirge',desc:'Vor dem Aufstieg liegt die Welt noch unter Wolken.'},
-    {emoji:'🌲',bg:'linear-gradient(135deg,#1a3020,#2a5530)',location:'Schwarzwald',title:'Lichtstrahlen im alten Wald',desc:'Eine Kathedrale aus Licht und Grün.'},
-  ]},
-  'Nacht & Kosmos':{desc:'Dunkelheit als Bedingung des Lichts.',items:[
-    {emoji:'🌌',bg:'linear-gradient(135deg,#050510,#0a0a2a)',location:'Eifel, Deutschland',title:'Sternenhimmel',desc:'Hier draußen wird klar, wie weit das Universum reicht.'},
-  ]},
-};
-var activeCat='Eigene Fotos';
-function renderNature(){
-  var nav=document.getElementById('nature-cat-nav');
-  if(!nav)return;
-  if(!nav.children.length){
-    Object.keys(NATURE_CATS).forEach(function(cat){
-      var b=document.createElement('button');
-      b.className='nature-cat-btn'+(cat===activeCat?' active':'');
-      b.textContent=cat;
-      b.onclick=function(){
-        activeCat=cat;
-        document.querySelectorAll('.nature-cat-btn').forEach(function(x){x.classList.remove('active');});
-        b.classList.add('active');
-        renderNatureCat();
-      };
-      nav.appendChild(b);
-    });
-  }
-  renderNatureCat();
-}
-function renderNatureCat(){
-  var lbl=document.getElementById('nature-cat-label');
-  var grid=document.getElementById('nature-grid');
-  var data=NATURE_CATS[activeCat];
-  if(lbl)lbl.innerHTML='<h3>'+activeCat+'</h3><p>'+data.desc+'</p>';
-  grid.innerHTML='';
-  data.items.forEach(function(n){
-    var card=document.createElement('div');card.className='nature-card';
-    var imgHtml=n.src
-      ?'<div style="overflow:hidden;border-radius:14px 14px 0 0;line-height:0"><picture>'
-        +(n.srcAvif?'<source srcset="'+n.srcAvif+'" type="image/avif">':'')
-        +'<source srcset="'+n.src+'" type="image/webp">'
-        +'<img class="nature-card-img" src="'+n.src+'" alt="'+n.title+'" loading="lazy"></picture></div>'
-      :'<div class="nature-img-area" style="background:'+(n.bg||'#111')+'"><span style="font-size:3.5rem">'+(n.emoji||'')+'</span></div>';
-    card.innerHTML=imgHtml
-      +'<div class="nature-img-info"><div class="nature-loc">📍 '+n.location+'</div>'
-      +'<div class="nature-title">'+n.title+'</div><div class="nature-desc">'+n.desc+'</div></div>';
-    grid.appendChild(card);
-  });
-}
+// Momente: Renderer und Viewer in js/momente.js.
 
 // ════════════════════════════════════════════════
 // PHILOSOPHEN TIMELINE — with zoom
