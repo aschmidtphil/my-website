@@ -24,6 +24,16 @@
   "urheber": "After   Lysippos",
   "werk": "Aristoteles"
  },
+ "boehme": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:B%C3%B6hme_Philosophische_Kugel.JPG",
+  "hinweis": "Nachweis für die bereits vorhandene Vignette. Historisches kosmologisches Diagramm; keine gesicherte eigenhändige Zeichnung Böhmes. Die Bilddateien wurden nicht ersetzt.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+  "name": "Jakob Böhme – vorhandene Kosmos-Vignette",
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:B%C3%B6hme_Philosophische_Kugel.JPG",
+  "urheber": "Historischer Illustrator unbekannt; Aufnahme: Schnäggli",
+  "werk": "Philosophische Kugel, Ausgabe der Vierzig Fragen von der Seelen, 1682"
+ },
  "christentum": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:KellsFol007vMadonnaChild_V2.jpg",
   "lizenz": "Public domain",
@@ -37,9 +47,30 @@
   "hinweis": "Paris — Ciorans Wohnort ab 1937",
   "lizenz": "CC BY-SA 3.0",
   "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "name": "Cioran-Kosmos – Hintergrund: Paris",
   "quelle_artikel": "",
   "urheber": "Jorge Royan",
   "werk": "Emil Cioran — Vignette"
+ },
+ "diablo": {
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/vignetten/originale/diablo.png",
+  "hinweis": "KI-generiertes Hintergrundbild. Die vollständige Komposition wurde für 1600 × 1000 Pixel verkleinert und oben/unten mit einem dunklen Rand ergänzt; keine Figuren seitlich abgeschnitten. Ersetzt das frühere BlizzCon-Foto.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Hintergrund",
+  "quellbild_groesse": [
+   1672,
+   941
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "Himmlische Heerscharen über der Höllenzitadelle (1).png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "Himmlische Heerscharen über der Höllenzitadelle"
  },
  "gnosis": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:El_Evangelio_de_Tom%C3%A1s-Gospel_of_Thomas-_Codex_II_Manuscritos_de_Nag_Hammadi-The_Nag_Hammadi_manuscripts.png",
@@ -70,6 +101,7 @@
   "hinweis": "Freiburg — Husserls letzte Wirkungsstätte",
   "lizenz": "CC BY-SA 3.0",
   "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "name": "Husserl-Kosmos – Hintergrund: Freiburg",
   "quelle_artikel": "",
   "urheber": "Armin Hornung",
   "werk": "Edmund Husserl — Vignette"
@@ -138,6 +170,15 @@
   "quelle_artikel": "https://de.wikipedia.org/wiki/Plotin",
   "urheber": "Unknown author Unknown author",
   "werk": "Plotin"
+ },
+ "oekologische_modernitaet": {
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:Lake_Tekapo_01.jpg",
+  "hinweis": "Lake Tekapo ist der größte See der Region Canterbury auf der Südinsel von Neuseeland.",
+  "lizenz": "CC BY-SA 4.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "quelle_artikel": "",
+  "urheber": "Krzysztof Golik",
+  "werk": "oekologische_modernitaet — Vignette"
  },
  "parmenides": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Elea-velia-villa.JPG",

@@ -2169,4 +2169,3 @@ const EPOCHS_META_V2 = [
   { name:'Neopragmatismus',    color:'#20a050' },
   { name:'Gegenwart',          color:'#4ade80' },
 ];
-

@@ -152,6 +152,846 @@
   "quelle_artikel": "https://de.wikipedia.org/wiki/Thot",
   "urheber": "Netjerudua"
  },
+ "aristoteles/aether": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   832,
+   3,
+   1092,
+   267
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/aether.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Der Äther – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Der Äther",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 1,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt. Die Spiral- und Sternmotive sind eine moderne symbolische Visualisierung, keine Rekonstruktion der aristotelischen Astronomie.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Der Äther",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/aether.png",
+  "raster": [
+   1,
+   4
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Der Äther",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/dynamis": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   585,
+   273,
+   826,
+   523
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/dynamis.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Dynamis — die Möglichkeit – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Dynamis — die Möglichkeit",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 2,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Dynamis — die Möglichkeit",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/dynamis.png",
+  "raster": [
+   2,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Dynamis — die Möglichkeit",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/ebenen/aristotelischer_kosmos": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   1098,
+   768,
+   1399,
+   1119
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/ebenen/aristotelischer_kosmos.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Der aristotelische Kosmos – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "uebersicht",
+  "bild_titel": "Der aristotelische Kosmos",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": null,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Übersichts-/Ebenenmotiv, keine zusätzliche Figur oder neue Rangstufe des Kosmos. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Der aristotelische Kosmos",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/aristotelischer_kosmos.png",
+  "raster": [
+   4,
+   5
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Der aristotelische Kosmos",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/ebenen/sphaeren_und_himmel": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   310,
+   3,
+   579,
+   267
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/ebenen/sphaeren_und_himmel.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Sphären & Himmel – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "ebene",
+  "bild_titel": "Sphären & Himmel",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 1,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Übersichts-/Ebenenmotiv, keine zusätzliche Figur oder neue Rangstufe des Kosmos. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Sphären & Himmel",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/sphaeren_und_himmel.png",
+  "raster": [
+   1,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Sphären & Himmel",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/ebenen/sublunare_welt": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   1098,
+   3,
+   1399,
+   267
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/ebenen/sublunare_welt.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die sublunare Welt – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "ebene",
+  "bild_titel": "Die sublunare Welt",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 4,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Übersichts-/Ebenenmotiv, keine zusätzliche Figur oder neue Rangstufe des Kosmos. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die sublunare Welt",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/sublunare_welt.png",
+  "raster": [
+   1,
+   5
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die sublunare Welt",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/eidos": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   310,
+   273,
+   579,
+   523
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/eidos.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Eidos — die Form – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Eidos — die Form",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 2,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Eidos — die Form",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/eidos.png",
+  "raster": [
+   2,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Eidos — die Form",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/elemente": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   3,
+   768,
+   304,
+   1119
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/elemente.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die vier Elemente – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die vier Elemente",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 4,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die vier Elemente",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/vier_elemente.png",
+  "raster": [
+   4,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die vier Elemente",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/energeia": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   3,
+   273,
+   304,
+   523
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/energeia.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Energeia — die Wirklichkeit – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Energeia — die Wirklichkeit",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 2,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Energeia — die Wirklichkeit",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/energeia.png",
+  "raster": [
+   2,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Energeia — die Wirklichkeit",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/eudaimonia": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   832,
+   529,
+   1092,
+   762
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/eudaimonia.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die Eudaimonia – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Eudaimonia",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 3,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die Eudaimonia",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/eudaimonia.png",
+  "raster": [
+   3,
+   4
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Eudaimonia",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/hyle": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   832,
+   273,
+   1092,
+   523
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/hyle.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Hylē — der Stoff – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Hylē — der Stoff",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 2,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Hylē — der Stoff",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/hyle.png",
+  "raster": [
+   2,
+   4
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Hylē — der Stoff",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/nous_poietikos": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   585,
+   529,
+   826,
+   762
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/nous_poietikos.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Der tätige Geist (nous poiētikos) – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Der tätige Geist",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 3,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Der tätige Geist (nous poiētikos)",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/taetiger_geist.png",
+  "raster": [
+   3,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Der tätige Geist",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/physis": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   1098,
+   273,
+   1399,
+   523
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/physis.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die Physis – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Physis",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 2,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die Physis",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/physis.png",
+  "raster": [
+   2,
+   5
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Physis",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/seele": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   310,
+   529,
+   579,
+   762
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/seele.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die Seele – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Seele",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 3,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt. Symbolbild für die vegetativen, sensitiven und rationalen Lebensvermögen; keine Darstellung einer nach Aristoteles unabhängig vom Leib existierenden Seele.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die Seele",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/seele.png",
+  "raster": [
+   3,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Seele",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/sphaerenintelligenzen": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   585,
+   3,
+   826,
+   267
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/sphaerenintelligenzen.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die Sphärenintelligenzen – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Sphärenintelligenzen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 1,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die Sphärenintelligenzen",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/sphaerenintelligenzen.png",
+  "raster": [
+   1,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Sphärenintelligenzen",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/steresis": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   3,
+   529,
+   304,
+   762
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/steresis.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die Sterēsis – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Sterēsis",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 2,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die Sterēsis",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/steresis.png",
+  "raster": [
+   3,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Sterēsis",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/synholon": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   1098,
+   529,
+   1399,
+   762
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/synholon.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Das Synholon — die Einzelsubstanz – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Das Synholon — die Einzelsubstanz",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 4,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Das Synholon — die Einzelsubstanz",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/synholon.png",
+  "raster": [
+   3,
+   5
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Das Synholon — die Einzelsubstanz",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/topos": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   585,
+   768,
+   826,
+   1119
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/topos.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Der Ort – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Der Ort",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 4,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Der Ort",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/ort.png",
+  "raster": [
+   4,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Der Ort",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/tyche": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   832,
+   768,
+   1092,
+   1119
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/tyche.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Tychē & Automaton – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Tychē & Automaton",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 4,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Tychē & Automaton",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/tyche_und_automaton.png",
+  "raster": [
+   4,
+   4
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Tychē & Automaton",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/unbewegter_beweger": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   3,
+   3,
+   304,
+   267
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/unbewegter_beweger.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Der Unbewegte Beweger – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Der Unbewegte Beweger",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 0,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt. Freie figürliche Personifikation eines philosophischen Prinzips; keine von Aristoteles überlieferte Gottesdarstellung und kein Aristoteles-Porträt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Der Unbewegte Beweger",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/unbewegter_beweger.png",
+  "raster": [
+   1,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Der Unbewegte Beweger",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "aristoteles/zeit": {
+  "ausgangscollage": "aristoteles_kosmos_collage.png",
+  "ausschnitt": [
+   310,
+   768,
+   579,
+   1119
+  ],
+  "bild_datei": "assets/images/goetter/aristoteles/zeit.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "bild_gross_alt": "Die Zeit – vollständige bereitgestellte KI-Collage",
+  "bild_gross_label": "Ganze Collage anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Zeit",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/aristoteles/originale/aristoteles_kosmos_collage.png",
+  "ebene": 4,
+  "export_quelle": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos_collage.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Symbolische Interpretation eines aristotelischen Begriffs, keine historische Abbildung. Anhand der CSV-Position sauber aus der vollständigen Collage zugeschnitten; Nachbarmotive und Trennlinien entfernt.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Aristoteles – Die Zeit",
+  "quellbild_groesse": [
+   1402,
+   1122
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "aristoteles_kosmos_einzelbilder/aristoteles_kosmos.csv",
+  "quelle_datei": "aristoteles_kosmos_einzelbilder/zeit.png",
+  "raster": [
+   4,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Zeit",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
  "aztekisch/centeotl": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Centeotl.jpg",
   "hinweis": "Der Mais — Grundnahrung und Gottesleib zugleich",
@@ -295,6 +1135,606 @@
   "name": "Xolotl",
   "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Bodl_Arch.Selden.A.2_roll113E_frame5.jpg",
   "urheber": "Unknown author Unknown author"
+ },
+ "boehme/b_adam": {
+  "ausschnitt": [
+   681,
+   1897,
+   1605,
+   2625
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fix.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n602/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: A bei der unteren Erdkugel, getrennt von der oberen Krone. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Der gefallene Adam",
+  "quellbild_groesse": [
+   2310,
+   3136
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n602/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel IX, Band 3 (1764), Scan n602",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_angst": {
+  "ausschnitt": [
+   1053,
+   1233,
+   1843,
+   2060
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Kreis 3: Angst und wirbelndes Rad. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Angst",
+  "quellbild_groesse": [
+   2289,
+   3121
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel II, Band 3 (1764), Scan n588",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_bitter": {
+  "ausschnitt": [
+   675,
+   593,
+   1465,
+   1420
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Kreis 2: Bitterkeit, Stachel und Bewegung. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Bitterkeit",
+  "quellbild_groesse": [
+   2289,
+   3121
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel II, Band 3 (1764), Scan n588",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_blitz": {
+  "ausschnitt": [
+   583,
+   881,
+   1655,
+   1919
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fiii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n590/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Vierte Gestalt: Feuerdurchbruch zwischen Dunkel und Licht. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Der Blitz",
+  "quellbild_groesse": [
+   2331,
+   3146
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n590/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel III, Band 3 (1764), Scan n590",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_christus": {
+  "ausschnitt": [
+   914,
+   1925,
+   1376,
+   2419
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fxi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n606/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Kreuz im A-Bereich über der Erde. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Der innere Christus",
+  "quellbild_groesse": [
+   2373,
+   3141
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n606/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel XI, Band 3 (1764), Scan n606",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_dreiwelten": {
+  "ausschnitt": [
+   242,
+   154,
+   1853,
+   2498
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/f0.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n583/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Zusammenhang von dunklem, lichtem und äußerem Weltbereich. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die drei Welten",
+  "quellbild_groesse": [
+   2014,
+   2565
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n583/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. The true principles of all things, Fig. I (1764), Scan n583",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_ganzheit": {
+  "ausschnitt": [
+   11,
+   319,
+   2181,
+   2624
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fxiii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n610/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Geordnete sieben Kreise um die göttliche Mitte. Kein Beleg für eine allgemeine Erlösung einschließlich Luzifers. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Wiederbringung",
+  "quellbild_groesse": [
+   2284,
+   3131
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n610/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel XIII, Band 3 (1764), Scan n610",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_grimm": {
+  "ausschnitt": [
+   1184,
+   841,
+   1811,
+   1454
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/f0.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n583/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Dunkler Bereich der ersten Impression. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Der Grimm",
+  "quellbild_groesse": [
+   2014,
+   2565
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n583/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. The true principles of all things, Fig. I (1764), Scan n583",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_herb": {
+  "ausschnitt": [
+   286,
+   1233,
+   1064,
+   2060
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Kreis 1: Herbigkeit und magnetische Anziehung. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Herbigkeit",
+  "quellbild_groesse": [
+   2289,
+   3121
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel II, Band 3 (1764), Scan n588",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_ja": {
+  "ausschnitt": [
+   45,
+   551,
+   1205,
+   1667
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Feine Kreisbewegung als Sinnbild des ausfliessenden Ja. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Das Ja",
+  "quellbild_groesse": [
+   2232,
+   3146
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel I, Band 3 (1764), Scan n586",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_licht": {
+  "ausschnitt": [
+   316,
+   1241,
+   1135,
+   2120
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fiv.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n592/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Lichtkreis der fünften Gestalt. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Das Licht",
+  "quellbild_groesse": [
+   2341,
+   3141
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n592/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel IV, Band 3 (1764), Scan n592",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_luzifer": {
+  "ausschnitt": [
+   706,
+   2207,
+   1551,
+   2865
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fvi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n596/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Abwärtsbewegung des mit L markierten Bereichs. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Luzifer",
+  "quellbild_groesse": [
+   2315,
+   3131
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n596/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel VI, Band 3 (1764), Scan n596",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_mysterium": {
+  "ausschnitt": [
+   82,
+   346,
+   2229,
+   2517
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fv.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n594/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Siebenfältiges Gesamtbild um die gemeinsame Mitte. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Mysterium Magnum",
+  "quellbild_groesse": [
+   2346,
+   3146
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n594/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel V, Band 3 (1764), Scan n594",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_nein": {
+  "ausschnitt": [
+   714,
+   1636,
+   1975,
+   2485
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Dunkle, einziehende Kreisbewegung als Sinnbild des Nein. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Das Nein",
+  "quellbild_groesse": [
+   2232,
+   3146
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel I, Band 3 (1764), Scan n586",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_qual": {
+  "ausschnitt": [
+   286,
+   593,
+   1877,
+   2060
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Überlagerung der ersten drei Naturgestalten. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Qual",
+  "quellbild_groesse": [
+   2289,
+   3121
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n588/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel II, Band 3 (1764), Scan n588",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_schall": {
+  "ausschnitt": [
+   702,
+   518,
+   1615,
+   1382
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fiv.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n592/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Lichtkreis der sechsten Gestalt. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Der Schall",
+  "quellbild_groesse": [
+   2341,
+   3141
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n592/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel IV, Band 3 (1764), Scan n592",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_signatur": {
+  "ausschnitt": [
+   38,
+   775,
+   1765,
+   2584
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/s.webp",
+  "datei_seite": "https://archive.org/details/theosophiarevela04bohm/page/n6/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Titelkupfer Signatura Rerum: Zeichenrad und Schloss. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Signatur",
+  "quellbild_groesse": [
+   1908,
+   3230
+  ],
+  "quelle_artikel": "https://archive.org/details/theosophiarevela04bohm/page/n6/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1730; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Illustrator und Stecher nicht gesichert",
+  "werk": "Jakob Böhme: Theosophia revelata, Band 4, 1730. Signatura Rerum, Titelkupfer XIV, Theosophia revelata, Band 4 (1730), Scan n6",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_spiegel": {
+  "ausschnitt": [
+   72,
+   201,
+   1544,
+   1768
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/k.webp",
+  "datei_seite": "https://commons.wikimedia.org/wiki/File:B%C3%B6hme_Philosophische_Kugel.JPG",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Wunder-Auge der Philosophischen Kugel. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+  "name": "Jakob Böhme – Der Spiegel",
+  "quellbild_groesse": [
+   1600,
+   1911
+  ],
+  "quelle_artikel": "https://commons.wikimedia.org/wiki/File:B%C3%B6hme_Philosophische_Kugel.JPG",
+  "rechte_hinweis": "Commons-Dateiseite: PD-old-100 / Public Domain Mark.",
+  "sammlung": "Wikimedia Commons; vorhandene lokale Reproduktion",
+  "urheber": "Historischer Illustrator unbekannt; Aufnahme: Schnäggli",
+  "werk": "Jakob Böhme: Vierzig Fragen von der Seelen, Philosophische Kugel, Ausgabe 1682",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_sucht": {
+  "ausschnitt": [
+   33,
+   456,
+   2076,
+   2517
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Sich einziehende, dunkle Kreislinie. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Sucht",
+  "quellbild_groesse": [
+   2232,
+   3146
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel I, Band 3 (1764), Scan n586",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_turba": {
+  "ausschnitt": [
+   301,
+   1299,
+   2037,
+   2927
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fvi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n596/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Zerrissene Ordnung im unteren dunklen Bereich. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Turba",
+  "quellbild_groesse": [
+   2315,
+   3131
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n596/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel VI, Band 3 (1764), Scan n596",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_ungrund": {
+  "ausschnitt": [
+   268,
+   661,
+   1875,
+   2139
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Offener Innenraum mit der beginnenden Kreisbewegung. Das Diagramm veranschaulicht den Übergang in Natur, kein wörtliches Bild des eigenschaftslosen Ungrundes. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Der Ungrund",
+  "quellbild_groesse": [
+   2232,
+   3146
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n586/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel I, Band 3 (1764), Scan n586",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_wesen": {
+  "ausschnitt": [
+   1077,
+   1241,
+   1908,
+   2120
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fiv.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n592/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt: Lichtkreis der siebten Gestalt. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Das Wesen",
+  "quellbild_groesse": [
+   2341,
+   3141
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n592/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel IV, Band 3 (1764), Scan n592",
+  "zuordnung": "Zuordnung durch historische Beschriftung, Nummerierung oder Werkbezug gestützt"
+ },
+ "boehme/b_wiedergeburt": {
+  "ausschnitt": [
+   142,
+   188,
+   2242,
+   2997
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fxi.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n606/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Helle Bewegung durch die Weltbereiche. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Die Wiedergeburt",
+  "quellbild_groesse": [
+   2373,
+   3141
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n606/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel XI, Band 3 (1764), Scan n606",
+  "zuordnung": "Heutige interpretative Zuordnung"
+ },
+ "boehme/b_wortfiat": {
+  "ausschnitt": [
+   571,
+   533,
+   1713,
+   1631
+  ],
+  "bild_format": "diagramm",
+  "bild_gross": "assets/images/goetter/boehme/tafeln/fvii.webp",
+  "datei_seite": "https://archive.org/details/worksofjacobbehm03bohm/page/n598/mode/1up",
+  "hinweis": "Ausschnitt aus historischer Tafel, mit ergänztem Papierrand. Heutige interpretative Zuordnung: Übergang vom oberen göttlichen Bereich zum äußeren Weltkreis. Über „Ganze Tafel“ ist der vollständige Bildzusammenhang zugänglich.",
+  "lizenz": "Gemeinfrei (Public Domain)",
+  "lizenz_url": "https://www.gesetze-im-internet.de/urhg/__68.html",
+  "name": "Jakob Böhme – Das Fiat",
+  "quellbild_groesse": [
+   2331,
+   3136
+  ],
+  "quelle_artikel": "https://archive.org/details/worksofjacobbehm03bohm/page/n598/mode/1up",
+  "rechte_hinweis": "Gemeinfreies Original von 1764; werkgetreuer Scan eines zweidimensionalen visuellen Werkes (§ 68 UrhG). Keine CC0-Lizenz des Archivs behauptet.",
+  "sammlung": "Getty Research Institute, Los Angeles; Digitalisat: Internet Archive",
+  "urheber": "Historische Illustration aus dem Freher-/Law-Umfeld; Stecher nicht gesichert",
+  "werk": "The works of Jacob Behmen, Band 3, London 1764. Tafel VII, Band 3 (1764), Scan n598",
+  "zuordnung": "Heutige interpretative Zuordnung"
  },
  "buddhismus/acala": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Okunoin_FudoMyoo.JPG",
@@ -806,6 +2246,440 @@
   "name": "Gott-Vater",
   "quelle_artikel": "https://commons.wikimedia.org/wiki/File:Creaci%C3%B3n_de_Ad%C3%A1m.jpg",
   "urheber": "Michelangelo"
+ },
+ "diablo/andariel": {
+  "ausschnitt": [
+   0,
+   0,
+   218,
+   265
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/andariel.png",
+  "bild_gross_alt": "Diablo – Andariel – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/andariel.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Andariel",
+  "quellbild_groesse": [
+   218,
+   265
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/andariel.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Andariel",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "diablo/auriel": {
+  "ausschnitt": [
+   186,
+   61,
+   621,
+   496
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/auriel.png",
+  "bild_gross_alt": "Diablo – Auriel – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/auriel.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Auriel",
+  "quellbild_groesse": [
+   807,
+   870
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Auriel.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Auriel, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
+ },
+ "diablo/azmodan": {
+  "ausschnitt": [
+   278,
+   84,
+   835,
+   637
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/azmodan.png",
+  "bild_gross_alt": "Diablo – Azmodan – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/azmodan.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Azmodan",
+  "quellbild_groesse": [
+   1070,
+   1045
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Azmodan.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Azmodan, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
+ },
+ "diablo/baal": {
+  "ausschnitt": [
+   0,
+   0,
+   231,
+   265
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/baal.png",
+  "bild_gross_alt": "Diablo – Baal – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/baal.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Baal",
+  "quellbild_groesse": [
+   231,
+   265
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/baal.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Baal",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "diablo/belial": {
+  "ausschnitt": [
+   0,
+   0,
+   252,
+   265
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/belial.png",
+  "bild_gross_alt": "Diablo – Belial – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/belial.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Belial",
+  "quellbild_groesse": [
+   252,
+   265
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/belial.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Belial",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "diablo/diablo": {
+  "ausschnitt": [
+   150,
+   0,
+   819,
+   668
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/diablo.png",
+  "bild_gross_alt": "Diablo – Diablo – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/diablo.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Diablo",
+  "quellbild_groesse": [
+   999,
+   868
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Diablo2.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Diablo, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
+ },
+ "diablo/duriel": {
+  "ausschnitt": [
+   0,
+   0,
+   225,
+   242
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/duriel.png",
+  "bild_gross_alt": "Diablo – Duriel – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/duriel.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Duriel",
+  "quellbild_groesse": [
+   225,
+   242
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/duriel.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Duriel",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "diablo/imperius": {
+  "ausschnitt": [
+   94,
+   76,
+   535,
+   515
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/imperius.png",
+  "bild_gross_alt": "Diablo – Imperius – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/imperius.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Imperius",
+  "quellbild_groesse": [
+   629,
+   953
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Imperius.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Imperius, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
+ },
+ "diablo/itherael": {
+  "ausschnitt": [
+   0,
+   0,
+   206,
+   256
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/itherael.png",
+  "bild_gross_alt": "Diablo – Itherael – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/itherael.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Itherael",
+  "quellbild_groesse": [
+   206,
+   256
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/itherael.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Itherael",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "diablo/lilith": {
+  "ausschnitt": [
+   0,
+   0,
+   216,
+   242
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/lilith.png",
+  "bild_gross_alt": "Diablo – Lilith – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/lilith.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Lilith",
+  "quellbild_groesse": [
+   216,
+   242
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/lilith.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Lilith",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "diablo/malthael": {
+  "ausschnitt": [
+   14,
+   0,
+   703,
+   689
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/malthael.png",
+  "bild_gross_alt": "Diablo – Malthael – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/malthael.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Malthael",
+  "quellbild_groesse": [
+   717,
+   895
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Malthael.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Malthael, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
+ },
+ "diablo/mephisto": {
+  "ausschnitt": [
+   187,
+   0,
+   788,
+   604
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/mephisto.png",
+  "bild_gross_alt": "Diablo – Mephisto – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/mephisto.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Mephisto",
+  "quellbild_groesse": [
+   985,
+   930
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Mephisto1.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Mephisto, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
+ },
+ "diablo/nephalem_d3": {
+  "ausschnitt": [
+   0,
+   0,
+   203,
+   256
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/nephalem_d3.png",
+  "bild_gross_alt": "Diablo – Der Nephalem – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/diablo/originale/nephalem_d3.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Dämonen und Engel des Sanktuariums (1).png. Symbolische KI-Darstellung eines Nephalem in barbarischer Gestalt. Beispiel für einen Spielercharakter, kein kanonisch festgelegtes Aussehen. Das Einzelheldenbild steht deshalb beim Diablo-III-Nephalem, nicht bei der Gruppe der ersten Nephalem. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Diablo – Der Nephalem",
+  "quellbild_groesse": [
+   203,
+   256
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "diablo/nephalem.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Nephalem",
+  "zuordnung": "Symbolische KI-Darstellung eines Nephalem in barbarischer Gestalt. Beispiel für einen Spielercharakter, kein kanonisch festgelegtes Aussehen. Das Einzelheldenbild steht deshalb beim Diablo-III-Nephalem, nicht bei der Gruppe der ersten Nephalem."
+ },
+ "diablo/tyrael": {
+  "ausschnitt": [
+   283,
+   24,
+   850,
+   592
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/diablo/originale/tyrael.png",
+  "bild_gross_alt": "Diablo – Tyrael – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "screenshot",
+  "datei_seite": "assets/images/goetter/diablo/originale/tyrael.png",
+  "hinweis": "Eigener Spiel-Screenshot von Alexander Schmidt aus Heroes of the Storm. Die dargestellte Spielfigur ist keine KI-Illustration. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": false,
+  "lizenz": "Eigener Spiel-Screenshot · © Blizzard Entertainment",
+  "lizenz_url": "",
+  "name": "Diablo – Tyrael",
+  "quellbild_groesse": [
+   1090,
+   800
+  ],
+  "quelle_artikel": "https://heroesofthestorm.blizzard.com/de-de/",
+  "quelle_datei": "Diablo_Hots/Tyrael.png",
+  "rechte_hinweis": "Screenshot: Alexander Schmidt. Spielgrafik und Figuren: © Blizzard Entertainment. Eigener Screenshot ist keine Behauptung von Gemeinfreiheit der Spielgrafik.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Screenshot: Alexander Schmidt; Spielgrafik: Blizzard Entertainment",
+  "werk": "Heroes of the Storm – Diablo – Tyrael, eigener Spiel-Screenshot",
+  "zuordnung": "Benannte Spielfigur in Heroes of the Storm"
  },
  "gnosis/achamoth": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Ecclesia_Gnostica_Holy_Sophia_Statue.png",
@@ -2415,12 +4289,46 @@
   "urheber": "Ériugena"
  },
  "lovecraft/azathoth": {
-  "datei_seite": "https://commons.wikimedia.org/wiki/File:Hugh_Rankin_-_The_Call_of_Cthulhu.jpg",
-  "lizenz": "Public domain",
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/azathoth.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/azathoth.png",
+  "bild_gross_alt": "Azathoth – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Azathoth",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/azathoth.png",
+  "ebene": 0,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/azathoth.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
   "lizenz_url": "",
-  "name": "Cthulhu-Mythos",
-  "quelle_artikel": "https://de.wikipedia.org/wiki/Cthulhu-Mythos",
-  "urheber": "Hugh Doak Rankin"
+  "name": "H. P. Lovecraft – Azathoth",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/azathoth.png",
+  "raster": [
+   2,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Azathoth",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/cthulhu": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Cthulhu3.jpg",
@@ -2449,13 +4357,46 @@
   "urheber": "Tom Ardans -  blog  -  Facebook"
  },
  "lovecraft/die_anderen_goetter": {
-  "datei_seite": "",
-  "hinweis": "the Other Gods, blind idiot deities of the outer hells, a writhing mass of shadow and countless eyes beyond the stars, jealous and terrible",
-  "lizenz": "KI-Sinnbild — keine historische Abbildung",
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/die_anderen_goetter.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/aeussere_goetter.png",
+  "bild_gross_alt": "Die Anderen Götter – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Äußeren Götter",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/aeussere_goetter.png",
+  "ebene": 1,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/aeussere_goetter.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
   "lizenz_url": "",
-  "name": "Die Anderen Götter",
+  "name": "H. P. Lovecraft – Die Anderen Götter",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
   "quelle_artikel": "",
-  "urheber": "KI-generiert (Pollinations/flux, Stil bloodborne)"
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/aeussere_goetter.png",
+  "raster": [
+   1,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Äußeren Götter",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/die_erdgoetter": {
   "datei_seite": "",
@@ -2465,6 +4406,90 @@
   "name": "Die Götter der Erde",
   "quelle_artikel": "",
   "urheber": "KI-generiert (Pollinations/flux, Stil bloodborne)"
+ },
+ "lovecraft/ebenen/diener_brut_und_niedere_goetter": {
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/ebenen/diener_brut_und_niedere_goetter.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/diener_brut_und_niedere_goetter.png",
+  "bild_gross_alt": "Diener, Brut und niedere Götter – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "ebene",
+  "bild_titel": "Diener, Brut und niedere Götter",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/diener_brut_und_niedere_goetter.png",
+  "ebene": 3,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/diener_brut_und_niedere_goetter.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe. Übersichts-/Ebenenmotiv, keine zusätzliche Figur oder neue Rangstufe des Kosmos.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "H. P. Lovecraft – Diener, Brut und niedere Götter",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/diener_brut_und_niedere_goetter.png",
+  "raster": [
+   1,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Diener, Brut und niedere Götter",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
+ },
+ "lovecraft/ebenen/grosse_alte": {
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/ebenen/grosse_alte.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/grosse_alte.png",
+  "bild_gross_alt": "Die Großen Alten – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "ebene",
+  "bild_titel": "Die Großen Alten",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/grosse_alte.png",
+  "ebene": 2,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/grosse_alte.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe. Übersichts-/Ebenenmotiv, keine zusätzliche Figur oder neue Rangstufe des Kosmos.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "H. P. Lovecraft – Die Großen Alten",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/grosse_alte.png",
+  "raster": [
+   1,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Großen Alten",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/hastur": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Hastur-the-Unspeakable-Robert-M-Price.gif",
@@ -2484,12 +4509,46 @@
   "urheber": "KI-generiert (Pollinations/flux, Stil bloodborne)"
  },
  "lovecraft/mi_go": {
-  "datei_seite": "https://commons.wikimedia.org/wiki/File:Hugh_Rankin_-_The_Call_of_Cthulhu.jpg",
-  "lizenz": "Public domain",
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/mi_go.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/mi_go.png",
+  "bild_gross_alt": "Die Mi-Go – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Mi-Go",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/mi_go.png",
+  "ebene": 3,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/mi_go.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
   "lizenz_url": "",
-  "name": "Cthulhu-Mythos",
-  "quelle_artikel": "https://de.wikipedia.org/wiki/Cthulhu-Mythos",
-  "urheber": "Hugh Doak Rankin"
+  "name": "H. P. Lovecraft – Die Mi-Go",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/mi_go.png",
+  "raster": [
+   3,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Mi-Go",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/nodens": {
   "datei_seite": "",
@@ -2501,12 +4560,46 @@
   "urheber": "KI-generiert (Pollinations/flux, Stil bloodborne)"
  },
  "lovecraft/nyarlathotep": {
-  "datei_seite": "https://commons.wikimedia.org/wiki/File:Hugh_Rankin_-_The_Call_of_Cthulhu.jpg",
-  "lizenz": "Public domain",
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/nyarlathotep.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/nyarlathotep.png",
+  "bild_gross_alt": "Nyarlathotep – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Nyarlathotep",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/nyarlathotep.png",
+  "ebene": 1,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/nyarlathotep.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
   "lizenz_url": "",
-  "name": "Cthulhu-Mythos",
-  "quelle_artikel": "https://de.wikipedia.org/wiki/Cthulhu-Mythos",
-  "urheber": "Hugh Doak Rankin"
+  "name": "H. P. Lovecraft – Nyarlathotep",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/nyarlathotep.png",
+  "raster": [
+   2,
+   3
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Nyarlathotep",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/shoggothen": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Shoggoth_by_Nottsuo.jpg",
@@ -2517,12 +4610,46 @@
   "urheber": "Nottsuo -  nottsuo.deviantart  -  www.pixiv.net  -  twitter.com/nottsuo"
  },
  "lovecraft/shub_niggurath": {
-  "datei_seite": "https://commons.wikimedia.org/wiki/File:Hugh_Rankin_-_The_Call_of_Cthulhu.jpg",
-  "lizenz": "Public domain",
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/shub_niggurath.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/shub_niggurath.png",
+  "bild_gross_alt": "Shub-Niggurath – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Shub-Niggurath",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/shub_niggurath.png",
+  "ebene": 1,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/shub_niggurath.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
   "lizenz_url": "",
-  "name": "Cthulhu-Mythos",
-  "quelle_artikel": "https://de.wikipedia.org/wiki/Cthulhu-Mythos",
-  "urheber": "Hugh Doak Rankin"
+  "name": "H. P. Lovecraft – Shub-Niggurath",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/shub_niggurath.png",
+  "raster": [
+   3,
+   1
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Shub-Niggurath",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/sternenbrut": {
   "datei_seite": "",
@@ -2534,12 +4661,46 @@
   "urheber": "KI-generiert (Pollinations/flux, Stil bloodborne)"
  },
  "lovecraft/tiefe_wesen": {
-  "datei_seite": "https://commons.wikimedia.org/wiki/File:Dagon.jpg",
-  "lizenz": "CC BY-SA 3.0",
-  "lizenz_url": "http://creativecommons.org/licenses/by-sa/3.0/",
-  "name": "Deep One",
-  "quelle_artikel": "https://en.wikipedia.org/wiki/Deep_One",
-  "urheber": "Dominique Signoret"
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/tiefe_wesen.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/tiefe_wesen.png",
+  "bild_gross_alt": "Die Tiefen Wesen – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Die Tiefen Wesen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/tiefe_wesen.png",
+  "ebene": 3,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/tiefe_wesen.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "H. P. Lovecraft – Die Tiefen Wesen",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/tiefe_wesen.png",
+  "raster": [
+   3,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Die Tiefen Wesen",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "lovecraft/tsathoggua": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Tsathoggua.jpg",
@@ -2559,12 +4720,46 @@
   "urheber": "KI-generiert (Pollinations/flux, Stil bloodborne)"
  },
  "lovecraft/yog_sothoth": {
-  "datei_seite": "https://commons.wikimedia.org/wiki/File:Hugh_Rankin_-_The_Call_of_Cthulhu.jpg",
-  "lizenz": "Public domain",
+  "ausgangscollage": "lovecraft_kosmos_collage.png",
+  "ausschnitt": [
+   0,
+   0,
+   418,
+   418
+  ],
+  "bild_datei": "assets/images/goetter/lovecraft/yog_sothoth.avif",
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/lovecraft/originale/yog_sothoth.png",
+  "bild_gross_alt": "Yog-Sothoth – bereitgestellte KI-Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_rolle": "figur",
+  "bild_titel": "Yog-Sothoth",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/lovecraft/originale/yog_sothoth.png",
+  "ebene": 1,
+  "export_quelle": "lovecraft_kosmos_einzelbilder/yog_sothoth.png",
+  "hinweis": "KI-generierte moderne Illustration, vom Websitebetreiber bereitgestellt. Freie Visualisierung nach Lovecrafts Motiven, keine Illustration aus einer historischen Werkausgabe.",
+  "importiert_am": "2026-10-23",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
   "lizenz_url": "",
-  "name": "Cthulhu-Mythos",
-  "quelle_artikel": "https://de.wikipedia.org/wiki/Cthulhu-Mythos",
-  "urheber": "Hugh Doak Rankin"
+  "name": "H. P. Lovecraft – Yog-Sothoth",
+  "quellbild_groesse": [
+   418,
+   418
+  ],
+  "quelle_artikel": "",
+  "quelle_csv": "lovecraft_kosmos_einzelbilder/lovecraft_kosmos.csv",
+  "quelle_datei": "lovecraft_kosmos_einzelbilder/yog_sothoth.png",
+  "raster": [
+   2,
+   2
+  ],
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Yog-Sothoth",
+  "zuordnung": "Gemäß bereitgestellter CSV; Slug-Abweichungen mit dem aktuellen Projektbestand abgeglichen."
  },
  "manichaeismus/mani": {
   "datei_seite": "https://commons.wikimedia.org/wiki/File:Collection_of_Chinese_Manichaean_Hanging_Scrolls.jpg",
@@ -2977,6 +5172,657 @@
   "name": "Ymir",
   "quelle_artikel": "https://de.wikipedia.org/wiki/Ymir",
   "urheber": "Christian Bickel"
+ },
+ "oekologische_modernitaet/aidōs": {
+  "ausschnitt": [
+   0,
+   0,
+   315,
+   325
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/aidōs.png",
+  "bild_gross_alt": "Ökologische Transformation – Aidōs – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/aidōs.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Aidōs",
+  "quellbild_groesse": [
+   315,
+   325
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/aidos.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Hirschgestalt als Motiv der Ehrfurcht vor der Natur",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/bios": {
+  "ausschnitt": [
+   0,
+   0,
+   308,
+   328
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/bios.png",
+  "bild_gross_alt": "Ökologische Transformation – Bios – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/bios.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Bios",
+  "quellbild_groesse": [
+   308,
+   328
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/bios.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Lebendige weibliche Naturgestalt",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/circularity": {
+  "ausschnitt": [
+   0,
+   0,
+   302,
+   240
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/circularity.png",
+  "bild_gross_alt": "Ökologische Transformation – Kyklos – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/circularity.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Kyklos",
+  "quellbild_groesse": [
+   302,
+   240
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/kyklos_03.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Ring aus Baum, Erde und Pflanzen",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/climate": {
+  "ausschnitt": [
+   0,
+   0,
+   327,
+   280
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/climate.png",
+  "bild_gross_alt": "Ökologische Transformation – Klimos – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/climate.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Klimos",
+  "quellbild_groesse": [
+   327,
+   280
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/klimos.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Halb lebendiger, halb abgestorbener Baum",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/commons": {
+  "ausschnitt": [
+   0,
+   0,
+   359,
+   280
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/commons.png",
+  "bild_gross_alt": "Ökologische Transformation – Koinon – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/commons.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Koinon",
+  "quellbild_groesse": [
+   359,
+   280
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/koinon.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Lebendige Unterwasserwelt als gemeinsames Gut",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/dike_future": {
+  "ausschnitt": [
+   0,
+   0,
+   302,
+   272
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/dike_future.png",
+  "bild_gross_alt": "Ökologische Transformation – Dikē – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/dike_future.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Dikē",
+  "quellbild_groesse": [
+   302,
+   272
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/dike.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Mehrere Generationen betrachten eine zukünftige Welt",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/eleutheria": {
+  "ausschnitt": [
+   0,
+   0,
+   306,
+   250
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/eleutheria.png",
+  "bild_gross_alt": "Ökologische Transformation – Eleutheria – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/eleutheria.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Eleutheria",
+  "quellbild_groesse": [
+   306,
+   250
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/eleutheria.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Freie Himmelsgestalt in den Wolken",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/energeia": {
+  "ausschnitt": [
+   0,
+   0,
+   302,
+   250
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/energeia.png",
+  "bild_gross_alt": "Ökologische Transformation – Energeia – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/energeia.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Sonnengestalt als symbolische Verkörperung von Energie; die im Projekttext ebenfalls behandelte fossile Energienutzung wird von diesem Einzelmotiv nicht dargestellt. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Energeia",
+  "quellbild_groesse": [
+   302,
+   250
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/energeia_02.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Leuchtende Sonnengestalt und Sonnenenergie",
+  "zuordnung": "Sonnengestalt als symbolische Verkörperung von Energie; die im Projekttext ebenfalls behandelte fossile Energienutzung wird von diesem Einzelmotiv nicht dargestellt."
+ },
+ "oekologische_modernitaet/erosion": {
+  "ausschnitt": [
+   0,
+   0,
+   300,
+   250
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/erosion.png",
+  "bild_gross_alt": "Ökologische Transformation – Erosion – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/erosion.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Erosion",
+  "quellbild_groesse": [
+   300,
+   250
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/erosion.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Baum zwischen lebendiger und zerstörter Landschaft",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/eudaimonia": {
+  "ausschnitt": [
+   0,
+   0,
+   300,
+   272
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/eudaimonia.png",
+  "bild_gross_alt": "Ökologische Transformation – Eudaimonia – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/eudaimonia.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Eudaimonia",
+  "quellbild_groesse": [
+   300,
+   272
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/eudaimonia.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Mensch und Tier beobachten friedlich eine Landschaft",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/future": {
+  "ausschnitt": [
+   0,
+   0,
+   303,
+   272
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/future.png",
+  "bild_gross_alt": "Ökologische Transformation – Elpis – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/future.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Elpis",
+  "quellbild_groesse": [
+   303,
+   272
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/elpis.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Kleiner Keimling wird in Händen geschützt",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/gaia": {
+  "ausschnitt": [
+   0,
+   0,
+   309,
+   272
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/gaia.png",
+  "bild_gross_alt": "Ökologische Transformation – Gaia – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/gaia.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Gaia",
+  "quellbild_groesse": [
+   309,
+   272
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/gaia_03.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Erde als Planet aus dem Weltraum",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/metanoia": {
+  "ausschnitt": [
+   0,
+   0,
+   300,
+   240
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/metanoia.png",
+  "bild_gross_alt": "Ökologische Transformation – Metanoia – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/metanoia.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Metanoia",
+  "quellbild_groesse": [
+   300,
+   240
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/metanoia_02.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Schmetterling schlüpft aus der Puppe",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/oikos": {
+  "ausschnitt": [
+   0,
+   0,
+   291,
+   328
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/oikos.png",
+  "bild_gross_alt": "Ökologische Transformation – Oikos – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/oikos.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Oikos",
+  "quellbild_groesse": [
+   291,
+   328
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/oikos.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Naturgestalt hält geschützte Lebenswelt in Glaskugel",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/phronesis": {
+  "ausschnitt": [
+   0,
+   0,
+   302,
+   250
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/phronesis.png",
+  "bild_gross_alt": "Ökologische Transformation – Phronesis – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/phronesis.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Phronesis",
+  "quellbild_groesse": [
+   302,
+   250
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/phronesis.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Verhüllte Gestalt schützt Keimling in einer Kugel",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/physis": {
+  "ausschnitt": [
+   0,
+   0,
+   371,
+   328
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/physis.png",
+  "bild_gross_alt": "Ökologische Transformation – Physis – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/physis.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Physis",
+  "quellbild_groesse": [
+   371,
+   328
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/physis.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Uralter Lebensbaum, Natur und Wasserfälle",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/progress": {
+  "ausschnitt": [
+   0,
+   0,
+   371,
+   280
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/progress.png",
+  "bild_gross_alt": "Ökologische Transformation – Fortschritt – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/progress.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Zukunftsstadt als Bild des Fortschrittsversprechens; eine interpretative positive Möglichkeit, keine vollständige Darstellung der ambivalenten Rolle im Kosmos. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Fortschritt",
+  "quellbild_groesse": [
+   371,
+   280
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/fortschritt.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Blick auf nachhaltige Stadt der Zukunft",
+  "zuordnung": "Zukunftsstadt als Bild des Fortschrittsversprechens; eine interpretative positive Möglichkeit, keine vollständige Darstellung der ambivalenten Rolle im Kosmos."
+ },
+ "oekologische_modernitaet/resilience": {
+  "ausschnitt": [
+   0,
+   0,
+   300,
+   250
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/resilience.png",
+  "bild_gross_alt": "Ökologische Transformation – Karteria – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/resilience.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Karteria",
+  "quellbild_groesse": [
+   300,
+   250
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/karteria.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Wintergestalt als Widerstandskraft der Natur",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/sophia": {
+  "ausschnitt": [
+   0,
+   0,
+   306,
+   272
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/sophia.png",
+  "bild_gross_alt": "Ökologische Transformation – Sophia – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/sophia.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Sophia",
+  "quellbild_groesse": [
+   306,
+   272
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/sophia.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Alter Weiser mit Büchern in einem Baum",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/symbiosis": {
+  "ausschnitt": [
+   0,
+   0,
+   345,
+   325
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/symbiosis.png",
+  "bild_gross_alt": "Ökologische Transformation – Symbiosis – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/symbiosis.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Kreislauf der Natur in 15 Bildern (1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Symbiosis",
+  "quellbild_groesse": [
+   345,
+   325
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/symbiosis.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Biene bestäubt eine Blüte",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
+ },
+ "oekologische_modernitaet/techne": {
+  "ausschnitt": [
+   0,
+   0,
+   309,
+   240
+  ],
+  "bild_format": "illustration",
+  "bild_gross": "assets/images/goetter/oekologische_modernitaet/originale/techne.png",
+  "bild_gross_alt": "Ökologische Transformation – Technē – bereitgestellte Originaldatei",
+  "bild_gross_label": "Originalbild anzeigen",
+  "bild_typ": "ki",
+  "datei_seite": "assets/images/goetter/oekologische_modernitaet/originale/techne.png",
+  "hinweis": "KI-generiertes Bild aus der vom Websitebetreiber bereitgestellten Sammlung. Kein historisches Dokument und keine offizielle Spielgrafik. Ausgangscollage laut Dateizuordnung: Fantastische Naturzyklen im Wandel(1).png. Darstellung als Medaillon optimiert; über „Originalbild anzeigen“ ist die bereitgestellte Datei vollständig zugänglich.",
+  "importiert_am": "2026-10-17",
+  "ki_generiert": true,
+  "lizenz": "KI-Illustration – für diese Website bereitgestellt",
+  "lizenz_url": "",
+  "name": "Ökologische Transformation – Technē",
+  "quellbild_groesse": [
+   309,
+   240
+  ],
+  "quelle_artikel": "",
+  "quelle_datei": "oekologische_transformation/techne_02.png",
+  "rechte_hinweis": "Vom Websitebetreiber zur Verwendung auf dieser Website bereitgestellt. KI-System und Erstellungsdatum nicht angegeben; keine Gemeinfreiheit oder CC-Lizenz behauptet.",
+  "sammlung": "Eigene Bildsammlung von Alexander Schmidt",
+  "urheber": "Bereitgestellt von Alexander Schmidt (KI-Illustration)",
+  "werk": "KI-Illustration: Nachhaltige futuristische Stadt",
+  "zuordnung": "Moderne interpretative Illustration des benannten Prinzips"
  },
  "platon/chora": {
   "datei_seite": "",

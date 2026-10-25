@@ -1,503 +1,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
      GÖTTERKOSMOS — Pantheen & religiöse Kosmen als Hierarchie + Abstammung
 ═══════════════════════════════════════════════════════════════════ -->
-<style>
-.gods-root{
-  --gx-bg:#0c0d18; --gx-ink:#ece6d6; --gx-ink2:#a59f93;
-  --gx-line:#2a2c46; --gx-star:#c9b876;
-  position:relative; background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, #1a1c3266 0%, transparent 60%),
-    radial-gradient(circle at 80% 90%, #15182e88 0%, transparent 50%),
-    var(--gx-bg);
-  min-height:100%; overflow:hidden;
-}
-.gods-stars{ position:absolute; inset:0; pointer-events:none; opacity:.5; z-index:0;
-  background-image:
-    radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 28% 62%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 47% 31%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 63% 78%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 81% 24%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 91% 56%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 38% 88%, #fff 50%, transparent),
-    radial-gradient(2px 2px at 71% 42%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 6% 73%, #fff 50%, transparent),
-    radial-gradient(1px 1px at 55% 12%, #fff 50%, transparent);
-  background-repeat:no-repeat;
-}
-.gods-stars{ animation:gxTwinkle 7s ease-in-out infinite; }
-@keyframes gxTwinkle{ 0%,100%{opacity:.42;} 50%{opacity:.6;} }
-.gods-root::after{ content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:radial-gradient(ellipse 55% 42% at 50% 40%, var(--pan-glow,rgba(201,184,118,.28)) 0%, transparent 62%);
-  opacity:.55; transition:background .45s ease; animation:gxAura 16s ease-in-out infinite; }
-@keyframes gxAura{ 0%,100%{opacity:.45;} 50%{opacity:.72;} }
-.gods-hero{ position:relative; z-index:2; padding:3rem 3rem 1.2rem; text-align:center; }
-.gods-eyebrow{ font-family:var(--fm); font-size:.72rem; letter-spacing:.32em; text-transform:uppercase;
-  color:var(--gx-star); margin-bottom:1rem; }
-.gods-title{ font-family:'Cinzel',serif; font-weight:900; font-size:clamp(2.2rem,5vw,3.6rem);
-  letter-spacing:.04em; color:var(--gx-ink); line-height:1.05;
-  text-shadow:0 0 30px rgba(201,184,118,.25); }
-.gods-title .accent{ color:var(--gx-star); }
-.gods-sub{ font-family:var(--fb); color:var(--gx-ink2); max-width:600px; margin:.9rem auto 0;
-  line-height:1.7; font-size:.92rem; }
-
-/* Kategorie-Trenner über den Tabs */
-.gods-cat-label{ font-family:var(--fm); font-size:.64rem; letter-spacing:.18em; text-transform:uppercase;
-  color:var(--gx-ink2); opacity:.6; width:100%; text-align:center; margin:.6rem 0 .1rem; }
-/* Der methodische Rahmen: leiser als der Untertitel, aber lesbar. */
-.gx-rahmen{ font-size:.78rem; line-height:1.6; opacity:.72; max-width:62ch;
-  margin-top:.9rem; border-left:2px solid var(--gx-line,#3a3f46); padding-left:.9rem; }
-.gods-tabs{ position:relative; z-index:2; display:flex; gap:.45rem; justify-content:center;
-  flex-wrap:wrap; padding:1.2rem 1rem .3rem; }
-.gods-tab{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem; letter-spacing:.04em;
-  background:transparent; color:var(--gx-ink2); border:1px solid var(--gx-line);
-  padding:.45rem 1.1rem; border-radius:2px; cursor:pointer; transition:all .25s; }
-@media (hover: hover){ .gods-tab:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); } }
-.gods-tab.active{ color:#0c0d18; background:var(--pan-color,#c9b876);
-  border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
-
-/* Auswahlfeld für Kategorien mit vielen Kosmen — bewusst wie ein gods-tab
-   gestaltet, damit die Leiste nicht in zwei Formensprachen zerfällt. Das
-   eigene Dreieck ersetzt die systemeigene Pfeilgrafik, die je nach Browser
-   hell oder dunkel ausfällt und im dunklen Kosmos-Hintergrund verschwände. */
-.gods-select{ font-family:'Cinzel',serif; font-weight:600; font-size:.82rem;
-  letter-spacing:.04em; color:var(--gx-ink2); background:transparent;
-  border:1px solid var(--gx-line); border-radius:2px; cursor:pointer;
-  padding:.45rem 2.2rem .45rem 1.1rem; transition:all .25s;
-  -webkit-appearance:none; appearance:none;
-  background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),
-                   linear-gradient(135deg,currentColor 50%,transparent 50%);
-  background-position:calc(100% - 1.15rem) 55%, calc(100% - .85rem) 55%;
-  background-size:5px 5px, 5px 5px; background-repeat:no-repeat; }
-@media (hover: hover){ .gods-select:hover{ color:var(--gx-ink); border-color:var(--pan-color,#c9b876); } }
-/* Das Vollfeld auf dem Telefon: eine Zeile statt elf Kategorien. */
-.gods-select-alle{ width:100%; margin:.2rem 0 .4rem; font-size:.88rem;
-  padding-top:.6rem; padding-bottom:.6rem; }
-.gods-select.active{ color:#0c0d18; background-color:var(--pan-color,#c9b876);
-  border-color:var(--pan-color,#c9b876); box-shadow:0 0 20px var(--pan-glow,rgba(201,184,118,.4)); }
-.gods-select:focus-visible{ outline:2px solid var(--gx-star); outline-offset:2px; }
-/* Die Liste selbst zeichnet das Betriebssystem — dort sind eigene Farben
-   nötig, sonst steht helle Schrift auf hellem Grund. */
-.gods-select option{ background:#12131f; color:#e8e4d8; font-family:'Cinzel',serif; }
-
-.gods-controls{ position:relative; z-index:2; display:flex; gap:1.4rem; justify-content:center;
-  flex-wrap:wrap; align-items:center; padding:.8rem 1rem 1.2rem; }
-.gods-ctrl{ display:inline-flex; align-items:center; gap:.45rem; font-family:var(--fm);
-  font-size:.74rem; color:var(--gx-ink2); cursor:pointer; user-select:none; }
-.gods-ctrl input{ cursor:pointer; accent-color:var(--gx-star); }
-.gods-ctrl-btn{ font-family:var(--fm); font-size:.74rem; letter-spacing:.04em;
-  background:transparent; color:var(--gx-star); border:1px solid var(--gx-star);
-  padding:.42rem 1rem; border-radius:2px; cursor:pointer; transition:all .2s; }
-@media (hover: hover){ .gods-ctrl-btn:hover{ background:var(--gx-star); color:#0c0d18; } }
-.gods-ctrl-btn.on{ background:var(--gx-star); color:#0c0d18; box-shadow:0 0 16px rgba(201,184,118,.4); }
-
-.gods-stage-wrap{ position:relative; z-index:1; overflow-x:auto; overflow-y:hidden; padding:0 1.5rem 2rem; }
-.gods-stage{ position:relative; margin:0 auto; }
-#gods-svg{ display:block; }
-
-.gx-tier-label{ font-family:'Cinzel',serif; font-size:13px; font-weight:600;
-  fill:var(--gx-star); letter-spacing:.06em; opacity:.85; }
-.gx-tier-rule{ stroke:var(--gx-line); stroke-width:1; stroke-dasharray:2 6; opacity:.6; }
-
-.gx-edge{ fill:none; stroke:#3a3d63; stroke-width:1.4; opacity:.5; transition:stroke .2s, opacity .2s, stroke-width .2s; }
-.gx-edge.lit{ stroke:var(--pan-color,#c9b876); stroke-width:2.4; opacity:1; }
-
-/* Emanation: sanfter Lichtpuls die Abstammungslinie hinab (Eltern -> Kind) */
-.gx-flow{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1.7; stroke-linecap:round;
-  stroke-dasharray:7 60; opacity:.42; pointer-events:none;
-  animation:gxFlow 9s linear infinite; }
-@keyframes gxFlow{ from{ stroke-dashoffset:67; } to{ stroke-dashoffset:0; } }
-/* Medaillon am Knoten: entsaettigt (Duotone-Vereinheitlichung), Ring in Pantheon-Farbe */
-.gx-medal{ filter:saturate(.35) contrast(1.06); }
-.gx-medal-ring{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1.5; opacity:.9; }
-.gx-mono-ini{ font-family:var(--fh,serif); font-weight:600; fill:#101322; pointer-events:none; }
-/* ── Karten IM Kosmos-Layout (Porträts-Tab) & in der Vergleichsansicht ── */
-.gx-hyfo{ overflow:visible; }
-.gx-hy-card{ position:relative; box-sizing:border-box; height:100%; display:flex; flex-direction:column;
-  align-items:center; gap:.3rem; padding:.55rem .45rem; text-align:center; cursor:pointer;
-  background:rgba(10,12,26,.62); border:1px solid rgba(122,126,178,.28); border-radius:12px;
-  transition:border-color .15s, transform .15s, box-shadow .15s; }
-@media (hover: hover){ .gx-node:hover .gx-hy-card, .gx-cmp-node:hover .gx-hy-card{ border-color:var(--pan-color,#c9b876);
-  transform:translateY(-2px); box-shadow:0 5px 20px rgba(0,0,0,.4); } }
-.gx-hy-card.major{ border-color:var(--pan-color,#c9b876); }
-.gx-hy-img{ width:58px; height:58px; border-radius:50%; background-size:cover;
-  background-position:center 22%; border:2px solid var(--pan-color,#c9b876);
-  filter:saturate(.78); flex:0 0 auto; }
-.gx-hy-mono{ display:flex; align-items:center; justify-content:center; font-family:var(--fh,serif);
-  font-size:1.5rem; color:var(--pan-color,#c9b876);
-  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), rgba(6,8,18,.55)); }
-.gx-hy-name{ font-family:'Cinzel',serif; font-size:.8rem; color:#e8eaf6; line-height:1.15;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.gx-hy-card.major .gx-hy-name{ color:var(--pan-color,#c9b876); }
-.gx-hy-dom{ font-family:var(--fb); font-size:.62rem; color:#9aa0c7; line-height:1.3;
-  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-.gx-hy-eq{ position:absolute; top:3px; right:7px; color:var(--gx-star); font-size:.72rem; line-height:1; }
-/* ── Sternbild-Ansicht ── */
-.gx-sf-dot{ fill:#aeb6e8; }
-.gx-stars .gx-edge{ stroke:rgba(150,165,225,.30)!important; stroke-width:1!important; opacity:.55!important; }
-.gx-star-glow{ fill:var(--pan-color,#c9b876); opacity:.4; filter:blur(2px);
-  animation:gxTwinkle 3.2s ease-in-out infinite; }
-.gx-star-core{ fill:#fdfefe; }
-.gx-star-ray{ stroke:#fdfefe; stroke-width:.7; opacity:.55; }
-.gx-star-name{ text-anchor:middle; font-family:'Cinzel',serif; fill:#c3c9ee; }
-.gx-star-name.major{ font-size:9.5px; fill:#eef0ff; letter-spacing:.02em; }
-.gx-star-name.minor{ font-size:7.5px; opacity:.72; }
-@keyframes gxTwinkle{ 0%,100%{opacity:.32} 50%{opacity:.72} }
-@media (prefers-reduced-motion: reduce){ .gx-star-glow{ animation:none; } }
-
-/* ── Card-Ansicht: Kosmos <-> Karten ── */
-.gx-viewbar{ display:flex; gap:.4rem; margin:.4rem 0 .6rem; }
-/* Auswahlleiste des Entsprechungs-Atlas. */
-.gx-atlas-wahl{ display:flex; flex-direction:column; gap:.4rem;
-  padding:.6rem .2rem .8rem; }
-.gx-aw-reihe{ display:flex; flex-wrap:wrap; align-items:center; gap:.35rem; }
-.gx-aw-lab{ font-family:var(--fm); font-size:.58rem; letter-spacing:.1em;
-  text-transform:uppercase; color:var(--gx-ink3,#8a8fa8); margin-right:.3rem; }
-.gx-aw-set, .gx-aw-pan{ font-family:var(--fm); font-size:.66rem;
-  padding:.3rem .6rem; border-radius:6px; cursor:pointer;
-  background:transparent; border:1px solid var(--gx-line); color:var(--gx-ink2); }
-.gx-aw-set.an{ background:var(--gx-ink2); color:#0c0d18; border-color:var(--gx-ink2); }
-.gx-aw-pan.an{ border-color:var(--pan-color,var(--gx-star));
-  color:var(--gx-ink); box-shadow:inset 0 0 0 1px var(--pan-color,transparent); }
-@media (hover: hover){
-  .gx-aw-set:hover, .gx-aw-pan:hover{ color:var(--gx-ink); }
-}
-@media (pointer: coarse){
-  .gx-aw-set, .gx-aw-pan{ min-height:38px; padding:.4rem .7rem; }
-}
-@media (max-width: 900px){
-  /* Auf dem Telefon je eine schiebbare Zeile statt Umbruch. */
-  .gx-aw-reihe{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
-    padding-bottom:.2rem; }
-  .gx-aw-reihe::-webkit-scrollbar{ display:none; }
-  .gx-aw-reihe > *{ flex:0 0 auto; }
-
-  /* Dasselbe Muster fuer Ansichtsleiste und Werkzeugfach: waagerecht
-     schieben statt umbrechen. Die fuenf Ansichtsknoepfe brachen sonst auf
-     zwei Zeilen um, die vier Werkzeuge auf zwei bis drei — zusammen vier
-     Zeilen Bedienung ueber einer Buehne, die selbst kaum noch Platz hatte. */
-  .gx-viewbar, .gods-controls{
-    flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
-    -webkit-overflow-scrolling:touch;
-  }
-  .gx-viewbar::-webkit-scrollbar,
-  .gods-controls::-webkit-scrollbar{ display:none; }
-  .gx-viewbar > *, .gods-controls > *{ flex:0 0 auto; }
-  .gx-viewbar{ margin-left:1.5rem; margin-right:1.5rem; }
-  /* Die Werkzeugbank hatte 2rem Innenabstand — sie war eine eigene Bank,
-     obwohl sie drei Kaestchen enthielt. Eingeklappt faellt sie ohnehin weg;
-     aufgeklappt reicht die Haelfte. */
-  .gods-controls{ gap:.9rem; padding:.5rem 1.5rem .7rem; justify-content:flex-start; }
-
-  /* Das Suchfeld verlangte 220 px Mindestbreite und zwang die Zeile damit
-     auf schmalen Schirmen zum Umbruch. Es darf jetzt schrumpfen. */
-  .gx-findbar{ margin-left:1.5rem; margin-right:1.5rem; flex-wrap:nowrap; }
-  .gx-findbar input{ min-width:0; flex:1 1 auto; }
-  .gx-findbar > button{ flex:0 0 auto; }
-
-  /* Fingerkuppengroesse fuer alles, was in diesen Zeilen angetippt wird. */
-  .gx-viewbtn, .gods-ctrl-btn, .gx-fb-reset{ min-height:40px; }
-  .gods-ctrl{ min-height:40px; }
-}
-.gx-viewbtn{ background:rgba(10,12,26,.6); border:1px solid rgba(122,126,178,.35); color:#9aa0c7;
-  font-family:var(--fm); font-size:.68rem; letter-spacing:.06em; padding:.32rem .75rem;
-  border-radius:999px; cursor:pointer; transition:all .15s; }
-@media (hover: hover){ .gx-viewbtn:hover{ color:#e8eaf6; } }
-.gx-viewbtn.on{ color:var(--pan-color,#c9b876); border-color:var(--pan-color,#c9b876); }
-.gx-cards{ position:relative; z-index:1; }
-.gx-cards-tier{ font-family:var(--fm); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--pan-color,#c9b876); opacity:.85; margin:1.1rem 0 .5rem; }
-.gx-cards-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(150px, 100%), 1fr)); gap:.6rem; }
-.gx-card{ display:flex; flex-direction:column; align-items:center; gap:.35rem; padding:.7rem .5rem .6rem;
-  background:rgba(10,12,26,.55); border:1px solid rgba(122,126,178,.25); border-radius:12px;
-  cursor:pointer; text-align:center; transition:transform .15s, border-color .15s, box-shadow .15s; }
-@media (hover: hover){ .gx-card:hover{ transform:translateY(-2px); border-color:var(--pan-color,#c9b876);
-  box-shadow:0 4px 18px rgba(0,0,0,.35); } }
-.gx-card.major .gx-card-name{ color:var(--pan-color,#c9b876); }
-.gx-card-img{ width:84px; height:84px; border-radius:50%; background-size:cover;
-  background-position:center 22%; border:2px solid var(--pan-color,#c9b876); filter:saturate(.75); }
-.gx-card-mono{ display:flex; align-items:center; justify-content:center; font-family:var(--fh,serif);
-  font-size:1.7rem; color:var(--pan-color,#c9b876);
-  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.10), rgba(6,8,18,.55)); }
-.gx-card-name{ font-size:.86rem; color:#e8eaf6; line-height:1.25; }
-.gx-card-dom{ font-size:.66rem; color:#9aa0c7; line-height:1.35; display:-webkit-box;
-  -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-/* Stimmungs-Vignette: EIN Werk je Pantheon, stark abgedunkelt liegend unter
-   Aura (z-index 0 < .gods-stage-wrap z-index 1); Toenung liefert die Aura. */
-.gx-vignette{ position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-size:cover; background-position:center 30%;
-  filter:saturate(.55) brightness(.9); opacity:0; transition:opacity .9s ease; }
-.gx-vignette.on{ opacity:.16; }
-@media (prefers-reduced-motion: reduce){ .gx-flow{ animation:none; opacity:.2; } }
-.gx-equiv-line{ fill:none; stroke:var(--gx-star); stroke-width:1.6; stroke-dasharray:5 4; opacity:.8;
-  transition:opacity .25s; }
-
-.gx-node{ cursor:pointer; transition:opacity .2s; }
-.gx-node .gx-orb{ transition:filter .2s; }
-@media (hover: hover){ .gx-node:hover .gx-orb{ filter:brightness(1.35); } }
-.gx-node.dim{ opacity:.18; }
-.gx-node.sel .gx-name{ fill:var(--gx-star); }
-.gx-name{ font-family:'Cinzel',serif; fill:var(--gx-ink); text-anchor:middle; pointer-events:none; }
-.gx-name.major{ font-weight:700; font-size:13px; }
-.gx-name.minor{ font-weight:400; font-size:10.5px; fill:var(--gx-ink2); }
-.gx-domain{ font-family:var(--fb); font-size:9px; fill:var(--gx-ink2); text-anchor:middle; pointer-events:none; opacity:.7; }
-.gx-equiv-badge{ font-size:11px; fill:var(--gx-star); pointer-events:none; }
-.gx-monism-frame{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1.3; stroke-dasharray:8 6; opacity:.45; pointer-events:none; }
-.gx-monism-label{ font-family:var(--fm); font-size:10px; letter-spacing:.13em; text-transform:uppercase; fill:var(--pan-color,#c9b876); opacity:.8; pointer-events:none; }
-.gx-monad-aura{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:2; opacity:.55; pointer-events:none; }
-.gx-monad-aura2{ fill:none; stroke:var(--pan-color,#c9b876); stroke-width:1; opacity:.25; pointer-events:none; }
-.gx-orb-halo{ fill:var(--pan-color,#c9b876); opacity:.12; pointer-events:none; animation:gxPulse 4.5s ease-in-out infinite; }
-@keyframes gxPulse{ 0%,100%{opacity:.10;} 50%{opacity:.26;} }
-.gx-node{ animation:gxNodeIn .55s ease backwards; }
-@keyframes gxNodeIn{ from{opacity:0;} to{opacity:1;} }
-#gx-edges{ animation:gxEdgeIn 1.1s ease both; }
-@keyframes gxEdgeIn{ from{opacity:0;} to{opacity:1;} }
-
-/* Das Fenster ist unten verankert. Ohne Hoehenbegrenzung waechst es bei viel
-   Inhalt nach OBEN aus dem Bild — auf hohen Monitoren faellt das nicht auf, auf
-   niedrigen sind Kopf und Portraet abgeschnitten. Darum Hoehe deckeln und den
-   Inhalt scrollen lassen. dvh, damit die Leisten mobiler Browser mitzaehlen. */
-.gx-panel{ position:fixed; right:1.5rem; bottom:1.5rem; width:340px; max-width:calc(100vw - 3rem);
-  max-height:calc(100vh - 3rem); max-height:calc(100dvh - 3rem);
-  display:flex; flex-direction:column;
-  background:linear-gradient(160deg,#14152a,#0e0f1d); border:1px solid var(--gx-line);
-  border-radius:4px; padding:1.5rem; z-index:60; box-shadow:0 20px 60px rgba(0,0,0,.6);
-  transform:translateY(20px); opacity:0; pointer-events:none; transition:all .3s; }
-.gx-panel-inhalt{ overflow-y:auto; overscroll-behavior:contain; min-height:0;
-  margin:0 -.5rem; padding:0 .5rem;
-  scrollbar-width:thin; scrollbar-color:var(--gx-line) transparent; }
-.gx-panel-inhalt::-webkit-scrollbar{ width:6px }
-.gx-panel-inhalt::-webkit-scrollbar-thumb{ background:var(--gx-line); border-radius:3px }
-/* Auf niedrigen Fenstern das Portraet kleiner, damit der Text Platz behaelt */
-@media (max-height:820px){ .gx-panel-portrait{ height:130px } }
-@media (max-height:680px){ .gx-panel-portrait{ height:100px } .gx-panel{ padding:1.15rem } }
-@media (max-height:560px){ .gx-panel-portrait{ height:76px }
-  .gx-panel-name{ font-size:1.25rem } }
-.gx-panel.open{ transform:translateY(0); opacity:1; pointer-events:auto; }
-.gx-panel-close{ position:absolute; top:.8rem; right:.8rem; background:rgba(10,12,24,.7);
-  border:none; border-radius:6px; width:1.8rem; height:1.8rem; line-height:1;
-  color:var(--gx-ink); font-size:1.05rem; cursor:pointer; z-index:3;
-  backdrop-filter:blur(4px); }
-/* Der Link-Knopf lag halbtransparent auf dem Portraet und war kaum lesbar. */
-.gx-panel-permalink{ position:absolute; top:.8rem; right:3rem; z-index:3;
-  background:rgba(10,12,24,.78); border:1px solid rgba(236,230,214,.28); border-radius:6px;
-  color:var(--gx-ink); font-family:var(--fm); font-size:.62rem; letter-spacing:.06em;
-  padding:.32rem .55rem; cursor:pointer; backdrop-filter:blur(4px);
-  box-shadow:0 2px 8px rgba(0,0,0,.45); }
-@media (hover: hover){ .gx-panel-permalink:hover{ border-color:var(--gx-star); color:var(--gx-star); } }
-@media (hover: hover){ .gx-panel-close:hover{ color:var(--gx-ink); } }
-.gx-panel-portrait{ width:100%; height:170px; border-radius:4px; overflow:hidden; margin-bottom:1rem;
-  background:#0c0d18; border:1px solid var(--gx-line); display:none; }
-.gx-panel-portrait.show{ display:block; }
-.gx-panel-portrait img{ width:100%; height:100%; object-fit:cover; object-position:center 30%; }
-.gx-panel-tier{ font-family:var(--fm); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--pan-color,#c9b876); margin-bottom:.5rem; }
-.gx-panel-name{ font-family:'Cinzel',serif; font-weight:700; font-size:1.55rem; color:var(--gx-ink);
-  line-height:1.1; margin-bottom:.5rem; }
-.gx-panel-domain{ font-family:var(--fb); color:var(--gx-ink2); font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
-.gx-panel-myth{ margin-bottom:1rem; padding:.75rem .85rem; border-left:2px solid var(--pan-color,#c9b876);
-  background:#1a1c3255; border-radius:0 3px 3px 0; }
-.gx-panel-myth-label{ font-family:var(--fm); font-size:.6rem; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--pan-color,#c9b876); margin-bottom:.4rem; opacity:.9; }
-.gx-panel-myth-text{ font-family:var(--fb); font-style:italic; font-size:.9rem; line-height:1.65; color:var(--gx-ink); }
-.gx-panel-myth-src{ font-family:var(--fm); font-size:.66rem; color:var(--gx-ink2); opacity:.75; margin-top:.5rem; }
-.gx-panel-rel{ font-family:var(--fb); font-size:.82rem; color:var(--gx-ink2); line-height:1.7;
-  border-top:1px solid var(--gx-line); padding-top:.9rem; }
-.gx-panel-rel b{ color:var(--gx-ink); font-weight:600; }
-.gx-equiv-chip{ display:inline-block; font-family:var(--fm); font-size:.7rem;
-  background:#1a1c3260; border:1px solid var(--gx-line); border-radius:2px;
-  padding:.15rem .55rem; margin:.2rem .25rem 0 0; color:var(--gx-star); cursor:pointer; transition:all .15s; }
-@media (hover: hover){ .gx-equiv-chip:hover{ border-color:var(--gx-star); background:#1a1c32; } }
-
-/* ── Bild-Lightbox: Porträt in großer Ansicht ── */
-.gx-panel-portrait.zoomable{ cursor:zoom-in; position:relative; }
-.gx-panel-portrait.zoomable::after{ content:'⤢'; position:absolute; right:.45rem; bottom:.35rem;
-  font-size:.85rem; color:#ece6d6; background:rgba(10,12,26,.66); border:1px solid var(--gx-line);
-  border-radius:3px; padding:.05rem .35rem; opacity:0; transition:opacity .2s; pointer-events:none; }
-@media (hover: hover){ .gx-panel-portrait.zoomable:hover::after{ opacity:.95; } }
-.gx-lightbox{ position:fixed; inset:0; z-index:900; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; padding:2.2rem 1.4rem 1.6rem;
-  background:rgba(4,5,12,.92); backdrop-filter:blur(8px);
-  opacity:0; pointer-events:none; transition:opacity .28s ease; }
-.gx-lightbox.open{ opacity:1; pointer-events:auto; }
-.gx-lightbox img{ max-width:min(92vw,980px); max-height:76vh; object-fit:contain;
-  border:1px solid var(--gx-line); border-radius:4px; box-shadow:0 30px 90px rgba(0,0,0,.75);
-  background:#0c0d18; transform:scale(.965); transition:transform .28s ease; }
-.gx-lightbox.open img{ transform:scale(1); }
-.gx-lb-name{ font-family:'Cinzel',serif; font-weight:700; font-size:1.35rem; color:var(--gx-ink);
-  margin-top:1rem; text-align:center; }
-.gx-lb-meta{ font-family:var(--fm); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase;
-  color:var(--pan-color,#c9b876); margin-top:.3rem; text-align:center; }
-.gx-lb-credit{ font-family:var(--fb); font-size:.7rem; color:var(--gx-ink2); margin-top:.55rem;
-  text-align:center; max-width:620px; line-height:1.6; opacity:.85; }
-.gx-lb-credit a{ color:var(--gx-star); text-decoration:none; border-bottom:1px dotted var(--gx-star); }
-.gx-lb-close{ position:absolute; top:1rem; right:1.2rem; background:none; border:1px solid var(--gx-line);
-  color:var(--gx-ink2); font-size:1.05rem; line-height:1; padding:.4rem .6rem; border-radius:3px;
-  cursor:pointer; transition:all .2s; }
-@media (hover: hover){ .gx-lb-close:hover{ color:var(--gx-ink); border-color:var(--gx-star); } }
-
-/* ── Schliessen auf dem Telefon ──────────────────────────────────────
-   Beide Schliessknöpfe waren mit 29×29 bzw. 35×32 px unter dem Fingermaß
-   und zudem blass — auf dem Gerät wirkte es, als gäbe es keinen Weg
-   zurück. Escape und ein Tipp neben das Bild schließen zwar schon, aber
-   das sieht man dem Bild nicht an. Hier also: größer, deutlicher, und
-   mit Abstand zur Statusleiste randloser Geräte.
-   Mit Maus bleibt alles wie bisher. */
-@media (pointer: coarse){
-  .gx-panel-close{
-    width:44px; height:44px; font-size:1.3rem;
-    top:.5rem; right:.5rem;
-    background:rgba(10,12,24,.85); border:1px solid var(--gx-line);
-  }
-  .gx-lb-close{
-    width:44px; height:44px; font-size:1.3rem;
-    top:calc(.6rem + env(safe-area-inset-top, 0px)); right:.9rem;
-    background:rgba(10,12,24,.85); color:var(--gx-ink);
-    border:1px solid var(--gx-line); border-radius:8px;
-  }
-  /* Der Tipp neben das Bild schließt bereits — nur wusste das niemand. */
-  .gx-lb-hinweis{ display:block; }
-}
-.gx-lb-hinweis{ display:none; margin-top:.9rem; text-align:center;
-  font-family:var(--fm); font-size:.62rem; letter-spacing:.06em;
-  color:var(--gx-ink3, #8a8fa8); }
-@media (prefers-reduced-motion: reduce){ .gx-lightbox, .gx-lightbox img{ transition:none; } }
-
-/* ── Permalink im Detail-Panel ── */
-.gx-panel-permalink{ position:absolute; top:.8rem; right:2.6rem; background:none; border:none;
-  font-family:var(--fm); font-size:.68rem; letter-spacing:.05em; color:var(--gx-ink2);
-  cursor:pointer; padding:.1rem .3rem; transition:color .15s; }
-@media (hover: hover){ .gx-panel-permalink:hover{ color:var(--gx-star); } }
-.gx-panel-permalink.done{ color:var(--gx-star); }
-
-/* ── Entsprechungs-Atlas: alle 67 Entsprechungen als ein Netz ── */
-.gxa-arc{ fill:none; stroke-width:5; opacity:.85; }
-.gxa-pan-label{ font-family:var(--fm); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
-  fill:var(--gx-ink2); }
-.gxa-edge{ fill:none; stroke:var(--gx-star); stroke-width:1; opacity:.16;
-  transition:opacity .18s, stroke-width .18s; }
-.gxa-edge.lit{ opacity:.95; stroke-width:2.2; filter:drop-shadow(0 0 4px rgba(201,184,118,.7)); }
-.gxa-edge.dim{ opacity:.045; }
-.gxa-node{ cursor:pointer; }
-.gxa-node circle{ transition:r .15s; }
-@media (hover: hover){ .gxa-node:hover circle{ r:5.5; } }
-.gxa-node.dim{ opacity:.22; }
-.gxa-node.gxa-off{ opacity:.10; }
-.gxa-edge.gxa-off{ opacity:.03; }
-.gx-zeitfilter{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
-  padding:.5rem .8rem; margin:.2rem 0 .6rem; border:1px solid var(--gx-line);
-  border-radius:10px; background:#12142a; }
-.gx-zeitfilter.gods-hidden{ display:none; }
-.gx-zeit-alle{ font-family:var(--fm,monospace); font-size:.68rem; letter-spacing:.05em;
-  padding:.32rem .7rem; border-radius:8px; cursor:pointer;
-  background:#161832; border:1px solid var(--gx-line); color:var(--gx-ink); transition:all .15s; }
-.gx-zeit-alle.on{ border-color:var(--gx-star); color:var(--gx-star); }
-@media (hover: hover){ .gx-zeit-alle:hover{ border-color:var(--gx-star); } }
-#gx-zeit-slider{ flex:1; min-width:180px; accent-color:var(--gx-star); cursor:pointer; }
-.gx-zeit-lab{ font-family:var(--fm,monospace); font-size:.74rem; color:var(--gx-star);
-  min-width:9.5rem; text-align:right; font-weight:700; }
-.gx-zeit-zahl{ font-family:var(--fm,monospace); font-size:.64rem; color:var(--gx-ink2); }
-.gxa-name{ font-family:'Cinzel',serif; font-size:8.6px; fill:var(--gx-ink2); pointer-events:none;
-  transition:fill .15s; }
-.gxa-node.lit .gxa-name{ fill:var(--gx-ink); font-weight:700; }
-.gxa-center{ font-family:'Cinzel',serif; fill:var(--gx-ink); text-anchor:middle; }
-.gxa-center-sub{ font-family:var(--fm); font-size:9.5px; letter-spacing:.1em; fill:var(--gx-ink2);
-  text-anchor:middle; }
-.gxa-center-names{ font-family:'Cinzel',serif; font-size:13px; fill:var(--gx-star); text-anchor:middle; }
-
-.gods-legend{ position:relative; z-index:2; text-align:center; font-family:var(--fm);
-  font-size:.72rem; color:var(--gx-ink2); padding:0 1rem 1.2rem; line-height:1.8; }
-.gods-legend .swatch{ display:inline-block; width:9px; height:9px; border-radius:50%;
-  vertical-align:middle; margin:0 .25rem 0 .8rem; }
-.gods-hidden{ display:none !important; }
-.gods-sources{ position:relative; z-index:2; text-align:center; font-family:var(--fb);
-  font-size:.7rem; color:var(--gx-ink2); opacity:.65; padding:0 2rem 1.5rem; line-height:1.6; max-width:680px; margin:0 auto; }
-.gods-sources b{ color:var(--gx-ink); opacity:1; }
-.gods-note{ position:relative; z-index:2; text-align:center; font-family:var(--fb);
-  font-size:.76rem; color:var(--gx-ink2); padding:0 2rem 1.2rem; line-height:1.7; max-width:720px; margin:0 auto;
-  font-style:italic; }
-
-/* ── Vergleichsansicht: zwei Pantheen als kompakte Reihen, Linien dazwischen ── */
-.gods-compare-picker{ position:relative; z-index:2; display:flex; align-items:center; justify-content:center;
-  gap:.8rem; flex-wrap:wrap; padding:.4rem 1rem 1.4rem; font-family:var(--fm); font-size:.78rem; color:var(--gx-ink2); }
-.gods-compare-picker select{ background:#14152a; color:var(--gx-ink); border:1px solid var(--gx-line);
-  border-radius:3px; padding:.4rem .7rem; font-family:var(--fm); font-size:.78rem; cursor:pointer; }
-.gods-compare-picker select:focus{ outline:1px solid var(--gx-star); }
-.gx-cmp-arrow{ color:var(--gx-star); font-size:1rem; }
-.gx-cmp-empty{ text-align:center; font-family:var(--fb); color:var(--gx-ink2); padding:3rem 2rem; font-size:.9rem; line-height:1.8; }
-.gx-cmp-empty b{ color:var(--gx-star); }
-.gx-cmp-row-label{ font-family:'Cinzel',serif; font-size:13px; font-weight:600; fill:var(--gx-ink); letter-spacing:.04em; }
-.gx-cmp-node{ cursor:pointer; }
-.gx-cmp-node .gx-orb{ transition:filter .2s; }
-@media (hover: hover){ .gx-cmp-node:hover .gx-orb{ filter:brightness(1.35); } }
-.gx-cmp-node.dim{ opacity:.15; }
-.gx-cmp-name{ font-family:'Cinzel',serif; font-size:11.5px; font-weight:600; fill:var(--gx-ink); text-anchor:middle; pointer-events:none; }
-.gx-cmp-pan{ font-family:var(--fm); font-size:8px; fill:var(--gx-ink2); text-anchor:middle; pointer-events:none; letter-spacing:.05em; text-transform:uppercase; }
-.gx-cmp-line{ fill:none; stroke-width:2; opacity:.5; transition:opacity .2s, stroke-width .2s; }
-.gx-cmp-line.lit{ opacity:1; stroke-width:3.5; }
-.gx-cmp-line.dim{ opacity:.06; }
-/* Kurzes Verbindungs-Label mittig auf der Linie */
-.gx-cmp-line-label{ font-family:var(--fm); font-size:9px; fill:var(--gx-star); text-anchor:middle;
-  pointer-events:none; letter-spacing:.04em; opacity:0; transition:opacity .2s; }
-.gx-cmp-line.lit + .gx-cmp-line-label{ opacity:1; }
-
-@media (max-width:780px){
-  .gods-hero{ padding:2rem 1.2rem 1rem; }
-  .gx-panel{ right:.75rem; left:.75rem; bottom:.75rem; width:auto; }
-}
-
-/* ── Suche, Motive, Zeitleiste, Tabelle (v29) ── */
-.gx-findbar{display:flex;gap:.6rem;margin:.2rem 1.5rem .8rem;flex-wrap:wrap}
-.gx-findbar input{flex:1;min-width:220px;padding:.5rem .8rem;border-radius:10px;
-  border:1px solid var(--gx-line,#3a3f46);background:#12142a;
-  color:var(--gx-ink);font:inherit}
-.gx-findbar input::placeholder{color:var(--gx-ink2)}
-.gx-findbar select{padding:.5rem .6rem;border-radius:10px;border:1px solid var(--gx-line,#3a3f46);
-  background:#161832;color:var(--gx-ink);font:inherit;max-width:46%}
-.gx-results{margin:0 1.5rem 1rem;border:1px solid var(--gx-line,#3a3f46);border-radius:12px;
-  background:var(--gx-bg2,rgba(128,128,128,.06));max-height:340px;overflow:auto}
-.gx-results .r-head{padding:.5rem .8rem;font-size:.78rem;color:var(--gx-ink2,#9aa)}
-.gx-results button{display:block;width:100%;text-align:left;padding:.5rem .8rem;background:none;
-  border:0;border-top:1px solid var(--gx-line,#3a3f46);color:var(--gx-ink,inherit);cursor:pointer;font:inherit}
-@media (hover: hover){ .gx-results button:hover{background:rgba(128,128,128,.12)} }
-.gx-results .r-pan{color:var(--gx-ink2,#9aa);font-size:.78em;margin-left:.45em}
-.gx-results .r-snip{display:block;font-size:.78em;color:var(--gx-ink2,#9aa);margin-top:2px}
-.gx-table{margin:0 1.5rem 2rem;overflow-x:auto}
-.gx-table table{border-collapse:collapse;width:100%;font-size:.85rem;margin-bottom:1.6rem}
-.gx-table caption{text-align:left;font-weight:700;padding:.4rem 0;font-size:1rem;color:var(--gx-ink)}
-.gx-table th,.gx-table td{border:1px solid var(--gx-line,#3a3f46);padding:.45rem .6rem;
-  vertical-align:top;text-align:left;color:var(--gx-ink)}
-.gx-table th{background:rgba(255,255,255,.06);color:var(--gx-ink);font-weight:700}
-.gx-table tbody tr:nth-child(even){background:rgba(255,255,255,.028)}
-@media (hover: hover){ .gx-table tbody tr:hover{background:rgba(201,184,118,.10)} }
-.gx-table td.gxt-my{max-width:420px}
-.gx-table .gxt-name{background:none;border:0;padding:0;color:inherit;font:inherit;
-  font-weight:700;cursor:pointer;text-decoration:underline dotted}
-.gxz-row{cursor:pointer}
-@media (hover: hover){ .gxz-row:hover .gxz-bar{filter:brightness(1.3)} }
-/* Native Dropdown-Listen (Motiv, Kosmos-Filter, Vergleich) auf dem dunklen Kosmos-Hintergrund lesbar */
-.gods-root select option{ background:#161832; color:#ece6d6; }
-/* Tabellen-Toolbar: Kosmos-Filter + CSV-Export */
-.gxt-toolbar{ display:flex; gap:.7rem; align-items:center; flex-wrap:wrap; margin:.1rem 0 1.1rem; }
-.gxt-toolbar-lab{ display:flex; align-items:center; gap:.45rem; font-size:.85rem; color:var(--gx-ink); }
-.gxt-panfilter{ padding:.45rem .6rem; border-radius:10px; border:1px solid var(--gx-line);
-  background:#161832; color:var(--gx-ink); font:inherit; }
-.gxt-export{ padding:.45rem .85rem; border-radius:10px; border:1px solid var(--gx-line);
-  background:#161832; color:var(--gx-ink); font:inherit; cursor:pointer; }
-@media (hover: hover){ .gxt-export:hover{ border-color:var(--gx-star); color:#fff; } }
-.gxt-kosmos{ font-weight:700; }
-/* Sichtbarer Tastatur-Fokus im ganzen Kosmos (vorher nur am Vergleichs-Select) */
-.gods-root :is(button,select,input,a,[tabindex]):focus-visible{
-  outline:2px solid var(--gx-star); outline-offset:2px; border-radius:6px; }
-/* Filter-Statusleiste (Porträts/Sternbild): aktive Einschränkung + „Alles anzeigen" */
-.gx-filterbar{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap;
-  margin:.1rem 0 .8rem; padding:.4rem .7rem; border:1px solid var(--gx-line);
-  border-radius:10px; background:#12142a; font-size:.82rem; color:var(--gx-ink2); }
-.gx-filterbar b{ color:var(--gx-ink); font-weight:600; }
-.gx-fb-reset{ margin-left:auto; padding:.3rem .7rem; border-radius:8px;
-  border:1px solid var(--gx-line); background:#161832; color:var(--gx-ink); font:inherit; cursor:pointer; }
-@media (hover: hover){ .gx-fb-reset:hover{ border-color:var(--gx-star); color:#fff; } }
-</style>
+<link rel="stylesheet" href="css/kosmos.css">
 
 <div class="gods-root" id="gods-root">
   <div class="gods-stars"></div>
@@ -618,6 +122,8 @@
 
   <div class="gx-table" id="gx-table" hidden></div>
 
+  <section class="gx-ebenenbilder" id="gx-ebenenbilder" aria-labelledby="gx-ebenenbilder-titel" hidden></section>
+
   <div class="gods-note" id="gods-note"></div>
   <div class="gods-legend" id="gods-legend"></div>
   <div class="gods-sources" id="gods-sources"></div>
@@ -628,6 +134,7 @@
       title="Permalink zu dieser Figur kopieren (zitierbar & teilbar)">🔗 Link</button>
     <div class="gx-panel-inhalt">
     <div class="gx-panel-portrait" id="gx-panel-portrait"></div>
+    <div class="gx-panel-bildart" id="gx-panel-bildart" hidden></div>
     <div class="gx-panel-tier" id="gx-panel-tier"></div>
     <div class="gx-panel-name" id="gx-panel-name"></div>
     <div class="gx-panel-domain" id="gx-panel-domain"></div>
@@ -644,6 +151,7 @@
   <div class="gx-lightbox" id="gx-lightbox" role="dialog" aria-label="Bild in großer Ansicht">
     <button class="gx-lb-close" onclick="gxCloseLightbox()" title="Schließen (Esc)">✕</button>
     <img id="gx-lb-img" src="" alt="">
+    <button class="gx-lb-source" id="gx-lb-source" type="button" aria-pressed="false" hidden>Ganze Tafel anzeigen</button>
     <div class="gx-lb-name" id="gx-lb-name"></div>
     <div class="gx-lb-meta" id="gx-lb-meta"></div>
     <div class="gx-lb-credit" id="gx-lb-credit"></div>
@@ -718,8 +226,8 @@
     ["Mesoamerika",["aztekisch"]],
     ["Philosophische Kosmen",["anaximander","heraklit","parmenides","platon","aristoteles","neuplatonismus","thomas","spinoza","kant","jacobi","kierkegaard","schelling","hegel","schopenhauer","nietzsche","cioran","hartmann","husserl","heidegger","levinas","richir","derrida"],"dropdown"],
     ["Mystische Traditionen",["gnosis","kabbala","boehme"]],
-    ["Moderne Kosmen",["kapitalismus","kapitalismus-satire"]],
-    ["Literarische Kosmen",["lovecraft"]],
+    ["Moderne Kosmen",["kapitalismus","kapitalismus-satire","oekologische_modernitaet"]],
+    ["Literarische Kosmen",["lovecraft","diablo"]],
   ];
 
   const NODE_W_BASE=120, TIER_GAP_BASE=150, TOP_PAD=70, LEFT_PAD=185, COL_GAP=32;
@@ -778,7 +286,7 @@
         const gr=document.createElement('optgroup'); gr.label=catLabel;
         present.forEach(key=>{
           const o=document.createElement('option');
-          o.value=key; o.textContent=DATA.panthea[key].label;
+          o.value=key; o.textContent=window.KOSMOS_SYMBOLE.zeichen(key)+' '+DATA.panthea[key].label;
           if(key===activePan) o.selected=true;
           gr.appendChild(o);
         });
@@ -807,7 +315,7 @@
         sel.appendChild(leer);
         present.forEach(key=>{
           const o=document.createElement('option');
-          o.value=key; o.textContent=DATA.panthea[key].label;
+          o.value=key; o.textContent=window.KOSMOS_SYMBOLE.zeichen(key)+' '+DATA.panthea[key].label;
           if(key===activePan) o.selected=true;
           sel.appendChild(o);
         });
@@ -824,7 +332,9 @@
         const p=DATA.panthea[key];
         const b=document.createElement('button');
         b.className='gods-tab'+(key===activePan?' active':'');
-        b.textContent=p.label;
+        b.innerHTML=window.KOSMOS_SYMBOLE.html(key);
+        b.appendChild(document.createTextNode(p.label));
+        b.setAttribute('aria-pressed',String(key===activePan));
         b.style.setProperty('--pan-color',p.color);
         b.style.setProperty('--pan-glow',hexA(p.color,.4));
         b.onclick=()=>waehlePan(key);
@@ -1041,6 +551,7 @@
   }
   window.gxRender=function(){
     if(!DATA)return;
+    gxRenderEbenenbilder();
     gxSyncFilterBar();
     const tEl0=document.getElementById('gx-table'); if(tEl0) tEl0.hidden=true;
     const awEl=document.getElementById('gx-atlas-wahl');
@@ -1235,9 +746,18 @@
     // Bild (falls vorhanden) — Klick öffnet die große Ansicht (Lightbox)
     const port=document.getElementById('gx-panel-portrait');
     const medKeyP=panKey+'/'+g.id;
+    const creditP=(window.GX_CREDITS||{})[medKeyP];
+    port.classList.toggle('diagramm',!!creditP&&creditP.bild_format==='diagramm');
+    port.classList.toggle('illustration',!!creditP&&creditP.bild_format==='illustration');
+    // Herkunft sichtbar halten: KI-Illustration und eigener Spiel-Screenshot unterscheiden.
+    const bildart=creditP&&creditP.bild_typ;
+    const bildLabel=bildart==='ki'?'KI-Illustration':bildart==='screenshot'?'Eigener Spiel-Screenshot · Heroes of the Storm':'';
+    const bildHinweis=document.getElementById('gx-panel-bildart');
+    bildHinweis.textContent=bildLabel;
+    bildHinweis.hidden=!bildLabel;
     const extP=(window.GX_MEDALS||{})[medKeyP]||'jpg';
     const imgPath='assets/images/goetter/'+medKeyP+'.'+extP;
-    port.innerHTML='<img src="'+imgPath+'" alt="'+g.name+'" onerror="this.parentNode.classList.remove(\'show\');this.parentNode.classList.remove(\'zoomable\')">';
+    port.innerHTML='<img src="'+imgPath+'" alt="'+_esc(g.name+(bildLabel?' – '+bildLabel:''))+'" onerror="this.parentNode.classList.remove(\'show\');this.parentNode.classList.remove(\'zoomable\')">';
     port.classList.add('show');
     port.classList.add('zoomable');
     port.onclick=function(){ gxOpenLightbox(panKey,g,imgPath); };
@@ -1365,6 +885,27 @@
       ? '<b>Quellen:</b> '+pan().sources.join(' · ') : '';
     srcEl.innerHTML = [_zl,_ql].filter(Boolean).join('<br>');
   }
+  // Gruppenmotive zeigen Ebenen oder den Gesamtkosmos, keine zusätzlichen Figuren.
+  // Ihre Nachweise verwenden dieselbe Bildverwaltung und Großansicht wie die Medaillons.
+  function gxRenderEbenenbilder(){
+    const box=document.getElementById('gx-ebenenbilder'); if(!box)return;
+    const rows=Object.entries(window.GX_CREDITS||{}).filter(([key,cr])=>
+      key.startsWith(activePan+'/')&&(cr.bild_rolle==='ebene'||cr.bild_rolle==='uebersicht')&&cr.bild_datei);
+    box.hidden=compareMode||!['hybrid','graph','stars','cards'].includes(gxView)||!rows.length;
+    box.innerHTML=''; if(box.hidden)return;
+    rows.sort((a,b)=>(a[1].bild_rolle==='uebersicht'?-1:a[1].ebene)-(b[1].bild_rolle==='uebersicht'?-1:b[1].ebene));
+    box.innerHTML='<h3 id="gx-ebenenbilder-titel">Übersicht und Ebenenbilder <span>KI-Illustrationen</span></h3><div class="gx-ebenenbilder-liste"></div>';
+    const list=box.querySelector('.gx-ebenenbilder-liste');
+    rows.forEach(([key,cr])=>{
+      const button=document.createElement('button'); button.type='button';
+      const title=cr.bild_titel||cr.name;
+      button.innerHTML='<img src="'+_esc(cr.bild_datei)+'" alt="" loading="lazy"><span>'+_esc(title)+'</span>';
+      button.setAttribute('aria-label',title+' – KI-Illustration öffnen');
+      button.onclick=()=>gxOpenLightbox(activePan,{id:key.slice(activePan.length+1),name:title,tier:cr.ebene},cr.bild_datei);
+      list.appendChild(button);
+    });
+  }
+
   // Zeitraum „von – bis" für die Datierungszeile (bis:'heute' bleibt „heute")
   function gxFmtZeitRange(z){
     if(!z) return '';
@@ -1952,14 +1493,39 @@
     document.getElementById('gx-lb-meta').textContent=p.label+(p.tiers&&p.tiers[g.tier]?' · '+p.tiers[g.tier]:'');
     // Bildnachweis aus dem Medaillon-Manifest (js/bildnachweise-goetter.js), falls vorhanden
     const cr=(window.GX_CREDITS||{})[panKey+'/'+g.id];
+    const bildLabel=cr&&cr.bild_typ==='ki'?'KI-Illustration':cr&&cr.bild_typ==='screenshot'?'Eigener Spiel-Screenshot · Heroes of the Storm':'';
+    if(bildLabel){
+      document.getElementById('gx-lb-meta').textContent+=' · '+bildLabel;
+      im.alt=g.name+' – '+bildLabel;
+    }
+    const sourceBtn=document.getElementById('gx-lb-source');
+    lb.classList.toggle('has-source',!!(cr&&cr.bild_gross));
+    lb.scrollTop=0;
+    if(sourceBtn){
+      sourceBtn.hidden=!(cr&&cr.bild_gross);
+      sourceBtn.textContent=cr&&cr.bild_gross_label||'Ganze Tafel anzeigen';
+      sourceBtn.setAttribute('aria-pressed','false');
+      let ganz=false;
+      sourceBtn.onclick=function(){
+        if(!cr||!cr.bild_gross) return;
+        ganz=!ganz;
+        im.src=ganz?cr.bild_gross:imgPath;
+        im.alt=ganz?(cr.bild_gross_alt||g.name+' – vollständige historische Tafel'):g.name+(bildLabel?' – '+bildLabel:' – ausgewählter Ausschnitt');
+        sourceBtn.textContent=ganz?'Ausschnitt anzeigen':cr.bild_gross_label||'Ganze Tafel anzeigen';
+        sourceBtn.setAttribute('aria-pressed',String(ganz));
+      };
+    }
     const cEl=document.getElementById('gx-lb-credit');
     if(cr){
       const author=cr.author||cr.urheber||'', lic=cr.license||cr.lizenz||'';
-      const licUrl=cr.license_url||cr.lizenz_url||'', srcU=cr.source_url||cr.quelle_artikel||cr.datei_seite||'';
+      const licUrl=cr.license_url||cr.lizenz_url||'', srcU=cr.source_url||cr.datei_seite||cr.quelle_artikel||'';
       let hc='';
       if(author) hc+='Bild: '+_esc(author);
       if(lic) hc+=(hc?' · ':'')+(licUrl?'<a href="'+_esc(licUrl)+'" target="_blank" rel="noopener">'+_esc(lic)+'</a>':_esc(lic));
       if(srcU) hc+=(hc?' · ':'')+'<a href="'+_esc(srcU)+'" target="_blank" rel="noopener">Quelle</a>';
+      if(cr.werk) hc+='<p>'+_esc(cr.werk)+'</p>';
+      if(cr.sammlung) hc+='<p>'+_esc(cr.sammlung)+'</p>';
+      if(cr.hinweis) hc+='<p>'+_esc(cr.hinweis)+'</p>';
       cEl.innerHTML=hc;
     } else cEl.innerHTML='';
     lb.style.setProperty('--pan-color',p.color);
@@ -2098,6 +1664,7 @@
 
   window.gxRenderCompare=function(){
     if(!DATA)return;
+    gxRenderEbenenbilder();
     cmpA=document.getElementById('gx-cmp-a').value;
     cmpB=document.getElementById('gx-cmp-b').value;
     const svg=document.getElementById('gods-svg'), stage=document.getElementById('gods-stage');

@@ -94,7 +94,7 @@
     </div>
 
     <h3>Haftung für Inhalte</h3>
-    <p>Als Diensteanbieter bin ich gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt.</p>
+    <p>Ich bin für die eigenen Inhalte dieser Website nach den geltenden gesetzlichen Bestimmungen verantwortlich. Wenn Ihnen ein Fehler oder eine mögliche Rechtsverletzung auffällt, erreichen Sie mich über die oben angegebene E-Mail-Adresse. Berechtigten Hinweisen gehe ich nach; gesetzliche Verpflichtungen bleiben unberührt.</p>
 
     <h3>Haftung für Links</h3>
     <p>Diese Seite enthält Links zu externen Webseiten Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.</p>
@@ -163,6 +163,20 @@
   <!-- ═══ BILDNACHWEISE ═══ -->
   <section class="legal-section" id="legal-bilder">
     <h2>Bildnachweise</h2>
+    <p id="kosmos-symbolnachweis" style="font-size:.86rem;line-height:1.7;margin-bottom:1.2rem">
+      <b>Symbole der Kosmenauswahl:</b> Kreuz, Davidstern, Stern und Halbmond, Dharma-Rad,
+      Torii und Taijitu sind vereinfachte SVG-Neuzeichnungen nach der Übersicht
+      <a href="https://commons.wikimedia.org/wiki/File:Symmetric_religious_symbols.svg" target="_blank" rel="noopener">Symmetric religious symbols.svg</a>
+      auf Wikimedia Commons. Urheber der Vorlage: Rursus und Klem; Zusammenstellung: Salix alba.
+      Die Vorlage ist als <b>Public Domain</b> freigegeben. Bearbeitung: vereinfachte Geometrie,
+      einheitliche Strichstärke und an die Oberfläche angepasste Farbe.
+      <b>Gnosis:</b> <a href="https://commons.wikimedia.org/wiki/File:Ouroboros.svg" target="_blank" rel="noopener">Ouroboros.svg</a>
+      von <a href="https://openclipart.org/detail/215030/ouroboros" target="_blank" rel="noopener">xoxoxo / Openclipart</a> (2015),
+      <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.de" target="_blank" rel="noopener">CC0 1.0 / Public Domain</a>.
+      Die Originalpfade sind verkleinert und in der jeweiligen Textfarbe auf transparentem Hintergrund eingebunden.
+      Die übrigen Bildzeichen sind eigene schematische Zeichnungen zur Orientierung;
+      sie beanspruchen keine verbindliche Repräsentation einer ganzen Tradition.
+      Alle Zeichen werden lokal ausgeliefert.</p>
     <p style="font-size:.86rem;line-height:1.7;margin-bottom:1.2rem">
       <b>Verwendete Software:</b> Kartenbibliothek <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>
       1.9.4, &copy; Volodymyr Agafonkin und Mitwirkende, BSD-2-Clause-Lizenz.
@@ -176,15 +190,17 @@
       <em>JetBrains&nbsp;Mono</em> &copy; JetBrains s.r.o. &middot;
       <em>Cinzel</em> &copy; Natanael Gama.
       Die Dateien stammen aus den Fontsource-Paketen (Version&nbsp;5.3.0) und sind unverändert.</p>
-    <p>Die Porträts der Philosophen stammen überwiegend von Wikimedia&nbsp;Commons. Viele ältere Werke (Gemälde, Stiche, Büsten) sind gemeinfrei (Public&nbsp;Domain). Wo Bilder unter einer Creative-Commons-Lizenz stehen, sind Urheber, Lizenz und Quelle nachstehend genannt; der Link führt jeweils zur Originalseite mit den vollständigen Lizenzangaben. Die Bilder wurden für die Darstellung zugeschnitten und in der Größe angepasst.</p>
+    <p>Die Porträts der Philosophen stammen überwiegend von Wikimedia&nbsp;Commons. Historische Kosmos-Illustrationen stammen auch aus digitalisierten Werkausgaben, etwa beim Internet&nbsp;Archive. Viele ältere Werke (Gemälde, Stiche, Büsten) sind gemeinfrei (Public&nbsp;Domain). Die Nachweise nennen die jeweilige Bezugsquelle, Urheber und Nutzungsstatus sowie, soweit ermittelt, das historische Werk. Die Bilder wurden für die Darstellung zugeschnitten und in der Größe angepasst; interpretative Zuordnungen sind als solche gekennzeichnet. Die Liste zeigt auch gemeinfreie Porträts. Kosmos-Hintergründe sind gesondert als solche bezeichnet; sie können etwa eine Stadt statt der Person darstellen.</p>
+
+    <p style="font-size:.9rem;line-height:1.8;color:var(--muted);margin-bottom:1rem">Einige Fantasy- und Begriffskosmen verwenden vom Websitebetreiber bereitgestellte <b>KI-Illustrationen</b>. Diese sind in den Bildnachweisen und bei den Figuren als solche gekennzeichnet. Eigene Spiel-Screenshots werden gesondert ausgewiesen; die Rechte an den dargestellten Spielgrafiken verbleiben beim jeweiligen Rechteinhaber.</p>
 
     <div class="lic-controls">
-      <input class="lic-search" id="lic-search" type="text" placeholder="Philosoph oder Lizenz suchen…" oninput="legalFilterLic(this.value)">
+      <input class="lic-search" id="lic-search" type="text" placeholder="Name, Werk oder Lizenz suchen…" oninput="legalFilterLic(this.value)">
       <select class="lic-search" id="lic-group" style="flex:0 0 auto;min-width:140px" onchange="legalFilterGroup(this.value)"><option value="">Alle Bereiche</option></select>
-      <label class="lic-pdtoggle"><input type="checkbox" id="lic-show-pd" onchange="legalTogglePD(this.checked)"> Auch Public Domain anzeigen</label>
+      <label class="lic-pdtoggle"><input type="checkbox" id="lic-show-pd" checked onchange="legalTogglePD(this.checked)"> Auch Public Domain anzeigen</label>
       <span class="lic-count" id="lic-count"></span>
     </div>
-    <p class="lic-pdnote" id="lic-pdnote">Gemeinfreie Bilder (Public&nbsp;Domain) sind ausgeblendet, da sie keinen Nachweis erfordern. Nur Bilder mit Lizenzpflicht (z.&nbsp;B. Creative&nbsp;Commons) werden angezeigt.</p>
+    <p class="lic-pdnote" id="lic-pdnote" style="display:none">Gemeinfreie Bilder (Public&nbsp;Domain) sind durch den Filter ausgeblendet. Dazu gehören auch viele Philosophenporträts.</p>
 
     <div class="lic-list" id="lic-list">
       <div class="lic-loading" id="lic-loading">Lade Bildnachweise…</div>
@@ -212,6 +228,11 @@ window.legalShow = function(sec, btn){
 let _licData = null;
 let _licLoaded = false;
 
+function licEsc(value){
+  return String(value==null?'':value).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 function licenseBadge(lic){
   if (!lic || lic === 'unbekannt') return '<span class="lic-badge unknown">Lizenz unbekannt</span>';
   const l = lic.toLowerCase();
@@ -238,7 +259,7 @@ function authorHtml(author){
     + 'data-full="' + encodeURIComponent(author) + '">mehr</a></span>';
 }
 let _groupFilter = '';
-let _showPD = false;
+let _showPD = true;
 window.legalTogglePD = function(on){
   _showPD = on;
   const note = document.getElementById('lic-pdnote');
@@ -272,7 +293,7 @@ function renderLic(filter){
   const ccEntries = entries.filter(([slug, d]) => !isPD(d.license));
   const pool = _showPD ? entries : ccEntries;
   const shown = pool.filter(([slug, d]) =>
-    !f || (d.name||'').toLowerCase().includes(f) || (d.license||'').toLowerCase().includes(f));
+    !f || [d.name,d.license,d.werk,d.hinweis,d.sammlung].some(v=>(v||'').toLowerCase().includes(f)));
 
   if (count) {
     const pdCount = entries.length - ccEntries.length;
@@ -295,7 +316,8 @@ function renderLic(filter){
      Fehler aussieht und den Nachweis unübersichtlich macht. Zusammengefasst
      wird nur, was in Name, Urheber, Lizenz UND Quelle übereinstimmt; die
      Zahl der Verwendungen steht daneben, damit nichts verschwiegen wird. */
-  const _key = d => [d.name||'', d.author||'', d.license||'', d.source_url||''].join('\u0001');
+  const _key = d => [d.name||'', d.author||'', d.license||'', d.source_url||'',
+    d.werk||'',d.hinweis||'',d.sammlung||'',d.rechte_hinweis||''].join('\u0001');
   const _gruppen = new Map();
   shown.forEach(([slug, d]) => {
     const k = _key(d);
@@ -307,16 +329,17 @@ function renderLic(filter){
 
   list.innerHTML = _zusammengefasst.sort((a,b)=>(a[1].name||'').localeCompare(b[1].name||''))
     .map(([slug, d]) => {
+      const imageSlug=d.image_slug||slug;
       const thumb = (d.group==='Vignetten')
-        ? 'assets/images/goetter/vignetten/' + slug + '.jpg'
-        : (slug.indexOf('/')>=0 ? 'assets/images/goetter/' + slug + '.jpg'
-                                : 'assets/images/philosophen/' + slug + '.jpg');
+        ? 'assets/images/goetter/vignetten/' + imageSlug + '.jpg'
+        : (imageSlug.indexOf('/')>=0 ? 'assets/images/goetter/' + imageSlug + '.jpg'
+                                : 'assets/images/philosophen/' + imageSlug + '.jpg');
       const author = authorHtml(d.author);
       const src = d.source_url
-        ? '<a href="'+d.source_url+'" target="_blank" rel="noopener">Quelle (Wikimedia)</a>'
+        ? '<a href="'+licEsc(d.source_url)+'" target="_blank" rel="noopener">Quelle / Digitalisat</a>'
         : '';
       const licLink = d.license_url
-        ? '<a href="'+d.license_url+'" target="_blank" rel="noopener">'+(d.license||'Lizenz')+'</a>'
+        ? '<a href="'+licEsc(d.license_url)+'" target="_blank" rel="noopener">'+licenseBadge(d.license)+'</a>'
         : licenseBadge(d.license);
       return '<div class="lic-item">'
         + '<img class="lic-thumb" src="'+thumb+'" alt="'+(d.name||'')+'" loading="lazy" '
@@ -325,9 +348,14 @@ function renderLic(filter){
         +   '<div class="lic-name">'+(d.name||slug)
         +     (d._mehrfach>1 ? ' <span style="opacity:.55;font-weight:400">('+d._mehrfach+' Verwendungen)</span>' : '')
         +   '</div>'
-        +   '<div class="lic-meta">'+licenseBadge(d.license)+author
+        +   '<div class="lic-meta">Verwendung: '+(d.group==='Philosophen'?'Philosophenporträt':d.group==='Vignetten'?'Kosmos-Hintergrund':'Kosmos-Illustration')+'</div>'
+        +   '<div class="lic-meta">'+licLink+author
         +     (src ? ' · '+src : '')
         +   '</div>'
+        +   (d.werk ? '<div class="lic-meta">'+licEsc(d.werk)+'</div>' : '')
+        +   (d.sammlung ? '<div class="lic-meta">'+licEsc(d.sammlung)+'</div>' : '')
+        +   (d.hinweis ? '<div class="lic-meta">'+licEsc(d.hinweis)+'</div>' : '')
+        +   (d.rechte_hinweis ? '<div class="lic-meta">'+licEsc(d.rechte_hinweis)+'</div>' : '')
         + '</div></div>';
     }).join('');
 }
@@ -340,12 +368,18 @@ function loadLicenses(){
     if(!data) return out;
     for (var k in data){ if(!Object.prototype.hasOwnProperty.call(data,k)) continue;
       var e=data[k]||{};
-      out[k]={
+      // Gleichnamige Vignette und Philosophenporträt dürfen sich nicht überschreiben.
+      out[(e.group||grp||'')+'/'+k]={
+        image_slug: k,
         name: e.name || k,
         author: e.author || e.urheber || '',
         license: e.license || e.lizenz || '',
         license_url: e.license_url || e.lizenz_url || '',
-        source_url: e.source_url || e.quelle_artikel || e.datei_seite || '',
+        source_url: e.source_url || e.datei_seite || e.quelle_artikel || '',
+        werk: e.werk || '',
+        hinweis: e.hinweis || '',
+        sammlung: e.sammlung || '',
+        rechte_hinweis: e.rechte_hinweis || '',
         group: e.group || grp || ''
       };
     }
@@ -355,7 +389,7 @@ function loadLicenses(){
   if (typeof window.BILDNACHWEISE !== 'undefined' && window.BILDNACHWEISE) Object.assign(merged, _norm(window.BILDNACHWEISE,'Philosophen'));
   if (typeof window.GX_CREDITS !== 'undefined' && window.GX_CREDITS) Object.assign(merged, _norm(window.GX_CREDITS,'Götter'));
   var _srcs=[['daten/bildnachweise.json','Philosophen'],
-             ['js/bildnachweise-goetter.json','Götter'],
+             ['daten/bildnachweise-goetter.json','Götter'],
              ['daten/bildnachweise-vignetten.json','Vignetten']];
   Promise.all(_srcs.map(function(f){
     return fetch(f[0]).then(function(r){ return r.ok?r.json():{}; }).catch(function(){ return {}; })
