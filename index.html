@@ -8806,28 +8806,35 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
     // "Strahlen"-Andeutung am Knoten (Markierung), die echte Navigation läuft über die Chips im Panel.
   }
 
-  // Bei Pinch-Zoom ist der sichtbare Ausschnitt kleiner als der Layout-Viewport.
-  // position:fixed allein verankert die Karte dann außerhalb des Bildschirms.
-  // Nur Touch-Geräte korrigieren; die Desktop-Geometrie bleibt unverändert.
+  // Die Detailkarte bleibt ein kompaktes Lesefenster unten rechts. Der Kosmos
+  // darf sich beim Pinch-Zoom vergrößern; Karte, Schrift und Tasten behalten
+  // ihre Bildschirmgröße. Dazu den Seitenzoom nur für diese Karte ausgleichen.
   window.gxPanelViewportAnpassen=function(){
     const pnl=document.getElementById('gx-panel');
     if(!pnl)return;
-    const props=['--gx-panel-links','--gx-panel-unten','--gx-panel-breite','--gx-panel-hoehe'];
+    const props=['--gx-panel-rechts','--gx-panel-unten','--gx-panel-breite','--gx-panel-hoehe','--gx-panel-massstab'];
     const v=window.visualViewport;
     if(!v||!window.matchMedia('(pointer: coarse)').matches){
       props.forEach(p=>pnl.style.removeProperty(p)); return;
     }
-    const rand=12/v.scale;
+    const skala=v.scale||1, rand=12/skala;
+    const bildschirmBreite=v.width*skala, bildschirmHoehe=v.height*skala;
     const nav=document.querySelector('body > nav');
     const kopf=nav&&nav.getBoundingClientRect();
     const oben=kopf&&kopf.left<v.offsetLeft+v.width&&kopf.right>v.offsetLeft
       ? Math.max(v.offsetTop,Math.min(kopf.bottom,v.offsetTop+v.height)) : v.offsetTop;
-    pnl.style.setProperty(props[0],(v.offsetLeft+rand)+'px');
+    // Maximal 300 sichtbare Pixel, auf kleinen Geräten höchstens 80 % der Breite.
+    // Rechts bleiben 12 Pixel Abstand; links bleibt der Kosmos sichtbar.
+    const breite=Math.max(0,Math.min(300,bildschirmBreite*.8,bildschirmBreite-24));
+    const hoehe=Math.max(0,Math.min(480,bildschirmHoehe*.64,
+      (v.offsetTop+v.height-oben)*skala-24));
+    pnl.style.setProperty(props[0],(document.documentElement.clientWidth-v.offsetLeft-v.width+rand)+'px');
     // clientHeight bleibt auch während des CSS-Ladens die Höhe des Fixed-Viewports;
     // innerHeight kann auf Android vorübergehend durch überbreite Inhalte wachsen.
     pnl.style.setProperty(props[1],(document.documentElement.clientHeight-v.offsetTop-v.height+rand)+'px');
-    pnl.style.setProperty(props[2],Math.max(0,v.width-2*rand)+'px');
-    pnl.style.setProperty(props[3],Math.max(0,v.offsetTop+v.height-oben-2*rand)+'px');
+    pnl.style.setProperty(props[2],breite+'px');
+    pnl.style.setProperty(props[3],hoehe+'px');
+    pnl.style.setProperty(props[4],String(1/skala));
   };
   // Einmal binden: Der SPA-Router baut die Seite bei jedem Besuch neu auf.
   // Die Ereignisse suchen deshalb immer die aktuelle Karte statt alte DOM-Knoten.
@@ -24018,19 +24025,32 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
 </style>
 
 <style>
-/* Götterkosmos: Detailkarte an den tatsächlich sichtbaren Touch-Viewport binden.
-   Die Werte folgen visualViewport auch bei Pinch-Zoom und verschobenen Browserleisten.
-   Positionswechsel sofort anwenden: transition:all würde dem Scrollen hinterherlaufen. */
+/* Götterkosmos: kompaktes Lesefenster unten rechts, unabhängig vom Seitenzoom.
+   Der Ursprung rechts unten hält die Verankerung beim Skalieren stabil.
+   Positionswechsel sofort anwenden; der Inhalt scrollt innerhalb der Karte. */
 @media (pointer: coarse){
   .gx-panel{
     box-sizing:border-box;
-    left:var(--gx-panel-links,.75rem); right:auto;
+    left:auto; right:var(--gx-panel-rechts,.75rem);
     bottom:var(--gx-panel-unten,.75rem);
-    width:var(--gx-panel-breite,calc(100vw - 1.5rem)); max-width:none;
-    max-height:var(--gx-panel-hoehe,calc(100dvh - 1.5rem));
+    width:var(--gx-panel-breite,min(300px,80vw)); max-width:none;
+    max-height:var(--gx-panel-hoehe,min(480px,64dvh));
+    padding:56px 16px 16px; border-radius:12px;
+    transform-origin:bottom right;
+    transform:scale(var(--gx-panel-massstab,1));
     overflow-wrap:anywhere; transition:opacity .2s;
   }
-  .gx-panel-permalink{ right:60px; min-height:44px; }
+  .gx-panel.open{ transform:scale(var(--gx-panel-massstab,1)); }
+  .gx-panel-close{ top:6px; right:6px; }
+  .gx-panel-permalink{ top:6px; right:58px; min-height:44px; font-size:.875rem;
+    color:var(--gx-ink); padding:0 10px; }
+  .gx-panel-portrait{ height:clamp(48px,calc(var(--gx-panel-hoehe,480px) * .2),104px);
+    margin-bottom:12px; }
+  .gx-panel-name{ font-size:1.375rem; }
+  .gx-panel-domain,.gx-panel-myth-text{ font-size:1rem; line-height:1.55; }
+  .gx-panel-rel{ font-size:.9375rem; }
+  .gx-panel-tier,.gx-panel-myth-label,.gx-panel-myth-src,.gx-panel-bildart{ font-size:.75rem; }
+  .gx-panel .gx-equiv-chip{ font-size:.8125rem; padding:.35rem .5rem; }
 }
 
 /* Momente: Telefon-Regeln zuletzt, damit die Seitenstile sie nicht überdecken. */
