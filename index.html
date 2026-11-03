@@ -10012,17 +10012,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 </script>
 </template>
 <template id="page-philosophy">
-<!-- ═══════════════════════════════════════════════════════════════
-     PHILOSOPHEN-TIMELINE v3 — überarbeitet
-     • Denkerzahl wird aus PHILS_V2 abgeleitet, nicht fest eingetragen
-       (hier stand jahrelang 332, während der Bestand längst darüber lag)
-     • korrekte Datumshandhabung (BC/AD/heute)
-     • Porträts für Lieblingsphilosophen
-     • Bessere Zoom-Stufen
-     • Epoche-Bands, Tier-System, Einflusslinien
-═══════════════════════════════════════════════════════════════════ -->
-
-<style>
+<!-- Philosophen-Timeline: gemeinsame Oberfläche, klassische Standarddarstellung. --><style>
 .karte-wrap{display:none;padding:0 3rem 2rem}
 .karte-wrap.active{display:block}
 .karte-kopf{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.7rem 0}
@@ -10044,18 +10034,7 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 .kf.an{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
 .karte-etikett{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--text3)}
-/* Farbige Emojis: etwas größer als die Schrift und mittig ausgerichtet */
-.km-btn, .kf-etikett{ font-variant-emoji:emoji }
 .kz-play{ font-size:1rem }
-/* Statuszeile */
-.ks{display:flex;align-items:center;gap:.5rem .7rem;flex-wrap:wrap;padding:.5rem .2rem .7rem}
-.ks-zahl{font-family:var(--fh);font-weight:700;font-size:.9rem;color:var(--text);white-space:nowrap}
-.ks-teile{display:flex;gap:.35rem;flex-wrap:wrap;flex:1;min-width:0}
-.ks-teil{font-family:var(--fm);font-size:.64rem;color:var(--text2);background:var(--surface);
-  border:1px solid var(--border);border-radius:100px;padding:.15rem .55rem;white-space:nowrap}
-.ks-teil.stumm{color:var(--text3)}
-.ks-reset{white-space:nowrap}
-.ks-leer{font-family:var(--fb);font-size:.82rem;color:var(--text2)}
 
 /* ── Orte der Lehre ────────────────────────────────────────────────
    Die Marken sind bewusst eckig, damit sie sich von den runden
@@ -10163,10 +10142,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .karte-fuss{font-size:.74rem;color:var(--text3);line-height:1.6;margin:.8rem 0 0}
 .karte-modus{display:inline-flex;gap:.2rem;background:var(--surface,var(--bg2));border:1px solid var(--border);
   border-radius:8px;padding:.2rem;margin-right:.6rem}
-.km-btn{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border:0;
-  border-radius:6px;background:transparent;color:var(--text3);cursor:pointer;white-space:nowrap}
-@media (hover: hover){ .km-btn:hover{color:var(--accent-text)} }
-.km-btn.active{background:var(--accent);color:var(--auf-accent,#fff)}
+@media (hover: hover){ }
 .karte-osm{display:block;height:560px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
 /* Gegenort und Spur beim Ueberfahren */
 .osm-gegenort{width:26px;height:26px;border-radius:50%;border:2px solid;background:rgba(12,14,26,.92);
@@ -10185,95 +10161,29 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   font-family:ui-monospace,monospace;font-size:11px;font-weight:700;color:#e8c46a}
 .leaflet-container{background:var(--ka-meer,#101420)}
 @media(max-width:900px){.karte-wrap{padding:0 1.2rem 2rem}}
-
-/* ── Bedienleiste in drei Ebenen ─────────────────────────────── */
-.tlk{margin:.2rem 0 1rem}
-.tlk-haupt{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;padding:.2rem 0 .7rem}
-.tlk-zahl{margin-left:auto;font-family:var(--fm);font-size:.66rem;letter-spacing:.06em;color:var(--text3);white-space:nowrap}
-.tlk-faecher{display:flex;gap:.3rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:.5rem}
-.tlk-tab{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--fm);font-size:.7rem;
-  letter-spacing:.04em;padding:.4rem .8rem;border-radius:8px;cursor:pointer;
-  background:transparent;border:1px solid var(--border);color:var(--text2);transition:all .15s}
-@media (hover: hover){ .tlk-tab:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tlk-tab.auf{background:var(--bg2);border-color:var(--accent);color:var(--accent-text)}
-.tlk-tab.auf .tlk-caret{transform:rotate(90deg)}
-.tlk-caret{display:inline-block;transition:transform .15s;font-size:.6rem;opacity:.7}
-.tlk-badge{display:inline-flex;align-items:center;justify-content:center;min-width:1.05rem;height:1.05rem;
-  border-radius:999px;background:var(--accent);color:var(--auf-accent,#fff);font-size:.58rem;font-weight:700;padding:0 .25rem}
-.tlk-tab-reset{margin-left:auto;font-style:italic;opacity:.8}
-.tlk-fach{padding:.9rem 0 .3rem;border-bottom:1px solid var(--border);animation:tlkAuf .16s ease}
+@media (hover: hover){ }
 @keyframes tlkAuf{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
-.tlk-zeile{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem}
-.tlk-zeile:last-child{margin-bottom:0}
-.tlk-lab{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--text3);min-width:5.5rem}
-.tlk-hilfe{margin:.7rem 0 0;font-size:.76rem;line-height:1.6;color:var(--text3);max-width:66ch}
-.pzb-w{font-size:.62rem;width:auto;padding:0 .55rem}
 @media(max-width:760px){
-  .tlk-lab{min-width:0}
-  .tlk-zahl{margin-left:0;width:100%}
 }
-.tl-kreise{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;padding:.55rem 0 .1rem}
-.tl-kreis-lab{font-family:var(--fm);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-right:.35rem}
-.tl-kreis{font-family:var(--fm);font-size:.66rem;letter-spacing:.04em;padding:.32rem .7rem;border-radius:14px;
-  cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--text3);transition:all .15s}
-@media (hover: hover){ .tl-kreis:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tl-kreis.an{background:var(--accent);border-color:var(--accent);color:var(--auf-accent,#fff)}
-.tl-kreis i{font-style:normal;opacity:.65;font-size:.58rem;margin-left:.25rem}
-.tl-kreis-haken{display:inline-block;width:.75rem;margin-right:.25rem;font-size:.62rem}
-.tl-kreis-alle{margin-left:.35rem;font-style:italic;opacity:.85}
-.tl-kreis-zahl{margin-left:auto;font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;color:var(--text3)}
-.tlk-zeile-leg{align-items:flex-start}
-.tlk-zeile-leg .epoch-legend-grid{display:flex;flex-wrap:wrap;gap:.3rem;max-width:100%}
-.tlk-zeile-leg .epoch-leg-item{display:flex;align-items:center;gap:.3rem;padding:.22rem .5rem;
-  border:1px solid var(--border);border-radius:12px;cursor:pointer;font-size:.66rem;
-  font-family:var(--fm);color:var(--text2);transition:all .15s;white-space:nowrap}
-@media (hover: hover){ .tlk-zeile-leg .epoch-leg-item:hover{border-color:var(--accent);color:var(--accent-text)} }
-.tlk-zeile-leg .epoch-leg-item.active{border-color:var(--accent);background:var(--accent);color:var(--auf-accent,#fff)}
-.tlk-zeile-leg .epoch-leg-swatch{width:.6rem;height:.6rem;border-radius:50%;flex-shrink:0}
+@media (hover: hover){ }
+@media (hover: hover){ }
 #female-btn.active{background:var(--accent2,#c0559a);color:#fff;border-color:transparent}
-.tl-hilfe{display:flex;align-items:center;gap:.8rem;margin:.1rem 0 .5rem;padding:.5rem .85rem;
-  border:1px solid var(--border);border-radius:9px;background:var(--bg2)}
-.tl-hilfe-t{font-size:.76rem;color:var(--text3);line-height:1.5}
-.tl-hilfe-t b{color:var(--text2);font-weight:600}
-.tl-hilfe-zu{margin-left:auto;background:transparent;border:0;color:var(--text3);
-  font-size:1.05rem;line-height:1;cursor:pointer;padding:.1rem .3rem}
-@media (hover: hover){ .tl-hilfe-zu:hover{color:var(--accent-text)} }
+@media (hover: hover){ }
 /* Auf Zeigegeräten ohne Maus war das Schliesskreuz nur 19 × 20 px gross und
    damit kaum zu treffen. Mehr Innenabstand macht daraus rund 44 × 40 px,
    ohne das Zeichen selbst zu vergrössern. Es steht isoliert am rechten Rand
    des Hinweiskastens, überlappt also nichts. Mit Maus unverändert. */
-@media (pointer: coarse){ .tl-hilfe-zu{ padding:.55rem .7rem; } }
-
-.phil-header   { padding:2.5rem 3rem 1.75rem; background:linear-gradient(180deg,var(--bg2),var(--bg)); border-bottom:1px solid var(--border); position:relative; overflow:hidden; }
+@media (pointer: coarse){ }
 .phil-glow     { position:absolute; left:50%; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); pointer-events:none; }
 .phil-hero .page-hero-glow { left:50%; right:auto; top:-100px; transform:translateX(-50%); width:600px; height:340px; background:radial-gradient(ellipse,rgba(91,82,232,.12),transparent 70%); }
-.phil-title    { font-family:var(--fh); font-size:clamp(2rem,4vw,2.8rem); font-weight:800; letter-spacing:-.035em; color:var(--text); line-height:1; margin:.3rem 0 .65rem; position:relative; z-index:1; }
-.phil-title span { color:var(--accent-text); }
-.phil-sub      { color:var(--text2); max-width:720px; line-height:1.75; font-size:.92rem; position:relative; z-index:1; }
-.phil-meta     { font-family:var(--fm); font-size:.74rem; color:var(--text3); margin-top:.6rem; position:relative; z-index:1; }
-
-.phil-controls { display:flex; gap:.55rem; align-items:center; flex-wrap:wrap; padding:.85rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); position:sticky; top:56px; z-index:90; }
-.phil-zoom-group { display:flex; gap:.2rem; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
-.pzb           { background:transparent; border:none; color:var(--text2); width:30px; height:30px; border-radius:6px; cursor:pointer; font-size:.95rem; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all .15s; font-family:var(--fm); }
-@media (hover: hover){ .pzb:hover{ background:var(--accent); color:var(--auf-accent,#fff); } }
-.zoom-label    { font-family:var(--fm); font-size:.72rem; color:var(--text3); padding:0 .4rem; min-width:42px; text-align:center; }
-.phil-search-wrap { position:relative; flex-shrink:0; }
-.phil-search   { background:var(--card); border:1px solid var(--border2); color:var(--text); padding:.42rem .75rem .42rem 1.95rem; border-radius:7px; font-family:var(--fb); font-size:.8rem; outline:none; width:190px; height:34px; }
-.phil-search:focus { border-color:var(--accent); }
-.phil-search-icon { position:absolute; left:.6rem; top:50%; transform:translateY(-50%); color:var(--text3); font-size:.78rem; pointer-events:none; }
+@media (hover: hover){ }
 /* ── Ansicht-Umschalter (Timeline / Tabelle) ── */
 .netz-wrap{ display:none; margin-top:1rem; border:1px solid var(--border); border-radius:12px;
   background:var(--surface); overflow:auto; max-height:78vh; }
 .netz-wrap.active{ display:block; }
 .netz-kopf{ display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; padding:.85rem 1.1rem;
   border-bottom:1px solid var(--border); position:sticky; left:0; top:0; background:var(--surface); z-index:3; }
-.netz-lg{ display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.66rem;
-  letter-spacing:.04em; color:var(--text2); cursor:pointer; user-select:none; padding:.28rem .6rem;
-  border:1px solid var(--border); border-radius:14px; transition:all .15s; }
-@media (hover: hover){ .netz-lg:hover{ border-color:var(--accent) } }
-.netz-lg.aus{ opacity:.35 }
-.netz-lg i{ width:1.4rem; height:0; border-top-width:2px; border-top-style:solid; display:inline-block }
+@media (hover: hover){ }
 .netz-info{ margin-left:auto; font-family:var(--fm); font-size:.66rem; color:var(--text3) }
 .netz-weg{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; padding:.7rem 1.1rem;
   border-bottom:1px solid var(--border); background:var(--bg2) }
@@ -10282,9 +10192,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .netz-weg-in{ font-family:var(--fm); font-size:.72rem; padding:.35rem .6rem; border-radius:8px;
   border:1px solid var(--border); background:var(--bg); color:var(--text); min-width:11rem }
 .netz-weg-in:focus{ outline:2px solid var(--accent); outline-offset:1px }
-.netz-weg-btn{ font-family:var(--fm); font-size:.66rem; letter-spacing:.05em; padding:.38rem .8rem;
-  border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text2); cursor:pointer }
-@media (hover: hover){ .netz-weg-btn:hover{ border-color:var(--accent); color:var(--accent-text) } }
+@media (hover: hover){ }
 .netz-weg-erg{ font-size:.76rem; color:var(--text2); line-height:1.5 }
 .nz-kante.weg{ stroke-width:3.4 !important; opacity:1 !important }
 #netz-svg{ display:block }
@@ -10297,16 +10205,12 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .nz-kante.dim{ opacity:.04 }
 .nz-jahr{ font-family:var(--fm); font-size:9px; fill:var(--text3); opacity:.7 }
 .nz-gitter{ stroke:var(--border); stroke-width:1; opacity:.5 }
-.view-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.22rem; flex-shrink:0; }
-.vs-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .8rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
-@media (hover: hover){ .vs-btn:hover{ color:var(--text); } }
-.vs-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
+@media (hover: hover){ }
 
 /* Die vier Ansichtsknöpfe brauchen zusammen 464 px und schoben die
    Rand auf dem Telefon um 74 px, der letzte war unlesbar. Ab hier dürfen sie
    umbrechen. Oberhalb von 900 px unverändert. */
 @media (max-width: 900px){
-  .view-switch { flex-wrap:wrap; flex-shrink:1; max-width:100%; }
 }
 /* ── Tabellenansicht ── */
 .tl-table-wrap { display:none; padding:1.2rem 3rem 3rem; overflow-x:auto; }
@@ -10326,16 +10230,10 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tl-tbl-epoch { white-space:nowrap; }
 .tl-epoch-pill { display:inline-block; font-family:var(--fm); font-size:.7rem; padding:.14rem .55rem; border-radius:6px; border:1px solid; white-space:nowrap; font-weight:600; }
 .tl-table-meta-row { display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:.7rem; }
-.tl-export-btn { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.38rem .85rem; border-radius:7px; cursor:pointer; font-family:var(--fm); font-size:.72rem; transition:all .15s; white-space:nowrap; }
-@media (hover: hover){ .tl-export-btn:hover{ background:var(--accent); border-color:var(--accent); color:var(--auf-accent,#fff); } }
+@media (hover: hover){ }
 .tl-badge { display:inline-block; font-family:var(--fm); font-size:.64rem; background:var(--surface); border:1px solid var(--border2); color:var(--text2); border-radius:5px; padding:.1rem .42rem; margin:.1rem .18rem .1rem 0; white-space:nowrap; }
 .tl-badge.hl { background:var(--accent); border-color:var(--accent); color:var(--auf-accent,#fff); }
 @media (max-width:900px){ .tl-table-wrap{ padding:1rem 1.2rem 2.5rem; } .tl-table .opt-col{ display:none; } }
-
-.infl-toggles  { display:flex; gap:.25rem; flex-wrap:wrap; }
-.itbtn         { background:var(--surface); border:1px solid var(--border2); color:var(--text2); padding:.3rem .7rem; border-radius:6px; cursor:pointer; font-family:var(--fm); font-size:.7rem; transition:all .15s; display:flex; align-items:center; gap:.35rem; white-space:nowrap; }
-.itbtn.active  { color:#fff; border-color:transparent; }
-.itbtn-dot     { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
 
 .epoch-filter-row { display:flex; gap:.3rem; flex-wrap:wrap; padding:.5rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); overflow-x:auto; }
 
@@ -10344,14 +10242,8 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .era-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
 @media (hover: hover){ .era-btn:hover{ color:var(--text); } }
 .era-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
-.filter-mode-switch { display:inline-flex; gap:.2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.2rem; }
-.fm-btn { background:transparent; border:none; color:var(--text2); padding:.32rem .85rem; border-radius:8px; cursor:pointer; font-size:.72rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; }
-@media (hover: hover){ .fm-btn:hover{ color:var(--text); } }
-.fm-btn.active { background:var(--accent); color:var(--auf-accent,#fff); }
-.epoch-dd-wrap { display:inline-flex; align-items:center; gap:.5rem; margin-left:1rem; }
+@media (hover: hover){ }
 .epoch-dd-label { font-size:.72rem; font-family:var(--fm); color:var(--text3); }
-.epoch-dd { background:var(--surface); border:1px solid var(--border); color:var(--text); padding:.45rem .8rem; border-radius:8px; font-size:.76rem; font-family:var(--fm); cursor:pointer; outline:none; min-width:280px; max-width:360px; }
-.epoch-dd:focus { border-color:var(--accent); }
 
 .epoch-btn     { background:var(--surface); border:1px solid var(--border); color:var(--text2); padding:.28rem .65rem; border-radius:14px; cursor:pointer; font-size:.7rem; font-family:var(--fm); transition:all .15s; white-space:nowrap; flex-shrink:0; }
 .epoch-btn.active { color:#fff; border-color:transparent; }
@@ -10359,12 +10251,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .tier-legend   { display:flex; gap:1.25rem; align-items:center; padding:.5rem 3rem; background:var(--bg); border-bottom:1px solid var(--border); flex-wrap:wrap; }
 .tier-item     { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
 .tier-pip      { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-/* ── Epochen-Farblegende (C13) ── */
-/* Die freistehende Epochen-Legende ist entfallen; die Farbtafel steht jetzt im
-   Fach Filter und wird ueber .tlk-zeile-leg gestaltet. */
-.epoch-leg-item { display:flex; align-items:center; gap:.35rem; font-family:var(--fm); font-size:.66rem; color:var(--text2); white-space:nowrap; cursor:pointer; padding:.1rem .2rem; border-radius:4px; transition:background .12s; }
-@media (hover: hover){ .epoch-leg-item:hover{ background:var(--surface); color:var(--text); } }
-.epoch-leg-item.active { background:var(--accent)22; color:var(--text); font-weight:600; }
+@media (hover: hover){ }
 .epoch-leg-swatch { width:11px; height:11px; border-radius:3px; flex-shrink:0; }
 .tier-fav      { display:flex; align-items:center; gap:.4rem; font-family:var(--fm); font-size:.68rem; color:var(--text3); white-space:nowrap; }
 .tier-fav-icon { width:14px; height:14px; border-radius:50%; background:var(--accent2); display:flex; align-items:center; justify-content:center; color:#fff; font-size:.6rem; flex-shrink:0; }
@@ -10430,102 +10317,128 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 .chip-dot      { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
 
 @media (max-width:780px) {
-  .phil-header,.phil-controls,.epoch-filter-row,.tier-legend { padding-left:1.2rem; padding-right:1.2rem; }
   .pmodal-header { flex-direction:column; gap:.8rem; }
   .pmodal-portrait { width:80px; height:108px; }
 }
 </style>
+<style>
+/* Ausschließlich Geometrie der Timeline. Farben, Schrift, Buttons, Eingaben und
+   Karten kommen aus dem unveränderten globalen Designsystem der index.html.
+   Jede Ausnahme ist in README.md begründet. Keine neuen Gestaltungsklassen. */
+#tl-timeline{display:grid;grid-template-rows:auto auto auto minmax(0,1fr);block-size:var(--timeline-hoehe);min-block-size:0;overflow:hidden}
+#tl-head{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;padding:.75rem 1.25rem .5rem}
+#tl-head .section-divider{margin:0}
+#tl-head>a{margin-inline-start:auto}
+#tl-controls{padding:.25rem 1.25rem .5rem;border-block-end:1px solid var(--border)}
+#tl-primary{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+#tl-primary .tags,#tl-actions{margin-block-start:0}
+#tl-primary #phil-search{flex:1;min-inline-size:8rem;max-inline-size:24rem}
+#tl-view{display:none}
+#tl-tools{display:none}
+#tl-actions{align-items:center;margin-block-start:.35rem}
+#ks-leiste{display:flex;align-items:center;gap:.5rem;min-inline-size:0;margin-block-start:.35rem}
+#vis-count-2{margin:0}
+#ks-teile{flex:1;min-inline-size:0;margin:0;align-items:center}
+#ks-reset{margin-inline-start:auto;white-space:nowrap}
+#tl-panels{overflow:auto;overscroll-behavior:contain;max-block-size:min(36dvh,calc(var(--timeline-hoehe)*.38));padding-inline:1.25rem}
+#tl-panels:has(>[role="region"]:not([hidden])){padding-block:.4rem}
+#tl-panel-close{display:flex;justify-content:flex-end;margin-block-end:.35rem}
+#tl-panels>.card{padding:.75rem;transform:none}
+#tl-panels .tags{align-items:center;margin-block-start:0;margin-block-end:.6rem}
+#tl-panels select{max-inline-size:100%}
+#epoch-legend-grid{display:flex;flex-wrap:wrap;gap:.3rem}
+#tl-views{min-block-size:0;overflow:hidden;position:relative}
+#tl-outer,#tl-wrap{block-size:100%;min-block-size:0}
+#tl-wrap{overflow-anchor:none;touch-action:none}
+#atlas-orientierung{position:absolute;inset-block-start:.5rem;inset-inline-start:.5rem;z-index:2;margin:0;pointer-events:none}
+#tl-timeline #karte-wrap,#tl-timeline #tl-table-wrap,#tl-timeline #netz-wrap{block-size:100%;max-block-size:none;margin:0;overflow:auto;padding-block-end:.5rem}
+#tl-timeline #karte-wrap{padding-inline:1.25rem}
+#tl-timeline #netz-wrap{border-radius:0;border-inline:0}
+#tl-timeline #tl-table-wrap{padding-inline:.75rem}
+#tl-timeline #karte-osm{block-size:max(200px,calc(var(--timeline-hoehe)*.45))}
+#tl-timeline .tier-legend{padding:0;border:0}
+#tl-timeline[data-focus="true"] #tl-head{display:none}
+#tl-timeline .tl-hover-card{max-inline-size:min(340px,calc(100vw - 1rem));min-inline-size:0}
+@media(max-width:650px){
+ #tl-timeline{grid-template-rows:auto minmax(0,1fr) auto auto}
+ #tl-head{grid-row:1;padding:.4rem .65rem;gap:.35rem}
+ #tl-head>.tag{display:none}
+ #tl-head>a{padding:.25rem .5rem;min-inline-size:40px;text-align:center}
+ #tl-head>a>span{display:none}
+ #tl-controls{grid-row:4;padding:.4rem .55rem max(.4rem,env(safe-area-inset-bottom));border-block-start:1px solid var(--border);border-block-end:0}
+ #tl-primary{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:.35rem}
+ #view-switch{display:none}
+ #tl-view{display:block;inline-size:100%}
+ #tl-primary #phil-search{inline-size:100%;min-inline-size:0;max-inline-size:none}
+ #zoom-group{grid-column:1/-1;justify-content:center}
+ #tl-actions{flex-wrap:nowrap;overflow:auto;gap:.25rem;padding:.1rem 0 .25rem}
+ #tl-actions>.btn{flex-shrink:0}
+ #tl-actions>[aria-controls]{display:none}
+ #tl-tools{display:block;flex:1;min-inline-size:0}
+ #tl-timeline .btn,#tl-timeline input,#tl-timeline select{min-block-size:40px}
+ #tl-timeline #tl-actions .btn{padding-inline:.5rem}
+ #ks-leiste{flex-wrap:wrap;gap:.25rem;margin-block-start:.15rem}
+ #ks-teile{flex-wrap:nowrap;overflow:auto}
+ #ks-teile>.tag{white-space:nowrap}
+ #ks-reset{min-block-size:32px}
+ #tl-panels{grid-row:3;padding-inline:.55rem;max-block-size:min(32dvh,calc(var(--timeline-hoehe)*.32))}
+ #tl-panels>.card{padding:.5rem}
+ #tl-views{grid-row:2}
+ #tl-timeline #karte-wrap{padding-inline:.5rem}
+}
+@media(max-height:500px){
+ #tl-head{padding-block:.25rem}
+ #tl-actions{margin-block-start:.15rem}
+ #tl-panels{max-block-size:28dvh}
+}
+@media(prefers-reduced-motion:reduce){#tl-timeline *{transition:none;animation:none;scroll-behavior:auto}}
+/* Nach den Layoutregeln: auch Controls mit explizitem display respektieren hidden. */
+#tl-timeline [hidden]{display:none}
 
-<!-- HEADER -->
-<div class="page-hero phil-hero">
-  <div class="page-hero-glow"></div>
-  <p class="hero-tag">Von Thales bis zur Gegenwart</p>
-  <h1 class="page-title">Philosophen-Timeline<span>.</span></h1>
-  <p class="page-desc" id="phil-desc">
-    2 600 Jahre Denkgeschichte · Einflussverbindungen, Epochen und Tier-System
-  </p>
-  <p class="phil-meta">
-    Klick + Drag zum Scrollen · Mausrad zum Zoomen · Hover zeigt Verbindungen · Klick öffnet Details
-  </p>
-</div>
+</style>
+<section id="tl-timeline" aria-label="Philosophen-Timeline">
+  <header id="tl-head">
+    <h1 class="section-divider">Philosophen-Timeline</h1>
+    <span class="tag"><span data-zahl="denker">580</span> Denker</span>
 
-<!-- ══ BEDIENUNG — drei Zonen ═══════════════════════════════════════
-     Die Reihenfolge folgt den Fragen, die ein Erstnutzer stellt:
-
-       Zone 1  Was sehe ich?    Ansicht · Suche · Werkzeug DIESER Ansicht
-       Zone 2  Wen sehe ich?    Zustandsstreifen: Zahl · aktive Filter · Reset
-       Zone 3  Wen will ich?    Faecher, benannt nach dem, WORAN sie filtern
-
-     Zone 2 lag bis hierher als .ks-Leiste INNERHALB von #karte-wrap und war
-     damit in der am seltensten geoeffneten Ansicht eingesperrt. Sie ist die
-     einzige Stelle, die „warum sehe ich gerade das?" beantwortet — sie
-     gehoert ueber alle vier Ansichten, nicht nur ueber die Karte.
-
-     Die Faecher hiessen „Filter | Kulturkreis | Darstellung | Einflusslinien".
-     Das trennte nichts: der Kulturkreis IST ein Filter. Jetzt trennt das
-     Kriterium — Merkmale der Person | Herkunft | Darstellung. Einflusslinien
-     sind eine Darstellungsfrage und stehen dort. -->
-<div class="tlk">
-
-  <div class="tlk-haupt">
-    <div class="view-switch" id="view-switch" role="group" aria-label="Ansicht wählen">
-      <button class="vs-btn active" id="vs-timeline" onclick="tlSetView('timeline')" aria-pressed="true" title="Denker auf der Zeitachse">⏳ Zeitachse</button>
-      <button class="vs-btn" id="vs-table" onclick="tlSetView('table')" aria-pressed="false" title="Sortierbare Tabelle mit CSV-Export">📊 Tabelle</button>
-      <button class="vs-btn" id="vs-netz" onclick="tlSetView('netz')" aria-pressed="false" title="Wer hat wen beeinflusst">🕸️ Einflussnetz</button>
-      <button class="vs-btn" id="vs-karte" onclick="tlSetView('karte')" aria-pressed="false" title="Geburts- und Sterbeorte auf der Weltkarte">🌍 Weltkarte</button>
+  </header>
+  <div id="tl-controls">
+    <div id="tl-primary">
+      <div class="tags" id="view-switch" role="group" aria-label="Ansicht wählen">
+        <button class="btn btn-ghost btn-sm" id="vs-timeline" onclick="tlSetView('timeline')" aria-pressed="true">⏳ Zeitachse</button>
+        <button class="btn btn-ghost btn-sm" id="vs-table" onclick="tlSetView('table')" aria-pressed="false">📊 Tabelle</button>
+        <button class="btn btn-ghost btn-sm" id="vs-netz" onclick="tlSetView('netz')" aria-pressed="false">🕸️ Einflussnetz</button>
+        <button class="btn btn-ghost btn-sm" id="vs-karte" onclick="tlSetView('karte')" aria-pressed="false">🌍 Weltkarte</button>
+      </div>
+      <select class="ctrl-select" id="tl-view" aria-label="Ansicht wählen" onchange="tlSetView(this.value)">
+        <option value="timeline">⏳ Zeitachse</option><option value="table">📊 Tabelle</option>
+        <option value="netz">🕸️ Einflussnetz</option><option value="karte">🌍 Weltkarte</option>
+      </select>
+      <input class="ctrl-input" id="phil-search" type="search" placeholder="Philosoph suchen…" aria-label="Philosoph suchen" oninput="tlSearch(this.value)">
+      <div class="tags" id="zoom-group" role="group" aria-label="Zoom der Zeitachse">
+        <button class="btn btn-ghost btn-sm" onclick="tlZoom(1/1.35)" aria-label="Herauszoomen">−</button>
+        <span class="tag" id="zoom-lbl">×1.0</span>
+        <button class="btn btn-ghost btn-sm" onclick="tlZoom(1.35)" aria-label="Hineinzoomen">+</button>
+        <button class="btn btn-ghost btn-sm" id="atlas-fit" onclick="tlReset()" title="Gesamten Zeitraum in die Bühnenbreite einpassen; Filter behalten">Gesamtansicht</button>
+      </div>
     </div>
-
-    <div class="phil-search-wrap">
-      <span class="phil-search-icon" aria-hidden="true">⌕</span>
-      <input class="phil-search" id="phil-search" type="search"
-        placeholder="Philosoph suchen…" aria-label="Philosoph suchen"
-        oninput="tlSearch(this.value)">
+    <div class="tags" id="tl-actions" role="group" aria-label="Werkzeuge">
+      <select class="ctrl-select" id="tl-tools" aria-label="Werkzeug öffnen" onchange="tlkFach(this.value)"><option value="">Werkzeuge…</option><option value="filter">🔍 Merkmale</option><option value="kreis">🌐 Herkunft</option><option value="ansicht">🎨 Darstellung</option><option value="hilfe">Hilfe zur Bedienung</option></select>
+      <button class="btn btn-ghost btn-sm" id="tlk-tab-filter" onclick="tlkFach('filter')" aria-expanded="false" aria-controls="tlk-fach-filter">🔍 Merkmale <span class="tag" id="tlk-badge-filter" hidden></span></button>
+      <button class="btn btn-ghost btn-sm" id="tlk-tab-kreis" onclick="tlkFach('kreis')" aria-expanded="false" aria-controls="tlk-fach-kreis">🌐 Herkunft <span class="tag" id="tlk-badge-kreis" hidden></span></button>
+      <button class="btn btn-ghost btn-sm" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')" aria-expanded="false" aria-controls="tlk-fach-ansicht">🎨 Darstellung</button>
+      <button class="btn btn-ghost btn-sm" id="tl-focus" onclick="tlTimelineFokus()" aria-pressed="false">⛶ Fokus</button>
+      <button class="btn btn-ghost btn-sm" id="tlk-tab-hilfe" onclick="tlkFach('hilfe')" aria-expanded="false" aria-controls="tlk-fach-hilfe">Hilfe</button>
     </div>
-
-    <!-- Werkzeug der Ansicht. Der Zoom stand bisher immer da, wirkte aber nur
-         auf der Zeitachse — in Tabelle, Netz und Karte war er ein Knopf ohne
-         Folge. tlSetView() blendet ihn jetzt mit der Ansicht ein und aus.
-         Der frühere vierte Knopf „Reset" hat Zoom UND Filter zurueckgesetzt,
-         aber weder Kulturkreis noch Herkunft — ein halbes Zuruecksetzen neben
-         zwei weiteren Reset-Knoepfen. Zuruecksetzen liegt jetzt allein im
-         Zustandsstreifen; den Zoom loest ein Doppelklick auf die freie
-         Flaeche der Zeitachse. -->
-    <div class="phil-zoom-group" id="zoom-group" role="group" aria-label="Zoom der Zeitachse">
-      <button class="pzb" onclick="tlZoom(1/1.35)" title="Herauszoomen" aria-label="Herauszoomen">−</button>
-      <span class="zoom-label" id="zoom-lbl">×1.0</span>
-      <button class="pzb" onclick="tlZoom(1.35)" title="Hineinzoomen" aria-label="Hineinzoomen">+</button>
+    <div id="ks-leiste" role="status" aria-live="polite" aria-atomic="true">
+      <span class="sec-sub" id="vis-count-2"></span><span class="tags" id="ks-teile"></span>
+      <button class="btn btn-ghost btn-sm" id="ks-reset" hidden>↺ Zurücksetzen</button>
     </div>
   </div>
-
-  <!-- ── Zone 2: Zustand ────────────────────────────────────────────
-       Beantwortet an EINER Stelle: wie viele sehe ich, welche Filter
-       greifen gerade, wie komme ich zurueck. Die Chips nennen jeden
-       wirksamen Filter im Klartext; der Reset erscheint nur, wenn es
-       etwas zurueckzunehmen gibt — ein Knopf, der nichts taete, waere
-       ein Angebot, das ins Leere fuehrt.
-       role=status + aria-live: Wer mit Screenreader filtert, hoert die
-       neue Trefferzahl, statt sie suchen zu muessen. -->
-  <div class="ks" id="ks-leiste" role="status" aria-live="polite">
-    <span class="ks-zahl" id="vis-count-2">—</span>
-    <span class="ks-teile" id="ks-teile"></span>
-    <button type="button" class="km-btn ks-reset" id="ks-reset" hidden
-            title="Alle Filter aufheben und in den Ausgangszustand zurück">↺ Alles zurücksetzen</button>
-  </div>
-
-  <div class="tlk-faecher" role="group" aria-label="Filter und Darstellung">
-    <button class="tlk-tab" id="tlk-tab-filter" onclick="tlkFach('filter')"
-            aria-expanded="false" aria-controls="tlk-fach-filter">
-      <span class="tlk-caret" aria-hidden="true">▸</span> 🔍 Merkmale <span class="tlk-badge" id="tlk-badge-filter" hidden></span></button>
-    <button class="tlk-tab" id="tlk-tab-kreis" onclick="tlkFach('kreis')"
-            aria-expanded="false" aria-controls="tlk-fach-kreis">
-      <span class="tlk-caret" aria-hidden="true">▸</span> 🌐 Herkunft <span class="tlk-badge" id="tlk-badge-kreis" hidden></span></button>
-    <button class="tlk-tab" id="tlk-tab-ansicht" onclick="tlkFach('ansicht')"
-            aria-expanded="false" aria-controls="tlk-fach-ansicht">
-      <span class="tlk-caret" aria-hidden="true">▸</span> 🎨 Darstellung</button>
-  </div>
-
-  <!-- Fach: Merkmale der Person -->
-  <div class="tlk-fach" id="tlk-fach-filter" hidden role="region" aria-labelledby="tlk-tab-filter">
+  <div id="tl-panels">
+    <div id="tl-panel-close" hidden><button class="btn btn-ghost btn-sm" onclick="tlkFach(tlkTimelineOffen())">Fach schließen ×</button></div>
+      <!-- Fach: Merkmale der Person -->
+  <div class="card" id="tlk-fach-filter" hidden role="region" aria-labelledby="tlk-tab-filter">
     <!-- EIN Slot, nicht fuenf. tlSetMode() loescht beim Wechsel alle uebrigen
          Werte („damit sich Modi nicht ueberlagern“) — es kann also immer nur
          ein Merkmal greifen. Fuenf gleichrangige Chips nebeneinander haben das
@@ -10533,31 +10446,31 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
          verlor die Epoche stillschweigend. Merkmal und Wert stehen deshalb
          jetzt in EINER Zeile mit Pfeil dazwischen — sichtbar ein Paar, nicht
          zwei unabhaengige Angebote. -->
-    <div class="tlk-zeile">
-      <span class="tlk-lab" id="lab-merkmal">Merkmal</span>
-      <div class="filter-mode-switch" id="filter-mode-switch" role="group" aria-labelledby="lab-merkmal">
-        <button class="fm-btn active" data-mode="epoch" onclick="tlSetMode('epoch',this)" aria-pressed="true">Epoche</button>
-        <button class="fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)" aria-pressed="false">Disziplin</button>
-        <button class="fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)" aria-pressed="false">Strömung</button>
-        <button class="fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)" aria-pressed="false">Grundposition</button>
-        <button class="fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)" aria-pressed="false">Thema</button>
+    <div class="tags">
+      <span class="tag" id="lab-merkmal">Merkmal</span>
+      <div class="tags" id="filter-mode-switch" role="group" aria-labelledby="lab-merkmal">
+        <button class="btn btn-ghost btn-sm fm-btn" data-mode="epoch" onclick="tlSetMode('epoch',this)" aria-pressed="true">Epoche</button>
+        <button class="btn btn-ghost btn-sm fm-btn" data-mode="disc" onclick="tlSetMode('disc',this)" aria-pressed="false">Disziplin</button>
+        <button class="btn btn-ghost btn-sm fm-btn" data-mode="mov" onclick="tlSetMode('mov',this)" aria-pressed="false">Strömung</button>
+        <button class="btn btn-ghost btn-sm fm-btn" data-mode="pos" onclick="tlSetMode('pos',this)" aria-pressed="false">Grundposition</button>
+        <button class="btn btn-ghost btn-sm fm-btn" data-mode="thema" onclick="tlSetMode('thema',this)" aria-pressed="false">Thema</button>
       </div>
-      <span class="tlk-lab" aria-hidden="true">→</span>
-      <div class="epoch-dd-wrap">
-        <select class="epoch-dd" id="epoch-dd" onchange="tlSetFilter(this.value)"
+      <span class="tag" aria-hidden="true">→</span>
+      <div class="tags">
+        <select class="ctrl-select" id="epoch-dd" onchange="tlSetFilter(this.value)"
                 aria-label="Wert des gewählten Merkmals"></select>
       </div>
     </div>
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Zusätzlich</span>
-      <button class="itbtn" id="female-btn" onclick="tlToggleFemale()" aria-pressed="false"
+    <div class="tags">
+      <span class="tag">Zusätzlich</span>
+      <button class="btn btn-ghost btn-sm" id="female-btn" onclick="tlToggleFemale()" aria-pressed="false"
         title="Zeigt nur die Philosophinnen des Datensatzes">♀ Nur Philosophinnen</button>
     </div>
-    <div class="tlk-zeile tlk-zeile-leg">
-      <span class="tlk-lab">Epochen</span>
+    <div class="tags">
+      <span class="tag">Epochen</span>
       <div class="epoch-legend-grid" id="epoch-legend-grid"></div>
     </div>
-    <p class="tlk-hilfe">Es greift immer nur <b>ein</b> Merkmal: Der Wechsel von Epoche auf
+    <p class="page-desc">Es greift immer nur <b>ein</b> Merkmal: Der Wechsel von Epoche auf
       Disziplin hebt eine gewählte Epoche auf. Kombinieren lässt es sich dagegen mit Herkunft,
       Suche und „Nur Philosophinnen“ — was gerade zusammen greift, steht oben im Streifen.
       Die Farbtafel ist derselbe Epochenfilter: ein Klick wählt, ein zweiter hebt auf.</p>
@@ -10566,19 +10479,19 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   <!-- Fach: Herkunft — Kulturkreis und Region beantworten dieselbe Frage
        (woher stammt jemand) und standen doch in zwei verschiedenen Faechern:
        der Kreis in einem eigenen, die Region unter „Filter“. -->
-  <div class="tlk-fach" id="tlk-fach-kreis" hidden role="region" aria-labelledby="tlk-tab-kreis">
-    <div class="tlk-zeile">
-      <span class="tlk-lab" id="lab-kreis">Kulturkreis</span>
+  <div class="card" id="tlk-fach-kreis" hidden role="region" aria-labelledby="tlk-tab-kreis">
+    <div class="tags">
+      <span class="tag" id="lab-kreis">Kulturkreis</span>
       <div class="tl-kreise" id="tl-kreise" role="group" aria-labelledby="lab-kreis"></div>
     </div>
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Region</span>
-      <div class="epoch-dd-wrap">
-        <select class="epoch-dd" id="herkunft-dd" onchange="tlSetHerkunft(this.value)"
+    <div class="tags">
+      <span class="tag">Region</span>
+      <div class="tags">
+        <select class="ctrl-select" id="herkunft-dd" onchange="tlSetHerkunft(this.value)"
           aria-label="Nach Geburtsort filtern"></select>
       </div>
     </div>
-    <p class="tlk-hilfe">Beides betrifft die Herkunft, aber nicht dasselbe: Der <b>Kulturkreis</b>
+    <p class="page-desc">Beides betrifft die Herkunft, aber nicht dasselbe: Der <b>Kulturkreis</b>
       ordnet die Denktradition zu, die <b>Region</b> den Geburtsort nach heutiger Geografie —
       Augustinus steht als Kulturkreis unter Europa, als Region unter Nordafrika. Klick blendet
       einen Kreis ein oder aus, Doppelklick zeigt nur diesen. Voreingestellt sind Europa und die
@@ -10589,40 +10502,38 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
   <!-- Fach: Darstellung — was die Ansicht zeigt, nicht wen sie zeigt.
        Die Einflusslinien hatten ein eigenes Fach, sind aber genau das:
        eine Darstellungsentscheidung. -->
-  <div class="tlk-fach" id="tlk-fach-ansicht" hidden role="region" aria-labelledby="tlk-tab-ansicht">
-    <div class="tlk-zeile">
-      <span class="tlk-lab">Karten</span>
-      <button class="itbtn" id="card-size-btn" onclick="tlToggleCardSize()" aria-pressed="false"
+  <div class="card" id="tlk-fach-ansicht" hidden role="region" aria-labelledby="tlk-tab-ansicht">
+    <div class="tags">
+      <span class="tag">Karten</span>
+      <button class="btn btn-ghost btn-sm" id="card-size-btn" onclick="tlToggleCardSize()" aria-pressed="false"
               title="Zwischen großen und kleinen Karten wechseln">◰ Mini</button>
     </div>
-    <div class="tlk-zeile">
-      <span class="tlk-lab" id="lab-linien">Einflusslinien</span>
-      <div class="infl-toggles" id="infl-toggles" role="group" aria-labelledby="lab-linien"></div>
+    <div class="tags">
+      <span class="tag" id="lab-linien">Einflusslinien</span>
+      <div class="tags" id="infl-toggles" role="group" aria-labelledby="lab-linien"></div>
     </div>
-    <div class="tier-legend">
+    <div class="tags" id="atlas-bildwahl"><label class="tag" for="tl-darstellung">Zeitachse</label><select class="ctrl-select" id="tl-darstellung" onchange="tlSetDarstellung(this.value)"><option value="klassisch" selected>Klassisch</option><option value="gruppiert">Aufger?umt</option></select><label class="tag" for="atlas-bilder">Landschaft</label><select class="ctrl-select" id="atlas-bilder" onchange="tlAtlasBild(this.value)"><option value="aus">Keine Bilder</option><option value="bilder" selected>Dezente Bildkontexte</option><option value="stilisiert">Stilisierte Landschaft</option></select><a class="btn btn-ghost btn-sm" href="#impressum" target="_blank" rel="noopener">Bildquellen ↗</a><p class="page-desc" id="atlas-bild-hinweis"></p><button class="btn btn-ghost btn-sm" onclick="tlKreisNur('European');tlAtlasGesamt()">Europäische Bildbeispiele ansehen</button></div><div class="tier-legend">
       <div class="tier-item"><div class="tier-pip" style="background:#f5b50a;box-shadow:0 0 0 2px #f5b50a44"></div>T1 — Giganten</div>
       <div class="tier-item"><div class="tier-pip" style="background:#3b9eff"></div>T2 — Wichtige Denker</div>
       <div class="tier-item"><div class="tier-pip" style="background:#23c552"></div>T3 — Bedeutend</div>
       <div class="tier-item"><div class="tier-pip" style="background:#9b7cff"></div>T4 — Schüler &amp; Randfiguren</div>
       <div class="vis-count" id="vis-count">—</div>
     </div>
-    <p class="tlk-hilfe">Der <b>Rang</b> ist keine Wertung, sondern ein Dichtemaß: Je weiter du in
-      die Zeitachse hineinzoomst, desto mehr Ränge erscheinen — bei geringem Zoom nur die Giganten.
-      Die <b>Einflusslinien</b> zeigen belegte Beziehungen; einzelne Arten lassen sich ausblenden.
+    <p class="page-desc">Die <b>klassische Zeitachse</b> zeigt einzelne Personen nach Rang und Zoom. Unter <b>Zeitachse → Aufgeräumt</b> können dichte Zeitabschnitte zusätzlich zu Gruppen verdichtet werden. Gruppen enthalten weiterhin alle zugehörigen Personen; ein Klick vergrößert den Abschnitt. Die <b>Einflusslinien</b> zeigen belegte Beziehungen; einzelne Arten lassen sich ausblenden.
       Wer wen über mehrere Schritte beeinflusst hat, zeigt die Verbindungssuche in der Ansicht
       „Einflussnetz“.</p>
   </div>
-</div>
 
-<!-- Kurzanleitung: die Bedienung der Buehne selbst ist sonst unsichtbar.
-     Einmal weggeklickt, bleibt sie fuer diesen Besuch weg. -->
-<div class="tl-hilfe" id="tl-hilfe">
-  <span class="tl-hilfe-t"><b>Ziehen</b> verschiebt · <b>Mausrad</b> zoomt · <b>Klick</b> auf eine Karte öffnet den Denker
-    · <b>Doppelklick</b> auf leere Fläche setzt zurück</span>
-  <button type="button" class="tl-hilfe-zu" onclick="tlHilfeZu()" aria-label="Hinweis schließen">×</button>
-</div>
-
-<!-- SVG CANVAS + Hover Card -->
+    <div class="card" id="tlk-fach-hilfe" hidden role="region" aria-labelledby="tlk-tab-hilfe">
+      <p class="page-desc"><b>Ziehen</b> verschiebt die Zeitachse; das <b>Mausrad</b> zoomt zum Zeiger. Mit Umschalt + Mausrad verschiebst du waagerecht. Ein Klick auf eine Karte öffnet Details.</p>
+      <p class="page-desc">Auf Touchgeräten: <b>Wischen</b> verschiebt und <b>zwei Finger</b> zoomen um ihre Mitte. Der <b>erste Tipp</b> auf eine Einzelkarte zeigt Kontext und Verbindungen, der <b>zweite Tipp</b> öffnet Details. Eine Gruppe vergrößert ihren Zeitabschnitt. Die Knöpfe − und + bleiben erreichbar.</p>
+      <p class="page-desc"><b>Gesamtansicht</b> und Doppelklick auf freie Fläche passen den ganzen Zeitraum in die Bühnenbreite ein; Filter bleiben gesetzt. <b>Zurücksetzen</b> setzt Auswahl, Darstellung und Karteneinstellungen zurück; die gewählte Ansicht bleibt erhalten. <b>Fokus</b> blendet den Seitenkopf aus; alle Werkzeuge bleiben erreichbar.</p>
+      <p class="page-desc">Die <b>Trefferzahl</b> zählt die aktuelle Auswahl. Auf der Zeitachse erscheinen abhängig vom Zoom weniger Karten. Im Einflussnetz gelten dieselben Filter; die Verbindungssuche berücksichtigt diese Auswahl und eingeblendete Beziehungstypen.</p>
+      <p class="page-desc">Eine Gruppe enthält alle genannten Personen ihres Zeitabschnitts. Klick vergrößert; an der Zoomgrenze öffnet sich die Mitgliederliste. Mit Tastatur öffnet die Leertaste die Liste direkt. Die Punkte einzelner Personen markieren ihre rechnerische Lebensmitte, nicht den Beginn ihrer Wirksamkeit.</p>
+      <p class="page-desc">Die Karte lädt Hintergrundkacheln von OpenStreetMap. Alle anderen Timeline-Daten und Medien liegen lokal.</p>
+    </div>
+  </div>
+  <div id="tl-views"><div class="tags" id="atlas-orientierung" aria-live="off"><span class="tag" id="atlas-bereich"></span><span class="tag" id="atlas-stufe"></span></div><!-- SVG CANVAS + Hover Card -->
 <div class="tl-outer" id="tl-outer">
   <div class="tl-canvas-wrap" id="tl-wrap">
     <svg id="tl-svg" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -10644,26 +10555,26 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
     <span class="karte-trenn" aria-hidden="true"></span>
     <span class="karte-etikett" id="lab-ortart">Ort</span>
     <div class="karte-modus" role="group" aria-labelledby="lab-ortart">
-      <button type="button" class="km-btn active" id="ko-geburt" onclick="kaOrtart('geburt')"
+      <button type="button" class="btn btn-ghost btn-sm" id="ko-geburt" onclick="kaOrtart('geburt')"
         aria-pressed="true" title="Wo die Denker geboren wurden">🎂 Geburtsort</button>
-      <button type="button" class="km-btn" id="ko-tod" onclick="kaOrtart('tod')"
+      <button type="button" class="btn btn-ghost btn-sm" id="ko-tod" onclick="kaOrtart('tod')"
         aria-pressed="false" title="Wo sie gestorben sind — zeigt Wanderung und Exil">🪦 Sterbeort</button>
     </div>
     <span class="karte-trenn" aria-hidden="true"></span>
     <span class="karte-etikett">Rang</span>
-    <button type="button" class="km-btn active" id="ko-tier" onclick="kaTierUm()"
+    <button type="button" class="btn btn-ghost btn-sm" id="ko-tier" onclick="kaTierUm()"
             title="Rang 3 und 4 dazuschalten — sonst wird die Karte sehr dicht"
             aria-pressed="true">◆ Rang 1–2</button>
 
     <span class="karte-etikett">Ebenen</span>
-    <button type="button" class="km-btn active" id="ko-lehr" onclick="kaLehrUm()"
+    <button type="button" class="btn btn-ghost btn-sm" id="ko-lehr" onclick="kaLehrUm()"
             title="Schulen, Bibliotheken, Universitäten und Zirkel ein- und ausblenden"
             aria-pressed="true">🏛️ Orte der Lehre</button>
 
-    <button type="button" class="km-btn" id="ko-funde" onclick="kaFundeUm()"
+    <button type="button" class="btn btn-ghost btn-sm" id="ko-funde" onclick="kaFundeUm()"
             title="Wo die Quellen des Götterkosmos gefunden wurden"
             aria-pressed="false">🏺 Fundorte</button>
-    <button type="button" class="km-btn" id="ko-phil-aus" onclick="kaPhilAusUm()"
+    <button type="button" class="btn btn-ghost btn-sm" id="ko-phil-aus" onclick="kaPhilAusUm()"
             title="Alle Denker-Punkte ausblenden — nützlich, um nur die Ebenen für sich zu sehen"
             aria-pressed="false">🙈 Denker aus</button>
     <span class="karte-info" id="karte-info"></span>
@@ -10678,7 +10589,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
       <option value="">— aus, alle Denker zeigen —</option>
     </select>
     <span class="kf-lage" id="kf-lage"></span>
-    <button type="button" class="km-btn kf-zurueck" id="kf-zurueck" hidden>Übersicht</button>
+    <button type="button" class="btn btn-ghost btn-sm" id="kf-zurueck" hidden>Übersicht</button>
   </div>
   <!-- Zeitregler: zeigt nur die Denker, die im eingestellten Jahr leben.
        Beim Abspielen wandert das Zentrum der Philosophie über die Karte —
@@ -10699,7 +10610,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
                aria-label="Jahr wählen">
       </div>
     </div>
-    <button type="button" class="km-btn kz-alle active" id="kz-alle"
+    <button type="button" class="btn btn-ghost btn-sm" id="kz-alle"
             title="Zeitfilter aufheben">alle Zeiten</button>
   </div>
   <!-- OpenStreetMap: echte Karte mit Staedten. Laedt Kacheln von fremden
@@ -10738,10 +10649,10 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
      senkrecht durch Kraefte geloest, damit verbundene Denker beieinanderliegen. -->
 <div class="netz-wrap" id="netz-wrap">
   <div class="netz-kopf" id="netz-kopf">
-    <span class="netz-lg" data-typ="student"><i style="border-color:#e8c46a"></i>Schüler</span>
-    <span class="netz-lg" data-typ="inspires"><i style="border-color:#7fb3d5"></i>inspiriert</span>
-    <span class="netz-lg" data-typ="develops"><i style="border-color:#82c99a"></i>entwickelt weiter</span>
-    <span class="netz-lg" data-typ="critic"><i style="border-color:#c97a7a;border-top-style:dashed"></i>kritisiert</span>
+    <button type="button" class="btn btn-ghost btn-sm netz-lg" data-typ="student"><i style="border-color:#e8c46a"></i>Schüler</button>
+    <button type="button" class="btn btn-ghost btn-sm netz-lg" data-typ="inspires"><i style="border-color:#7fb3d5"></i>inspiriert</button>
+    <button type="button" class="btn btn-ghost btn-sm netz-lg" data-typ="develops"><i style="border-color:#82c99a"></i>entwickelt weiter</button>
+    <button type="button" class="btn btn-ghost btn-sm netz-lg" data-typ="critic"><i style="border-color:#c97a7a;border-top-style:dashed"></i>kritisiert</button>
     <span class="netz-info" id="netz-info"></span>
   </div>
   <!-- Verbindungssuche: kuerzester Weg zwischen zwei Denkern im Einflussnetz. -->
@@ -10751,8 +10662,8 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
     <span class="netz-weg-pf">→</span>
     <input class="netz-weg-in" id="nz-nach" list="nz-namen" placeholder="… nach" aria-label="Denker (Ziel)">
     <datalist id="nz-namen"></datalist>
-    <button type="button" class="netz-weg-btn" onclick="nzWegSuchen()">Weg zeigen</button>
-    <button type="button" class="netz-weg-btn" onclick="nzWegLoeschen()">zurück</button>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="nzWegSuchen()">Weg zeigen</button>
+    <button type="button" class="btn btn-ghost btn-sm" onclick="nzWegLoeschen()">zurück</button>
     <span class="netz-weg-erg" id="nz-weg-erg"></span>
   </div>
   <svg id="netz-svg" xmlns="http://www.w3.org/2000/svg"></svg>
@@ -10761,7 +10672,7 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 <div class="tl-table-wrap" id="tl-table-wrap">
   <div class="tl-table-meta-row">
     <div class="tl-table-meta" id="tl-table-meta"></div>
-    <button class="tl-export-btn" onclick="tlTblExport()" title="Aktuelle Tabellenansicht als CSV herunterladen">⬇ Als CSV exportieren</button>
+    <button class="btn btn-ghost btn-sm" onclick="tlTblExport()" title="Aktuelle Tabellenansicht als CSV herunterladen">⬇ Als CSV exportieren</button>
   </div>
   <table class="tl-table">
     <thead>
@@ -10780,9 +10691,9 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
 </div>
 
 <!-- MODAL -->
-<div class="pmodal-overlay" id="pmodal" onclick="if(event.target===this)tlCloseModal()">
+<div class="pmodal-overlay" id="pmodal" role="dialog" aria-modal="true" aria-labelledby="pm-name" onclick="if(event.target===this)tlCloseModal()">
   <div class="pmodal-box">
-    <button class="pmodal-close" onclick="tlCloseModal()">✕</button>
+    <button class="pmodal-close" aria-label="Detailfenster schließen" onclick="tlCloseModal()">✕</button>
     <div class="pmodal-header">
       <div class="pmodal-portrait" id="pm-portrait-wrap"></div>
       <div class="pmodal-headerinfo">
@@ -10797,6 +10708,11 @@ html[data-theme="light"] .karte-liste{margin-top:.9rem;min-height:2rem}
     <div id="pm-infl"></div>
   </div>
 </div>
+
+
+    <div class="pmodal-overlay" id="atlas-gruppe" hidden role="dialog" aria-modal="true" aria-labelledby="atlas-gruppentitel"><div class="pmodal-box"><button class="pmodal-close" aria-label="Gruppenliste schließen" onclick="tlAtlasGruppeZu()">×</button><h2 class="sec-title" id="atlas-gruppentitel"></h2><p class="page-desc" id="atlas-gruppenzeit"></p><div class="tags" id="atlas-gruppenliste"></div></div></div>
+  </div>
+</section>
 
 <script>
 /* ════════════════════════════════════════════════════════════════
@@ -10878,7 +10794,7 @@ function computeConnected(name) {
 let inflMode = 'focus'; /* 'focus' = lines only for active node, 'all' = always show all */
 
 function svgW() { return BASE_W * zoom; }
-function xOf(yr) { return ((yr - YEAR_MIN) / YEAR_RANGE) * svgW(); }
+function xOf(yr) { return ATLAS_PAD + ((yr - YEAR_MIN) / YEAR_RANGE) * (svgW()-2*ATLAS_PAD); }
 function dark() { return document.documentElement.dataset.theme === 'dark'; }
 function cv(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
 /* Kulturkreise nach dem Vorbild der History of Philosophy without any gaps.
@@ -11167,6 +11083,7 @@ function visible(p) {
   return baseVisible(p);
 }
 function dimmed(p) {
+  if (femaleOnly && !p.female) return true;
   /* Epochen-Modus: Einzelepoche oder Großepoche */
   if (filterMode === 'epoch') {
     if (epoch && p.epoch !== epoch) return true;
@@ -11245,7 +11162,10 @@ function portraitBase(p) {
 /* Full portrait URL using the detected best format */
 function portraitUrl(p) {
   const base = portraitBase(p);
-  return base ? base + '.' + _imgExt : null;
+  if (!base) return null;
+  const datei=base.split('/').pop();
+  const ext=[_imgExt,'webp','jpg','avif'].find(e=>ATLAS_PORTRAITS.has(datei+'.'+e));
+  return ext ? base+'.'+ext : null;
 }
 
 /* CORRECT death/birth handling — null means "lives" */
@@ -11287,9 +11207,9 @@ function render() {
   svg.innerHTML = '';
 
   const dk        = dark();
-  const bgCard    = dk ? '#181824' : '#ffffff';
-  const textCol   = dk ? '#e8e8f0' : '#18181f';
-  const mutedCol  = dk ? '#606078' : '#9090a8';
+  const bgCard    = cv('--card');
+  const textCol   = cv('--text');
+  const mutedCol  = cv('--text3');
   const borderCol = cv('--border');
 
   /* 0. DEFS — markers, gradients, portrait clips */
@@ -11437,7 +11357,7 @@ function render() {
      (Hover verschiebt nichts → kein Flackern). Es wird aus den bei DIESEM Zoom
      sichtbaren Karten berechnet (kompakt), aber NICHT vom Hover beeinflusst.
      Cache-Key = Zoomstufe; ein Hover ändert den Key nicht. */
-  const _layoutKey = 'z' + zoom.toFixed(3) + (femaleOnly ? 'F' : '') + '_' + cardSize;
+  const _layoutKey = 'z' + zoom.toFixed(3) + (femaleOnly ? 'F' : '') + '_' + cardSize + '_' + phils().map(p=>p.slug).join('|');
   if (!window._layoutCache || window._layoutCache.key !== _layoutKey) {
     const sideMap = {}, rowMap = {};
     const rowEnds = { above: [], below: [] };
@@ -12298,7 +12218,7 @@ function renderTable() {
     + (fLabel ? ' · Filter: ' + fLabel : '') + (femaleOnly ? ' · nur Frauen' : '')
     + (search ? ' · Suche: „' + search + '"' : '');
   body.innerHTML = rows.map((p, i) =>
-    '<tr onclick="window._tblOpenRow(' + i + ')">'
+    '<tr tabindex="0" onclick="window._tblOpenRow(' + i + ')">'
     + '<td class="tl-tbl-name"><span class="tl-tbl-dot" style="background:' + (p.color||'#888') + '"></span>' + dispName(p) + '</td>'
     + '<td class="tl-tbl-life">' + lifeStr(p) + '</td>'
     + '<td class="tl-tbl-epoch">' + (p.epoch ? '<span class="tl-epoch-pill" style="color:' + (p.color||'#999') + ';background:' + (p.color||'#999') + '1a;border-color:' + (p.color||'#999') + '55">' + p.epoch + '</span>' : '') + '</td>'
@@ -12383,14 +12303,15 @@ let nzFertig=null;     // einmal berechnetes Layout
 let nzFest=null;       // per Klick festgehaltener Denker
 
 function nzLayout(){
-  if(nzFertig) return nzFertig;
-  const alle=PHILS_V2.filter(Boolean);
+  const alle=phils().filter(p=>!dimmed(p));
+  const schluessel=alle.map(p=>p.name).join('|')+JSON.stringify(nzAus);
+  if(nzFertig && nzFertig.schluessel===schluessel) return nzFertig;
   const nach={}; alle.forEach(p=>nach[p.name]=p);
   const kanten=[];
   alle.forEach(p=>(p.influences||[]).forEach(i=>{
-    if(nach[i.to]) kanten.push({a:p.name,b:i.to,typ:i.type||'inspires'}); }));
+    if(nach[i.to] && !nzAus[i.type||'inspires']) kanten.push({a:p.name,b:i.to,typ:i.type||'inspires'}); }));
   const drin=new Set(); kanten.forEach(k=>{drin.add(k.a);drin.add(k.b);});
-  const knoten=alle.filter(p=>drin.has(p.name)).sort((a,b)=>a.birth-b.birth);
+  const knoten=alle.sort((a,b)=>a.birth-b.birth);
   const grad={}; kanten.forEach(k=>{grad[k.a]=(grad[k.a]||0)+1;grad[k.b]=(grad[k.b]||0)+1;});
 
   const W=Math.max(1600,knoten.length*15), H=780, PADX=70, PADY=42;
@@ -12428,7 +12349,7 @@ function nzLayout(){
     for(let i=0;i<y.length;i++) y[i]=PADY+(y[i]-ymin)*f;
   }
   const pos={}; knoten.forEach((p,i)=>pos[p.name]={x:X(p.name),y:y[i],p,grad:grad[p.name]||1});
-  nzFertig={knoten,kanten,pos,W,H,PADY};
+  nzFertig={knoten,kanten,pos,W,H,PADY,schluessel};
   return nzFertig;
 }
 
@@ -12436,7 +12357,8 @@ function renderNetz(){
   const svg=document.getElementById('netz-svg'); if(!svg) return;
   const L=nzLayout();
   const dl=document.getElementById('nz-namen');          // Namen fuer die Verbindungssuche
-  if(dl && !dl.childElementCount){
+  if(dl){
+    dl.replaceChildren();
     L.knoten.forEach(p=>{ const o=document.createElement('option');
       o.value=p.name; if(p.display&&p.display!==p.name) o.label=p.display; dl.appendChild(o); });
   }
@@ -14617,7 +14539,7 @@ function osmZeichne(){
   var info = document.getElementById('karte-info');
   if (info) info.textContent = '';
   try{ ksAuffrischen(LP.length, Object.keys(orte).length); }catch(e){ console.warn('Statuszeile:', e); }
-  setTimeout(function(){ osmKarte.invalidateSize(); }, 60);
+  setTimeout(function(){ if(tlUiAktiv && osmKarte) osmKarte.invalidateSize(); }, 60);
 }
 
 /* Auffaechern: die Einzelnen als Portraet-Marker im Kreis um den Ort */
@@ -14872,7 +14794,7 @@ window.tlOpenModal = function(p) {
   if (!modal) return;
   const fav = isFav(p);
   const slug = favSlug(p);
-  
+
   /* Portrait — <picture> with avif→webp→jpg, all from zitate/ */
   const portraitWrap = document.getElementById('pm-portrait-wrap');
   const pBase = portraitBase(p);
@@ -14887,7 +14809,7 @@ window.tlOpenModal = function(p) {
     portraitWrap.innerHTML = `<div class="pmodal-portrait-fallback" style="color:${p.color}">${initial}</div>`;
   }
   portraitWrap.style.borderColor = p.color;
-  
+
   document.getElementById('pm-epoch').innerHTML = `<span style="color:${p.color}">${p.epoch}</span>`
     + `<span class="tier-badge" style="background:${(TIER_RING[p.tier]||'#7a7f87')}22;color:${TIER_RING[p.tier]||'#7a7f87'};border:1px solid ${TIER_RING[p.tier]||'#7a7f87'}55">`
     + `● Tier ${p.tier} · ${tierName(p)}</span>`
@@ -14943,59 +14865,684 @@ window.tlOpenModal = function(p) {
 window.tlCloseModal = function() { document.getElementById('pmodal')?.classList.remove('open'); };
 window.tlByName = byName;
 
-/* ════════ Responsive height ════════ */
-function setH() {
-  /* Feste Viewport-Höhe zwischen Filtern und Footer (zoom-unabhängig). */
-  const h = Math.max(460, window.innerHeight - 290);
-  const w = document.getElementById('tl-wrap');
-  const o = document.getElementById('tl-outer');
-  if (w) w.style.height = h+'px';
-  if (o) o.style.height = h+'px';
-  /* SVG-Höhe = Container-Höhe; Achse exakt mittig. */
-  SVG_H  = h;
-  AXIS_Y = Math.round(h / 2);
+const ATLAS_PORTRAITS=new Set(["achille-mbembe.avif","achille-mbembe.jpg","achille-mbembe.webp","adam-smith.avif","adam-smith.jpg","adam-smith.webp","adorno.avif","adorno.jpg","adorno.webp","agamben.avif","agamben.jpg","agamben.webp","agostino-nifo.avif","agostino-nifo.jpg","agostino-nifo.webp","alasdair-macintyre.avif","alasdair-macintyre.jpg","alasdair-macintyre.webp","albertus-magnus.avif","albertus-magnus.jpg","albertus-magnus.webp","alexander-aphrodisias.avif","alexander-aphrodisias.jpg","alexander-aphrodisias.webp","alfred-north-whitehead.avif","alfred-north-whitehead.jpg","alfred-north-whitehead.webp","alkuin.avif","alkuin.jpg","alkuin.webp","althusser.avif","althusser.jpg","althusser.webp","amartya-sen.avif","amartya-sen.jpg","amartya-sen.webp","ambedkar.avif","ambedkar.jpg","ambedkar.webp","anaxagoras.avif","anaxagoras.jpg","anaxagoras.webp","anaximander.avif","anaximander.jpg","anaximander.webp","anaximenes.avif","anaximenes.jpg","anaximenes.webp","andreas-salome.avif","andreas-salome.jpg","andreas-salome.webp","anna-komnene.avif","anna-komnene.jpg","anna-komnene.webp","anscombe.avif","anscombe.jpg","anscombe.webp","anselm-canterbury.avif","anselm-canterbury.jpg","anselm-canterbury.webp","anselm-v-canterbury.avif","anselm-v-canterbury.jpg","anselm-v-canterbury.webp","antisthenes.avif","antisthenes.jpg","antisthenes.webp","antoine-arnauld.avif","antoine-arnauld.jpg","antoine-arnauld.webp","anton-wilhelm-amo.avif","anton-wilhelm-amo.jpg","anton-wilhelm-amo.webp","apel.avif","apel.jpg","apel.webp","arendt.avif","arendt.jpg","arendt.webp","aristippos-kyrene.avif","aristippos-kyrene.jpg","aristippos-kyrene.webp","aristophanes.avif","aristophanes.jpg","aristophanes.webp","aristoteles.avif","aristoteles.jpg","aristoteles.webp","arkesilaos.avif","arkesilaos.jpg","arkesilaos.webp","astell.avif","astell.jpg","astell.webp","augustinus.avif","augustinus.jpg","augustinus.webp","aurobindo.avif","aurobindo.jpg","aurobindo.webp","averroes.avif","averroes.jpg","averroes.webp","avicenna.avif","avicenna.jpg","avicenna.webp","ayer.avif","ayer.jpg","ayer.webp","ayn-rand.avif","ayn-rand.jpg","ayn-rand.webp","bachtin.avif","bachtin.jpg","bachtin.webp","bakunin.avif","bakunin.jpg","bakunin.webp","barcan-marcus.avif","barcan-marcus.jpg","barcan-marcus.webp","basilius-grosse.avif","basilius-grosse.jpg","basilius-grosse.webp","baudrillard.avif","baudrillard.jpg","baudrillard.webp","bayle.avif","bayle.jpg","bayle.webp","beauvoir.avif","beauvoir.jpg","beauvoir.webp","bell-hooks.avif","bell-hooks.jpg","bell-hooks.webp","benedetto-croce.avif","benedetto-croce.jpg","benedetto-croce.webp","benjamin.avif","benjamin.jpg","benjamin.webp","bentham.avif","bentham.jpg","bentham.webp","berdjajew.avif","berdjajew.jpg","berdjajew.webp","bergson.avif","bergson.jpg","bergson.webp","berkeley.avif","berkeley.jpg","berkeley.webp","bernardino-telesio.avif","bernardino-telesio.jpg","bernardino-telesio.webp","bhabha.avif","bhabha.jpg","bhabha.webp","biko.avif","biko.jpg","biko.webp","boehme.avif","boehme.jpg","boehme.webp","boethius.avif","boethius.jpg","boethius.webp","bolzano.avif","bolzano.jpg","bolzano.webp","bonaventura.avif","bonaventura.jpg","bonaventura.webp","boskovic.avif","boskovic.jpg","boskovic.webp","bourdieu.avif","bourdieu.jpg","bourdieu.webp","braidotti.avif","braidotti.jpg","braidotti.webp","brandom.avif","brandom.jpg","brandom.webp","brentano.avif","brentano.jpg","brentano.webp","buddha.avif","buddha.jpg","buddha.webp","buddhadasa.avif","buddhadasa.jpg","buddhadasa.webp","butler.avif","butler.jpg","butler.webp","byung-chul-han.avif","byung-chul-han.jpg","byung-chul-han.webp","cabral.avif","cabral.jpg","cabral.webp","camus.avif","camus.jpg","camus.webp","carl-schmitt.avif","carl-schmitt.jpg","carl-schmitt.webp","carnap.avif","carnap.jpg","carnap.webp","cassiodor.avif","cassiodor.jpg","cassiodor.webp","cassirer.avif","cassirer.jpg","cassirer.webp","cavell.avif","cavell.jpg","cavell.webp","cavendish.avif","cavendish.jpg","cavendish.webp","cesaire.avif","cesaire.jpg","cesaire.webp","chalmers.avif","chalmers.jpg","chalmers.webp","chisholm.avif","chisholm.jpg","chisholm.webp","chomsky.avif","chomsky.jpg","chomsky.webp","christine-pizan.avif","christine-pizan.jpg","christine-pizan.webp","chrysipp.avif","chrysipp.jpg","chrysipp.webp","cicero.avif","cicero.jpg","cicero.webp","cioran.avif","cioran.jpg","cioran.webp","cixous.avif","cixous.jpg","cixous.webp","clr-james.avif","clr-james.jpg","clr-james.webp","comenius.avif","comenius.jpg","comenius.webp","comte.avif","comte.jpg","comte.webp","condillac.avif","condillac.jpg","condillac.webp","condorcet.avif","condorcet.jpg","condorcet.webp","coomaraswamy.avif","coomaraswamy.jpg","coomaraswamy.webp","cornelius-agrippa.avif","cornelius-agrippa.jpg","cornelius-agrippa.webp","crescas.avif","crescas.jpg","crescas.webp","cusanus.avif","cusanus.jpg","cusanus.webp","dante-alighieri.avif","dante-alighieri.jpg","dante-alighieri.webp","dawit-anhaght.avif","dawit-anhaght.jpg","dawit-anhaght.webp","deleuze.avif","deleuze.jpg","deleuze.webp","demokrit.avif","demokrit.jpg","demokrit.webp","dennett.avif","dennett.jpg","dennett.webp","derek-parfit.avif","derek-parfit.jpg","derek-parfit.webp","derrida.avif","derrida.jpg","derrida.webp","descartes.avif","descartes.jpg","descartes.webp","dewey.avif","dewey.jpg","dewey.webp","diderot.avif","diderot.jpg","diderot.webp","dilthey.avif","dilthey.jpg","dilthey.webp","diogenes-sinope.avif","diogenes-sinope.jpg","diogenes-sinope.webp","dogen.avif","dogen.jpg","dogen.webp","du-bois.avif","du-bois.jpg","du-bois.webp","du-chatelet.avif","du-chatelet.jpg","du-chatelet.webp","duhem.avif","duhem.jpg","duhem.webp","dummett.avif","dummett.jpg","dummett.webp","duns-scotus.avif","duns-scotus.jpg","duns-scotus.webp","durkheim.avif","durkheim.jpg","durkheim.webp","dussel.avif","dussel.jpg","dussel.webp","edith-stein.avif","edith-stein.jpg","edith-stein.webp","edmund-burke.avif","edmund-burke.jpg","edmund-burke.webp","edmund-spenser.avif","edmund-spenser.jpg","edmund-spenser.webp","eduard-zeller.avif","eduard-zeller.jpg","eduard-zeller.webp","elisabeth-pfalz.avif","elisabeth-pfalz.jpg","elisabeth-pfalz.webp","ellul.avif","ellul.jpg","ellul.webp","emerson.avif","emerson.jpg","emerson.webp","empedokles.avif","empedokles.jpg","empedokles.webp","engels.avif","engels.jpg","engels.webp","epiktet.avif","epiktet.jpg","epiktet.webp","epikur.avif","epikur.jpg","epikur.webp","erasmus-rotterdam.avif","erasmus-rotterdam.jpg","erasmus-rotterdam.webp","erich-kaestner.avif","erich-kaestner.jpg","erich-kaestner.webp","eriugena.avif","eriugena.jpg","eriugena.webp","ernst-bloch.avif","ernst-bloch.jpg","ernst-bloch.webp","ernst-mach.avif","ernst-mach.jpg","ernst-mach.webp","fakhr-din-razi.avif","fakhr-din-razi.jpg","fakhr-din-razi.webp","fanon.avif","fanon.jpg","fanon.webp","farabi.avif","farabi.jpg","farabi.webp","federici.avif","federici.jpg","federici.webp","ferguson.avif","ferguson.jpg","ferguson.webp","feuerbach.avif","feuerbach.jpg","feuerbach.webp","feyerabend.avif","feyerabend.jpg","feyerabend.webp","fichte.avif","fichte.jpg","fichte.webp","fink.avif","fink.jpg","fink.webp","florenski.avif","florenski.jpg","florenski.webp","flusser.avif","flusser.jpg","flusser.webp","fodor.avif","fodor.jpg","fodor.webp","foucault.avif","foucault.jpg","foucault.webp","francesco-petrarca.avif","francesco-petrarca.jpg","francesco-petrarca.webp","francis-bacon.avif","francis-bacon.jpg","francis-bacon.webp","francisco-suarez.avif","francisco-suarez.jpg","francisco-suarez.webp","francisco-vitoria.avif","francisco-vitoria.jpg","francisco-vitoria.webp","francois-rabelais.avif","francois-rabelais.jpg","francois-rabelais.webp","frankfurt.avif","frankfurt.jpg","frankfurt.webp","franz-rosenzweig.avif","franz-rosenzweig.jpg","franz-rosenzweig.webp","fraser.avif","fraser.jpg","fraser.webp","frege.avif","frege.jpg","frege.webp","freire.avif","freire.jpg","freire.webp","freud.avif","freud.jpg","freud.webp","gadamer.avif","gadamer.jpg","gadamer.webp","galen.avif","galen.jpg","galen.webp","galileo-galilei.avif","galileo-galilei.jpg","galileo-galilei.webp","gandhi.avif","gandhi.jpg","gandhi.webp","gehlen.avif","gehlen.jpg","gehlen.webp","gemistos-plethon.avif","gemistos-plethon.jpg","gemistos-plethon.webp","george-herbert-mead.avif","george-herbert-mead.jpg","george-herbert-mead.webp","ghazali.avif","ghazali.jpg","ghazali.webp","giannozzo-manetti.avif","giannozzo-manetti.jpg","giannozzo-manetti.webp","gilbert-poitiers.avif","gilbert-poitiers.jpg","gilbert-poitiers.webp","gilroy.avif","gilroy.jpg","gilroy.webp","giordano-bruno.avif","giordano-bruno.jpg","giordano-bruno.webp","girolamo-cardano.avif","girolamo-cardano.jpg","girolamo-cardano.webp","girolamo-savonarola.avif","girolamo-savonarola.jpg","girolamo-savonarola.webp","glissant.avif","glissant.jpg","glissant.webp","goedel.avif","goedel.jpg","goedel.webp","goldman.avif","goldman.jpg","goldman.webp","gomez-davila.avif","gomez-davila.jpg","gomez-davila.webp","gorgias.avif","gorgias.jpg","gorgias.webp","gramsci.avif","gramsci.jpg","gramsci.webp","gratian.avif","gratian.jpg","gratian.webp","gregor-nazianz.avif","gregor-nazianz.jpg","gregor-nazianz.webp","gregor-nyssa.avif","gregor-nyssa.jpg","gregor-nyssa.webp","gregorios-palamas.avif","gregorios-palamas.jpg","gregorios-palamas.webp","guattari.avif","guattari.jpg","guattari.webp","guenther-anders.avif","guenther-anders.jpg","guenther-anders.webp","habermas.avif","habermas.jpg","habermas.webp","hadewijch.avif","hadewijch.jpg","hadewijch.webp","hamann.avif","hamann.jpg","hamann.webp","hans-albert.avif","hans-albert.jpg","hans-albert.webp","hans-jonas.avif","hans-jonas.jpg","hans-jonas.webp","haraway.avif","haraway.jpg","haraway.webp","hare.avif","hare.jpg","hare.webp","hegel.avif","hegel.jpg","hegel.webp","heidegger.avif","heidegger.jpg","heidegger.webp","heine.avif","heine.jpg","heine.webp","heinrich-seuse.avif","heinrich-seuse.jpg","heinrich-seuse.webp","heloise.avif","heloise.jpg","heloise.webp","helvetius.avif","helvetius.jpg","helvetius.webp","hempel.avif","hempel.jpg","hempel.webp","henry-sidgwick.avif","henry-sidgwick.jpg","henry-sidgwick.webp","heraklit.avif","heraklit.jpg","heraklit.webp","herder.avif","herder.jpg","herder.webp","hermann-cohen.avif","hermann-cohen.jpg","hermann-cohen.webp","hilbert.avif","hilbert.jpg","hilbert.webp","hildegard-bingen.avif","hildegard-bingen.jpg","hildegard-bingen.webp","hippias.avif","hippias.jpg","hippias.webp","hippokrates.avif","hippokrates.jpg","hippokrates.webp","hobbes.avif","hobbes.jpg","hobbes.webp","hoelderlin.avif","hoelderlin.jpg","hoelderlin.webp","holbach.avif","holbach.jpg","holbach.webp","honneth.avif","honneth.jpg","honneth.webp","horkheimer.avif","horkheimer.jpg","horkheimer.webp","hugo-st-viktor.avif","hugo-st-viktor.jpg","hugo-st-viktor.webp","huldrych-zwingli.avif","huldrych-zwingli.jpg","huldrych-zwingli.webp","hume.avif","hume.jpg","hume.webp","husserl.avif","husserl.jpg","husserl.webp","hutcheson.avif","hutcheson.jpg","hutcheson.webp","hypatia.avif","hypatia.jpg","hypatia.webp","iamblichos.avif","iamblichos.jpg","iamblichos.webp","ibn-arabi.avif","ibn-arabi.jpg","ibn-arabi.webp","ibn-hazm.avif","ibn-hazm.jpg","ibn-hazm.webp","ibn-khaldun.avif","ibn-khaldun.jpg","ibn-khaldun.webp","ibn-tufail.avif","ibn-tufail.jpg","ibn-tufail.webp","illich.avif","illich.jpg","illich.webp","imre-lakatos.avif","imre-lakatos.jpg","imre-lakatos.webp","ingarden.avif","ingarden.jpg","ingarden.webp","iqbal.avif","iqbal.jpg","iqbal.webp","iris-young.avif","iris-young.jpg","iris-young.webp","isaak-luria.avif","isaak-luria.jpg","isaak-luria.webp","isaiah-berlin.avif","isaiah-berlin.jpg","isaiah-berlin.webp","isidor-v-sevilla.avif","isidor-v-sevilla.jpg","isidor-v-sevilla.webp","jacobi.avif","jacobi.jpg","jacobi.webp","jacopo-zabarella.avif","jacopo-zabarella.jpg","jacopo-zabarella.webp","jan-hus.avif","jan-hus.jpg","jan-hus.webp","jaspers.avif","jaspers.jpg","jaspers.webp","jean-bodin.avif","jean-bodin.jpg","jean-bodin.webp","jean-gerson.avif","jean-gerson.jpg","jean-gerson.webp","jl-nancy.avif","jl-nancy.jpg","jl-nancy.webp","johannes-buridan.avif","johannes-buridan.jpg","johannes-buridan.webp","johannes-calvin.avif","johannes-calvin.jpg","johannes-calvin.webp","johannes-damaskus.avif","johannes-damaskus.jpg","johannes-damaskus.webp","johannes-duns-scotus.avif","johannes-duns-scotus.jpg","johannes-duns-scotus.webp","johannes-kepler.avif","johannes-kepler.jpg","johannes-kepler.webp","johannes-petritsi.avif","johannes-petritsi.jpg","johannes-petritsi.webp","johannes-scottus-eriugena.avif","johannes-scottus-eriugena.jpg","johannes-scottus-eriugena.webp","johannes-tauler.avif","johannes-tauler.jpg","johannes-tauler.webp","john-dee.avif","john-dee.jpg","john-dee.webp","john-wyclif.avif","john-wyclif.jpg","john-wyclif.webp","justus-lipsius.avif","justus-lipsius.jpg","justus-lipsius.webp","kant.avif","kant.jpg","kant.webp","kant1.avif","kant1.jpg","kant1.webp","karneades.avif","karneades.jpg","karneades.webp","kautilya.avif","kautilya.jpg","kautilya.webp","kierkegaard.avif","kierkegaard.jpg","kierkegaard.webp","kindi.avif","kindi.jpg","kindi.webp","klages.avif","klages.jpg","klages.webp","kleanthes.avif","kleanthes.jpg","kleanthes.webp","konfuzius.avif","konfuzius.jpg","konfuzius.webp","korsgaard.avif","korsgaard.jpg","korsgaard.webp","kracauer.avif","kracauer.jpg","kracauer.webp","krates.avif","krates.jpg","krates.webp","kripke.avif","kripke.jpg","kripke.webp","krishnamurti.avif","krishnamurti.jpg","krishnamurti.webp","kristeva.avif","kristeva.jpg","kristeva.webp","kropotkin.avif","kropotkin.jpg","kropotkin.webp","kuhn.avif","kuhn.jpg","kuhn.webp","kuno-fischer.avif","kuno-fischer.jpg","kuno-fischer.webp","lacan.avif","lacan.jpg","lacan.webp","laozi.avif","laozi.jpg","laozi.webp","latour.avif","latour.jpg","latour.webp","leibniz.avif","leibniz.jpg","leibniz.webp","lenin.avif","lenin.jpg","lenin.webp","lessing.avif","lessing.jpg","lessing.webp","leukipp.avif","leukipp.jpg","leukipp.webp","levi-strauss.avif","levi-strauss.jpg","levi-strauss.webp","levinas.avif","levinas.jpg","levinas.webp","locke.avif","locke.jpg","locke.webp","loewith.avif","loewith.jpg","loewith.webp","lorenzo-valla.avif","lorenzo-valla.jpg","lorenzo-valla.webp","lotze.avif","lotze.jpg","lotze.webp","luhmann.avif","luhmann.jpg","luhmann.webp","luis-molina.avif","luis-molina.jpg","luis-molina.webp","lukacs.avif","lukacs.jpg","lukacs.webp","lukrez.avif","lukrez.jpg","lukrez.webp","luxemburg.avif","luxemburg.jpg","luxemburg.webp","lyotard.avif","lyotard.jpg","lyotard.webp","machiavelli.avif","machiavelli.jpg","machiavelli.webp","maimonides.avif","maimonides.jpg","maimonides.webp","malebranche.avif","malebranche.jpg","malebranche.webp","mandeville.avif","mandeville.jpg","mandeville.webp","marc-aurel.avif","marc-aurel.jpg","marc-aurel.webp","marc-richir.avif","marc-richir.jpg","marc-richir.webp","marcel.avif","marcel.jpg","marcel.webp","marcuse.avif","marcuse.jpg","marcuse.webp","margarete-navarra.avif","margarete-navarra.jpg","margarete-navarra.webp","marguerite-porete.avif","marguerite-porete.jpg","marguerite-porete.webp","mariategui.avif","mariategui.jpg","mariategui.webp","marie-gournay.avif","marie-gournay.jpg","marie-gournay.webp","marion.avif","marion.jpg","marion.webp","marsilio-ficino.avif","marsilio-ficino.jpg","marsilio-ficino.webp","marsilius-padua.avif","marsilius-padua.jpg","marsilius-padua.webp","martha-nussbaum.avif","martha-nussbaum.jpg","martha-nussbaum.webp","marti.avif","marti.jpg","marti.webp","martin-buber.avif","martin-buber.jpg","martin-buber.webp","martin-luther.avif","martin-luther.jpg","martin-luther.webp","marx.avif","marx.jpg","marx.webp","masham.avif","masham.jpg","masham.webp","maturana.avif","maturana.jpg","maturana.webp","max-weber.avif","max-weber.jpg","max-weber.webp","maximus-confessor.avif","maximus-confessor.jpg","maximus-confessor.webp","mcdowell.avif","mcdowell.jpg","mcdowell.webp","mcluhan.avif","mcluhan.jpg","mcluhan.webp","mctaggart.avif","mctaggart.jpg","mctaggart.webp","mechthild-magdeburg.avif","mechthild-magdeburg.jpg","mechthild-magdeburg.webp","meinong.avif","meinong.jpg","meinong.webp","meister-eckhart.avif","meister-eckhart.jpg","meister-eckhart.webp","meister_eckhart.avif","meister_eckhart.jpg","meister_eckhart.webp","melissos-samos.avif","melissos-samos.jpg","melissos-samos.webp","menzius.avif","menzius.jpg","menzius.webp","merleau-ponty.avif","merleau-ponty.jpg","merleau-ponty.webp","metrodoros.avif","metrodoros.jpg","metrodoros.webp","michael-psellos.avif","michael-psellos.jpg","michael-psellos.webp","michel-henry.avif","michel-henry.jpg","michel-henry.webp","midgley.avif","midgley.jpg","midgley.webp","mill.avif","mill.jpg","mill.webp","momo.avif","momo.jpg","momo.webp","montaigne.avif","montaigne.jpg","montaigne.webp","montesquieu.avif","montesquieu.jpg","montesquieu.webp","moore.avif","moore.jpg","moore.webp","moritz-schlick.avif","moritz-schlick.jpg","moritz-schlick.webp","moses-mendelssohn.avif","moses-mendelssohn.jpg","moses-mendelssohn.webp","mou-zongsan.avif","mou-zongsan.jpg","mou-zongsan.webp","mozi.avif","mozi.jpg","mozi.webp","mudimbe.avif","mudimbe.jpg","mudimbe.webp","mulla-sadra.avif","mulla-sadra.jpg","mulla-sadra.webp","n-hartmann.avif","n-hartmann.jpg","n-hartmann.webp","naess.avif","naess.jpg","naess.webp","nagarjuna.avif","nagarjuna.jpg","nagarjuna.webp","neurath.avif","neurath.jpg","neurath.webp","nietzsche.avif","nietzsche.jpg","nietzsche.webp","nikolaus-kopernikus.avif","nikolaus-kopernikus.jpg","nikolaus-kopernikus.webp","nikolaus-v-kues.avif","nikolaus-v-kues.jpg","nikolaus-v-kues.webp","nishida.avif","nishida.jpg","nishida.webp","nishitani.avif","nishitani.jpg","nishitani.webp","novalis.avif","novalis.jpg","novalis.webp","nozick.avif","nozick.jpg","nozick.webp","nyerere.avif","nyerere.jpg","nyerere.webp","oakeshott.avif","oakeshott.jpg","oakeshott.webp","origenes.avif","origenes.jpg","origenes.webp","panaitios.avif","panaitios.jpg","panaitios.webp","paracelsus.avif","paracelsus.jpg","paracelsus.webp","parmenides.avif","parmenides.jpg","parmenides.webp","pascal.avif","pascal.jpg","pascal.webp","patanjali.avif","patanjali.jpg","patanjali.webp","patocka.avif","patocka.jpg","patocka.webp","paul-natorp.avif","paul-natorp.jpg","paul-natorp.webp","peirce.avif","peirce.jpg","peirce.webp","peter-abaelard.avif","peter-abaelard.jpg","peter-abaelard.webp","peter-singer.avif","peter-singer.jpg","peter-singer.webp","peter-trawny.avif","peter-trawny.jpg","peter-trawny.webp","petrus-abaelardus.avif","petrus-abaelardus.jpg","petrus-abaelardus.webp","petrus-damianus.avif","petrus-damianus.jpg","petrus-damianus.webp","petrus-lombardus.avif","petrus-lombardus.jpg","petrus-lombardus.webp","philip-sidney.avif","philip-sidney.jpg","philip-sidney.webp","philipp-melanchthon.avif","philipp-melanchthon.jpg","philipp-melanchthon.webp","philo-alexandria.avif","philo-alexandria.jpg","philo-alexandria.webp","philon-v-alexandrien.avif","philon-v-alexandrien.jpg","philon-v-alexandrien.webp","photios.avif","photios.jpg","photios.webp","pico-della-mirandola.avif","pico-della-mirandola.jpg","pico-della-mirandola.webp","pierre-gassendi.avif","pierre-gassendi.jpg","pierre-gassendi.webp","pierre-nicole.avif","pierre-nicole.jpg","pierre-nicole.webp","pierre-ramus.avif","pierre-ramus.jpg","pierre-ramus.webp","pietro-pomponazzi.avif","pietro-pomponazzi.jpg","pietro-pomponazzi.webp","platon.avif","platon.jpg","platon.webp","plessner.avif","plessner.jpg","plessner.webp","plotin.avif","plotin.jpg","plotin.webp","plutarch.avif","plutarch.jpg","plutarch.webp","poincare.avif","poincare.jpg","poincare.webp","popper.avif","popper.jpg","popper.webp","poseidonios.avif","poseidonios.jpg","poseidonios.webp","prior.avif","prior.jpg","prior.webp","proklos.avif","proklos.jpg","proklos.webp","protagoras.avif","protagoras.jpg","protagoras.webp","proudhon.avif","proudhon.jpg","proudhon.webp","ps-dionysius-areopagita.avif","ps-dionysius-areopagita.jpg","ps-dionysius-areopagita.webp","putnam.avif","putnam.jpg","putnam.webp","pyrrhon.avif","pyrrhon.jpg","pyrrhon.webp","pythagoras.avif","pythagoras.jpg","pythagoras.webp","quijano.avif","quijano.jpg","quijano.webp","quine.avif","quine.jpg","quine.webp","rabanus-maurus.avif","rabanus-maurus.jpg","rabanus-maurus.webp","radhakrishnan.avif","radhakrishnan.jpg","radhakrishnan.webp","ramanuja.avif","ramanuja.jpg","ramanuja.webp","ramon-llull.avif","ramon-llull.jpg","ramon-llull.webp","ramsey.avif","ramsey.jpg","ramsey.webp","rawls.avif","rawls.jpg","rawls.webp","razi-rhazes.avif","razi-rhazes.jpg","razi-rhazes.webp","reid.avif","reid.jpg","reid.webp","reinhold.avif","reinhold.jpg","reinhold.webp","richard-hooker.avif","richard-hooker.jpg","richard-hooker.webp","richard-st-viktor.avif","richard-st-viktor.jpg","richard-st-viktor.webp","rickert.avif","rickert.jpg","rickert.webp","ricoeur.avif","ricoeur.jpg","ricoeur.webp","robert-bellarmin.avif","robert-bellarmin.jpg","robert-bellarmin.webp","robert-fludd.avif","robert-fludd.jpg","robert-fludd.webp","robert-grosseteste.avif","robert-grosseteste.jpg","robert-grosseteste.webp","robert-kilwardby.avif","robert-kilwardby.jpg","robert-kilwardby.webp","rodo.avif","rodo.jpg","rodo.webp","roger-bacon.avif","roger-bacon.jpg","roger-bacon.webp","roland-barthes.avif","roland-barthes.jpg","roland-barthes.webp","rorty.avif","rorty.jpg","rorty.webp","rousseau.avif","rousseau.jpg","rousseau.webp","royce.avif","royce.jpg","royce.webp","rumi.avif","rumi.jpg","rumi.webp","russell.avif","russell.jpg","russell.webp","saadia.avif","saadia.jpg","saadia.webp","sade.avif","sade.jpg","sade.webp","said.avif","said.jpg","said.webp","salomon-maimon.avif","salomon-maimon.jpg","salomon-maimon.webp","sanches.avif","sanches.jpg","sanches.webp","santayana.avif","santayana.jpg","santayana.webp","sartre.avif","sartre.jpg","sartre.webp","saussure.avif","saussure.jpg","saussure.webp","scanlon.avif","scanlon.jpg","scanlon.webp","scheler.avif","scheler.jpg","scheler.webp","schelling.avif","schelling.jpg","schelling.webp","schelling1.avif","schelling1.jpg","schelling1.webp","schelling2.avif","schelling2.jpg","schelling2.webp","schelling3.avif","schelling3.jpg","schelling3.webp","schestow.avif","schestow.jpg","schestow.webp","schiller.avif","schiller.jpg","schiller.webp","schleiermacher.avif","schleiermacher.jpg","schleiermacher.webp","schnell.avif","schnell.jpg","schnell.webp","scholem.avif","scholem.jpg","scholem.webp","schopenhauer.avif","schopenhauer.jpg","schopenhauer.webp","schuetz.avif","schuetz.jpg","schuetz.webp","searle.avif","searle.jpg","searle.webp","sellars.avif","sellars.jpg","sellars.webp","seneca.avif","seneca.jpg","seneca.webp","senghor.avif","senghor.jpg","senghor.webp","serres.avif","serres.jpg","serres.webp","sextus-empiricus.avif","sextus-empiricus.jpg","sextus-empiricus.webp","shaftesbury.avif","shaftesbury.jpg","shaftesbury.webp","shankara.avif","shankara.jpg","shankara.webp","siger-brabant.avif","siger-brabant.jpg","siger-brabant.webp","simmel.avif","simmel.jpg","simmel.webp","simone-weil.avif","simone-weil.jpg","simone-weil.webp","simplicius.avif","simplicius.jpg","simplicius.webp","simplikios.avif","simplikios.jpg","simplikios.webp","skovoroda.avif","skovoroda.jpg","skovoroda.webp","sloterdijk.avif","sloterdijk.jpg","sloterdijk.webp","sohn-rethel.avif","sohn-rethel.jpg","sohn-rethel.webp","sokrates.avif","sokrates.jpg","sokrates.webp","solowjow.avif","solowjow.jpg","solowjow.webp","sor-juana.avif","sor-juana.jpg","sor-juana.webp","sorel.avif","sorel.jpg","sorel.webp","spencer.avif","spencer.jpg","spencer.webp","speusippos.avif","speusippos.jpg","speusippos.webp","spinoza.avif","spinoza.jpg","spinoza.webp","stiegler.avif","stiegler.jpg","stiegler.webp","stirner.avif","stirner.jpg","stirner.webp","straton-lampsakos.avif","straton-lampsakos.jpg","straton-lampsakos.webp","suhrawardi.avif","suhrawardi.jpg","suhrawardi.webp","tagore.avif","tagore.jpg","tagore.webp","taha.avif","taha.jpg","taha.webp","taylor-charles.avif","taylor-charles.jpg","taylor-charles.webp","tengelyi.avif","tengelyi.jpg","tengelyi.webp","tengelyi2.avif","tengelyi2.webp","tengelyi3.avif","tengelyi3.webp","thales.avif","thales.jpg","thales.webp","theophrast.avif","theophrast.jpg","theophrast.webp","thich-nhat-hanh.avif","thich-nhat-hanh.jpg","thich-nhat-hanh.webp","thomas-morus.avif","thomas-morus.jpg","thomas-morus.webp","thomas-muentzer.avif","thomas-muentzer.jpg","thomas-muentzer.webp","thomas-nagel.avif","thomas-nagel.jpg","thomas-nagel.webp","thomas-v-aquin.avif","thomas-v-aquin.jpg","thomas-v-aquin.webp","thoreau.avif","thoreau.jpg","thoreau.webp","tolstoi.avif","tolstoi.jpg","tolstoi.webp","tommaso-campanella.avif","tommaso-campanella.jpg","tommaso-campanella.webp","trawny.avif","trawny.webp","turing.avif","turing.jpg","turing.webp","tusi.avif","tusi.jpg","tusi.webp","tycho-brahe.avif","tycho-brahe.jpg","tycho-brahe.webp","uexkuell.avif","uexkuell.jpg","uexkuell.webp","vaihinger.avif","vaihinger.jpg","vaihinger.webp","van-inwagen.avif","van-inwagen.jpg","van-inwagen.webp","vasconcelos.avif","vasconcelos.jpg","vasconcelos.webp","vico.avif","vico.jpg","vico.webp","vivekananda.avif","vivekananda.jpg","vivekananda.webp","voegelin.avif","voegelin.jpg","voegelin.webp","voltaire.avif","voltaire.jpg","voltaire.webp","von-wright.avif","von-wright.jpg","von-wright.webp","walter-burley.avif","walter-burley.jpg","walter-burley.webp","wang-yangming.avif","wang-yangming.jpg","wang-yangming.webp","watsuji.avif","watsuji.jpg","watsuji.webp","wilhelm-v-ockham.avif","wilhelm-v-ockham.jpg","wilhelm-v-ockham.webp","wilhelm-von-humboldt.avif","wilhelm-von-humboldt.jpg","wilhelm-von-humboldt.webp","william-gilbert.avif","william-gilbert.jpg","william-gilbert.webp","william-shakespeare.avif","william-shakespeare.jpg","william-shakespeare.webp","windelband.avif","windelband.jpg","windelband.webp","wittgenstein.avif","wittgenstein.jpg","wittgenstein.webp","wjames.avif","wjames.jpg","wjames.webp","wolff.avif","wolff.jpg","wolff.webp","wollstonecraft.avif","wollstonecraft.jpg","wollstonecraft.webp","xenophanes.avif","xenophanes.jpg","xenophanes.webp","xenophon.avif","xenophon.jpg","xenophon.webp","xunzi.avif","xunzi.jpg","xunzi.webp","yann-martel.avif","yann-martel.jpg","yann-martel.webp","zea.avif","zea.jpg","zea.webp","zenon-elea.avif","zenon-elea.jpg","zenon-elea.webp","zenon-kition.avif","zenon-kition.jpg","zenon-kition.webp","zenon-v-elea.avif","zenon-v-elea.jpg","zenon-v-elea.webp","zenon-v-kition.avif","zenon-v-kition.jpg","zenon-v-kition.webp","zera-yacob.avif","zera-yacob.jpg","zera-yacob.webp","zhu-xi.avif","zhu-xi.jpg","zhu-xi.webp","zhuangzi.avif","zhuangzi.jpg","zhuangzi.webp","zizek.avif","zizek.jpg","zizek.webp"]);
+/* Zeitkoordinaten, semantische Verdichtung und Navigation der bestehenden SVG.
+   Nur die Timeline-Zeichnung wird ergänzt; Daten, Dialog, Netz, Tabelle und
+   Weltkarte bleiben in ihrer bisherigen Engine. Keine neue CSS-Palette. */
+const ATLAS_PAD=22;
+const ATLAS_MAX_PX_JAHR=12;
+const atlasKlassischRender=render,atlasKlassischFokus=setFocus;
+const atlasRangspitzen=new Map();
+let atlasDarstellung='klassisch';
+// Ganzbild um diesen Anteil der Bühnenhöhe nach oben versetzen.
+const ATLAS_ATHEN_ANHEBUNG=.16;
+// Bildpunkt auf Höhe der zentralen Köpfe; bleibt beim Zoomen vertikal im Blick.
+const ATLAS_ATHEN_FIGURENANKER=.57;
+const ATLAS_BILDER=[
+ {id:'aristoteles',von:-700,bis:650,verhaeltnis:1600/1100,titel:'Griechisch-römische Philosophie',werk:'Aristoteles-Büste; römische Kopie, Fotografie von Jastrow',kreis:'European'},
+ {id:'christentum',von:450,bis:1450,verhaeltnis:1500/1100,titel:'Lateinisch-christliche Handschriftenkultur',werk:'Book of Kells, Folio 7v',kreis:'European'},
+ {id:'platon',von:1250,bis:1750,verhaeltnis:1600/1100,titel:'Renaissance und Antikenrezeption',werk:'Raffael: Die Schule von Athen (1509)',kreis:'European'}
+];
+const atlas={fit:0,breite:0,stufe:'Übersicht',gruppen:[],knoten:[],positionen:new Map(),pin:null,bildmodus:'athen',passend:false,letzterTap:null,unterdrueckeKlick:0,raf:0,scrollRaf:0,radFaktor:1,radX:0,statistik:{},zeiten:[],fokus:null};
+atlas.bildKnoten=new Map();
+const ATLAS_BILDMODI=['aus','bilder','stilisiert','athen'];
+try{const b=localStorage.getItem('tl-timeline-bilder');if(ATLAS_BILDMODI.includes(b))atlas.bildmodus=b;}catch{}
+// Ein Vergleichslink überschreibt die gespeicherte Auswahl nur für diesen Aufruf.
+const atlasBildParameter=new URLSearchParams(location.search).get('landschaft');
+if(ATLAS_BILDMODI.includes(atlasBildParameter))atlas.bildmodus=atlasBildParameter;
+function atlasWrap(){return document.getElementById('tl-wrap');}
+function atlasSkala(){return Math.max(1,svgW()-2*ATLAS_PAD)/YEAR_RANGE;}
+function atlasJahr(x){return YEAR_MIN+(x-ATLAS_PAD)/atlasSkala();}
+function atlasMitte(p){return (p.birth+deathYearForPos(p))/2;}
+function atlasFmt(y){y=Math.round(y);return y<0?Math.abs(y)+' v. Chr.':y===0?'Zeitenwende':String(y);}
+function atlasGrenzen(){const w=atlasWrap();return {von:Math.max(YEAR_MIN,atlasJahr(w.scrollLeft)),bis:Math.min(YEAR_MAX,atlasJahr(w.scrollLeft+w.clientWidth))};}
+function atlasMaximum(){return Math.max(atlas.fit,(YEAR_RANGE*ATLAS_MAX_PX_JAHR+2*ATLAS_PAD)/BASE_W);}
+function atlasIstGesamt(){return Math.abs(zoom-atlas.fit)<.00001;}
+function atlasMassstab(){
+ const w=atlasWrap();if(!w)return;
+ const altBreite=atlas.breite,gesamt=!atlas.fit||atlasIstGesamt();
+ const jahr=atlas.fit?atlasJahr(w.scrollLeft+altBreite/2):(YEAR_MIN+YEAR_MAX)/2;
+ atlas.breite=w.clientWidth||document.getElementById('tl-views').clientWidth;atlas.fit=atlas.breite/BASE_W;
+ if(gesamt)zoom=atlas.fit;else zoom=Math.max(atlas.fit,Math.min(atlasMaximum(),zoom));
+ const svg=document.getElementById('tl-svg');svg.setAttribute('width',svgW());
+ if(gesamt)w.scrollLeft=0;else if(altBreite!==atlas.breite)w.scrollLeft=xOf(jahr)-w.clientWidth/2;
 }
-
-/* ════════ Init ════════ */
-function init() {
-  detectImageFormat();
-  requestAnimationFrame(() => {
-    setH();
-    window.addEventListener('resize', ()=>{ setH(); render(); });
-    new MutationObserver(()=>render()).observe(document.documentElement,
-      { attributes:true, attributeFilter:['data-theme'] });
-
-    buildInflToggles();
-    buildEpochFilter();
-    buildEpochLegend();
-    tlKreisLeiste();          // Kulturkreis-Fach fuellen (hier existiert #tl-kreise sicher)
-    /* Aufruf ueber den Menuepunkt „Weltkarte" (#philosophy/karte): direkt dorthin. */
-    try{ if (window._routeSub && window._routeSub[0] === 'karte'){
-      setTimeout(function(){ tlSetView('karte'); }, 0);
-    } }catch(e){}
-    tlGeoAnhaengen(); tlHerkunftFuellen();   // Geodaten + Herkunftsauswahl
-    setupDrag();
-
-    const tryRender = (attempts) => {
-      if (typeof PHILS_V2 !== 'undefined' && typeof EPOCHS_META_V2 !== 'undefined') {
-        render();
-        setTimeout(()=>{
-          const w = document.getElementById('tl-wrap');
-          if (w) w.scrollLeft = BASE_W * 0.20;
-        }, 100);
-      } else if ((attempts||0) < 50) {
-        setTimeout(() => tryRender((attempts||0)+1), 100);
-      }
-    };
-    tryRender(0);
+function atlasZoomAn(wert,x,jahr){
+ const w=atlasWrap();if(!w)return;
+ const anker=jahr===undefined?atlasJahr(w.scrollLeft+x):jahr;
+ zoom=Math.max(atlas.fit,Math.min(atlasMaximum(),wert));
+ document.getElementById('tl-svg').setAttribute('width',svgW());
+ w.scrollLeft=xOf(anker)-x;render();hideHoverCard();
+}
+window.tlZoom=function(f){atlasZoomAn(zoom*f,atlasWrap().clientWidth/2);};
+function atlasGesamt(){
+ atlasMassstab();zoom=atlas.fit;focusName=null;_chainSet.clear();_connectedToFocus.clear();
+ document.getElementById('tl-svg').setAttribute('width',svgW());atlasWrap().scrollLeft=0;render();hideHoverCard();
+}
+function atlasZuPerson(p){
+ atlas.pin=p.name;
+ atlasZoomAn(Math.max(zoom,atlas.fit*10),atlasWrap().clientWidth/2,atlasMitte(p));
+}
+function atlasZuGruppe(g){
+ if(zoom>=atlasMaximum()*.999){atlasGruppenliste(g);return;}
+ const span=Math.max(8,g.bis-g.von);
+ const z=(YEAR_RANGE*(atlasWrap().clientWidth-2*ATLAS_PAD)/span+2*ATLAS_PAD)/BASE_W;
+ atlasZoomAn(Math.max(zoom*2.5,z),atlasWrap().clientWidth/2,(g.von+g.bis)/2);
+ atlasWrap().focus({preventScroll:true});
+}
+function atlasGruppenliste(g){
+ const dialog=document.getElementById('atlas-gruppe'),liste=document.getElementById('atlas-gruppenliste');
+ document.getElementById('atlas-gruppentitel').textContent=TL_KREIS_LABEL[g.kreis]+' · '+g.personen.length+' Personen';
+ document.getElementById('atlas-gruppenzeit').textContent=atlasFmt(g.von)+' – '+atlasFmt(g.bis);
+ liste.replaceChildren();
+ g.personen.slice().sort((a,b)=>a.birth-b.birth).forEach(p=>{
+  const b=document.createElement('button');b.type='button';b.className='btn btn-ghost btn-sm';b.textContent=dispName(p)+' · '+lifeStr(p);
+  b.onclick=()=>{tlAtlasGruppeZu();atlasZuPerson(p);atlasWrap().focus({preventScroll:true});tlOpenModal(p);};liste.appendChild(b);
+ });
+ dialog.hidden=false;dialog.classList.add('open');dialog.querySelector('button').focus({preventScroll:true});
+}
+window.tlAtlasGruppeZu=function(){const d=document.getElementById('atlas-gruppe');d.hidden=true;d.classList.remove('open');atlasWrap().focus({preventScroll:true});};
+function atlasStufe(){
+ // Hysterese: kleine Radbewegungen an einer Grenze wechseln nicht ständig.
+ const r=zoom/atlas.fit;
+ if(atlas.stufe==='Übersicht'&&r<2.6)return 'Übersicht';
+ if(atlas.stufe==='Detail'&&r>8.5)return 'Detail';
+ return r<2.3?'Übersicht':r<9.5?'Erkunden':'Detail';
+}
+function atlasSchoeneZahl(w){const p=10**Math.floor(Math.log10(Math.max(.001,w)));return [1,2,5,10].map(n=>n*p).find(n=>n>=w)||10*p;}
+function atlasModell(){
+ atlas.stufe=atlasStufe();
+ const personen=phils().filter(p=>!dimmed(p));
+ const kreise=TL_KREISE.filter(k=>personen.some(p=>(p.kreis||'European')===k));
+ const voll=cardSize==='full'||atlas.stufe==='Detail';
+ const karte={w:voll?150:118,h:voll?110:64};
+ const bin=atlasSchoeneZahl((atlas.stufe==='Übersicht'?118:karte.w+12)/atlasSkala());
+ const raster=new Map();
+ personen.forEach(p=>{
+  const nr=Math.floor(atlasMitte(p)/bin),kreis=p.kreis||'European',key=nr+'|'+kreis;
+  if(!raster.has(key))raster.set(key,{kreis,von:Math.max(YEAR_MIN,nr*bin),bis:Math.min(YEAR_MAX,(nr+1)*bin),personen:[]});
+  raster.get(key).personen.push(p);
+ });
+ const abstand=atlas.stufe==='Übersicht'?48:karte.h+14;
+ const proSeite=Math.max(1,Math.ceil(kreise.length/2));
+ const reihen=Math.max(proSeite,Math.floor((SVG_H/2-40)/abstand));
+ const h=Math.max(SVG_H,2*(proSeite*abstand+42));
+ const achse=h/2,gruppen=[],knoten=[];
+ [...raster.values()].sort((a,b)=>a.von-b.von||kreise.indexOf(a.kreis)-kreise.indexOf(b.kreis)).forEach(g=>{
+  const i=kreise.indexOf(g.kreis),oben=i%2===0,grund=Math.floor(i/2);
+  const kap=atlas.stufe==='Übersicht'?1:Math.max(1,Math.floor((reihen-1-grund)/proSeite)+1);
+  const sortiert=g.personen.slice().sort((a,b)=>Number(b.name===atlas.pin)-Number(a.name===atlas.pin)||a.birth-b.birth||a.name.localeCompare(b.name));
+  const einzeln=sortiert.length<=kap?sortiert:sortiert.slice(0,Math.max(sortiert.some(p=>p.name===atlas.pin)?1:0,kap-1));
+  const rest=sortiert.filter(p=>!einzeln.includes(p));
+  const eintraege=einzeln.map(p=>({p,personen:[p],kreis:g.kreis,von:g.von,bis:g.bis}));
+  if(rest.length)eintraege.push({...g,personen:rest});
+  eintraege.forEach((e,n)=>{
+   const gruppe=!e.p;const breite=Math.max(64,Math.min(gruppe?112:karte.w,bin*atlasSkala()-9));
+   const hoehe=gruppe?40:karte.h;
+   const mitte=(e.von+e.bis)/2;
+   const cx=Math.max(breite/2+3,Math.min(svgW()-breite/2-3,xOf(mitte)));
+   const row=grund+n*proSeite;
+   const y=oben?achse-32-row*abstand-hoehe:achse+34+row*abstand;
+   const e2={...e,cx,y,w:breite,h:hoehe,oben,jahr:e.p?atlasMitte(e.p):e.personen.reduce((s,p)=>s+atlasMitte(p),0)/e.personen.length};
+   (gruppe?gruppen:knoten).push(e2);
   });
+ });
+ return {personen,kreise,gruppen,knoten,h,achse,bin,voll};
+}
+function atlasSchrift(auswahl){return cv(auswahl)||'sans-serif';}
+const atlasMessung=document.createElement('canvas').getContext('2d');
+function atlasTextbreite(text,size){atlasMessung.font=size+'px '+atlasSchrift('--fb');return atlasMessung.measureText(text).width;}
+function atlasText(g,text,x,y,size,farbe,extra={}){const t=el('text',{x,y,fill:farbe,'font-family':atlasSchrift('--fb'),'font-size':size,...extra},text);g.appendChild(t);return t;}
+function atlasZeilen(name,max){
+ const teile=name.split(' '),zeilen=[''];
+ teile.forEach(t=>{const i=zeilen.length-1;if((zeilen[i]+' '+t).trim().length>max&&i===0)zeilen.push(t);else zeilen[i]+=(zeilen[i]?' ':'')+t;});
+ return zeilen.slice(0,2).map(s=>s.length>max?s.slice(0,max-1)+'…':s);
+}
+function atlasAnker(e){return {x:xOf(e.jahr),y:AXIS_Y};}
+function atlasFokusAktualisieren(){
+ const svg=document.getElementById('tl-svg');if(!svg)return;
+ svg.querySelectorAll('[data-atlas-namen]').forEach(g=>{
+  const namen=JSON.parse(g.getAttribute('data-atlas-namen'));
+  g.setAttribute('opacity',!_chainSet.size||namen.some(n=>_chainSet.has(n))?'1':'.18');
+ });
+ const linien=svg.querySelector('#infl-g');if(linien){linien.replaceChildren();atlasLinien(linien);}
+}
+setFocus=function(name){
+ if(atlasDarstellung==='klassisch'){atlasKlassischFokus(name);return;}
+ focusName=name;
+ if(name){const nb=computeConnected(name);if(!_chainSet.has(name))_chainSet=new Set();nb.forEach(n=>_chainSet.add(n));_chainSet.add(name);_connectedToFocus=new Set(_chainSet);}
+ atlasFokusAktualisieren();
+};
+function atlasLinien(g){
+ const gruppiert=new Set();
+ phils().forEach(p=>(p.influences||[]).forEach(inf=>{
+  if(!inflOn[inf.type])return;
+  const a=atlas.positionen.get(p.name),b=atlas.positionen.get(inf.to);if(!a||!b||a===b)return;
+  if(inflMode==='focus'&&(!_chainSet.size||!_chainSet.has(p.name)||!_chainSet.has(inf.to)))return;
+  const key=a.key+'|'+b.key+'|'+inf.type;if(gruppiert.has(key))return;gruppiert.add(key);
+  const ax=xOf(a.jahr),bx=xOf(b.jahr),my=AXIS_Y+(inf.type==='critic'?25:-25);
+  g.appendChild(el('path',{d:`M${ax},${AXIS_Y} Q${(ax+bx)/2},${my} ${bx},${AXIS_Y}`,fill:'none',stroke:INFL_COL[inf.type],'stroke-width':_chainSet.size?1.7:1,'stroke-dasharray':inf.type==='critic'?'5 4':'none',opacity:_chainSet.size?'.7':'.18','marker-end':'url(#atlas-pfeil-'+inf.type+')'}));
+ }));
+}
+function atlasDefs(svg){
+ const defs=el('defs');
+ Object.entries(INFL_COL).forEach(([t,c])=>{const m=el('marker',{id:'atlas-pfeil-'+t,markerWidth:6,markerHeight:6,refX:5,refY:3,orient:'auto'});m.appendChild(el('path',{d:'M0 0 L6 3 L0 6Z',fill:c}));defs.appendChild(m);});
+ const fade=el('radialGradient',{id:'atlas-weich',cx:'50%',cy:'50%',r:'50%'});
+ [[0,1],[.45,1],[.85,.3],[1,0]].forEach(([n,a])=>fade.appendChild(el('stop',{offset:n,'stop-color':'white','stop-opacity':a})));
+ defs.appendChild(fade);
+ const m=el('mask',{id:'atlas-maske',maskContentUnits:'objectBoundingBox'});m.appendChild(el('rect',{x:0,y:0,width:1,height:1,fill:'url(#atlas-weich)'}));defs.appendChild(m);
+ svg.appendChild(defs);
+}
+function atlasLandschaft(svg,h){
+ if(atlas.bildmodus==='aus')return;
+ const bereich=atlasGrenzen(),aktiv=TL_KREISE.filter(k=>tlKreisAktiv[k]);
+ const passt=aktiv.length===1&&aktiv[0]==='European';atlas.passend=passt;
+ const terminal=document.documentElement.dataset.style==='terminal';
+ const d=atlas.stufe==='Übersicht'?.075:atlas.stufe==='Erkunden'?.14:.065;
+ const gruppe=el('g',{id:'atlas-landschaft','pointer-events':'none','aria-hidden':'true'});
+ const ganzbild=atlas.bildmodus==='athen';
+ const fotos=!terminal&&(ganzbild||atlas.bildmodus==='bilder'&&passt);
+ // Der Ganzbildversuch spannt ein Motiv über die gesamte Jahresachse. Es bleibt
+ // an denselben Zeitkoordinaten wie die Karten verankert, auch beim Verschieben.
+ const szenen=ganzbild?[{...ATLAS_BILDER[2],von:YEAR_MIN,bis:YEAR_MAX}]:ATLAS_BILDER.map((b,i)=>({...b,bis:i===2&&!fotos?2030:b.bis}));
+ szenen.forEach((b,i)=>{
+  if(b.bis<bereich.von-120||b.von>bereich.bis+120)return;
+  const x=xOf(b.von),breite=xOf(b.bis)-x;
+  const region=el('g',{'data-bild':b.id,'data-von':b.von,'data-bis':b.bis,opacity:d,mask:'url(#atlas-maske)'});
+  if(fotos){
+   // Lokale vorhandene Dateien; die Dateirechte sind im Labornachweis belegt.
+   const bildH=breite/b.verhaeltnis;
+   const gesamtH=Math.max(1,atlas.breite-2*ATLAS_PAD)/b.verhaeltnis;
+   const sichtbarH=atlasWrap().clientHeight||h;
+   // Ausgehend vom angehobenen Gesamtbild um die Figuren statt um die Bildmitte
+   // vergrößern. Die horizontale Verankerung an den Jahreszahlen bleibt dieselbe.
+   // In flachen Querformatfenstern den Figurenanker spätestens in der Mitte halten.
+   const figurenY=Math.min(sichtbarH/2,sichtbarH*(.5-ATLAS_ATHEN_ANHEBUNG)+gesamtH*(ATLAS_ATHEN_FIGURENANKER-.5));
+   const bildY=ganzbild?(h-sichtbarH)/2+figurenY-bildH*ATLAS_ATHEN_FIGURENANKER:(h-bildH)/2;
+   let image=atlas.bildKnoten.get(b.id);
+   if(!image){
+    image=el('image',{href:'assets/images/goetter/vignetten/'+b.id+'.avif',preserveAspectRatio:'xMidYMid meet'});
+    image.setAttribute('data-fallback','webp');image.addEventListener('error',()=>{if(image.dataset.fallback==='webp'){image.dataset.fallback='jpg';image.setAttribute('href','assets/images/goetter/vignetten/'+b.id+'.webp');}else if(image.dataset.fallback==='jpg'){image.dataset.fallback='';image.setAttribute('href','assets/images/goetter/vignetten/'+b.id+'.jpg');}else image.remove();});
+    atlas.bildKnoten.set(b.id,image);
+   }
+   Object.entries({x,y:bildY,width:breite,height:bildH}).forEach(([k,v])=>image.setAttribute(k,v));
+   region.appendChild(image);
+  }else{
+   // Eigenständige abstrakte Linienlandschaft, keine Rekonstruktion eines Ortes.
+   for(let n=0;n<22;n++){
+    const y=h*(.1+n*.037),welle=h*(.035+(n%4)*.008),mitte=x+breite/2;
+    region.appendChild(el('path',{d:`M${x},${y} C${x+breite*.22},${y-welle} ${mitte-breite*.1},${y+welle} ${mitte},${y} S${x+breite*.8},${y-welle} ${x+breite},${y+welle}`,fill:'none',stroke:cv(i===0?'--accent':i===1?'--accent2':'--accent3'),'stroke-width':n%5===0?2.3:1}));
+   }
+  }
+  gruppe.appendChild(region);
+ });
+ svg.appendChild(gruppe);
+}
+function atlasAchse(svg,modell){
+ const farbe=cv('--text3'),rand=cv('--border2');
+ const europ=modell.kreise.length===1&&modell.kreise[0]==='European';
+ [[-700,500,europ?'Antike':'bis 500'],[500,1500,europ?'Mittelalter':'500–1500'],[1500,2030,europ?'Neuzeit':'seit 1500']].forEach(([von,bis,titel],i)=>{
+  const x=xOf(von),breite=xOf(bis)-x;
+  if(x+breite<atlasWrap().scrollLeft||x>atlasWrap().scrollLeft+atlas.breite)return;
+  svg.appendChild(el('rect',{x,y:AXIS_Y-15,width:breite,height:31,fill:cv('--bg'),opacity:'.9'}));
+  svg.appendChild(el('line',{x1:x,y1:AXIS_Y,x2:x+breite,y2:AXIS_Y,stroke:cv(i===0?'--accent':i===1?'--accent2':'--accent3'),'stroke-width':2}));
+  if(breite>95)atlasText(svg,titel,Math.max(x+6,atlasWrap().scrollLeft+12),AXIS_Y-9,11,farbe);
+ });
+ const tick=atlasSchoeneZahl(110/atlasSkala());
+ const gr=atlasGrenzen();
+ const jahre=new Set([YEAR_MIN,YEAR_MAX]);
+ for(let j=Math.ceil(gr.von/tick)*tick;j<=gr.bis;j+=tick)jahre.add(j);
+ const belegt=[];
+ [YEAR_MIN,YEAR_MAX].forEach(j=>{const x=xOf(j),breite=atlasTextbreite(atlasFmt(j),11);belegt.push(j===YEAR_MIN?[x,x+breite]:[x-breite,x]);});
+ [...jahre].sort((a,b)=>a-b).forEach(j=>{
+  const x=xOf(j);if(x<atlasWrap().scrollLeft-30||x>atlasWrap().scrollLeft+atlas.breite+30)return;
+  svg.appendChild(el('line',{x1:x,x2:x,y1:AXIS_Y-4,y2:AXIS_Y+5,stroke:rand}));
+  const breite=atlasTextbreite(atlasFmt(j),11),kasten=[x-breite/2,x+breite/2];
+  if(j===YEAR_MIN||j===YEAR_MAX||!belegt.some(b=>kasten[0]<b[1]+8&&kasten[1]>b[0]-8)){
+   atlasText(svg,atlasFmt(j),x,AXIS_Y+23,11,farbe,{'text-anchor':j===YEAR_MIN?'start':j===YEAR_MAX?'end':'middle'});if(j!==YEAR_MIN&&j!==YEAR_MAX)belegt.push(kasten);
+  }
+ });
+}
+function atlasTooltip(p,e){
+ showHoverCard(p,e.cx,e.oben,e.y,e.h);
+ const tip=document.getElementById('tl-hover'),w=atlasWrap();
+ const links=Math.max(8,Math.min(w.clientWidth-tip.offsetWidth-8,e.cx-w.scrollLeft-tip.offsetWidth/2));
+ const oben=Math.max(40,Math.min(w.clientHeight-tip.offsetHeight-8,e.y-w.scrollTop-tip.offsetHeight-8));
+ tip.style.left=links+'px';tip.style.top=oben+'px';
+}
+function atlasAktiviere(e,touch){
+ if(!e.p){atlasZuGruppe(e);return;}
+ if(touch&&atlas.letzterTap!==e.p.name){atlas.letzterTap=e.p.name;setFocus(e.p.name);atlasTooltip(e.p,e);}
+ else{atlas.letzterTap=null;atlas.pin=e.p.name;tlOpenModal(e.p);}
+}
+function atlasKarte(svg,e,modell,index){
+ const sichtbar=e.cx+e.w/2>=atlasWrap().scrollLeft-200&&e.cx-e.w/2<=atlasWrap().scrollLeft+atlas.breite+200;
+ e.key=String(index);e.personen.forEach(p=>atlas.positionen.set(p.name,e));
+ if(!sichtbar)return;
+ const gruppe=!e.p,farbe=gruppe?cv('--accent'):e.p.color;
+ const g=el('g',{transform:`translate(${e.cx},${e.y})`,role:'button',tabindex:0,'data-atlas-action':String(index),'data-atlas-namen':JSON.stringify(e.personen.map(p=>p.name)),'aria-label':gruppe?`${TL_KREIS_LABEL[e.kreis]}: ${e.personen.length} Personen, ${atlasFmt(e.von)} bis ${atlasFmt(e.bis)}. Zum Erkunden vergrößern.`:dispName(e.p)+', '+lifeStr(e.p)});
+ if(e.p){g.setAttribute('class','phil-node-group');g.setAttribute('data-name',e.p.name);}
+ g.appendChild(el('title',{},gruppe?`${TL_KREIS_LABEL[e.kreis]} · ${e.personen.length} Personen · Klick vergrößert diesen Zeitabschnitt`:dispName(e.p)+' · '+lifeStr(e.p)));
+ const dot=atlasAnker(e);
+ svg.appendChild(el('line',{x1:dot.x,y1:AXIS_Y,x2:e.cx,y2:e.oben?e.y+e.h:e.y,stroke:farbe,opacity:'.35','stroke-width':1}));
+ svg.appendChild(el('circle',{cx:dot.x,cy:AXIS_Y,r:3.5,fill:farbe,stroke:cv('--bg'),'stroke-width':1.5}));
+ g.appendChild(el('rect',{x:-e.w/2,y:0,width:e.w,height:e.h,rx:8,fill:cv('--card'),stroke:gruppe?cv('--border2'):farbe,'stroke-width':1,opacity:'.96'}));
+ if(gruppe){
+  atlasText(g,TL_KREIS_LABEL[e.kreis],0,15,11,cv('--text2'),{'text-anchor':'middle'});
+  atlasText(g,e.personen.length+' Personen',0,31,12,cv('--text'),{'text-anchor':'middle','font-weight':650});
+ }else{
+  const base=portraitBase(e.p).split('/').pop();const bild=['avif','webp','jpg'].map(ext=>base+'.'+ext).find(f=>ATLAS_PORTRAITS.has(f));
+  const radius=modell.voll?17:12;
+  if(bild){
+   const clip=el('clipPath',{id:'atlas-portraet-'+index});clip.appendChild(el('circle',{cx:0,cy:5+radius,r:radius}));g.appendChild(clip);
+   g.appendChild(el('image',{x:-radius,y:5,width:radius*2,height:radius*2,href:'assets/images/philosophen/'+bild,preserveAspectRatio:'xMidYMid slice','clip-path':'url(#atlas-portraet-'+index+')'}));
+  }
+  else atlasText(g,dispName(e.p).charAt(0),0,modell.voll?27:23,18,farbe,{'text-anchor':'middle','font-weight':650});
+  const max=Math.max(9,Math.floor(e.w/(modell.voll?7.2:6.7))),zeilen=atlasZeilen(dispName(e.p),max);
+  zeilen.forEach((t,i)=>atlasText(g,t,0,(modell.voll?52:41)+i*14,modell.voll?14:12,cv('--text'),{'text-anchor':'middle','font-weight':600}));
+  if(modell.voll){atlasText(g,e.p.epoch.length>23?e.p.epoch.slice(0,22)+'…':e.p.epoch,0,e.h-24,10,cv('--text3'),{'text-anchor':'middle'});atlasText(g,lifeStr(e.p),0,e.h-7,10,cv('--text2'),{'text-anchor':'middle'});}
+  if(isFav(e.p))atlasText(g,'★',e.w/2-9,13,11,farbe,{'text-anchor':'middle'});
+ }
+ g.addEventListener('click',()=>{if(performance.now()>atlas.unterdrueckeKlick)atlasAktiviere(e,false);});
+ g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();if(gruppe&&ev.key===' ')atlasGruppenliste(e);else atlasAktiviere(e,false);}});
+ if(e.p){g.addEventListener('mouseenter',()=>{setFocus(e.p.name);atlasTooltip(e.p,e);});g.addEventListener('mouseleave',hideHoverCard);}
+ svg.appendChild(g);atlas.knoten.push({element:g,eintrag:e});
+}
+function atlasOrientierung(){
+ const modus=document.getElementById('tl-darstellung');if(modus)modus.value=atlasDarstellung;
+ const gr=atlasGrenzen(),bar=document.getElementById('atlas-bereich');
+ if(bar)bar.textContent=atlasFmt(gr.von)+' – '+atlasFmt(gr.bis);
+ const level=document.getElementById('atlas-stufe');if(level){const n=[],g=atlas.statistik.sichtbareGruppen,k=atlas.statistik.sichtbareKarten;if(g)n.push(g+(g===1?' Gruppe':' Gruppen'));if(k)n.push(k+(k===1?' Karte':' Karten'));level.textContent=(atlasDarstellung==='klassisch'?'Klassisch':'Aufgeräumt')+' · '+atlas.stufe+(n.length?' · '+n.join(' · '):'');level.title='Gruppen und Einzelkarten im sichtbaren Ausschnitt';}
+ const auswahl=document.getElementById('atlas-bilder');if(auswahl){
+  // Die Atlas-Erweiterung ergänzt ihr Werkzeug auch bei einer bereits laufenden Vorschau.
+  if(!auswahl.querySelector('option[value="athen"]'))auswahl.add(new Option('Schule von Athen – ganze Breite','athen'),auswahl.options[2]);
+  auswahl.value=atlas.bildmodus;
+ }
+ const label=document.getElementById('zoom-lbl');if(label)label.textContent='×'+(zoom/atlas.fit).toFixed(1);
+ const btn=document.getElementById('atlas-fit');if(btn)btn.setAttribute('aria-pressed',String(atlasIstGesamt()));
+ const hint=document.getElementById('atlas-bild-hinweis');if(hint)hint.textContent=atlas.bildmodus==='athen'?(document.documentElement.dataset.style==='terminal'?'Im Terminaldesign erscheint die abstrakte Linienfassung.':'Raffaels Schule von Athen über die gesamte Zeitfläche: ein atmosphärischer Bildversuch, keine historische Zuordnung aller Epochen und Traditionen.'):atlas.bildmodus==='aus'?'Hintergrundbilder sind ausgeschaltet.':atlas.bildmodus==='bilder'&&!atlas.passend?'Gemischte Traditionen: neutrale Linienlandschaft. Die drei Bildbeispiele erscheinen bei ausschließlicher Auswahl Europas.':atlas.bildmodus==='bilder'?'Bildkontexte: griechisch-römische Philosophie, lateinische Handschriften und Renaissance.':'Stilisierte Motive sind eigene abstrakte Grafiken, keine historischen Quellen.';
+}
+function atlasRender(){
+ const start=performance.now(),svg=document.getElementById('tl-svg'),w=atlasWrap();if(!svg||!w)return;
+ atlasMassstab();atlas.knoten=[];atlas.positionen.clear();
+ const modell=atlasModell();atlas.gruppen=modell.gruppen;atlas.einzel=modell.knoten;atlas.statistik={personen:modell.personen.length,gruppen:modell.gruppen.length,einzelkarten:modell.knoten.length,stufe:atlas.stufe};
+ svg.replaceChildren();svg.setAttribute('width',svgW());svg.setAttribute('height',modell.h);AXIS_Y=modell.achse;
+ atlasDefs(svg);atlasLandschaft(svg,modell.h);atlasAchse(svg,modell);
+ const linien=el('g',{id:'infl-g','pointer-events':'none'});svg.appendChild(linien);
+ [...modell.gruppen,...modell.knoten].forEach((e,i)=>atlasKarte(svg,e,modell,i));
+ const scrollOben=Math.max(0,(modell.h-w.clientHeight)/2);
+ const imBild=atlas.knoten.filter(k=>{const e=k.eintrag;return e.cx+e.w/2>=w.scrollLeft&&e.cx-e.w/2<=w.scrollLeft+w.clientWidth&&e.y+e.h>=scrollOben&&e.y<=scrollOben+w.clientHeight;});
+ atlas.statistik.sichtbareGruppen=imBild.filter(k=>!k.eintrag.p).length;atlas.statistik.sichtbareKarten=imBild.filter(k=>k.eintrag.p).length;
+ atlasLinien(linien);w.scrollTop=Math.max(0,(modell.h-w.clientHeight)/2);
+ atlasFokusAktualisieren();atlasOrientierung();
+ const vc=document.getElementById('vis-count');if(vc)vc.textContent=modell.personen.length+' Personen in '+modell.gruppen.length+' Gruppen und '+modell.knoten.length+' Einzelkarten';
+ atlas.zeiten.push(performance.now()-start);if(atlas.zeiten.length>120)atlas.zeiten.shift();
+}
+/* Die ursprüngliche Zeichnung nutzt dieselben Zeitkoordinaten, Werkzeuge und
+   Pointerhandler. Nur die Art der Verdichtung wird gewechselt. */
+baseVisible=function(p){
+ if(dimmed(p))return false;
+ if(search||femaleOnly||atlas.pin===p.name)return true;
+ if(zoom<MEGA_ZOOM)return MEGA.has(p.name)||((p.kreis||'European')!=='European'&&p.tier===atlasRangspitzen.get(p.kreis));
+ return zoom>=(TIER_VIS[p.tier]||1);
+};
+visible=function(p){return !dimmed(p)&&(_chainSet.has(p.name)||baseVisible(p));};
+function atlasKlassischZeichnen(){
+ atlasMassstab();atlas.stufe=zoom<MEGA_ZOOM?'Übersicht':zoom<1.5?'Erkunden':'Detail';
+ atlas.knoten=[];atlas.positionen.clear();atlas.gruppen=[];
+ atlasRangspitzen.clear();phils().filter(p=>!dimmed(p)).forEach(p=>{const k=p.kreis||'European';atlasRangspitzen.set(k,Math.min(atlasRangspitzen.get(k)||4,p.tier||4));});
+ atlasKlassischRender();
+ const svg=document.getElementById('tl-svg'),w=atlasWrap(),h=Number(svg.getAttribute('height'));
+ atlasDefs(svg);atlasLandschaft(svg,h);
+ const landschaft=document.getElementById('atlas-landschaft');if(landschaft)svg.insertBefore(landschaft,svg.firstChild);
+ const daten=new Map(phils().map(p=>[p.name,p]));
+ svg.querySelectorAll('#node-g .phil-node-group').forEach((g,index)=>{
+  const p=daten.get(g.dataset.name);if(!p)return;
+  const alt=g.lastElementChild,hit=alt.cloneNode(true);alt.replaceWith(hit);
+  const e={p,personen:[p],key:String(index),jahr:atlasMitte(p),cx:xOf(atlasMitte(p)),y:Number(hit.getAttribute('y'))+(window._contentShiftY||0),w:CARD_W,h:Number(hit.getAttribute('height')),oben:Number(hit.getAttribute('y'))<AXIS_Y};
+  g.setAttribute('data-atlas-action',String(index));g.setAttribute('data-atlas-namen',JSON.stringify([p.name]));g.setAttribute('role','button');g.setAttribute('tabindex','0');g.setAttribute('aria-label',dispName(p)+', '+lifeStr(p));
+  g.addEventListener('click',()=>{if(performance.now()>atlas.unterdrueckeKlick)atlasAktiviere(e,false);});
+  g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();atlasAktiviere(e,false);}});
+  g.addEventListener('mouseenter',()=>{setFocus(p.name);atlasTooltip(p,e);});g.addEventListener('mouseleave',hideHoverCard);
+  atlas.knoten.push({element:g,eintrag:e});atlas.positionen.set(p.name,e);
+ });
+ atlas.einzel=atlas.knoten.map(k=>k.eintrag);
+ const sichtbar=atlas.knoten.filter(({element:g})=>{const b=g.getBoundingClientRect(),r=w.getBoundingClientRect();return b.right>=r.left&&b.left<=r.right&&b.bottom>=r.top&&b.top<=r.bottom;});
+ atlas.statistik={einzelkarten:atlas.knoten.length,sichtbareKarten:sichtbar.length,sichtbareGruppen:0};
+ atlasFokusAktualisieren();atlasOrientierung();
+}
+render=function(){if(atlasDarstellung==='klassisch')atlasKlassischZeichnen();else atlasRender();};
+window.tlSetDarstellung=function(modus){
+ if(!['klassisch','gruppiert'].includes(modus))return;
+ atlasDarstellung=modus;window._layoutCache=null;focusName=null;_chainSet.clear();_connectedToFocus.clear();atlas.letzterTap=null;hideHoverCard();
+ render();
+};
+function atlasNavigation(){
+ const w=atlasWrap(),punkte=new Map();let drag=null,pinch=null;
+ const opts={signal:tlUiAbbruch.signal};
+ document.getElementById('atlas-gruppe').addEventListener('keydown',e=>{
+  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();tlAtlasGruppeZu();}
+  if(e.key==='Tab'){const f=[...document.querySelectorAll('#atlas-gruppe button')],i=f.indexOf(document.activeElement);if(e.shiftKey&&i===0){e.preventDefault();f.at(-1).focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0].focus();}}
+ },opts);
+ document.getElementById('atlas-gruppe').addEventListener('click',e=>{if(e.target.id==='atlas-gruppe')tlAtlasGruppeZu();},opts);
+ w.tabIndex=0;w.setAttribute('role','region');w.setAttribute('aria-label','Historische Zeitachse. Pfeiltasten verschieben; Plus und Minus zoomen; Pos1 zeigt alles.');
+ w.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse'&&e.button!==0)return;
+  punkte.set(e.pointerId,{x:e.clientX,y:e.clientY});w.setPointerCapture(e.pointerId);
+  drag={x:e.clientX,y:e.clientY,scroll:w.scrollLeft,bewegung:false,ziel:e.target.closest('[data-atlas-action]')?.getAttribute('data-atlas-action'),touch:e.pointerType!=='mouse'};
+  if(punkte.size===2){const [a,b]=[...punkte.values()],x=(a.x+b.x)/2-w.getBoundingClientRect().left;pinch={dist:Math.hypot(b.x-a.x,b.y-a.y),zoom,jahr:atlasJahr(w.scrollLeft+x)};drag.bewegung=true;hideHoverCard();}
+ },opts);
+ w.addEventListener('pointermove',e=>{
+  if(!punkte.has(e.pointerId))return;punkte.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(punkte.size===2&&pinch){const [a,b]=[...punkte.values()],x=(a.x+b.x)/2-w.getBoundingClientRect().left;atlasZoomAn(pinch.zoom*Math.hypot(b.x-a.x,b.y-a.y)/Math.max(1,pinch.dist),x,pinch.jahr);return;}
+  if(drag){const dx=e.clientX-drag.x;if(Math.hypot(dx,e.clientY-drag.y)>6)drag.bewegung=true;if(drag.bewegung){w.scrollLeft=drag.scroll-dx;hideHoverCard();}}
+ },opts);
+ const los=e=>{
+  const warPinch=!!pinch;punkte.delete(e.pointerId);if(punkte.size<2)pinch=null;
+  if(!punkte.size&&drag){
+   const ziel=drag.ziel,touch=drag.touch,bewegt=drag.bewegung||warPinch;
+   atlas.unterdrueckeKlick=performance.now()+450;
+   if(!bewegt&&ziel!==undefined){const knoten=atlas.knoten.find(k=>k.element.getAttribute('data-atlas-action')===ziel);if(knoten)atlasAktiviere(knoten.eintrag,touch);}
+   drag=null;
+  }else if(punkte.size===1&&drag){const a=[...punkte.values()][0];drag={x:a.x,y:a.y,scroll:w.scrollLeft,bewegung:true};}
+ };
+ w.addEventListener('pointerup',los,opts);w.addEventListener('pointercancel',e=>{punkte.delete(e.pointerId);drag=null;pinch=null;atlas.unterdrueckeKlick=performance.now()+450;},opts);
+ w.addEventListener('wheel',e=>{
+  if(e.shiftKey||Math.abs(e.deltaX)>Math.abs(e.deltaY)&&!e.ctrlKey){e.preventDefault();w.scrollLeft+=(e.deltaX||e.deltaY);return;}
+  e.preventDefault();atlas.radFaktor*=Math.exp(-e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?w.clientHeight:1)*.0018);atlas.radX=e.clientX-w.getBoundingClientRect().left;
+  if(!atlas.raf)atlas.raf=requestAnimationFrame(()=>{atlas.raf=0;atlasZoomAn(zoom*atlas.radFaktor,atlas.radX);atlas.radFaktor=1;});
+ },{...opts,passive:false});
+ w.addEventListener('scroll',()=>{if(!atlas.scrollRaf)atlas.scrollRaf=requestAnimationFrame(()=>{atlas.scrollRaf=0;if(tlUiAktiv&&viewMode==='timeline')render();});},opts);
+ w.addEventListener('mouseleave',()=>{if(!punkte.size){focusName=null;_chainSet.clear();_connectedToFocus.clear();atlasFokusAktualisieren();hideHoverCard();}},opts);
+ w.addEventListener('keydown',e=>{
+  if(e.target!==w)return;
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();w.scrollLeft+=(e.key==='ArrowRight'?1:-1)*w.clientWidth*.2;}
+  else if(e.key==='+'||e.key==='='){e.preventDefault();tlZoom(1.35);}else if(e.key==='-'){e.preventDefault();tlZoom(1/1.35);}else if(e.key==='Home'){e.preventDefault();atlasGesamt();}
+ },opts);
+}
+setupDrag=atlasNavigation;
+window.tlAtlasBild=function(wert){if(!ATLAS_BILDMODI.includes(wert))return;atlas.bildmodus=wert;try{localStorage.setItem('tl-timeline-bilder',wert);}catch{}render();};
+window.tlAtlasGesamt=atlasGesamt;
+
+/* Ergänzt die bestehende Engine um gemeinsame Zustände. Die Atlas-Zeichnung
+   bleibt ein Teil derselben Timeline; die drei übrigen Ansichten bleiben erhalten. */
+const tlUiRoot=document.getElementById('tl-timeline');
+const tlUiAbbruch=new AbortController();
+let tlUiAktiv=true,tlUiRaf=0,tlUiPanel=null,tlUiFokus=false,tlUiDialogFokus=null;
+let tlUiThemeObserver,tlUiGroessenObserver;
+const tlUiNach=id=>document.getElementById(id);
+const tlUiTreffer=()=>phils().filter(p=>!dimmed(p));
+const tlUiQuellRender=render,tlUiQuellNetz=renderNetz,tlUiQuellModal=window.tlOpenModal;
+
+function tlUiKnopf(id,gedrueckt){
+ const b=tlUiNach(id);if(!b)return;
+ b.setAttribute('aria-pressed',String(gedrueckt));
+ b.classList.toggle('btn-primary',gedrueckt);b.classList.toggle('btn-ghost',!gedrueckt);
+}
+function tlUiAuswahlZurueck(){
+ focusName=null;_chainSet=new Set();_connectedToFocus=new Set();_lastTapName=null;
+ atlas.letzterTap=null;
+ nzFest=null;hideHoverCard();
+ if(osmKarte){osmSchliesse();osmSpurWeg();}
+ const erg=tlUiNach('nz-weg-erg');if(erg)erg.textContent='';
+}
+function tlUiBedienung(){
+ tlUiKnopf('female-btn',femaleOnly);tlUiKnopf('card-size-btn',cardSize==='full');
+ tlUiKnopf('infl-mode-btn',inflMode==='all');tlUiKnopf('tl-focus',tlUiFokus);
+ Object.keys(inflOn).forEach(t=>tlUiKnopf('itb-'+t,inflOn[t]));
+ tlUiKnopf('ko-geburt',kaOrtart==='geburt');tlUiKnopf('ko-tod',kaOrtart==='tod');
+ tlUiKnopf('ko-lehr',kaLehr);tlUiKnopf('ko-funde',kaFunde);tlUiKnopf('ko-phil-aus',kaPhilAus);tlUiKnopf('ko-tier',kaTierMax===KA_TIER_STD);
+ ['timeline','table','netz','karte'].forEach(v=>tlUiKnopf('vs-'+v,viewMode===v));
+ document.querySelectorAll('#tl-timeline .fm-btn').forEach(b=>{
+  const an=b.dataset.mode===filterMode;b.setAttribute('aria-pressed',String(an));
+  b.classList.toggle('btn-primary',an);b.classList.toggle('btn-ghost',!an);
+ });
+ document.querySelectorAll('#tl-timeline .epoch-leg-item').forEach(b=>{
+  const an=b.dataset.epoch===epoch;b.setAttribute('aria-pressed',String(an));
+  b.classList.toggle('btn-primary',an);b.classList.toggle('btn-ghost',!an);
+ });
+ document.querySelectorAll('#tl-timeline .netz-lg').forEach(b=>{
+  const an=!nzAus[b.dataset.typ];b.setAttribute('aria-pressed',String(an));
+  b.classList.toggle('btn-primary',an);b.classList.toggle('btn-ghost',!an);
+  b.onclick=()=>{const t=b.dataset.typ;nzAus[t]=!nzAus[t];inflOn[t]=!nzAus[t];nzFertig=null;renderNetz();};
+ });
+ tlUiNach('card-size-btn').closest('.tags').hidden=viewMode!=='timeline';
+ tlUiNach('infl-toggles').closest('.tags').hidden=!['timeline','netz'].includes(viewMode);
+ tlUiNach('infl-mode-btn').hidden=viewMode!=='timeline';
+ tlUiNach('atlas-bildwahl').hidden=viewMode!=='timeline';
+ tlUiNach('atlas-orientierung').hidden=viewMode!=='timeline';
+ const rang=tlUiRoot.querySelector('.tier-legend');if(rang)rang.hidden=viewMode!=='timeline';
+ const s=tlUiNach('tl-view');if(s)s.value=viewMode;
 }
 
-init();
+/* Eine Statusquelle für alle Ansichten; „dargestellt“ bezeichnet die
+   Zoomauswahl, nicht die Zahl der momentan im Fensterausschnitt liegenden Karten. */
+function tlUiStatus(){
+ if(!tlUiAktiv||!tlUiRoot.isConnected)return;
+ const treffer=tlUiTreffer(),teile=[];
+ const kreise=TL_KREISE.filter(k=>tlKreisAktiv[k]);
+ teile.push(kreise.length?kreise.map(k=>TL_KREIS_LABEL[k]).join(', '):'Kein Kulturkreis');
+ if(epoch)teile.push('Epoche: '+epoch);
+ if(window._currentEra)teile.push('Großepoche: '+window._currentEra);
+ [discFilter,movFilter,posFilter,themaFilter].filter(Boolean).forEach(t=>teile.push(t));
+ if(tlHerkunft)teile.push('Region: '+tlHerkunft.split(':').slice(1).join(':'));
+ if(femaleOnly)teile.push('Nur Philosophinnen');
+ if(search)teile.push('Suche: '+tlUiNach('phil-search').value);
+ let zahl=treffer.length+' Treffer';
+ if(viewMode==='timeline'){
+  zahl+=' · '+atlas.stufe;
+ }else if(viewMode==='netz')zahl+=' im Netz';
+ else if(viewMode==='karte'){
+  if(kfAktiv()){zahl=kfStandText();teile.push('Einzelweg; übrige Denker ausgeblendet');}
+  else{
+   const personen=kaPhilAus?[]:treffer.filter(p=>kaTierPasst(p)&&kaZeitPasst(p)&&kaOrtVon(p));
+   zahl=personen.length+' von '+treffer.length+' Treffern auf der Karte';
+   teile.push(kaOrtart==='tod'?'Sterbeorte':'Geburtsorte');
+   if(kaTierMax<4)teile.push('Rang 1–'+kaTierMax);
+   if(kaJahr!==null)teile.push('Jahr '+kaJahrText(kaJahr));
+   if(kaLehr)teile.push('Orte der Lehre');if(kaFunde)teile.push('Fundorte');
+   if(kaPhilAus)teile.push('Denker ausgeblendet');
+  }
+ }
+ if(search&&!treffer.length){
+  const andere=PHILS_V2.some(p=>p.name.toLowerCase().includes(search)||dispName(p).toLowerCase().includes(search));
+  teile.push(andere?'Weitere Treffer durch Auswahl ausgeschlossen – Herkunft/Merkmale prüfen.':'Kein passender Name im Bestand.');
+ }
+ if(tlUiNach('vis-count-2').textContent!==zahl)tlUiNach('vis-count-2').textContent=zahl;
+ const chips=tlUiNach('ks-teile');const text=JSON.stringify(teile);
+ if(chips.dataset.inhalt!==text){chips.dataset.inhalt=text;chips.replaceChildren();teile.forEach(t=>{const s=document.createElement('span');s.className='tag';s.textContent=t;chips.appendChild(s);});}
+ const anders=!!(epoch||window._currentEra||discFilter||movFilter||posFilter||themaFilter||search||femaleOnly||tlHerkunft||!tlKreisStd()||!atlasIstGesamt()||cardSize!=='mini'||inflMode!=='focus'||Object.values(inflOn).some(x=>!x)||Object.values(nzAus).some(Boolean)||kaJahr!==null||kfAktiv()||kaPhilAus||kaTierMax!==KA_TIER_STD||kaOrtart!=='geburt'||!kaLehr||kaFunde);
+ tlUiNach('ks-reset').hidden=!anders;
+ const bf=tlUiNach('tlk-badge-filter'),bk=tlUiNach('tlk-badge-kreis');
+ const n=Number(!!(epoch||window._currentEra||discFilter||movFilter||posFilter||themaFilter))+Number(femaleOnly);
+ bf.hidden=!n;bf.textContent=String(n);
+ const k=Number(!tlKreisStd())+Number(!!tlHerkunft);bk.hidden=!k;bk.textContent=String(k);
+ tlUiBedienung();
+}
+render=function(){if(tlUiAktiv&&tlUiRoot.isConnected){if(viewMode==='timeline')tlUiQuellRender();tlUiStatus();}};
+renderNetz=function(){if(tlUiAktiv&&tlUiRoot.isConnected){tlUiQuellNetz();tlUiStatus();}};
+ksAuffrischen=tlUiStatus;
+window.tlkMarken=tlUiStatus;
+
+function tlUiKartenStart(){kzBinden();kfListeBauen();ksBinden();kaTierKnopf();}
+function tlUiAuffrischen({auswahl=false}={}){
+ if(!tlUiAktiv)return;
+ if(auswahl){window._layoutCache=null;nzFertig=null;tlUiAuswahlZurueck();}
+ buildEpochFilter();updateEpochLegendActive();
+ if(viewMode==='timeline')render();
+ else if(viewMode==='table')renderTable();
+ else if(viewMode==='netz')renderNetz();
+ else{tlUiKartenStart();osmZeichne();}
+ tlUiStatus();tlUiGroessePlanen();
+}
+tlNeuzeichnen=function(){tlUiAuffrischen({auswahl:true});};
+window.kaAuffrischen=function(){if(viewMode==='karte'){tlUiKartenStart();osmZeichne();}tlUiStatus();};
+window.tlSetView=function(mode){
+ if(!['timeline','table','netz','karte'].includes(mode))return;
+ if(viewMode==='karte'&&mode!=='karte')kzLaufAus();
+ viewMode=mode;tlUiAuswahlZurueck();
+ ['timeline','table','netz','karte'].forEach(v=>{
+  const node=tlUiNach({timeline:'tl-outer',table:'tl-table-wrap',netz:'netz-wrap',karte:'karte-wrap'}[v]);
+  node.hidden=v!==mode;node.classList.toggle('active',v===mode);
+ });
+ tlUiNach('zoom-group').hidden=mode!=='timeline';
+ tlUiAuffrischen();
+};
+window.tlSetFilter=function(value){
+ if(filterMode==='epoch'){
+  epoch=value.startsWith('era:')?'':value;window._currentEra=value.startsWith('era:')?value.slice(4):'';
+ }else{discFilter=filterMode==='disc'?value:'';movFilter=filterMode==='mov'?value:'';posFilter=filterMode==='pos'?value:'';themaFilter=filterMode==='thema'?value:'';}
+ tlUiAuffrischen({auswahl:true});
+};
+window.tlSetMode=function(mode){
+ filterMode=mode;epoch='';window._currentEra='';discFilter='';movFilter='';posFilter='';themaFilter='';
+ tlUiAuffrischen({auswahl:true});
+};
+window.legendPickEpoch=function(name){const wert=epoch===name?'':name;window.tlSetMode('epoch');window.tlSetFilter(wert);};
+window.tlSearch=function(val){
+ search=val.toLowerCase().trim();tlUiNach('phil-search').value=val;
+ const gefunden=search.length>1?tlUiTreffer()[0]:null;
+ if(gefunden&&viewMode==='timeline'){
+  atlas.pin=gefunden.name;
+ }
+ tlUiAuffrischen({auswahl:true});
+ if(gefunden&&viewMode==='timeline'){
+  atlasZuPerson(gefunden);
+ }
+};
+window.tlToggleFemale=function(){femaleOnly=!femaleOnly;tlUiAuffrischen({auswahl:true});};
+window.tlToggleCardSize=function(){
+ cardSize=cardSize==='mini'?'full':'mini';CARD_W=CARD_DIMS[cardSize].w;CARD_H=CARD_DIMS[cardSize].h;
+ tlUiNach('card-size-btn').textContent=cardSize==='mini'?'◰ Mini':'◳ Groß';
+ window._layoutCache=null;tlUiAuffrischen();
+};
+window.tlToggleInflMode=function(){inflMode=inflMode==='focus'?'all':'focus';tlUiNach('infl-mode-btn').textContent=inflMode==='all'?'⚡ Linien: immer alle':'⚡ Linien: bei Fokus';tlUiAuffrischen();};
+buildInflToggles=function(){
+ const box=tlUiNach('infl-toggles');box.replaceChildren();
+ const labels={student:'Lehrer → Schüler',inspires:'Inspiration',critic:'Kritik',develops:'Weiterentwicklung'};
+ Object.entries(labels).forEach(([t,label])=>{
+  const b=document.createElement('button');b.type='button';b.className='btn btn-ghost btn-sm';b.id='itb-'+t;b.textContent=label;
+  b.onclick=()=>{inflOn[t]=!inflOn[t];nzAus[t]=!inflOn[t];nzFertig=null;tlUiAuffrischen();};box.appendChild(b);
+ });
+ const b=document.createElement('button');b.type='button';b.id='infl-mode-btn';b.className='btn btn-ghost btn-sm';b.textContent='⚡ Linien: bei Fokus';b.onclick=()=>tlToggleInflMode();box.appendChild(b);
+};
+tlKreisLeiste=function(){
+ const box=tlUiNach('tl-kreise');box.className='tags';box.replaceChildren();
+ TL_KREISE.forEach(k=>{
+  const b=document.createElement('button');b.type='button';b.className='btn btn-sm '+(tlKreisAktiv[k]?'btn-primary':'btn-ghost');b.dataset.kreis=k;
+  b.textContent=TL_KREIS_LABEL[k]+' · '+PHILS_V2.filter(p=>(p.kreis||'European')===k).length;
+  b.setAttribute('aria-pressed',String(tlKreisAktiv[k]));b.title='Ein-/ausblenden. Doppelklick: nur diesen Kulturkreis.';
+  b.onclick=()=>tlKreisUm(k);b.ondblclick=()=>tlKreisNur(k);box.appendChild(b);
+ });
+ const alle=TL_KREISE.every(k=>tlKreisAktiv[k]);const b=document.createElement('button');b.type='button';b.className='btn btn-ghost btn-sm';b.textContent=alle?'Europa + Islam':'Alle Kulturkreise';b.onclick=()=>tlKreisAlle();box.appendChild(b);
+};
+buildEpochLegend=function(){
+ const box=tlUiNach('epoch-legend-grid');box.replaceChildren();
+ EPOCHS_META_V2.forEach(e=>{
+  const b=document.createElement('button');b.type='button';b.className='btn btn-ghost btn-sm epoch-leg-item';b.dataset.epoch=e.name;
+  const s=el('svg',{width:10,height:10,'aria-hidden':'true'});s.appendChild(el('circle',{cx:5,cy:5,r:4,fill:e.color}));b.append(s,document.createTextNode(e.name));b.onclick=()=>legendPickEpoch(e.name);box.appendChild(b);
+ });
+};
+window.tlReset=function(){
+ window._layoutCache=null;tlUiAuswahlZurueck();atlasGesamt();tlUiStatus();
+};
+window.tlkAllesZuruecksetzen=function(){
+ kzLaufAus();kaFokus=null;kaJahr=null;kaPhilAus=false;kaTierMax=KA_TIER_STD;kaOrtart='geburt';kaLehr=true;kaFunde=false;
+ epoch='';window._currentEra='';filterMode='epoch';discFilter='';movFilter='';posFilter='';themaFilter='';search='';femaleOnly=false;tlHerkunft='';
+ TL_KREISE.forEach(k=>tlKreisAktiv[k]=TL_KREIS_STD[k]);
+ inflMode='focus';Object.keys(inflOn).forEach(k=>inflOn[k]=true);nzAus={};
+ cardSize='mini';CARD_W=CARD_DIMS.mini.w;CARD_H=CARD_DIMS.mini.h;zoom=atlas.fit;atlas.pin=null;
+ tlUiNach('phil-search').value='';tlUiNach('herkunft-dd').value='';tlUiNach('zoom-lbl').textContent='×1.0';tlUiNach('card-size-btn').textContent='◰ Mini';tlUiNach('infl-mode-btn').textContent='⚡ Linien: bei Fokus';
+ tlUiNach('kf-wahl').value='';tlUiNach('kf-zurueck').hidden=true;tlUiNach('kf-wahl').closest('.kf').classList.remove('an');
+ tlUiNach('kf-lage').textContent='Alle Denker auf der Karte. Einen Namen wählen, um nur dessen Weg zu sehen.';
+ lebenGewaehlt=null;exilGewaehlt=null;kfReglerAnpassen();tlUiNach('kz-regler').value=KZ_BIS;
+ if(osmKarte){osmSchliesse();osmSpurWeg();osmKarte.setView([42,12],4,{animate:false});}
+ ['ko-geburt','ko-lehr'].forEach(id=>{tlUiNach(id).classList.add('active');tlUiKnopf(id,true);});
+ ['ko-tod','ko-funde','ko-phil-aus'].forEach(id=>{tlUiNach(id).classList.remove('active');tlUiKnopf(id,false);});
+ tlUiNach('kz-alle').classList.add('active');tlUiNach('kz-leiste').classList.remove('zeit-an');
+ tlUiNach('nz-von').value='';tlUiNach('nz-nach').value='';
+ tlKreisLeiste();kaTierKnopf();kzAnzeigeAuffrischen();tlUiAuffrischen({auswahl:true});tlUiNach('tl-wrap').scrollLeft=0;
+};
+ksZuruecksetzen=window.tlkAllesZuruecksetzen;
+
+window.tlkTimelineOffen=()=>tlUiPanel;
+window.tlkFach=function(name){
+ const alt=tlUiPanel;tlUiPanel=alt===name?null:name;tlkOffen=tlUiPanel;
+ ['filter','kreis','ansicht','hilfe'].forEach(n=>{
+  tlUiNach('tlk-fach-'+n).hidden=n!==tlUiPanel;tlUiNach('tlk-tab-'+n).setAttribute('aria-expanded',String(n===tlUiPanel));
+ });
+ tlUiNach('tl-panel-close').hidden=!tlUiPanel;
+ tlUiNach('tl-tools').value=tlUiPanel||'';
+ tlUiGroessePlanen();
+};
+window.tlTimelineFokus=function(){tlUiFokus=!tlUiFokus;tlUiRoot.dataset.focus=String(tlUiFokus);tlUiKnopf('tl-focus',tlUiFokus);tlUiGroessePlanen();};
+window.tlHilfeZu=function(){if(tlUiPanel==='hilfe')tlkFach('hilfe');};
+
+/* Nur dynamische Geometrie wird als CSS-Variable gesetzt. Alle visuellen
+   Eigenschaften bleiben an die unveränderten globalen Tokens gebunden. */
+function setH(){
+ if(!tlUiAktiv||!tlUiRoot.isConnected)return;
+ const vv=window.visualViewport;
+ const unten=(vv?vv.height+vv.offsetTop:innerHeight);
+ const hoehe=Math.max(0,Math.floor(unten-tlUiRoot.getBoundingClientRect().top));
+ tlUiRoot.style.setProperty('--timeline-hoehe',hoehe+'px');
+ const w=tlUiNach('tl-wrap');
+ SVG_H=Math.max(1,Math.floor(w.clientHeight));AXIS_Y=Math.round(SVG_H/2);
+}
+function tlUiGroessePlanen(){
+ if(tlUiRaf||!tlUiAktiv)return;
+ tlUiRaf=requestAnimationFrame(()=>{tlUiRaf=0;if(!tlUiAktiv)return;setH();if(viewMode==='timeline')render();});
+}
+
+/* Detaildialog: Fokus, Escape, Rückgabe und vorhandene Beziehungsnavigation. */
+window.tlOpenModal=function(p){
+ atlas.pin=p.name;
+ const m=tlUiNach('pmodal');if(!m.classList.contains('open'))tlUiDialogFokus=document.activeElement;
+ tlUiQuellModal(p);
+ m.querySelectorAll('.pmodal-chip').forEach(s=>{s.setAttribute('role','button');s.tabIndex=0;s.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();s.click();}};});
+ m.querySelector('.pmodal-close').focus({preventScroll:true});
+};
+window.tlCloseModal=function(){tlUiNach('pmodal').classList.remove('open');if(tlUiDialogFokus?.isConnected)tlUiDialogFokus.focus({preventScroll:true});tlUiDialogFokus=null;};
+
+function tlUiInit(){
+ window._layoutCache=null;window._currentEra='';
+ buildInflToggles();buildEpochFilter();buildEpochLegend();tlKreisLeiste();tlGeoAnhaengen();tlHerkunftFuellen();
+ tlUiKartenStart();setupDrag();setH();detectImageFormat();
+ tlUiNach('tl-wrap').addEventListener('dblclick',e=>{if(!e.target.closest('.phil-node-group'))tlReset();},{signal:tlUiAbbruch.signal});
+ tlUiNach('pmodal').addEventListener('keydown',e=>{
+  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();tlCloseModal();}
+  if(e.key==='Tab'){
+   const f=[...tlUiNach('pmodal').querySelectorAll('button,[tabindex="0"],a[href]')].filter(n=>n.getClientRects().length);
+   const i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();f.at(-1)?.focus();}else if(!e.shiftKey&&i===f.length-1){e.preventDefault();f[0]?.focus();}
+  }
+ },{signal:tlUiAbbruch.signal});
+ tlUiRoot.addEventListener('keydown',e=>{if(e.key==='Escape'&&!tlUiNach('pmodal').classList.contains('open')&&tlUiPanel){const tab=tlUiNach('tlk-tab-'+tlUiPanel);tlkFach(tlUiPanel);tab.focus();}},{signal:tlUiAbbruch.signal});
+ tlUiRoot.addEventListener('keydown',e=>{if(e.target.matches('.tl-table tbody tr')&&(e.key==='Enter'||e.key===' ')){e.preventDefault();e.target.click();}},{signal:tlUiAbbruch.signal});
+ tlUiRoot.querySelectorAll('.tl-table th.sortable').forEach(th=>{th.tabIndex=0;th.setAttribute('role','button');th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();th.click();}},{signal:tlUiAbbruch.signal});});
+ window.addEventListener('resize',tlUiGroessePlanen,{signal:tlUiAbbruch.signal});
+ window.visualViewport?.addEventListener('resize',tlUiGroessePlanen,{signal:tlUiAbbruch.signal});
+ window.visualViewport?.addEventListener('scroll',tlUiGroessePlanen,{signal:tlUiAbbruch.signal});
+ tlUiThemeObserver=new MutationObserver(tlUiGroessePlanen);tlUiThemeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme','data-style']});
+ tlUiGroessenObserver=new ResizeObserver(tlUiGroessePlanen);
+ ['tl-head','tl-controls','tl-panels'].forEach(id=>tlUiGroessenObserver.observe(tlUiNach(id)));
+ document.fonts.ready.then(tlUiGroessePlanen);
+ const start=window._routeSub?.[0]==='karte'?'karte':'timeline';tlSetView(start);
+ atlasGesamt();
+ window.TL_TIMELINE={zustand:()=>({viewMode,zoom,filterMode,epoch,search,femaleOnly,tlHerkunft,kreise:{...tlKreisAktiv},treffer:tlUiTreffer().map(p=>p.name),cardSize,inflMode,inflOn:{...inflOn},kaTierMax,kaJahr,kaFokus,kaOrtart,kaLehr,kaFunde,kaPhilAus,SVG_H,AXIS_Y}),atlas:()=>({darstellung:atlasDarstellung,minZoom:atlas.fit,maxZoom:atlasMaximum(),relativ:zoom/atlas.fit,stufe:atlas.stufe,bereich:atlasGrenzen(),gruppen:atlas.gruppen.map(g=>({kreis:g.kreis,namen:g.personen.map(p=>p.name)})),einzelkarten:atlas.statistik.einzelkarten,einzelNamen:(atlas.einzel||[]).map(e=>e.p.name),bildmodus:atlas.bildmodus,zeiten:atlas.zeiten.slice(),breite:atlas.breite,weltBreite:svgW(),scrollLinks:atlasWrap().scrollLeft})};
+ window.tlTimelineDispose=function(){
+  tlUiAktiv=false;kzLaufAus();tlUiAbbruch.abort();tlUiThemeObserver.disconnect();tlUiGroessenObserver.disconnect();
+  [tlUiRaf,_focusRaf,atlas.raf,atlas.scrollRaf].filter(Boolean).forEach(cancelAnimationFrame);
+  [_focusFallback,_unfocusTimer,_zoomAnimTimer,kzWartet].filter(Boolean).forEach(clearTimeout);
+  if(osmKarte){osmKarte.remove();osmKarte=null;}
+  atlas.bildKnoten.clear();
+  delete window.TL_TIMELINE;delete window.tlTimelineDispose;
+ };
+}
+
+tlUiInit();
 
 })();
-</script>
-</template>
+</script></template>
 <template id="page-argumente">
 <!-- ════════════════════════════════════════════════════════════════
      BIBLIOTHEK DER ARGUMENTE
@@ -22311,6 +22858,8 @@ async function showPage(id, sub) {
     return;
   }
 
+  // Timeline vor dem regulären Seitenwechsel sauber abbauen.
+  if (window.tlTimelineDispose) window.tlTimelineDispose();
   // Inject HTML
   root.innerHTML = html;
 

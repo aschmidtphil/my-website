@@ -304,6 +304,8 @@ async function showPage(id, sub) {
     return;
   }
 
+  // Timeline vor dem regulären Seitenwechsel sauber abbauen.
+  if (window.tlTimelineDispose) window.tlTimelineDispose();
   // Inject HTML
   root.innerHTML = html;
 
