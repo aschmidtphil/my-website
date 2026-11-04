@@ -1534,9 +1534,85 @@
       ]
     },
     {
-      "id": "shinjuku-gyoen-pokemon-center-2026-09-05",
-      "title": "Shinjuku Gyoen und Pokémon Center · 5. September 2026",
+      "id": "arcade-nach-teamlab-2026-09-05",
+      "title": "Arcade nach teamLab · 5. September 2026",
       "publishedAt": "2026-09-05",
+      "description": "Ein Arcade-Abend nach teamLab Borderless: Greifautomaten, ein Gengar-Gewinn und ein neuer Eindruck von japanischen Spielhallen.",
+      "cover": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/vorschau.webp",
+      "coverAlt": "Greifautomat mit zahlreichen großen Gengar-Plüschtieren",
+      "provenance": {
+        "kind": "manual",
+        "reviewed": true,
+        "sourceRecordingRef": null
+      },
+      "items": [
+        {
+          "type": "video",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/01.mp4",
+          "text": "War nach TeamLab noch in einer Arcade.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "user-specified-original"
+          },
+          "alt": "Violett und blau beleuchteter Raum mit spiegelnden Flächen"
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/02.webp",
+          "text": "In Akihabara hatte ich mir eine angeguckt, 1 € verspielt und es dann sein gelassen, weil mir das Ganze ziemlich shady und insgesamt wie ein ziemlicher Scam vorkam.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "user-specified-original"
+          },
+          "alt": "Greifautomat mit Pokémon-Plüschtieren, darunter Gengar, Pikachu und Nachtara",
+          "duration": 9.055555555555555
+        },
+        {
+          "type": "video",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/03.mp4",
+          "text": "Nach gestern muss ich meinen Eindruck aber etwas korrigieren.\nFür 20 € inklusive Lehrgeld und quasi erstem Versuch war das Teil meins, was echt okay ist. 😄",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "user-specified-original"
+          },
+          "alt": "Greifautomat mit zahlreichen großen Gengar-Plüschtieren"
+        },
+        {
+          "type": "video",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/04.mp4",
+          "text": "Andere hatten weniger Erfolg, aber alle waren freundlich und es war lustig, anderen zuzugucken und mitzufiebern. :)\nTeilweise hat Japan sogar deutlich schärfere Regeln gegen Glücksspiel als wir, was ich erstmal kaum glauben konnte, wenn man die ganzen Läden hier sieht. 😄",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "user-specified-original"
+          },
+          "alt": "Blau beleuchteter Spielbereich mit Personen vor Lichtflächen"
+        }
+      ]
+    },
+    {
+      "id": "shinjuku-gyoen-pokemon-center-2026-09-05",
+      "title": "Shinjuku Gyoen und Pokémon Center · 3. September 2026",
+      "publishedAt": "2026-09-03",
       "description": "Ein Vormittag im Shinjuku Gyoen Park und ein Nachmittag zwischen Pokémon und anderen Spezialläden.",
       "cover": "assets/momente/shinjuku-gyoen-pokemon-center-2026-09-05/20261017-235403-819e35/vorschau.webp",
       "coverAlt": "Weite grüne Rasenfläche im Shinjuku Gyoen Park unter bewölktem Himmel",
