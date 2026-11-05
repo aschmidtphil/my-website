@@ -1535,21 +1535,98 @@
     },
     {
       "id": "arcade-nach-teamlab-2026-09-05",
-      "title": "Arcade nach teamLab · 5. September 2026",
+      "title": "teamLab Borderless und Arcade · 5. September 2026",
       "publishedAt": "2026-09-05",
-      "description": "Ein Arcade-Abend nach teamLab Borderless: Greifautomaten, ein Gengar-Gewinn und ein neuer Eindruck von japanischen Spielhallen.",
-      "cover": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/vorschau.webp",
-      "coverAlt": "Greifautomat mit zahlreichen großen Gengar-Plüschtieren",
+      "description": "Der Besuch bei teamLab Borderless am 4. September: wechselnde Kunstwelten, ein philosophischer Gedanke und anschließend ein Abend in der Arcade.",
+      "cover": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/vorschau.webp",
+      "coverAlt": "Lächelndes Selfie vor blau leuchtenden Wasserfall-Projektionen bei teamLab Borderless",
       "provenance": {
-        "kind": "manual",
-        "reviewed": true,
+        "kind": "reconstructed",
+        "reviewed": false,
         "sourceRecordingRef": null
       },
       "items": [
         {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/01.webp",
+          "text": "Ich find’s echt wunderschön und ein richtig cooles Erlebnis. 🥰",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "reviewed": false,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "editorial-selection-from-visit"
+          },
+          "alt": "Lächelndes Selfie vor blau leuchtenden Wasserfall-Projektionen bei teamLab Borderless",
+          "duration": 6
+        },
+        {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/01.mp4",
-          "text": "War nach TeamLab noch in einer Arcade.",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/02.mp4",
+          "text": "Die Mischung aus klassischer Kunst und moderner Technik finde ich einfach großartig.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "reviewed": false,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "editorial-selection-from-visit"
+          },
+          "alt": "Animierte Wellenlandschaft im Stil japanischer Bildkunst auf mehreren Projektionsflächen"
+        },
+        {
+          "type": "video",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/03.mp4",
+          "text": "Allerdings erzeugt das Ganze auch ein bisschen FOMO bei mir. 😂\nWenn man später wiederkommt, ist es tatsächlich teilweise komplett anders.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "reviewed": false,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "editorial-selection-from-visit"
+          },
+          "alt": "Raum mit blauem digitalem Wasserfall, roten Blüten und interaktiven Projektionen"
+        },
+        {
+          "type": "video",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/04.mp4",
+          "text": "Ich war knapp zwei Stunden dort und habe dabei kaum – eigentlich fast gar keine – Wiederholungen gesehen.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "reviewed": false,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "editorial-selection-from-visit"
+          },
+          "alt": "Späterer Blick in den Wasserfall-Raum mit blauen und gelbgrünen Projektionen"
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/05.webp",
+          "text": "Zumindest scheint den Machern das auch bewusst gewesen zu sein. 😄",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "reviewed": false,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "editorial-selection-from-visit"
+          },
+          "alt": "Hinweisschild: This artwork evolves and changes day by day along with the real flow of time",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/06.webp",
+          "text": "The artworks in a room change over time.",
           "textPosition": "bottom",
           "fit": "contain",
           "provenance": {
@@ -1557,13 +1634,93 @@
             "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "user-specified-original"
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Erläuterung des Borderless-Konzepts: Kunstwerke in einem Raum verändern sich mit der Zeit",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/07.webp",
+          "text": "Artworks leave rooms, move through the halls and enter other spaces.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Erläuterung mit gezeichneten Lichtbahnen: Kunstwerke verlassen Räume und wandern durch die Ausstellung",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/08.webp",
+          "text": "Try returning to the same room after a while.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Erläuterung des Borderless-Konzepts mit dem Hinweis, später in denselben Raum zurückzukehren",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/09.webp",
+          "text": "Wander, explore and discover in one continuous borderless world.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Wandtext: Wander, Explore, and Discover in One Continuous Borderless World",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/10.webp",
+          "text": "Könnte glatt von Aristoteles stammen 😀\nErinnert mich an The Great Chain of Being.",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Wandtext: Everything exists in infinite continuity. And continuity itself is beautiful",
+          "duration": 6
+        },
+        {
+          "type": "video",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/11.mp4",
+          "text": "War nach teamLab noch in einer Arcade. 🕹️",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
           },
           "alt": "Violett und blau beleuchteter Raum mit spiegelnden Flächen"
         },
         {
           "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/02.webp",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/12.webp",
           "text": "In Akihabara hatte ich mir eine angeguckt, 1 € verspielt und es dann sein gelassen, weil mir das Ganze ziemlich shady und insgesamt wie ein ziemlicher Scam vorkam.",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1572,14 +1729,14 @@
             "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "user-specified-original"
+            "matchMethod": "confirmed-text-and-original"
           },
           "alt": "Greifautomat mit Pokémon-Plüschtieren, darunter Gengar, Pikachu und Nachtara",
           "duration": 9.055555555555555
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/03.mp4",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/13.mp4",
           "text": "Nach gestern muss ich meinen Eindruck aber etwas korrigieren.\nFür 20 € inklusive Lehrgeld und quasi erstem Versuch an einer Claw-Machine war das Teil meins, was echt okay ist. 😄",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1588,13 +1745,13 @@
             "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "user-specified-original"
+            "matchMethod": "confirmed-text-and-original"
           },
           "alt": "Greifautomat mit zahlreichen großen Gengar-Plüschtieren"
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261104-210406-91857b/04.mp4",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/14.mp4",
           "text": "Andere hatten weniger Erfolg, aber alle waren freundlich und es war lustig, anderen zuzugucken und mitzufiebern. :)\nTeilweise hat Japan sogar deutlich schärfere Regeln gegen Glücksspiel als wir, was ich erstmal kaum glauben konnte, wenn man die ganzen Läden hier sieht. 😄",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1603,7 +1760,7 @@
             "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "user-specified-original"
+            "matchMethod": "confirmed-text-and-original"
           },
           "alt": "Blau beleuchteter Spielbereich mit Personen vor Lichtflächen"
         }
@@ -1642,7 +1799,7 @@
         {
           "type": "image",
           "src": "assets/momente/shinjuku-gyoen-pokemon-center-2026-09-05/20261017-235403-819e35/02.webp",
-          "text": "Und diese Pflanzen sehen irgendwie aus wie eine Lunge. 🫁🌱\nStraight from Resident Evil. ^^",
+          "text": "Und diese Pflanzen sehen aus wie eine Lunge. 🫁🌱\nStraight from Resident Evil. ^^",
           "textPosition": "bottom",
           "fit": "contain",
           "provenance": {
