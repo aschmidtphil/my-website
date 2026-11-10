@@ -1538,158 +1538,127 @@
       "title": "teamLab Borderless und Arcade · 5. September 2026",
       "publishedAt": "2026-09-05",
       "description": "Der Besuch bei teamLab Borderless am 4. September: wechselnde Kunstwelten, ein philosophischer Gedanke und anschließend ein Abend in der Arcade.",
-      "cover": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/vorschau.webp",
-      "coverAlt": "Lächelndes Selfie vor blau leuchtenden Wasserfall-Projektionen bei teamLab Borderless",
+      "cover": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/vorschau.webp",
+      "coverAlt": "Video mit farbigen Blumenprojektionen bei teamLab Borderless",
       "provenance": {
         "kind": "reconstructed",
-        "reviewed": false,
+        "reviewed": true,
         "sourceRecordingRef": null
       },
       "items": [
         {
           "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/01.webp",
-          "text": "Ich find’s echt wunderschön und ein richtig cooles Erlebnis. 🥰",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/08.webp",
+          "text": "",
           "textPosition": "bottom",
           "fit": "contain",
           "provenance": {
-            "kind": "reconstructed",
-            "reviewed": false,
+            "kind": "manual",
+            "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "editorial-selection-from-visit"
+            "matchMethod": "confirmed-text-and-original"
           },
-          "alt": "Lächelndes Selfie vor blau leuchtenden Wasserfall-Projektionen bei teamLab Borderless",
+          "alt": "Großer Schriftzug teamLab Borderless am Ausgang der Ausstellung",
           "duration": 6
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/02.mp4",
-          "text": "Die Mischung aus klassischer Kunst und moderner Technik finde ich einfach großartig.",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/01.mp4",
+          "text": "The artworks in a room change over time.\n\nArtworks leave rooms, move through the halls and enter other spaces.\n\nTry returning to the same room after a while.\n\nWander, explore and discover in one continuous borderless world.",
           "textPosition": "bottom",
           "fit": "contain",
           "provenance": {
-            "kind": "reconstructed",
-            "reviewed": false,
+            "kind": "manual",
+            "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "editorial-selection-from-visit"
+            "matchMethod": "confirmed-text-and-original"
           },
-          "alt": "Animierte Wellenlandschaft im Stil japanischer Bildkunst auf mehreren Projektionsflächen"
+          "alt": "Video mit farbigen Blumenprojektionen bei teamLab Borderless"
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/03.mp4",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/02.mp4",
+          "text": "Ich find’s echt wunderschön und ne richtig coole Mischung aus klassischer Kunst und moderner Technik. 🥰",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Video eines Spiegelraums mit vielen farbig leuchtenden Lichtpunkten"
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/03.webp",
+          "text": "",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Selfie vor blau und violett leuchtenden Projektionen bei teamLab Borderless",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/04.webp",
           "text": "Allerdings erzeugt das Ganze auch ein bisschen FOMO bei mir. 😂\nWenn man später wiederkommt, ist es tatsächlich teilweise komplett anders.",
           "textPosition": "bottom",
           "fit": "contain",
           "provenance": {
-            "kind": "reconstructed",
-            "reviewed": false,
+            "kind": "manual",
+            "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
-            "matchMethod": "editorial-selection-from-visit"
+            "matchMethod": "confirmed-text-and-original"
           },
-          "alt": "Raum mit blauem digitalem Wasserfall, roten Blüten und interaktiven Projektionen"
-        },
-        {
-          "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/04.mp4",
-          "text": "Ich war knapp zwei Stunden dort und habe dabei kaum – eigentlich fast gar keine – Wiederholungen gesehen.",
-          "textPosition": "bottom",
-          "fit": "contain",
-          "provenance": {
-            "kind": "reconstructed",
-            "reviewed": false,
-            "sourceRecordingRef": null,
-            "mediaMatchConfidence": null,
-            "matchMethod": "editorial-selection-from-visit"
-          },
-          "alt": "Späterer Blick in den Wasserfall-Raum mit blauen und gelbgrünen Projektionen"
+          "alt": "Viele bunte Blüten und Lichtpunkte in einer farbigen Projektion",
+          "duration": 7.611111111111111
         },
         {
           "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/05.webp",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/05.webp",
+          "text": "",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "manual",
+            "reviewed": true,
+            "sourceRecordingRef": null,
+            "mediaMatchConfidence": null,
+            "matchMethod": "confirmed-text-and-original"
+          },
+          "alt": "Raum voller schwebender, warm leuchtender Kugeln mit filigranen Mustern",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/06.webp",
           "text": "Zumindest scheint den Machern das auch bewusst gewesen zu sein. 😄",
           "textPosition": "bottom",
           "fit": "contain",
           "provenance": {
-            "kind": "reconstructed",
-            "reviewed": false,
-            "sourceRecordingRef": null,
-            "mediaMatchConfidence": null,
-            "matchMethod": "editorial-selection-from-visit"
-          },
-          "alt": "Hinweisschild: This artwork evolves and changes day by day along with the real flow of time",
-          "duration": 6
-        },
-        {
-          "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/06.webp",
-          "text": "The artworks in a room change over time.",
-          "textPosition": "bottom",
-          "fit": "contain",
-          "provenance": {
             "kind": "manual",
             "reviewed": true,
             "sourceRecordingRef": null,
             "mediaMatchConfidence": null,
             "matchMethod": "confirmed-text-and-original"
           },
-          "alt": "Erläuterung des Borderless-Konzepts: Kunstwerke in einem Raum verändern sich mit der Zeit",
+          "alt": "Wandtext: To have seen something, is to not have seen something else",
           "duration": 6
         },
         {
           "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/07.webp",
-          "text": "Artworks leave rooms, move through the halls and enter other spaces.",
-          "textPosition": "bottom",
-          "fit": "contain",
-          "provenance": {
-            "kind": "manual",
-            "reviewed": true,
-            "sourceRecordingRef": null,
-            "mediaMatchConfidence": null,
-            "matchMethod": "confirmed-text-and-original"
-          },
-          "alt": "Erläuterung mit gezeichneten Lichtbahnen: Kunstwerke verlassen Räume und wandern durch die Ausstellung",
-          "duration": 6
-        },
-        {
-          "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/08.webp",
-          "text": "Try returning to the same room after a while.",
-          "textPosition": "bottom",
-          "fit": "contain",
-          "provenance": {
-            "kind": "manual",
-            "reviewed": true,
-            "sourceRecordingRef": null,
-            "mediaMatchConfidence": null,
-            "matchMethod": "confirmed-text-and-original"
-          },
-          "alt": "Erläuterung des Borderless-Konzepts mit dem Hinweis, später in denselben Raum zurückzukehren",
-          "duration": 6
-        },
-        {
-          "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/09.webp",
-          "text": "Wander, explore and discover in one continuous borderless world.",
-          "textPosition": "bottom",
-          "fit": "contain",
-          "provenance": {
-            "kind": "manual",
-            "reviewed": true,
-            "sourceRecordingRef": null,
-            "mediaMatchConfidence": null,
-            "matchMethod": "confirmed-text-and-original"
-          },
-          "alt": "Wandtext: Wander, Explore, and Discover in One Continuous Borderless World",
-          "duration": 6
-        },
-        {
-          "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/10.webp",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/07.webp",
           "text": "Könnte glatt von Aristoteles stammen 😀\nErinnert mich an The Great Chain of Being.",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1705,7 +1674,7 @@
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/11.mp4",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/09.mp4",
           "text": "War nach teamLab noch in einer Arcade. 🕹️",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1720,7 +1689,7 @@
         },
         {
           "type": "image",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/12.webp",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/10.webp",
           "text": "In Akihabara hatte ich mir eine angeguckt, 1 € verspielt und es dann sein gelassen, weil mir das Ganze ziemlich shady und insgesamt wie ein ziemlicher Scam vorkam.",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1736,7 +1705,7 @@
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/13.mp4",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/11.mp4",
           "text": "Nach gestern muss ich meinen Eindruck aber etwas korrigieren.\nFür 20 € inklusive Lehrgeld und quasi erstem Versuch an einer Claw-Machine war das Teil meins, was echt okay ist. 😄",
           "textPosition": "bottom",
           "fit": "contain",
@@ -1751,7 +1720,7 @@
         },
         {
           "type": "video",
-          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261105-132058-9732ae/14.mp4",
+          "src": "assets/momente/arcade-nach-teamlab-2026-09-05/20261108-210630-ffba7e/12.mp4",
           "text": "Andere hatten weniger Erfolg, aber alle waren freundlich und es war lustig, anderen zuzugucken und mitzufiebern. :)\nTeilweise hat Japan sogar deutlich schärfere Regeln gegen Glücksspiel als wir, was ich erstmal kaum glauben konnte, wenn man die ganzen Läden hier sieht. 😄",
           "textPosition": "bottom",
           "fit": "contain",

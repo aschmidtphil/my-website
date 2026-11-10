@@ -212,6 +212,28 @@ function registerPageInit(id, fn) { _pageInits[id] = fn; }
 // ── HTML cache (content only — not init state) ───
 const _htmlCache = {};
 
+const _seitenDateien = new Map();
+function ladeSeitenDatei(pfad, art){
+  if (_seitenDateien.has(pfad)) return _seitenDateien.get(pfad);
+  const promise = new Promise((resolve, reject) => {
+    const stylesheet = art === 'css';
+    let el = [...document.querySelectorAll(stylesheet ? 'link[rel="stylesheet"]' : 'script[src]')]
+      .find(n => n.getAttribute(stylesheet ? 'href' : 'src') === pfad);
+    if (el && (stylesheet ? el.sheet : el.dataset.geladen === 'ja')) { resolve(); return; }
+    const neu = !el;
+    if (neu) {
+      el = document.createElement(stylesheet ? 'link' : 'script');
+      if (stylesheet) { el.rel = 'stylesheet'; el.href = pfad; }
+      else el.src = pfad;
+    }
+    el.addEventListener('load', () => { el.dataset.geladen = 'ja'; resolve(); }, {once:true});
+    el.addEventListener('error', () => { el.remove(); reject(new Error(pfad)); }, {once:true});
+    if (neu) document.head.appendChild(el);
+  });
+  _seitenDateien.set(pfad, promise);
+  promise.catch(() => _seitenDateien.delete(pfad));
+  return promise;
+}
 async function getPageHTML(id) {
   if (_htmlCache[id]) return _htmlCache[id];
 
@@ -284,7 +306,7 @@ async function showPage(id, sub) {
   const newHash = '#' + id + (window._routeSub.length ? '/' + window._routeSub.map(encodeURIComponent).join('/') : '');
   if (location.hash !== newHash) history.pushState({page:id}, '', newHash);
   _currentPage = id;
-  if (id !== 'nature' && window.stopMomente) window.stopMomente();
+  if (window.stopMomente) window.stopMomente();
 
   const root = document.getElementById('page-root');
   if (!root) { _busy = false; return; }
@@ -292,7 +314,18 @@ async function showPage(id, sub) {
   root.style.transition = 'opacity .15s';
   root.style.opacity    = '0';
 
-  const html = await getPageHTML(id);
+  let html;
+  try {
+    [html] = await Promise.all([getPageHTML(id),
+      id === 'goetter' ? ladeSeitenDatei('css/kosmos.css', 'css') : Promise.resolve()]);
+  } catch(error) {
+    root.innerHTML = '<p role="status" style="padding:3rem">Die Seite konnte nicht vollständig geladen werden. '
+      + '<button type="button">Erneut versuchen</button></p>';
+    root.querySelector('button').onclick = () => showPage(id, sub);
+    root.style.opacity = '1'; _busy = false;
+    console.warn('Seitenressourcen:', error);
+    return;
+  }
 
   if (!html) {
     root.innerHTML = `<div style="padding:4rem 3rem;font-family:var(--fm);color:var(--text2)">
@@ -636,6 +669,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try{                                            // Seiten
       (window.NAV_GROUPS||[]).forEach(function(gr){
         (gr.items||[]).forEach(function(it){
+          if(!it.id || !veroeffentlicht(it.id)) return;
           add({grp:'Seiten',sym:it.icon||'▸',t:it.label,u:'Seite',geh:function(){nav(it.id);}});
         });
       });
@@ -644,6 +678,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try{
         document.querySelectorAll('#nav-groups a[data-page]').forEach(function(a){
           var id=a.getAttribute('data-page');
+          if(!veroeffentlicht(id)) return;
           add({grp:'Seiten',sym:'▸',t:(a.textContent||'').trim(),u:'Seite',geh:function(){nav(id);}});
         });
       }catch(x){}

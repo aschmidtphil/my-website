@@ -1,4 +1,8 @@
 <style>
+/* Berufsbezeichnungen bleiben als Wörter zusammen und dürfen in Ruhe umbrechen. */
+.hero-text .hero-subtitle { line-height: 1.75; max-width: 34rem; text-wrap: pretty; }
+.hero-cta #home-music { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; font-size: 1.2rem; }
+.hero-cta #home-music[aria-pressed="true"] { color: var(--accent-text); border-color: var(--accent); background: var(--surface2); }
 /* ═══ Startseite: Werkschau ══════════════════════════════════════════
    Die Kacheln zeigen keine Symbolbilder, sondern kleine Ansichten aus
    den echten Datenbeständen der Seite — die Konstellation kommt aus
@@ -98,7 +102,7 @@
 <div class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
-  <!-- Portrait LEFT -->
+  <!-- Porträt links -->
   <div class="hero-portrait-wrap fade-up d1">
     <div class="hm-stapel" id="hm-stapel">
       <picture>
@@ -110,7 +114,7 @@
       </picture>
     </div>
   </div>
-  <!-- Text RIGHT -->
+  <!-- Text rechts -->
   <div class="hero-text">
     <p class="hero-tag fade-up" id="t-hero-tag">Phänomenologie · Mythologie · Daten</p>
     <h1 class="hero-name fade-up d1">
@@ -118,7 +122,7 @@
       <span class="n2">Schmidt<span class="cursor">_</span></span>
     </h1>
     <p class="hero-subtitle fade-up d2">
-      <span class="nur-diss">Dr.&thinsp;phil. &middot; </span>Data Scientist &middot; Entwickler
+      Dr.&thinsp;phil.&nbsp;&middot; Data&nbsp;Engineer&nbsp;&middot; Data&nbsp;Analyst&nbsp;&middot; Data&nbsp;Scientist&nbsp;&middot; Entwickler
     </p>
     <p class="hero-desc fade-up d2" id="t-hero-desc">
       Ich verbinde <em style="font-style:normal;color:var(--accent3-text)">Datenwissenschaft</em>,
@@ -129,6 +133,7 @@
       <button class="btn btn-primary" onclick="open('https://github.com/aschmidtphil','_blank')">GitHub</button>
       <button class="btn btn-ghost nur-diss" onclick="showPage('diss')">Dissertation</button>
       <button class="btn btn-ghost" onclick="showPage('kontakt')">Kontakt</button>
+      <button class="btn btn-ghost" type="button" id="home-music" aria-label="Small Escape abspielen" title="Small Escape abspielen" aria-pressed="false">♪</button>
     </div>
   </div>
 </div>

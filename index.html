@@ -32,6 +32,7 @@
    Verweise darauf weg, damit keine toten Links entstehen.
    ═══════════════════════════════════════════════════════════════════ */
 const NICHT_OEFFENTLICH = [
+  'argumente',
   /* Eigene Arbeiten: bleiben draussen, bis die Titelblaetter der PDFs
      bereinigt sind. Auf jedem stehen Matrikelnummer und die davon
      abgeleitete Uni-Mailadresse. Wichtig: Diese Liste raeumt nur die
@@ -3790,6 +3791,10 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
      Alle Aufrufe von tlOpenModal kommen aus der Philosophie-Seite. -->
 <template id="page-home">
 <style>
+/* Berufsbezeichnungen bleiben als Wörter zusammen und dürfen in Ruhe umbrechen. */
+.hero-text .hero-subtitle { line-height: 1.75; max-width: 34rem; text-wrap: pretty; }
+.hero-cta #home-music { width: 44px; height: 44px; padding: 0; flex: 0 0 44px; font-size: 1.2rem; }
+.hero-cta #home-music[aria-pressed="true"] { color: var(--accent-text); border-color: var(--accent); background: var(--surface2); }
 /* ═══ Startseite: Werkschau ══════════════════════════════════════════
    Die Kacheln zeigen keine Symbolbilder, sondern kleine Ansichten aus
    den echten Datenbeständen der Seite — die Konstellation kommt aus
@@ -3889,7 +3894,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
 <div class="hero">
   <div class="hero-grid-bg"></div>
   <div class="hero-glow"></div>
-  <!-- Portrait LEFT -->
+  <!-- Porträt links -->
   <div class="hero-portrait-wrap fade-up d1">
     <div class="hm-stapel" id="hm-stapel">
       <picture>
@@ -3901,7 +3906,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
       </picture>
     </div>
   </div>
-  <!-- Text RIGHT -->
+  <!-- Text rechts -->
   <div class="hero-text">
     <p class="hero-tag fade-up" id="t-hero-tag">Phänomenologie · Mythologie · Daten</p>
     <h1 class="hero-name fade-up d1">
@@ -3909,7 +3914,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
       <span class="n2">Schmidt<span class="cursor">_</span></span>
     </h1>
     <p class="hero-subtitle fade-up d2">
-      <span class="nur-diss">Dr.&thinsp;phil. &middot; </span>Data Scientist &middot; Entwickler
+      Dr.&thinsp;phil.&nbsp;&middot; Data&nbsp;Engineer&nbsp;&middot; Data&nbsp;Analyst&nbsp;&middot; Data&nbsp;Scientist&nbsp;&middot; Entwickler
     </p>
     <p class="hero-desc fade-up d2" id="t-hero-desc">
       Ich verbinde <em style="font-style:normal;color:var(--accent3-text)">Datenwissenschaft</em>,
@@ -3920,6 +3925,7 @@ html[data-style="glass"][data-theme="dark"] .ctrl-select{
       <button class="btn btn-primary" onclick="open('https://github.com/aschmidtphil','_blank')">GitHub</button>
       <button class="btn btn-ghost nur-diss" onclick="showPage('diss')">Dissertation</button>
       <button class="btn btn-ghost" onclick="showPage('kontakt')">Kontakt</button>
+      <button class="btn btn-ghost" type="button" id="home-music" aria-label="Small Escape abspielen" title="Small Escape abspielen" aria-pressed="false">♪</button>
     </div>
   </div>
 </div>
@@ -8075,8 +8081,6 @@ select.inf-sel option{ background:#0b0d1a; color:var(--text); }
 <!-- ═══════════════════════════════════════════════════════════════
      GÖTTERKOSMOS — Pantheen & religiöse Kosmen als Hierarchie + Abstammung
 ═══════════════════════════════════════════════════════════════════ -->
-<link rel="stylesheet" href="css/kosmos.css">
-
 <div class="gods-root" id="gods-root">
   <div class="gods-stars"></div>
 
@@ -22766,6 +22770,28 @@ function registerPageInit(id, fn) { _pageInits[id] = fn; }
 // ── HTML cache (content only — not init state) ───
 const _htmlCache = {};
 
+const _seitenDateien = new Map();
+function ladeSeitenDatei(pfad, art){
+  if (_seitenDateien.has(pfad)) return _seitenDateien.get(pfad);
+  const promise = new Promise((resolve, reject) => {
+    const stylesheet = art === 'css';
+    let el = [...document.querySelectorAll(stylesheet ? 'link[rel="stylesheet"]' : 'script[src]')]
+      .find(n => n.getAttribute(stylesheet ? 'href' : 'src') === pfad);
+    if (el && (stylesheet ? el.sheet : el.dataset.geladen === 'ja')) { resolve(); return; }
+    const neu = !el;
+    if (neu) {
+      el = document.createElement(stylesheet ? 'link' : 'script');
+      if (stylesheet) { el.rel = 'stylesheet'; el.href = pfad; }
+      else el.src = pfad;
+    }
+    el.addEventListener('load', () => { el.dataset.geladen = 'ja'; resolve(); }, {once:true});
+    el.addEventListener('error', () => { el.remove(); reject(new Error(pfad)); }, {once:true});
+    if (neu) document.head.appendChild(el);
+  });
+  _seitenDateien.set(pfad, promise);
+  promise.catch(() => _seitenDateien.delete(pfad));
+  return promise;
+}
 async function getPageHTML(id) {
   if (_htmlCache[id]) return _htmlCache[id];
 
@@ -22838,7 +22864,7 @@ async function showPage(id, sub) {
   const newHash = '#' + id + (window._routeSub.length ? '/' + window._routeSub.map(encodeURIComponent).join('/') : '');
   if (location.hash !== newHash) history.pushState({page:id}, '', newHash);
   _currentPage = id;
-  if (id !== 'nature' && window.stopMomente) window.stopMomente();
+  if (window.stopMomente) window.stopMomente();
 
   const root = document.getElementById('page-root');
   if (!root) { _busy = false; return; }
@@ -22846,7 +22872,18 @@ async function showPage(id, sub) {
   root.style.transition = 'opacity .15s';
   root.style.opacity    = '0';
 
-  const html = await getPageHTML(id);
+  let html;
+  try {
+    [html] = await Promise.all([getPageHTML(id),
+      id === 'goetter' ? ladeSeitenDatei('css/kosmos.css', 'css') : Promise.resolve()]);
+  } catch(error) {
+    root.innerHTML = '<p role="status" style="padding:3rem">Die Seite konnte nicht vollständig geladen werden. '
+      + '<button type="button">Erneut versuchen</button></p>';
+    root.querySelector('button').onclick = () => showPage(id, sub);
+    root.style.opacity = '1'; _busy = false;
+    console.warn('Seitenressourcen:', error);
+    return;
+  }
 
   if (!html) {
     root.innerHTML = `<div style="padding:4rem 3rem;font-family:var(--fm);color:var(--text2)">
@@ -23190,6 +23227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try{                                            // Seiten
       (window.NAV_GROUPS||[]).forEach(function(gr){
         (gr.items||[]).forEach(function(it){
+          if(!it.id || !veroeffentlicht(it.id)) return;
           add({grp:'Seiten',sym:it.icon||'▸',t:it.label,u:'Seite',geh:function(){nav(it.id);}});
         });
       });
@@ -23198,6 +23236,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try{
         document.querySelectorAll('#nav-groups a[data-page]').forEach(function(a){
           var id=a.getAttribute('data-page');
+          if(!veroeffentlicht(id)) return;
           add({grp:'Seiten',sym:'▸',t:(a.textContent||'').trim(),u:'Seite',geh:function(){nav(id);}});
         });
       }catch(x){}
@@ -24143,8 +24182,8 @@ document.addEventListener('DOMContentLoaded',function(){setTimeout(patchHeroCanv
 <script src="js/documents-data.js" onerror="console.log('documents-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
 <script src="js/documents-meta-data.js" onerror="console.log('documents-meta-data.js nicht geladen (optional, nur lokaler Fallback)')"></script>
 <script src="js/momente-data.js"></script>
-<script src="js/momente-songs.js?v=20261101"></script>
-<script src="js/momente.js"></script>
+<script src="js/momente-songs.js?v=20261110"></script>
+<script src="js/momente.js?v=20261110"></script>
 <!-- Telefon-Regeln bewusst ganz am Ende: Sie standen zuvor oben, die
      Seitenstile aber weiter unten — bei gleicher Spezifität gewann
      dadurch immer der Seitenstil. Fünfmal ist mir deshalb eine Regel

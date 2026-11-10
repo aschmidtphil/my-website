@@ -11,8 +11,18 @@
   const music=new Audio();music.preload='none';music.volume=.3;
   const songs=(window.MOMENTE_SONGS||[]).filter(s=>s.title&&typeof s.src==='string'&&/^assets\/audio\/momente\/[\w./-]+\.mp3$/.test(s.src)&&!s.src.includes('..'));
   let musicPanel, musicIndex=0, musicWanted=false, musicError='', musicAttempt=0, videoClaim=false;
+  const homeMusic=()=>document.getElementById('home-music');
   function videoHasSound(){return Boolean(dialog&&media&&media.tagName==='VIDEO'&&!muted&&!media.muted&&!media.ended&&!paused&&(videoClaim||!media.paused));}
   function musicUI(){
+    const home=homeMusic();
+    if(home){
+      const active=musicWanted&&!music.paused;
+      home.textContent=active?'♫':'♪';
+      home.setAttribute('aria-pressed',String(active));
+      home.title=musicError||(musicWanted?'Musik pausieren':'Small Escape abspielen');
+      home.setAttribute('aria-label',home.title);
+      home.disabled=!songs.some(s=>s.src.endsWith('/small-escape.mp3'));
+    }
     if(!musicPanel)return;
     const song=songs[musicIndex];
     musicPanel.querySelector('#music-current').textContent=song?song.title:'Keine Musik hinterlegt';
@@ -25,7 +35,7 @@
     musicPanel.querySelector('#music-state').title=musicPanel.querySelector('#music-state').textContent;
   }
   function syncMusic(){
-    const allowed=dialog&&musicWanted&&songs.length&&!document.hidden&&!videoHasSound();
+    const allowed=(dialog||homeMusic())&&musicWanted&&songs.length&&!document.hidden&&!videoHasSound();
     if(!allowed){musicAttempt++;music.pause();musicUI();return;}
     if(!music.getAttribute('src'))music.src=songs[musicIndex].src;
     if(music.paused){
@@ -44,6 +54,16 @@
     music.removeAttribute('src');music.load();syncMusic();
   }
   function disableMusic(){musicWanted=false;musicAttempt++;music.pause();music.removeAttribute('src');music.load();musicError='';musicUI();}
+  // Der kleine Startseitenknopf nutzt dieselbe Audioinstanz wie der Statusplayer.
+  // Er öffnet keinen Player und beginnt bei bewusster Aktivierung mit Small Escape.
+  document.addEventListener('click',event=>{
+    if(!event.target.closest('#home-music'))return;
+    if(musicWanted){musicWanted=false;musicError='';syncMusic();return;}
+    const index=songs.findIndex(s=>s.src.endsWith('/small-escape.mp3'));
+    if(index<0)return;
+    if(index!==musicIndex)selectSong(index,true);
+    else{musicWanted=true;musicError='';syncMusic();}
+  });
   function mountMusic(){
     if(!musicPanel){
       musicPanel=el('section');musicPanel.id='momente-music';musicPanel.setAttribute('aria-label','Hintergrundmusik');
@@ -73,7 +93,7 @@
   music.addEventListener('playing',musicUI);
   music.addEventListener('error',()=>{if(!music.getAttribute('src'))return;musicWanted=false;musicAttempt++;music.pause();music.removeAttribute('src');music.load();musicError='Audiodatei nicht verfügbar. Bitte einen anderen Song wählen oder erneut versuchen.';musicUI();});
   music.addEventListener('ended',()=>{
-    if(musicWanted&&musicPanel.querySelector('#music-auto').checked)selectSong(musicIndex+1);
+    if(dialog&&musicWanted&&musicPanel.querySelector('#music-auto').checked)selectSong(musicIndex+1);
     else{musicWanted=false;musicUI();}
   });
   function localPath(s){return typeof s==='string'&&/^assets\/momente\/[\w./-]+$/.test(s)&&!s.includes('..');}
