@@ -65,3 +65,20 @@
 #music-state{display:block;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.5em}
 #momente-music :is(button,select,input,summary):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .momente-viewer #momente-music small{font-size:.75rem}
+/* Musik-Direktknöpfe. Galerie: dezent am rechten Rand über den Kacheln; der Player klappt nach unten auf.
+   Viewer: ▶/Ⅱ steht in der freien Spalte direkt links neben ♪, das Raster der Steuerleiste bleibt unverändert. */
+#momente-galerie-musik{position:relative;z-index:3;float:right;display:flex;gap:8px;margin:0 0 .75rem 1rem}
+#momente-galerie-musik~.momente-grid{clear:both}
+#momente-galerie-musik>button{width:44px;height:44px;padding:0;font:inherit;font-size:1.1rem;line-height:1;color:var(--text2);background:transparent;border:1px solid var(--border);border-radius:10px;cursor:pointer}
+#momente-galerie-musik>button[aria-pressed="true"],#momente-galerie-musik>button[aria-expanded="true"]{color:var(--text);border-color:var(--accent)}
+#momente-galerie-musik>button:disabled{opacity:.5;cursor:default}
+#momente-galerie-musik>button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+@media(hover:hover){#momente-galerie-musik>button:hover{color:var(--text);border-color:var(--accent)}}
+#momente-galerie-musik #momente-music{top:calc(100% + 8px);bottom:auto;max-height:min(70dvh,560px)}
+#music-quick{grid-column:3;justify-self:end;width:44px;font-size:1.1rem}
+/* Verkleinerte 980-Pixel-Desktopansicht auf Telefonen: Galerieknöpfe wie die Viewerknöpfe skalieren. */
+@media(pointer:coarse) and (max-device-width:600px) and (min-width:601px) and (orientation:portrait){
+  #momente-galerie-musik{gap:2vw}
+  #momente-galerie-musik>button{width:12.25vw;height:12.25vw;font-size:5vw;border-radius:2vw}
+  #momente-galerie-musik #momente-music{width:min(92vw,calc(100vw - 32px))}
+}

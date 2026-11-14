@@ -12,6 +12,9 @@
   const songs=(window.MOMENTE_SONGS||[]).filter(s=>s.title&&typeof s.src==='string'&&/^assets\/audio\/momente\/[\w./-]+\.mp3$/.test(s.src)&&!s.src.includes('..'));
   let musicPanel, musicIndex=0, musicWanted=false, musicError='', musicAttempt=0, videoClaim=false;
   const homeMusic=()=>document.getElementById('home-music');
+  // Kleine Musikleiste der Galerie (♪ öffnet den Player, ▶/Ⅱ spielt direkt ab); wird bei jedem Seitenaufbau neu angelegt.
+  let galleryBar=null;
+  const galleryActive=()=>Boolean(galleryBar&&galleryBar.isConnected);
   function videoHasSound(){return Boolean(dialog&&media&&media.tagName==='VIDEO'&&!muted&&!media.muted&&!media.ended&&!paused&&(videoClaim||!media.paused));}
   function musicUI(){
     const home=homeMusic();
@@ -23,6 +26,12 @@
       home.setAttribute('aria-label',home.title);
       home.disabled=!songs.some(s=>s.src.endsWith('/small-escape.mp3'));
     }
+    // Direktknöpfe in Galerie und Viewer: dieselbe Funktion wie „Musik abspielen/pausieren“ im Player.
+    document.querySelectorAll('[data-music="quick"]').forEach(b=>{
+      const label=musicWanted?'Musik pausieren':'Musik abspielen';
+      b.textContent=musicWanted?'Ⅱ':'▶';b.setAttribute('aria-pressed',String(musicWanted));
+      b.setAttribute('aria-label',label);b.title=musicError||label;b.disabled=!songs.length;
+    });
     if(!musicPanel)return;
     const song=songs[musicIndex];
     musicPanel.querySelector('#music-current').textContent=song?song.title:'Keine Musik hinterlegt';
@@ -35,7 +44,7 @@
     musicPanel.querySelector('#music-state').title=musicPanel.querySelector('#music-state').textContent;
   }
   function syncMusic(){
-    const allowed=(dialog||homeMusic())&&musicWanted&&songs.length&&!document.hidden&&!videoHasSound();
+    const allowed=(dialog||homeMusic()||galleryActive())&&musicWanted&&songs.length&&!document.hidden&&!videoHasSound();
     if(!allowed){musicAttempt++;music.pause();musicUI();return;}
     if(!music.getAttribute('src'))music.src=songs[musicIndex].src;
     if(music.paused){
@@ -57,6 +66,9 @@
   // Der kleine Startseitenknopf nutzt dieselbe Audioinstanz wie der Statusplayer.
   // Er öffnet keinen Player und beginnt bei bewusster Aktivierung mit Small Escape.
   document.addEventListener('click',event=>{
+    if(event.target.closest('[data-music="quick"]')){musicWanted=!musicWanted;musicError='';syncMusic();return;}
+    // In der Galerie klappt ein Klick außerhalb den Player ein (er überlagert sonst Kacheln).
+    if(!dialog&&galleryActive()&&musicOpenIn(galleryBar)&&!galleryBar.contains(event.target))setMusicOpen(false);
     if(!event.target.closest('#home-music'))return;
     if(musicWanted){musicWanted=false;musicError='';syncMusic();return;}
     const index=songs.findIndex(s=>s.src.endsWith('/small-escape.mp3'));
@@ -82,10 +94,14 @@
     }
     musicPanel.hidden=true;musicUI();
   }
+  // Der Player hängt am Viewer, solange er offen ist, sonst an der Galerieleiste.
+  function musicHost(){return dialog?dialog.querySelector('#momente-controls'):galleryActive()?galleryBar:null;}
+  function musicOpenIn(host){return Boolean(host&&musicPanel&&!musicPanel.hidden&&musicPanel.parentElement===host);}
   function setMusicOpen(expanded){
-    if(!dialog)return;
+    const host=musicHost();if(!host)return;
+    if(!musicPanel||musicPanel.parentElement!==host){mountMusic();host.append(musicPanel);}
     musicPanel.hidden=!expanded;
-    const button=dialog.querySelector('#music-toggle');
+    const button=host.querySelector('[data-music="toggle"]');
     button.setAttribute('aria-expanded',String(expanded));
     button.title=expanded?'Musikplayer einklappen':'Musikplayer öffnen';button.setAttribute('aria-label',button.title);
     if(!expanded&&musicPanel.contains(document.activeElement))button.focus();
@@ -93,7 +109,9 @@
   music.addEventListener('playing',musicUI);
   music.addEventListener('error',()=>{if(!music.getAttribute('src'))return;musicWanted=false;musicAttempt++;music.pause();music.removeAttribute('src');music.load();musicError='Audiodatei nicht verfügbar. Bitte einen anderen Song wählen oder erneut versuchen.';musicUI();});
   music.addEventListener('ended',()=>{
-    if(dialog&&musicWanted&&musicPanel.querySelector('#music-auto').checked)selectSong(musicIndex+1);
+    // Ohne geöffneten Player gilt die Voreinstellung „automatisch weiter“.
+    const auto=!musicPanel||musicPanel.querySelector('#music-auto').checked;
+    if((dialog||galleryActive())&&musicWanted&&auto)selectSong(musicIndex+1);
     else{musicWanted=false;musicUI();}
   });
   function localPath(s){return typeof s==='string'&&/^assets\/momente\/[\w./-]+$/.test(s)&&!s.includes('..');}
@@ -111,6 +129,14 @@
   async function renderNature(){
     const grid=document.getElementById('momente-grid');if(!grid)return;
     const message=document.getElementById('momente-state');
+    if(songs.length&&!grid.parentElement.querySelector('#momente-galerie-musik')){
+      galleryBar=el('div');galleryBar.id='momente-galerie-musik';galleryBar.setAttribute('role','group');galleryBar.setAttribute('aria-label','Hintergrundmusik');
+      galleryBar.innerHTML='<button type="button" id="galerie-music-quick" data-music="quick">▶</button><button type="button" id="galerie-music-toggle" data-music="toggle" aria-controls="momente-music" aria-expanded="false" title="Musikplayer öffnen" aria-label="Musikplayer öffnen">♪</button>';
+      const bar=galleryBar;
+      bar.querySelector('#galerie-music-toggle').onclick=()=>setMusicOpen(!musicOpenIn(bar));
+      bar.addEventListener('keydown',e=>{if(e.key==='Escape'&&musicOpenIn(bar)){e.preventDefault();setMusicOpen(false);}});
+      grid.parentElement.prepend(galleryBar);musicUI();
+    }
     try{
       if(!archive){
         if(location.protocol==='file:'){
@@ -135,13 +161,16 @@
   function open(index,card){
     if(dialog)close();opener=card;statusIndex=index;itemIndex=0;paused=reduced.matches;
     dialog=el('dialog','momente-viewer');dialog.setAttribute('aria-label','Momente – Status-Viewer');
-    dialog.innerHTML='<div class="momente-shell"><div class="momente-progress" aria-hidden="true"></div><div class="momente-toolbar"><div class="momente-heading" aria-live="polite"></div><button type="button" data-action="close" title="Viewer schließen" aria-label="Viewer schließen">✕</button></div><div class="momente-stage"><button type="button" class="momente-arrow momente-prev" data-action="prev" aria-label="Vorheriges Element">‹</button><button type="button" class="momente-arrow momente-next" data-action="next" aria-label="Nächstes Element">›</button></div><div class="momente-caption" tabindex="0" aria-label="Bildunterschrift"></div><div id="momente-controls" role="group" aria-label="Medienwiedergabe"><button type="button" data-action="pause"></button><button type="button" data-action="sound"></button><button type="button" id="music-toggle" aria-controls="momente-music" aria-expanded="false" aria-label="Musikplayer öffnen" title="Musikplayer öffnen">♪</button></div><div class="momente-meta"></div><div class="momente-help">Links / rechts: wechseln · Leertaste: Pause · Escape: schließen</div></div>';
+    dialog.innerHTML='<div class="momente-shell"><div class="momente-progress" aria-hidden="true"></div><div class="momente-toolbar"><div class="momente-heading" aria-live="polite"></div><button type="button" data-action="close" title="Viewer schließen" aria-label="Viewer schließen">✕</button></div><div class="momente-stage"><button type="button" class="momente-arrow momente-prev" data-action="prev" aria-label="Vorheriges Element">‹</button><button type="button" class="momente-arrow momente-next" data-action="next" aria-label="Nächstes Element">›</button></div><div class="momente-caption" tabindex="0" aria-label="Bildunterschrift"></div><div id="momente-controls" role="group" aria-label="Medienwiedergabe"><button type="button" data-action="pause"></button><button type="button" data-action="sound"></button><button type="button" id="music-quick" data-music="quick">▶</button><button type="button" id="music-toggle" data-music="toggle" aria-controls="momente-music" aria-expanded="false" aria-label="Musikplayer öffnen" title="Musikplayer öffnen">♪</button></div><div class="momente-meta"></div><div class="momente-help">Links / rechts: wechseln · Leertaste: Pause · Escape: schließen</div></div>';
     // Bild und Text bilden gemeinsam den Lesebereich; der Text verdeckt keine Medien.
     const content=el('div','momente-content');
     const shell=dialog.querySelector('.momente-shell'),initialStage=dialog.querySelector('.momente-stage');
     shell.insertBefore(content,initialStage);content.append(initialStage,dialog.querySelector('.momente-caption'));
+    // Ein in der Galerie geöffneter Player wandert eingeklappt in den Viewer.
+    const galleryToggle=galleryActive()&&galleryBar.querySelector('[data-music="toggle"]');
+    if(galleryToggle){galleryToggle.setAttribute('aria-expanded','false');galleryToggle.title='Musikplayer öffnen';galleryToggle.setAttribute('aria-label',galleryToggle.title);}
     mountMusic();dialog.querySelector('#momente-controls').append(musicPanel);
-    dialog.querySelector('#music-toggle').onclick=()=>setMusicOpen(musicPanel.hidden);
+    dialog.querySelector('#music-toggle').onclick=()=>setMusicOpen(!musicOpenIn(musicHost()));musicUI();
     document.body.append(dialog);previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';
     dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
     dialog.addEventListener('keydown',e=>{if(e.key==='Escape'&&!musicPanel.hidden){e.preventDefault();e.stopPropagation();setMusicOpen(false);return;}if(e.target.closest('input,select,summary,#momente-music'))return;if(e.key==='ArrowRight'){e.preventDefault();step(1);}if(e.key==='ArrowLeft'){e.preventDefault();step(-1);}if(e.code==='Space'&&!e.target.closest('button,a')){e.preventDefault();toggle();}});
@@ -164,7 +193,8 @@
     // Native Video-Steuerung bleibt aus: Pause und Ton gibt es genau einmal in dieser Leiste.
   }
   function stopMedia(){cancelAnimationFrame(frame);videoClaim=false;if(media){if(media.tagName==='VIDEO'){media.onpause=media.onplay=media.onended=media.onplaying=media.onwaiting=null;media.pause();media.removeAttribute('src');media.load();}media.remove();media=null;}}
-  function close(){if(!dialog)return;generation++;stopMedia();musicWanted=false;musicPanel.remove();dialog.close();dialog.remove();dialog=null;syncMusic();document.body.style.overflow=previousOverflow;if(opener&&opener.isConnected)opener.focus();}
+  // Schließen beendet die Musik nicht mehr: Die Galerie hat eigene Knöpfe zum Pausieren.
+  function close(){if(!dialog)return;generation++;stopMedia();musicPanel.remove();dialog.close();dialog.remove();dialog=null;syncMusic();document.body.style.overflow=previousOverflow;if(opener&&opener.isConnected)opener.focus();}
   function setCaption(element,text,externalUrl,externalLabel){
     element.replaceChildren();
     String(text).split(/(🇯🇵)/u).forEach(teil=>{
