@@ -86,15 +86,16 @@
 @media(pointer:coarse) and (max-device-width:600px) and (min-width:601px) and (orientation:portrait){
   #music-quick{font-size:5vw}
 }
-/* WhatsApp-nahe Telefonansicht (Standard seit 15.11.2026), nur Telefon-Hochformat:
-   Das Medium bekommt die ganze Höhe, der Text liegt unten darüber und ist auf drei Zeilen gekürzt.
-   Stellschrauben: Zeilenzahl (3lh), Deckkraft des Textbands (.84), aufgeklappte Höhe (70 %). */
-@media(max-width:900px) and (orientation:portrait),(pointer:coarse) and (max-device-width:600px) and (min-width:601px) and (orientation:portrait){
-  .momente-viewer.momente-wa .momente-content{position:relative;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
-  .momente-viewer.momente-wa .momente-caption{position:absolute;left:0;right:0;bottom:0;z-index:3;align-self:auto;max-height:70%;overflow:hidden;padding:14px 16px;background:rgba(16,20,25,.84);border:0;border-left:3px solid #cdb78e;border-radius:8px;box-shadow:0 -8px 24px rgba(0,0,0,.35)}
-  .momente-viewer.momente-wa .momente-text{max-height:4.8em;max-height:3lh;overflow:hidden}
-  .momente-viewer.momente-wa .momente-caption.gekuerzt .momente-text{-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
-  .momente-viewer.momente-wa .momente-caption.offen{overflow:auto}
-  .momente-viewer.momente-wa .momente-caption.offen .momente-text{max-height:none;-webkit-mask-image:none;mask-image:none}
-  .momente-viewer.momente-wa .momente-mehr{display:block;margin:.4em 0 0 auto;min-height:2.4em;min-width:0;padding:.2em .8em;font-size:.72em;line-height:1.4;background:#2a3542;border-color:#8a96a6}
+/* Telefon-Hochformat (seit 16.11.2026): Ansicht wie bisher (Text im reservierten Bereich unter dem Medium).
+   Nur Folien ohne Text blenden das Textfeld aus, das Medium nutzt dann die ganze Fläche.
+   Die Pfeile bleiben dabei auf der Höhe wie bei Folien mit Text: Mitte von (65 % der Fläche minus Abstand). */
+@media(max-width:900px) and (orientation:portrait){
+  .momente-viewer.momente-ohne-text .momente-content{grid-template-rows:minmax(0,1fr);row-gap:0}
+  .momente-viewer.momente-ohne-text .momente-caption{display:none}
+  .momente-viewer.momente-ohne-text .momente-arrow{top:calc(32.5% - 6px)}
+}
+@media(pointer:coarse) and (max-device-width:600px) and (min-width:601px) and (orientation:portrait){
+  .momente-viewer.momente-ohne-text .momente-content{grid-template-rows:minmax(0,1fr);row-gap:0}
+  .momente-viewer.momente-ohne-text .momente-caption{display:none}
+  .momente-viewer.momente-ohne-text .momente-arrow{top:calc(32.5% - 1.5vw)}
 }

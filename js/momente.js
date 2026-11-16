@@ -3,9 +3,8 @@
   'use strict';
   let archive, dialog, media, frame, statusIndex=0, itemIndex=0, elapsed=0, last=0;
   let paused=false, ready=false, muted=true, opener, previousOverflow, generation=0;
-  // WhatsApp-nahe Telefonansicht (seit 15.11.2026 Standard): Die Klasse momente-wa wirkt nur über die
-  // Telefon-Hochformatregeln in css/momente.css; Desktop und Querformat bleiben unverändert.
-  let waPaused=false;
+  // Telefon-Hochformat (seit 16.11.2026): Folien ohne Text bekommen die Klasse momente-ohne-text;
+  // das Medium nutzt dann die ganze Fläche (Regeln in css/momente.css).
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
   const date=s=>new Intl.DateTimeFormat('de-DE',{dateStyle:'long',timeZone:'UTC'}).format(new Date(s));
@@ -163,7 +162,7 @@
   }
   function open(index,card){
     if(dialog)close();opener=card;statusIndex=index;itemIndex=0;paused=reduced.matches;
-    dialog=el('dialog','momente-viewer momente-wa');dialog.setAttribute('aria-label','Momente – Status-Viewer');
+    dialog=el('dialog','momente-viewer');dialog.setAttribute('aria-label','Momente – Status-Viewer');
     dialog.innerHTML='<div class="momente-shell"><div class="momente-progress" aria-hidden="true"></div><div class="momente-toolbar"><div class="momente-heading" aria-live="polite"></div><button type="button" data-action="close" title="Viewer schließen" aria-label="Viewer schließen">✕</button></div><div class="momente-stage"><button type="button" class="momente-arrow momente-prev" data-action="prev" aria-label="Vorheriges Element">‹</button><button type="button" class="momente-arrow momente-next" data-action="next" aria-label="Nächstes Element">›</button></div><div class="momente-caption" tabindex="0" aria-label="Bildunterschrift"></div><div id="momente-controls" role="group" aria-label="Medienwiedergabe"><button type="button" data-action="pause"></button><button type="button" data-action="sound"></button><button type="button" id="music-quick" data-music="quick">▶</button><button type="button" id="music-toggle" data-music="toggle" aria-controls="momente-music" aria-expanded="false" aria-label="Musikplayer öffnen" title="Musikplayer öffnen">♪</button></div><div class="momente-meta"></div><div class="momente-help">Links / rechts: wechseln · Leertaste: Pause · Escape: schließen</div></div>';
     // Bild und Text bilden gemeinsam den Lesebereich; der Text verdeckt keine Medien.
     const content=el('div','momente-content');
@@ -211,32 +210,14 @@
       link.href=externalUrl;link.target='_blank';link.rel='noopener noreferrer';element.append(link);
     }
   }
-  // Lange Texte zunächst auf wenige Zeilen kürzen; Aufklappen pausiert die Folge wie bei WhatsApp.
-  function waMehr(caption){
-    caption.classList.remove('offen');
-    if(!caption.textContent)return;
-    // Text in einen eigenen Block, damit der Knopf in einer eigenen Zeile darunter steht.
-    const body=el('div','momente-text');body.append(...caption.childNodes);caption.append(body);
-    if(body.scrollHeight<=body.clientHeight+2)return;
-    caption.classList.add('gekuerzt');
-    const more=el('button','momente-mehr','… mehr anzeigen');more.type='button';more.setAttribute('aria-expanded','false');
-    more.onclick=e=>{
-      e.stopPropagation();const open=caption.classList.toggle('offen');
-      more.textContent=open?'weniger anzeigen':'… mehr anzeigen';more.setAttribute('aria-expanded',String(open));
-      if(open&&!paused){toggle();waPaused=true;}else if(!open&&waPaused){waPaused=false;if(paused)toggle();}
-      if(!open)caption.scrollTop=0;
-    };
-    caption.append(more);
-  }
   function show(){
     stopMedia();const token=++generation;elapsed=0;last=0;ready=false;
-    if(waPaused){waPaused=false;paused=false;} // Beim Weiterblättern läuft die Folge wieder.
     const s=archive.statuses[statusIndex],i=item(),stage=dialog.querySelector('.momente-stage');
     stage.querySelectorAll('.momente-message').forEach(n=>n.remove());
     const progress=dialog.querySelector('.momente-progress');progress.replaceChildren();s.items.forEach((_,n)=>{const segment=el('div','momente-segment');segment.append(el('span'));if(n<itemIndex)segment.firstChild.style.width='100%';progress.append(segment);});
     const heading=dialog.querySelector('.momente-heading');heading.replaceChildren(el('span','',s.title),el('small','',(s.demo?'DEMO · ':'')+date(s.publishedAt)+' · '+(itemIndex+1)+' / '+s.items.length));
     const caption=dialog.querySelector('.momente-caption');setCaption(caption,i.text||'',i.externalOnly?null:i.externalUrl,i.externalLabel);caption.scrollTop=0;
-    waMehr(caption);
+    dialog.classList.toggle('momente-ohne-text',!caption.textContent.trim());
     dialog.querySelector('.momente-meta').textContent=[i.location,i.date?date(i.date):null,i.textIncomplete?'Text in der Bildschirmaufnahme abgeschnitten':null].filter(Boolean).join(' · ');
     if(i.externalOnly){
       media=el('a','momente-link-preview');media.href=i.externalUrl;media.target='_blank';media.rel='noopener noreferrer';media.setAttribute('aria-label',i.externalLabel||'Externen Link öffnen');
