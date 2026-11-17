@@ -2,6 +2,207 @@
   "schemaVersion": 1,
   "statuses": [
     {
+      "id": "herbstsonne-2026-11-16",
+      "title": "Herbstsonne · 16. November 2026",
+      "publishedAt": "2026-11-16",
+      "description": "Lektüre, Musik und Spaziergänge im Winter.",
+      "cover": "assets/momente/2026-11-16-herbstsonne/vorschau.webp",
+      "coverAlt": "Sonniger, laubbedeckter Waldweg im Gegenlicht",
+      "provenance": {
+        "kind": "reconstructed",
+        "mediaMatchConfidence": null,
+        "reviewed": true,
+        "sourceRecordingRef": "wa-20261116-211625"
+      },
+      "items": [
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/01.webp",
+          "text": "Sehr volles Wochenende, aber zumindest am Samstag konnte ich ein bisschen die Herbstsonne genießen. 🍂☀️",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 7.5
+          },
+          "alt": "Sonniger, laubbedeckter Waldweg im Gegenlicht",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/02.webp",
+          "text": "... mit guten Hörbüchern & Podcasts 🎧😌",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 10.0
+          },
+          "alt": "Selfie mit Kopfhörern vor herbstlichen Bäumen",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/03.webp",
+          "text": "Echt wunderschön, der Herbst ⛅🌳",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 13.5
+          },
+          "alt": "Waldweg mit Laub, Sonne zwischen hohen Bäumen",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/04.webp",
+          "text": "Krass, dass der Mond so früh schon draußen war. 🍁🌙\n\nWas ist da los, Mrs. Luna? 👀",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 18.0
+          },
+          "alt": "Rot gefärbter Ahorn vor blauem Himmel",
+          "duration": 6
+        },
+        {
+          "type": "video",
+          "src": "assets/momente/2026-11-16-herbstsonne/05.mp4",
+          "text": "So viel Wasser hatte die Gelpe schon lang nicht mehr. 🌊",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "frame-comparison-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 25.0
+          }
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/06.webp",
+          "text": "❤️",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 32.75
+          },
+          "alt": "Laubbedeckter Waldweg mit tiefstehender Sonne",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/07.webp",
+          "text": "🍃💧",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 35.25
+          },
+          "alt": "Teich zwischen herbstlichen Bäumen mit Spiegelung",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/08.webp",
+          "text": "",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 37.75
+          },
+          "alt": "Grüne Wiese unter Sonne und Wolken",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/09.webp",
+          "text": "Ich frag mich, wie die drei wohl heißen. 🌳🌳🌳\n\nNur falsche Antworten erlaubt. xD😄",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 40.5
+          },
+          "alt": "Drei Bäume vor einem herbstlich gefärbten Hang",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/10.webp",
+          "text": "",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 44.0
+          },
+          "alt": "See mit Spiegelung der bewaldeten Ufer",
+          "duration": 6
+        },
+        {
+          "type": "image",
+          "src": "assets/momente/2026-11-16-herbstsonne/11.webp",
+          "text": "Noch einmal tief durchatmen, und dann: neue Woche 💪💚",
+          "textPosition": "bottom",
+          "fit": "contain",
+          "provenance": {
+            "kind": "reconstructed",
+            "mediaMatchConfidence": null,
+            "reviewed": true,
+            "matchMethod": "geometric-feature-match-and-visual-review",
+            "sourceRecordingRef": "wa-20261116-211625",
+            "sourceFrameSeconds": 48.0
+          },
+          "alt": "Wiese unter sonnigem Himmel mit Wolken",
+          "duration": 6
+        }
+      ]
+    },
+    {
       "id": "japan-nachklang-2026-10-12",
       "title": "Japan-Nachklang · 12. Oktober 2026",
       "publishedAt": "2026-10-12",
