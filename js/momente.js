@@ -81,7 +81,7 @@
   function mountMusic(){
     if(!musicPanel){
       musicPanel=el('section');musicPanel.id='momente-music';musicPanel.setAttribute('aria-label','Hintergrundmusik');
-      musicPanel.innerHTML='<div><strong>Hintergrundmusik</strong><button type="button" id="music-collapse" title="Musikplayer einklappen" aria-label="Musikplayer einklappen">✕</button></div><span id="music-current"></span><div><button type="button" id="music-prev" title="Vorheriger Song" aria-label="Vorheriger Song">‹</button><label for="music-select">Song</label><select id="music-select"></select><button type="button" id="music-next" title="Nächster Song" aria-label="Nächster Song">›</button></div><div><button type="button" id="music-play">Musik abspielen</button><button type="button" id="music-off">Ausschalten</button></div><div><label for="music-volume">Lautstärke</label><input id="music-volume" type="range" min="0" max="100" value="30"><button type="button" id="music-mute">Stummschalten</button></div><label><input type="checkbox" id="music-auto" checked> Nächsten Song automatisch abspielen</label><small id="music-state" role="status"></small>';
+      musicPanel.innerHTML='<div><strong id="music-current"></strong><button type="button" id="music-collapse" title="Musikplayer einklappen" aria-label="Musikplayer einklappen">✕</button></div><div id="music-zeit"><span id="music-elapsed">0:00</span><input id="music-seek" type="range" min="0" max="0" step="0.1" value="0" aria-label="Position im Song" disabled><span id="music-duration">–:––</span></div><div><button type="button" id="music-prev" title="Vorheriger Song" aria-label="Vorheriger Song">‹</button><label for="music-select">Song</label><select id="music-select"></select><button type="button" id="music-next" title="Nächster Song" aria-label="Nächster Song">›</button></div><div><button type="button" id="music-play">Musik abspielen</button><button type="button" id="music-off">Ausschalten</button></div><div><label for="music-volume">Lautstärke</label><input id="music-volume" type="range" min="0" max="100" value="30"><button type="button" id="music-mute">Stummschalten</button></div><label><input type="checkbox" id="music-auto" checked> Nächsten Song automatisch abspielen</label><small id="music-state" role="status"></small>';
       const select=musicPanel.querySelector('#music-select');
       songs.forEach((song,index)=>{const option=el('option','',song.title);option.value=index;select.append(option);});
       musicPanel.querySelector('#music-play').onclick=()=>{musicWanted=!musicWanted;musicError='';syncMusic();};
@@ -92,9 +92,13 @@
       musicPanel.querySelector('#music-collapse').onclick=()=>setMusicOpen(false);
       musicPanel.querySelector('#music-volume').oninput=e=>{music.volume=Number(e.target.value)/100;musicUI();};
       musicPanel.querySelector('#music-mute').onclick=()=>{music.muted=!music.muted;musicUI();};
+      // Zeitleiste: Ziehen zeigt die Zielzeit sofort, gesprungen wird beim Loslassen.
+      const seek=musicPanel.querySelector('#music-seek');
+      seek.oninput=()=>{musicSeeking=true;musicTime();};
+      seek.onchange=()=>{if(isFinite(music.duration))music.currentTime=Number(seek.value);musicSeeking=false;musicTime();};
       ['music-prev','music-next','music-select'].forEach(id=>{musicPanel.querySelector('#'+id).disabled=songs.length<2;});
     }
-    musicPanel.hidden=true;musicUI();
+    musicPanel.hidden=true;musicUI();musicTime();
   }
   // Der Player hängt am Viewer, solange er offen ist, sonst an der Galerieleiste.
   function musicHost(){return dialog?dialog.querySelector('#momente-controls'):galleryActive()?galleryBar:null;}
@@ -109,6 +113,21 @@
     if(!expanded&&musicPanel.contains(document.activeElement))button.focus();
   }
   music.addEventListener('playing',musicUI);
+  // Zeitleiste des Players (Laufzeit / Position / Gesamtdauer). Vor dem ersten Abspielen ist die Dauer
+  // wegen preload='none' unbekannt; die Leiste bleibt dann deaktiviert.
+  let musicSeeking=false;
+  const musicClock=t=>isFinite(t)&&t>=0?Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0'):'–:––';
+  function musicTime(){
+    if(!musicPanel)return;
+    const seek=musicPanel.querySelector('#music-seek'),d=music.duration,ok=isFinite(d)&&d>0;
+    seek.disabled=!ok;seek.max=ok?String(d):'0';
+    if(!musicSeeking)seek.value=ok?String(music.currentTime):'0';
+    const pos=ok?Number(seek.value):0;
+    musicPanel.querySelector('#music-elapsed').textContent=musicClock(pos);
+    musicPanel.querySelector('#music-duration').textContent=ok?musicClock(d):'–:––';
+    seek.setAttribute('aria-valuetext',ok?musicClock(pos)+' von '+musicClock(d):'Noch nicht geladen');
+  }
+  ['timeupdate','loadedmetadata','durationchange','emptied','seeked'].forEach(t=>music.addEventListener(t,musicTime));
   music.addEventListener('error',()=>{if(!music.getAttribute('src'))return;musicWanted=false;musicAttempt++;music.pause();music.removeAttribute('src');music.load();musicError='Audiodatei nicht verfügbar. Bitte einen anderen Song wählen oder erneut versuchen.';musicUI();});
   music.addEventListener('ended',()=>{
     // Ohne geöffneten Player gilt die Voreinstellung „automatisch weiter“.

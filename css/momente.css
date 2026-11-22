@@ -56,12 +56,19 @@
 #momente-music[hidden]{display:none}
 #momente-music>div{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
 #momente-music>div strong{flex:1}
-#music-current{flex:1;min-width:120px;overflow-wrap:anywhere;color:var(--text2)}
+/* Der Songtitel ist zugleich die Überschrift des Players (spart eine Zeile für die Zeitleiste). */
+#music-current{flex:1;min-width:120px;overflow-wrap:anywhere}
 #momente-music button,#momente-music select{font:inherit;color:inherit;background:var(--bg2);border:1px solid var(--border);border-radius:8px;min-height:44px;padding:6px 10px;max-width:100%;cursor:pointer}
 #momente-music button:disabled,#momente-music select:disabled{opacity:.55;cursor:default}
 #momente-music label{display:inline-flex;align-items:center;gap:8px}
 #music-select{flex:1;min-width:100px;width:180px}
 #music-volume{max-width:130px;accent-color:var(--accent)}
+/* Zeitleiste: Laufzeit links, Gesamtdauer rechts; der gespielte Teil in Akzentfarbe. */
+#momente-music>#music-zeit{flex-wrap:nowrap;gap:10px}
+#music-zeit span{flex:0 0 auto;min-width:3.2em;font-variant-numeric:tabular-nums;color:var(--text2);font-size:.85em}
+#music-zeit span:last-child{text-align:right}
+#music-seek{flex:1;min-width:0;width:100%;height:24px;margin:0;accent-color:var(--accent);cursor:pointer}
+#music-seek:disabled{opacity:.45;cursor:default}
 #music-state{display:block;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:1.5em}
 #momente-music :is(button,select,input,summary):focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .momente-viewer #momente-music small{font-size:.75rem}
@@ -85,6 +92,8 @@
 /* Korrektur: Im verkleinerten 980-px-Telefonmodus war „Ⅱ“ des Musikknopfs winzig (ID-Regel schlug 5vw). */
 @media(pointer:coarse) and (max-device-width:600px) and (min-width:601px) and (orientation:portrait){
   #music-quick{font-size:5vw}
+  /* Native Schieberegler skalieren nicht mit; zoom vergrößert Spur und Griff fürs Antippen. */
+  #music-seek{zoom:2.2}
 }
 /* Telefon-Hochformat (seit 16.11.2026): Ansicht wie bisher (Text im reservierten Bereich unter dem Medium).
    Nur Folien ohne Text blenden das Textfeld aus, das Medium nutzt dann die ganze Fläche.
