@@ -43,7 +43,20 @@
       var D=window.GODS_DATA;
       if(!el) return true;
       if(!(D&&D.meta&&D.meta.rahmen)) return false;
-      el.textContent=D.meta.rahmen; return true;
+      /* Absaetze: Liste von {stark?, text}. Der erste fuellt das vorhandene
+         <p id="gx-rahmen">, jeder weitere wird als Geschwister mit denselben
+         Klassen dahinter gesetzt. Kein innerHTML - die Teile werden einzeln
+         als Text eingesetzt. */
+      if(el.dataset.gesetzt) return true;
+      var abs=D.meta.rahmen; if(typeof abs==='string') abs=[{text:abs}];
+      var ziel=el;
+      abs.forEach(function(a,i){
+        var p=i?document.createElement('p'):el;
+        if(i){ p.className=el.className; ziel.after(p); ziel=p; }
+        if(a.stark){ var b=document.createElement('strong'); b.textContent=a.stark; p.appendChild(b); }
+        p.appendChild(document.createTextNode(a.text||''));
+      });
+      el.dataset.gesetzt='1'; return true;
     }
     if(!setzen()){ var n=0, t=setInterval(function(){ if(setzen()||++n>60) clearInterval(t); },100); }
   })();
